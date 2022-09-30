@@ -14,8 +14,14 @@ trigger:
 
 variables:
   DATE_COUNTER: $[counter(format('UI{0:yyyy}{0:MM}{0:dd}', pipeline.startTime), 1)]
-  NX_BASE: "origin/main~1"
-  NX_HEAD: "origin/main"
+  ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    NX_BRANCH: $(System.PullRequest.PullRequestNumber)
+    TARGET_BRANCH: $[replace(variables['System.PullRequest.TargetBranch'],'refs/heads/','origin/')]
+    BASE_SHA: $(git merge-base $(TARGET_BRANCH) HEAD)
+  ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+    NX_BRANCH: $(Build.SourceBranchName)
+    BASE_SHA: $(git rev-parse HEAD~1)
+  HEAD_SHA: $(git rev-parse HEAD)
 
 pool:
   vmImage: ubuntu-latest
@@ -40,19 +46,12 @@ stages:
           workingDirectory: $(Build.SourcesDirectory)
 
         - task: Npm@1
-          displayName: "npm install Nx"
-          inputs:
-            command: 'custom'
-            workingDir: 'UI/'
-            customCommand: 'install -g nx'
-
-        - task: Npm@1
           displayName: "npm ci"
           inputs:
             command: 'ci'
             workingDir: 'UI/'
 
-        - script: nx affected --base=origin/main~1 --head=origin/main --target=build
+        - script: npx nx affected --base=$(BASE_SHA) --target=build --parallel=3
           displayName: "nx build"
           continueOnError: false
           workingDirectory: 'UI/'
