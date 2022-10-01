@@ -12,12 +12,15 @@ trigger:
       - UI/*
       - Deployment/Pipelines/azure-pipeline-ui.yml
 
+pr:
+  - main
+
 variables:
   DATE_COUNTER: $[counter(format('UI{0:yyyy}{0:MM}{0:dd}', pipeline.startTime), 1)]
   ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     NX_BRANCH: $(System.PullRequest.PullRequestNumber)
     TARGET_BRANCH: $[replace(variables['System.PullRequest.TargetBranch'],'refs/heads/','origin/')]
-    BASE_SHA: $(git merge-base $(TARGET_BRANCH) HEAD)
+    BASE_SHA: $(git merge-base origin/main HEAD)
   ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
     NX_BRANCH: $(Build.SourceBranchName)
     BASE_SHA: $(git rev-parse HEAD~1)
@@ -35,23 +38,28 @@ stages:
         displayName: "Building UI Project"
 
         steps:
+
+        - checkout: self
+          clean: true
+          fetchDepth: 5
+
         - task: NodeTool@0
           inputs:
-            versionSpec: '14.x'
+           versionSpec: '14.x'
           displayName: 'Install Node.js'
 
         - script: rm -rf "UI/node_modules"
           displayName: "Purge node packages"
           continueOnError: true
           workingDirectory: $(Build.SourcesDirectory)
-
+        
         - task: Npm@1
           displayName: "npm ci"
           inputs:
             command: 'ci'
             workingDir: 'UI/'
 
-        - script: npx nx affected --base=$(BASE_SHA) --target=build --parallel=3
+        - script: npx nx affected:build --prod --runner=ci --parallel=3 --verbose --base=$(BASE_SHA) --head=$(HEAD_SHA)
           displayName: "nx build"
           continueOnError: false
           workingDirectory: 'UI/'
