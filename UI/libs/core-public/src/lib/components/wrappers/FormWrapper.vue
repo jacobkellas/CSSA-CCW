@@ -5,12 +5,13 @@
   >
     <v-stepper
       alt-labels
-      v-model="stepIndex"
+      v-model="stepIndex.step"
     >
-      <FormStepHeader :step-index="stepIndex" />
+      <FormStepHeader :step-index="stepIndex.step" />
       <FormStepItems
-        :step-index="stepIndex"
+        :step-index="stepIndex.step"
         :handle-next-section="handleNextSection"
+        :handle-reset="handleResetForm"
       />
     </v-stepper>
   </v-card>
@@ -19,13 +20,23 @@
 <script setup lang="ts">
 import FormStepHeader from '../form-stepper/FormStepHeader.vue';
 import FormStepItems from '../form-stepper/FormStepItems.vue';
-import { ref } from 'vue';
+import { useFormStep } from '@core-public/stores/formStep';
+import { reactive } from 'vue';
 
-const stepIndex = ref(1);
+const { getFormStep, setFormStep } = useFormStep();
+
+const stepIndex = reactive({
+  step: getFormStep,
+});
 
 function handleNextSection() {
-  stepIndex.value = stepIndex.value + 1;
-  console.log(stepIndex.value);
+  setFormStep(stepIndex.step + 1);
+  stepIndex.step = stepIndex.step + 1;
+}
+
+function handleResetForm() {
+  setFormStep(1);
+  stepIndex.step = 1;
 }
 </script>
 
