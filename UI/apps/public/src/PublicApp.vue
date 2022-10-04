@@ -3,12 +3,7 @@
   <v-app>
     <div id="app">
       <div id="nav">
-        <router-link to="/">
-          {{ $t(' Home ') }}
-        </router-link>
-        <router-link to="/about">
-          {{ $t('About') }}
-        </router-link>
+        <router-view name="navbar" />
       </div>
       <v-main>
         <router-view />
@@ -82,15 +77,9 @@ export default defineComponent({
 }
 
 #nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  min-height: 1rem;
+  background: #263b65;
+  color: aliceblue;
 }
 
 .update-dialog {
