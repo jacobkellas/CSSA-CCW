@@ -10,6 +10,7 @@ describe('PersonalInfoSection', () => {
 
   beforeEach(() => {
     vuetify = new Vuetify();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     wrapper = mount(PersonalInfoSection, {
       localVue,
@@ -50,11 +51,9 @@ describe('PersonalInfoSection', () => {
     expect(wrapper.findAll('p').at(1).element.textContent).toContain('first');
   });
 
-
   it('should display the correct middle name', () => {
     expect(wrapper.findAll('p').at(2).element.textContent).toContain('middle');
   });
-
 
   it('should display the correct middle name status', () => {
     expect(wrapper.findAll('p').at(3).element.textContent).toContain('false');

@@ -25,11 +25,13 @@ This is a `<FormButtonContainer>` component which has basic Continue, Save and C
 <Props of={FormButtonContainer} />
 
 <Canvas>
-  <Story name="Primary" height="400px"
+  <Story
+    name="Primary"
+    height="400px"
   >
     {{
       components: { FormButtonContainer },
-      template: '<FormButtonContainer />',
+      template: '<FormButtonContainer valid={true} />',
     }}
   </Story>
 </Canvas>
