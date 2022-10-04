@@ -13,7 +13,7 @@ export const AddressInfoSection = () => ({
       addressLine1: 'testLine1',
       addressLine2: 'testLine2',
       city: 'testCity',
-      county: "testCounty",
+      county: 'testCounty',
       state: 'testState',
       zip: 'testZip',
       country: 'testCountry',

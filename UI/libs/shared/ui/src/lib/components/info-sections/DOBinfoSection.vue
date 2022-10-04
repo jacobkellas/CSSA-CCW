@@ -76,6 +76,7 @@
 import { DOBType } from '@shared-ui/types/defaultTypes';
 
 interface IDOBInfoSectionProps {
+  // eslint-disable-next-line vue/prop-name-casing
   DOBInfo: DOBType;
   color: string;
 }
