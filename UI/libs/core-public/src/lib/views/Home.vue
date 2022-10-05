@@ -10,4 +10,5 @@
 </template>
 
 <script setup lang="ts">
-import AcknowledgementContainer from '@core-public/components/containers/AcknowledgementContainer.vue';</script>
+import AcknowledgementContainer from '@core-public/components/containers/AcknowledgementContainer.vue';
+</script>

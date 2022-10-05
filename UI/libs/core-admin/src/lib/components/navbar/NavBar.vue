@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import LoginButton from '@core-public/components/login/LoginButton.vue';
+import LoginButton from '@core-admin/components/login/LoginButton.vue';
 </script>
 
 <style lang="scss" scoped>

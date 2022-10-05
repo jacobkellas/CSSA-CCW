@@ -8,10 +8,7 @@
         class="form-card rounded elevation-2"
         :class="{ 'dark-card': $vuetify.theme.dark }"
       >
-        <v-form
-          @submit.prevent="getFormValues"
-          v-model="valid"
-        >
+        <v-form @submit.prevent="getFormValues">
           <BrandLogo />
           <v-row>
             <v-col
@@ -29,7 +26,6 @@
               sm="3"
             >
               <v-btn
-                :disabled="!valid"
                 color="success"
                 class="mr-4"
                 type="submit"

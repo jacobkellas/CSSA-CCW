@@ -1,11 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import * as msal from '@azure/msal-browser';
 
 /**
- * Implementation of MSAL B2C Login through a popup
+ * Implementation of MSAL B2C Login through a popup or redirect
  */
 export default {
   auth: null,
   loginType: null,
+  accessToken: null,
 
   /**
    * Create the msal popup instance
@@ -132,8 +135,8 @@ export default {
    */
   async signOut() {
     const logoutRequest: msal.EndSessionPopupRequest = {
-      postLogoutRedirectUri: msalConfig.auth.redirectUri,
-      mainWindowRedirectUri: msalConfig.auth.redirectUri,
+      postLogoutRedirectUri: window.location.origin,
+      mainWindowRedirectUri: window.location.origin,
     };
 
     this.loginType === 'Popup'
@@ -146,7 +149,7 @@ export default {
    * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-common/docs/Accounts.md
    */
   acquireToken(request: msal.PopupRequest) {
-    request.account = this.auth.getActiveAccount();
+    request.account = this.auth?.getActiveAccount();
 
     return this.auth
       .acquireTokenSilent(request)
@@ -155,8 +158,8 @@ export default {
           throw new msal.InteractionRequiredAuthError();
         }
         console.log('access_token acquired at: ' + new Date().toString());
-        accessToken = response.accessToken;
-        return accessToken;
+        this.accessToken = response.accessToken;
+        return response.accessToken;
       })
       .catch(error => {
         console.log(
@@ -167,14 +170,14 @@ export default {
           // fallback to interaction when silent call fails
           return this.loginType === 'Popup'
             ? this.auth
-                .acquireTokenPopup(request)
+                ?.acquireTokenPopup(request)
                 .then(response => {
                   return response;
                 })
                 .catch(error => {
                   console.log(error);
                 })
-            : this.authRedirect.acquireTokenRedirect(request);
+            : this.authRedirect?.acquireTokenRedirect(request);
         } else {
           console.log(error);
         }
@@ -186,7 +189,7 @@ export default {
    * @returns boolean
    */
   isAuthenticated() {
-    const account = this.auth.getActiveAccount();
+    const account = this.auth?.getActiveAccount();
     if (!account) {
       return false;
     }

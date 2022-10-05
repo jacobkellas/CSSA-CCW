@@ -22,8 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import AcknowledgementButtonContainer
-  from '@shared-ui/components/containers/AcknowledgementButtonContainer.vue';
+import AcknowledgementButtonContainer from '@shared-ui/components/containers/AcknowledgementButtonContainer.vue';
 
 const tempText = ' last acknowledgement then proceed to form.';
 interface IAcknowledgmentFinalProps {

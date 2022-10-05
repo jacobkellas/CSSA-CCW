@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import LoginButton from '@core-public/components/LoginButton.vue';
+import LoginButton from '@core-admin/components/login/LoginButton.vue';
 import Vuetify from 'vuetify';
 import { createLocalVue, mount } from '@vue/test-utils';
 

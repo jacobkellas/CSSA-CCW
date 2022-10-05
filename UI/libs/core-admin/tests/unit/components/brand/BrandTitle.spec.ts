@@ -1,10 +1,10 @@
-import BrandLogo from '@core-admin/components/BrandLogo.vue';
+import BrandTitle from '@core-admin/components/brand/BrandTitle.vue';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 
 const localVue = createLocalVue();
 
-describe('BrandLogo', () => {
+describe('BrandTitle', () => {
   let vuetify;
 
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('BrandLogo', () => {
   });
 
   it('Should render logo label', () => {
-    const wrapper = mount(BrandLogo, {
+    const wrapper = mount(BrandTitle, {
       localVue,
       vuetify,
       mocks: {
