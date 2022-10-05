@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import auth from '@core-public/api/auth/authentication';
+import auth from '@shared-ui/api/auth/authentication';
 import Button from '@shared-ui/components/Button.vue';
 
 function handleLogIn() {

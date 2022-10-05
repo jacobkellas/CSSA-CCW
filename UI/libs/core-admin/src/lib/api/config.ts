@@ -1,10 +1,10 @@
 import axios from 'axios';
-import interceptors from '@core-public/api/interceptors';
-import { usePublicAppConfigStore } from '@core-public/stores/publicAppConfig';
+import interceptors from '@core-admin/api/interceptors';
+import { useAdminAppConfigStore } from '@core-admin/stores/adminAppConfig';
 
 const initialize = async () => {
   const res = await axios.get('/config.json');
-  const configStore = usePublicAppConfigStore();
+  const configStore = useAdminAppConfigStore();
 
   const config = {
     apiBaseUrl: res.data.Configuration.ServicesBaseUrl,
@@ -18,7 +18,7 @@ const initialize = async () => {
     loginType: res.data.Authentication.LoginType || 'Popup',
   };
 
-  configStore.setPublicAppConfig(config);
+  configStore.setAdminAppConfig(config);
   const { clientId, authority, knownAuthorities, loginType } = config;
 
   import('@shared-ui/api/auth/authentication').then(auth => {

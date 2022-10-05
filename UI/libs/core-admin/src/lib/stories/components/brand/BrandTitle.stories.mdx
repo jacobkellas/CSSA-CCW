@@ -2,7 +2,7 @@
 
 import { Canvas, Meta, Props, Story, Source } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
-import BrandTitle from '@core-admin/components/BrandTitle';
+import BrandTitle from '@core-admin/components/brand/BrandTitle';
 
 <Meta
   title="Components/BrandTitle"
@@ -18,8 +18,8 @@ With `MDX`, we can define a story for `BrandTitle` right in the middle of our Ma
 <Canvas>
   <Story name="Primary">
     {{
-        components: { BrandTitle },
-        template: `
+      components: { BrandTitle },
+      template: `
           <div>
         <v-form>
           <BrandTitle />

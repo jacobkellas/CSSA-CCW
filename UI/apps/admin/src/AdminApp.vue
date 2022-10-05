@@ -1,45 +1,46 @@
 <!--eslint-disable vue-a11y/click-events-have-key-events -->
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">
-        {{ $t('Home') }}
-      </router-link>
-      <router-link to="/about">
-        {{ $t('About') }}
-      </router-link>
-    </div>
-    <router-view />
+  <v-app>
+    <div id="app">
+      <div id="nav">
+        <router-view name="navbar" />
+      </div>
+      <v-main>
+        <router-view />
+      </v-main>
 
-    <div
-      class="update-dialog"
-      v-if="prompt"
-    >
-      <div class="update-dialog__content">
-        {{ $t('A new version is found. Refresh to load it?') }}
-      </div>
-      <div class="update-dialog__actions">
-        <!-- eslint-disable-next-line vue-a11y/click-events-have-key-events -->
-        <button
-          class="update-dialog__button update-dialog__button--confirm"
-          @click="update"
-        >
-          {{ $t('Update') }}
-        </button>
-        <!-- eslint-disable-next-line vue-a11y/click-events-have-key-events -->
-        <button
-          class="update-dialog__button update-dialog__button--cancel"
-          @click="prompt = false"
-        >
-          {{ $t('Cancel') }}
-        </button>
+      <div
+        class="update-dialog"
+        v-if="prompt"
+      >
+        <div class="update-dialog__content">
+          {{ $t('A new version is found. Refresh to load it?') }}
+        </div>
+        <div class="update-dialog__actions">
+          <!-- eslint-disable-next-line vue-a11y/click-events-have-key-events -->
+          <button
+            class="update-dialog__button update-dialog__button--confirm"
+            @click="update"
+          >
+            {{ $t('Update') }}
+          </button>
+          <!-- eslint-disable-next-line vue-a11y/click-events-have-key-events -->
+          <button
+            class="update-dialog__button update-dialog__button--cancel"
+            @click="prompt = false"
+          >
+            {{ $t('Cancel') }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useQuery } from '@tanstack/vue-query';
+import initialize from '@core-admin/api/config';
 
 export default defineComponent({
   name: 'App',
@@ -61,6 +62,9 @@ export default defineComponent({
       });
     }
   },
+  setup() {
+    useQuery(['config'], initialize);
+  },
 });
 </script>
 
@@ -74,16 +78,9 @@ export default defineComponent({
 }
 
 #nav {
-  padding: 30px;
-
-  a {
-    color: #2c3e50;
-    font-weight: bold;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  min-height: 1rem;
+  background: #263b65;
+  color: aliceblue;
 }
 
 .update-dialog {
