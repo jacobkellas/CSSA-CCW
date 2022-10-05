@@ -24,7 +24,7 @@ describe(' AcknowledgementInitial', () => {
         handleDecline: () => null,
       },
     });
-  })
+  });
 
   it('Should match the snapshot', () => {
     expect(wrapper.html()).toMatchSnapshot();
