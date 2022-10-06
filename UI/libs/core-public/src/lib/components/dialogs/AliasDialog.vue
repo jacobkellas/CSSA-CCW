@@ -95,7 +95,7 @@
         <div class="mt-2 btn-container">
           <v-btn
             id="submit-btn"
-            color="success"
+            color="primary"
             @click="handleSubmit"
             class="mr-2"
             :disabled="!valid"

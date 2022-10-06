@@ -23,6 +23,14 @@ const routes: Array<RouteConfig> = [
       navbar: NavBar,
     },
   },
+  {
+    path: '/form-2',
+    name: 'form-2',
+    components: {
+      default: FormView,
+      navbar: NavBar,
+    },
+  },
 ];
 
 export const router = new VueRouter({

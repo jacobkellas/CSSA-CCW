@@ -70,7 +70,7 @@
           <v-select
             :items="hairColors"
             :label="$t('Hair Color')"
-            :rules="[v => !!v || $t(' Hair color is require')]"
+            :rules="[v => !!v || $t(' Hair color is required')]"
             @change="
               v => {
                 state.appearance.hairColor = v.toLowerCase();
