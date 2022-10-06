@@ -68,3 +68,10 @@ export type ContactInfoType = {
   faxPhoneNumber: string;
   textMessageUpdates: boolean;
 };
+
+export type WeaponInfoType = {
+  make: string;
+  model: string;
+  caliber: string;
+  serialNumber: string;
+};
