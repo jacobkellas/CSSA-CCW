@@ -19,51 +19,31 @@
         >
           <v-row>
             <v-col>
-              <TextInput
-                :label="'Make'"
-                :target="'make'"
+              <v-text-field
+                :label="$t('Make')"
                 :rule="[v => !!v || 'Make is required']"
-                @input="
-                  (v, t) => {
-                    handleInput(v, t);
-                  }
-                "
+                v-model="state.weapon.make"
               />
             </v-col>
             <v-col>
-              <TextInput
-                :label="'Model'"
-                :target="'model'"
+              <v-text-field
+                :label="$t('Model')"
                 :rule="[v => !!v || 'Model is required']"
-                @input="
-                  (v, t) => {
-                    handleInput(v, t);
-                  }
-                "
+                v-model="state.weapon.model"
               />
             </v-col>
             <v-col>
-              <TextInput
-                :label="'Caliber'"
-                :target="'caliber'"
+              <v-text-field
+                :label="$t('Caliber')"
                 :rule="[v => !!v || 'Caliber is required']"
-                @input="
-                  (v, t) => {
-                    handleInput(v, t);
-                  }
-                "
+                v-model="state.weapon.caliber"
               />
             </v-col>
             <v-col>
-              <TextInput
-                :label="'Serial number'"
-                :target="'serialNumber'"
+              <v-text-field
+                :label="$t('Serial number')"
                 :rule="[v => !!v || 'Serial number is required']"
-                @input="
-                  (v, t) => {
-                    handleInput(v, t);
-                  }
-                "
+                v-model="state.weapon.serialNumber"
               />
             </v-col>
           </v-row>
@@ -93,8 +73,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { WeaponInfoType } from '@shared-ui/types/defaultTypes';
-import TextInput from '@shared-ui/components/inputs/TextInput.vue';
+import { WeaponInfoType } from '@shared-utils/types/defaultTypes';
 
 interface IWeaponsDialogProps {
   saveWeapon: (weapon) => void;
@@ -108,24 +87,6 @@ const state = reactive({
   valid: false,
 });
 
-function handleInput(value, target) {
-  switch (target) {
-    case 'make':
-      state.weapon.make = value;
-      break;
-    case 'model':
-      state.weapon.model = value;
-      break;
-    case 'caliber':
-      state.weapon.caliber = value;
-      break;
-    case 'serialNumber':
-      state.weapon.serialNumber = value;
-      break;
-    default:
-      return;
-  }
-}
 function handleSubmit() {
   props.saveWeapon(state.weapon);
   state.dialog = false;

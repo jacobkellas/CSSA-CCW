@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { WeaponInfoType } from '@shared-ui/types/defaultTypes';
+import { WeaponInfoType } from '@shared-utils/types/defaultTypes';
 
 interface IWeaponTableProps {
   weapons: Array<WeaponInfoType>;

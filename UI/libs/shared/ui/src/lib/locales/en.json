@@ -19,6 +19,27 @@
   "acknowledgement-part5": " I have read and understand the applicable Penal Code sections regarding false statements on a CCW Application, manslaughter, killing in defense of self or property, limitation on self-defense and defense of property, and child access and firearm storage, stated in this application \n- Note: this is a link\n(click here to read section 5 of the state application).",
   "acknowledgement-part6": "I have read and understand the Firearms Prohibiting Categories attachment to this application. I further acknowledge that these prohibiting categories can be amended or expanded by state or federal legislative or regulatory bodies and that any such amendment or expansion may affect my eligibility to hold a CCW license \n- Note: this is a link\n(click here to read pages 12 and 13 of the state application). ",
   "acknowledgement-part7": " I hereby give permission to the agency to which this application is made to conduct a background investigation of me and to contact any person or agency who may add to or aid in this investigation. I further authorize persons, firms, agencies and institutions listed on this application to release or confirm information about me and statements I have made as contained in this application.",
-  "Authority": "Authority"
+  "Authority": "Authority",
+  "Documentation-Header": "Attach Documentation: please upload the required documentation.",
+  "Documentation-Subheader": "To upload Documentation, please use the button below to begin the process. Please scan each document individually. The maximum size of individual files is 5 MB.",
+  "EVERYONE" :"EVERYONE: ",
+  "Documentation-Everyone": "Your driver's license, two (2) MONTHLY proofs of residence such as the MOST Current utility bills (SDG&E,garbage or phone), cable bill, mortgage statement, cell phone bill, bank statements, credit card statement, etc. Overdue bills will not bew accepted. P.O. Boxes are not allowed.",
+  "MILITARY": "MILITARY: ",
+  "Documentation-Military": "Military Command letter, Military Orders stationing you in San Diego, DD-214 or NG Form 22 (National Guard) with type of discharge included.",
+  "NOT-BORN-IN-US": " NOT BORN IN U.S.:",
+  "Documentation-NotBornInUs": " If you were not born in the United States you will be required to upload verification that you are here in the U.S. legally by uploading:",
+  "Documentation-bullet1": " Naturalization Certificate",
+  "Documentation-bullet2": " Resident Alien Card (be sure to upload the back side showing the expiration date, if applicable).",
+  "Documentation-bullet3": "Valid US Passport",
+  "Documentation-bullet4": "Certificate of Birth Abroad",
+  "SUPPORTING": "SUPPORTING DOCUMENTS: ",
+  "Documentation-Supporting": " Business licenses, police reports, restraining orders, photos, receipts, last 2 paycheck stubs, work Id, contact name and number if we need  to verify employment, Corporate/LLC documents, contracts, specialized licenses (State Bar card, Security Guard card, Exposed Carry Permit, Contractors license, Real Estate license, Broker's license etc.). This list is not all-inclusive.",
+  "LEGAL-NAME-CHANGE" :"LEGAL NAME CHANGE: ",
+  "Documentation-LegalNameChange": "Please upload the court order showing your previous and you current legal name.",
+  "JUDICIAL": "IF APPLYING FOR A JUDICIAL 3 YEAR CCW LICENSE: ",
+  "Documentation-Judicial" : "A copy of your Judicial ID.",
+  "RESERVE": "IF APPLYING FOR A RESERVE 4 YEAR CCW LICENSE:",
+  "Documentation-Reserve": " A copy of your Reserve Id and/or a letter from the agency you serve.",
+  "Rename": " Please rename all files to descibe the contents of the file"
 }
 

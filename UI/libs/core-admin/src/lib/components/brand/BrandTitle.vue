@@ -1,12 +1,15 @@
 <template>
-  <TextInput
-    :label="'Brand Title '"
-    :target="'brandTitle'"
+  <v-text-field
+    :label="$t('Brand Title')"
     :rules="[v => !!v || 'Brand Title is required']"
-    :name="'brandTitle'"
+    v-model="state.brandTitle"
   />
 </template>
 
 <script setup lang="ts">
-import TextInput from '@shared-ui/components/inputs/TextInput.vue';
+import { reactive } from 'vue';
+
+const state = reactive({
+  brandTitle: '',
+});
 </script>
