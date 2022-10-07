@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { AliasType } from '@shared-ui/types/defaultTypes';
+import { AliasType } from '@shared-utils/types/defaultTypes';
 import { reactive, ref } from 'vue';
 
 interface AliasDialogProps {

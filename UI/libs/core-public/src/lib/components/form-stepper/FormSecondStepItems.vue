@@ -5,7 +5,8 @@
     </v-stepper-content>
 
     <v-stepper-content step="2">
-</v-stepper-content>
+      <SecondFormStepTwo :handle-next-section="handleNextSection" />
+    </v-stepper-content>
 
     <v-stepper-content step="3">
 </v-stepper-content>
@@ -14,6 +15,7 @@
 
 <script setup lang="ts">
 import SecondFormStepOne from '@core-public/components/form-stepper/form-steps/SecondFormStepOne.vue';
+import SecondFormStepTwo from '@core-public/components/form-stepper/form-steps/SecondFormStepTwo.vue';
 
 interface IFormSecondStepItemsProps {
   stepIndex: number;

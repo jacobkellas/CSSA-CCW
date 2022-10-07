@@ -133,6 +133,7 @@ const state = reactive({
 
 function onConfirm() {
   step.setFormStep(1);
+  props.resetForm();
   router.push('form-2');
 }
 function onCancel() {
