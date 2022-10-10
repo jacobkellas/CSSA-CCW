@@ -35,6 +35,10 @@
   margin: 0;
 }
 
+.v-input--selection-controls .v-input__slot > .v-label, .v-input--selection-controls .v-radio > .v-label {
+  color: #111111;
+}
+
 h3 {
   color: #111111;
 }

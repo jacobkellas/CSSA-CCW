@@ -49,6 +49,7 @@ export type AddressInfoType = {
 export type RadioOptionsType = {
   label: string;
   value: string | boolean;
+  color?: string;
 };
 
 export type AppearanceInfoType = {

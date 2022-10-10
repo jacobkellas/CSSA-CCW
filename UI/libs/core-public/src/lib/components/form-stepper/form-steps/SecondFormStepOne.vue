@@ -11,6 +11,7 @@
       <v-row>
         <v-col>
           <v-select
+            id="select"
             :items="employmentStatus"
             :label="$t(' Employment Status')"
             :rules="[v => !!v || $t(' Employment status is required')]"
