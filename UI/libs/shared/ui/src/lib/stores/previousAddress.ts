@@ -14,12 +14,12 @@ export const usePreviousAddressesStore = defineStore(
 
     function updatePreviousAddresses(previousAddress: AddressInfoType) {
       const index = previousAddresses.value.indexOf(previousAddress);
-      previousAddresses.value.splice(index, 1, previousAddresses.value);
+      previousAddresses.value.splice(index, 1, previousAddress);
     }
 
     function deletePreviousAddresses(previousAddress: AddressInfoType) {
-      const index = previousAddresses.value.find(previousAddress);
-      previousAddresses.splice(index, 1);
+      const index = previousAddresses.value.indexOf(previousAddress);
+      previousAddresses.value.splice(index, 1);
     }
 
     return {

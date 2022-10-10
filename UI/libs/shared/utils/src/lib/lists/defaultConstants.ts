@@ -28,9 +28,9 @@ export const formOneStepNames = [
 ];
 
 export const formTwoStepName = [
-  ' Employement & Weapons',
-  ' Files',
+  ' Employment & Weapons',
   'Application Type',
+  ' Files',
 ];
 
 export const employmentStatus = ['Employed', 'Unemployed', 'Retired'];

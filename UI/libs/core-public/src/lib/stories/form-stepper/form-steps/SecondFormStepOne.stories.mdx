@@ -1,0 +1,31 @@
+<!-- SecondFormStepOne.stories.mdx -->
+
+
+import { Canvas, Meta, Props, Story, } from '@storybook/addon-docs/blocks';
+import { withKnobs } from '@storybook/addon-knobs';
+import SecondFormStepOne from '../../../components/form-stepper/form-steps/SecondFormStepOne.vue';
+
+<Meta
+  title="Components/acknowledgement-section/AcknowledgementInitial"
+  component={SecondFormStepOne}
+  decoratiors={[withKnobs]}
+/>
+
+# Acknowledgement Initial
+
+This is a `<SecondFormStepOne>` used to continue the enteries for the form and allows for employment
+status updates and weapons
+
+<Props of={SecondFormStepOne}/>
+
+<Canvas>
+  <Story
+    name="Primary"
+    height="500px"
+  >
+    {{
+      components: {SecondFormStepOne},
+      template: '<SecondFormStepOne :handle-next-section="() => {}"/>'
+    }}
+  </Story>
+</Canvas>

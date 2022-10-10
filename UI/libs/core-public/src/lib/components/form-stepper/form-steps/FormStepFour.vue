@@ -136,7 +136,7 @@ import { usePhysicalAppearanceStore } from '@shared-ui/stores/physicalAppearance
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import { AppearanceInfoType } from '@shared-utils/types/defaultTypes';
-import { eyeColors, hairColors } from '@shared-utils/lists/defaultList';
+import { eyeColors, hairColors } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepFourProps {
   handleNextSection: () => void;
