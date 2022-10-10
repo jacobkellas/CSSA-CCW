@@ -41,7 +41,7 @@
 import { reactive } from 'vue';
 import { useEmploymentStore } from '@shared-ui/stores/employment';
 import { useWeaponsStore } from '@shared-ui/stores/weapons';
-import { employmentStatus } from '@shared-utils/lists/defaultList';
+import { employmentStatus } from '@shared-utils/lists/defaultConstants';
 import { WeaponInfoType } from '@shared-utils/types/defaultTypes';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
