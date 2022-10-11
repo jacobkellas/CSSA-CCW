@@ -225,7 +225,7 @@ function getAliasFromDialog(alias) {
 .alias-components-container {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   justify-content: flex-start;
   align-items: flex-start;
 }

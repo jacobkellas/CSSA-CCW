@@ -7,7 +7,7 @@
       <v-subheader class="sub-header font-weight-bold">
         {{ $t(' Physical Appearance') }}
       </v-subheader>
-      <v-row>
+      <v-row class='ml-5'>
         <v-col
           cols="6"
           md="5"
@@ -81,7 +81,7 @@
       <v-subheader class="sub-header font-weight-bold">
         {{ $t(' Gender ') }}
       </v-subheader>
-      <v-row>
+      <v-row class='ml-5'>
         <v-col
           cols="6"
           md="5"
