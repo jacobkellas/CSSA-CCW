@@ -3,13 +3,7 @@ import { defineStore } from 'pinia';
 import { ContactInfoType } from '@shared-utils/types/defaultTypes';
 
 export const useContactStore = defineStore('contact', () => {
-  const contact = ref<ContactInfoType>({
-    primaryPhone: '',
-    cellPhone: '',
-    workPhone: '',
-    faxNumber: '',
-    textMessageUpdates: false,
-  });
+  const contact = ref<ContactInfoType>({} as ContactInfoType);
   const getContactInfo = computed(() => contact.value);
 
   function setContactInfo(payload: ContactInfoType) {
@@ -18,11 +12,11 @@ export const useContactStore = defineStore('contact', () => {
 
   function deleteContactInfo() {
     contact.value = {
-      primaryPhone: '',
-      cellPhone: '',
-      workPhone: '',
-      faxNumber: '',
+      cellPhoneNumber: '',
+      faxPhoneNumber: '',
+      primaryPhoneNumber: '',
       textMessageUpdates: false,
+      workPhoneNumber: '',
     };
   }
 

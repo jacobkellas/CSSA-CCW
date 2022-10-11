@@ -1,0 +1,89 @@
+{
+  "application": {
+
+    "aliases": [
+      {
+        "prevLastName": "string",
+        "prevFirstName": "string",
+        "prevMiddleName": "string",
+        "cityWhereChanged": "string",
+        "stateWhereChanged": "string",
+        "courtFileNumber": "string"
+      }
+    ],
+    "applicationType": "string",
+    "citizenship": {
+      "citizen": "boolean",
+      "militaryStatus": "string"
+    },
+    "contact": {
+      "primaryPhoneNumber": "string",
+      "cellPhoneNumber": "string",
+      "workPhoneNumber": "string",
+      "faxPhoneNumber": "string",
+      "textMessageUpdates": "boolean"
+    },
+    "currentAddress": {
+      "addressLine1": "string",
+      "addressLine2": "string",
+      "city": "string",
+      "county": "string",
+      "state": "string",
+      "zip": "string",
+      "country": "string"
+    },
+    "differentMailing": "boolean",
+    "DOB": {
+      "DOB": "string",
+      "birthCity": "string",
+      "birthState": "string",
+      "birthCountry": "string",
+      "currentAge": "number"
+    },
+    "employment": "string",
+    "idInfo": {
+      "idNumber": "string",
+      "issuingState": "string"
+    },
+    // this one might be blank
+    "mailingAddress": {
+       "addressLine1": "string",
+      "addressLine2": "string",
+      "city": "string",
+      "county": "string",
+      "state": "string",
+      "zip": "string",
+      "country": "string"
+    },
+    "personalInfo": {
+      "lastName": "string",
+      "firstName": "string",
+      "middleName": "string",
+      "noMiddleName": "boolean",
+      "maidenName": "string",
+      "suffix": "string",
+      "ssn": "string",
+      "maritalStatus": "string"
+    },
+    "physicalAppearance": {
+      "gender": "string",
+      "heightFeet": "number",
+      "heightInch": "number",
+      "weight": "number",
+      "hairColor": "string",
+      "eyeColor": "string",
+      "physicalDesc": "string" // this one is a text field because they might be entering a paragraph here
+    },
+    "previousAddress": [
+      // this is an array of current address models
+    ],
+    "weapons": [
+      {
+        "make": "string",
+        "model": "string",
+        "caliber": "string",
+        "serialNumber": "string"
+      }
+    ]
+  }
+}

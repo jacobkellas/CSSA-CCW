@@ -8,7 +8,7 @@ export const usePhysicalAppearanceStore = defineStore(
     const physicalAppearance = ref<AppearanceInfoType>({
       gender: '',
       heightFeet: 0,
-      heightInches: 0,
+      heightInch: 0,
       weight: 0,
       hairColor: '',
       eyeColor: '',

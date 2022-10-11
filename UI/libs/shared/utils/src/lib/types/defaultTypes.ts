@@ -1,3 +1,13 @@
+export type AddressInfoType = {
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  county: string;
+  state: string;
+  zip: string;
+  country: string;
+};
+
 export type AliasType = {
   prevLastName: string;
   prevFirstName: string;
@@ -7,9 +17,27 @@ export type AliasType = {
   courtFileNumber: string;
 };
 
-export type IdType = {
-  idNumber: string;
-  issuingState: string;
+export type AppearanceInfoType = {
+  gender: string;
+  heightFeet: number;
+  heightInch: number;
+  weight: number;
+  hairColor: string;
+  eyeColor: string;
+  physicalDesc: string;
+};
+
+export type CitizenshipType = {
+  citizen: boolean;
+  militaryStatus: string;
+};
+
+export type ContactInfoType = {
+  primaryPhoneNumber: string;
+  cellPhoneNumber: string;
+  workPhoneNumber: string;
+  faxPhoneNumber: string;
+  textMessageUpdates: boolean;
 };
 
 export type DOBType = {
@@ -20,9 +48,9 @@ export type DOBType = {
   currentAge: 0;
 };
 
-export type CitizenshipType = {
-  citizen: boolean;
-  militaryStatus: string;
+export type IdType = {
+  idNumber: string;
+  issuingState: string;
 };
 
 export type PersonalInfoType = {
@@ -36,38 +64,10 @@ export type PersonalInfoType = {
   maritalStatus: string;
 };
 
-export type AddressInfoType = {
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  county: string;
-  state: string;
-  zip: string;
-  country: string;
-};
-
 export type RadioOptionsType = {
   label: string;
   value: string | boolean;
   color?: string;
-};
-
-export type AppearanceInfoType = {
-  gender: string;
-  heightFeet: number;
-  heightInch: number;
-  weight: number;
-  hairColor: string;
-  eyeColor: string;
-  physicalDesc: string;
-};
-
-export type ContactInfoType = {
-  primaryPhoneNumber: string;
-  cellPhoneNumber: string;
-  workPhoneNumber: string;
-  faxPhoneNumber: string;
-  textMessageUpdates: boolean;
 };
 
 export type WeaponInfoType = {
