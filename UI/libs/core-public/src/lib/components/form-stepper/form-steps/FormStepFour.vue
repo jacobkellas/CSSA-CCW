@@ -7,7 +7,7 @@
       <v-subheader class="sub-header font-weight-bold">
         {{ $t(' Physical Appearance') }}
       </v-subheader>
-      <v-row>
+      <v-row class="ml-5">
         <v-col
           cols="6"
           md="5"
@@ -15,7 +15,7 @@
         >
           <v-text-field
             :label="$t('Height feet')"
-            :rules="[v => !!v || 'Height feet is required']"
+            :rules="[v => !!v || $t('Height feet is required')]"
             v-model="state.appearance.heightFeet"
           />
         </v-col>
@@ -27,7 +27,7 @@
         >
           <v-text-field
             :label="$t('Height inches')"
-            :rules="[v => !!v || 'Height incheds is required']"
+            :rules="[v => !!v || $t('Height inches is required')]"
             v-model="state.appearance.heightInch"
           />
         </v-col>
@@ -39,7 +39,7 @@
         >
           <v-text-field
             :label="$t('Weight')"
-            :rules="[v => !!v || 'Weight is required']"
+            :rules="[v => !!v || $t('Weight is required')]"
             v-model="state.appearance.weight"
           />
         </v-col>
@@ -81,7 +81,7 @@
       <v-subheader class="sub-header font-weight-bold">
         {{ $t(' Gender ') }}
       </v-subheader>
-      <v-row>
+      <v-row class="ml-5">
         <v-col
           cols="6"
           md="5"

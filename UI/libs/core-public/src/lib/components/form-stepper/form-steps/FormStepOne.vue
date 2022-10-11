@@ -16,7 +16,7 @@
         >
           <v-text-field
             :label="$t('Last name')"
-            :rules="[v => !!v || 'Last name is required']"
+            :rules="[v => !!v || $t('Last name is required')]"
             v-model="personalInfo.lastName"
           />
         </v-col>
@@ -28,7 +28,7 @@
         >
           <v-text-field
             :label="$t('First name')"
-            :rules="[v => !!v || 'First name is required']"
+            :rules="[v => !!v || $t('First name is required')]"
             v-model="personalInfo.firstName"
           />
         </v-col>
@@ -43,7 +43,7 @@
             :rules="[
               v =>
                 (!!v && !personalInfo.noMiddleName) ||
-                'Middle name is required or you must select no middle name',
+                $t('Middle name is required or you must select no middle name'),
             ]"
             v-model="personalInfo.middleName"
           />
@@ -114,7 +114,7 @@
             :label="$t('Confirm SSN')"
             :rules="[
               v => !!v || 'Confirm ssn cannot be blank',
-              v => v === personalInfo.ssn || 'SSN\'s do not match',
+              v => v === personalInfo.ssn || $t('SSN\'s do not match'),
             ]"
             v-model="ssnConfirm"
           />
@@ -225,7 +225,7 @@ function getAliasFromDialog(alias) {
 .alias-components-container {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   justify-content: flex-start;
   align-items: flex-start;
 }

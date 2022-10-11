@@ -16,7 +16,7 @@
           <v-text-field
             v-model="id.idNumber"
             :label="$t('Id number')"
-            :rules="[v => !!v || 'Id  number is required']"
+            :rules="[v => !!v || $t('Id  number is required')]"
             required
           />
         </v-col>
@@ -28,7 +28,7 @@
         >
           <v-text-field
             :label="$t(' Issuing State')"
-            :rules="[v => !!v || 'Issuing state is required']"
+            :rules="[v => !!v || $t('Issuing state is required')]"
             v-model="id.issuingState"
           />
         </v-col>
@@ -66,22 +66,22 @@
         >
           <v-text-field
             :label="$t('Current Age')"
-            :rules="[v => !!v || 'Current age is required']"
+            :rules="[v => !!v || $t('Current age is required')]"
             v-model="DOBInfo.currentAge"
           />
           <v-text-field
             :label="$t('Birth city')"
-            :rules="[v => !!v || 'Birth city cannot be blank']"
+            :rules="[v => !!v || $t('Birth city cannot be blank')]"
             v-model="DOBInfo.birthCity"
           />
           <v-text-field
             :label="$t('Birth state')"
-            :rules="[v => !!v || 'Birth state cannot be blank']"
+            :rules="[v => !!v || $t('Birth state cannot be blank')]"
             v-model="DOBInfo.birthState"
           />
           <v-text-field
             :label="$t('Birth country')"
-            :rules="[v => !!v || 'Birth country cannot be blank']"
+            :rules="[v => !!v || $t('Birth country cannot be blank')]"
             v-model="DOBInfo.birthCountry"
           />
         </v-col>
@@ -159,11 +159,7 @@ import { useDOBStore } from '@shared-ui/stores/DOB';
 import { useCitizenshipStore } from '@shared-ui/stores/citizenship';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import {
-  CitizenshipType,
-  DOBType,
-  IdType,
-} from '@shared-utils/types/defaultTypes';
+import { CitizenshipType, DOBType, IdType } from '@shared-utils/types/defaultTypes';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
