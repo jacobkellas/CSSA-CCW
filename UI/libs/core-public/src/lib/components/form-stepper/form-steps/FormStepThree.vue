@@ -15,7 +15,7 @@
         >
           <v-text-field
             :label="$t('Address line 1')"
-            :rules="[v => !!v || 'Address line 1 cannot be blank']"
+            :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
             v-model="address.addressLine1"
           />
         </v-col>
@@ -40,7 +40,7 @@
         >
           <v-text-field
             :label="$t('City')"
-            :rules="[v => !!v || ' City cannot be blank']"
+            :rules="[v => !!v || $t('City cannot be blank')]"
             v-model="address.city"
           />
         </v-col>
@@ -52,7 +52,7 @@
         >
           <v-text-field
             :label="$t('State')"
-            :rules="[v => !!v || 'State cannot be blank']"
+            :rules="[v => !!v || $t('State cannot be blank')]"
             v-model="address.state"
           />
         </v-col>
@@ -63,7 +63,7 @@
         >
           <v-text-field
             :label="$t('County')"
-            :rules="[v => !!v || 'County cannot be blank']"
+            :rules="[v => !!v || $t('County cannot be blank')]"
             v-model="address.county"
           />
         </v-col>
@@ -74,7 +74,7 @@
         >
           <v-text-field
             :label="$t('Zip')"
-            :rules="[v => !!v || 'Zip cannot be blank']"
+            :rules="[v => !!v || $t('Zip cannot be blank')]"
             v-model="address.zip"
           />
         </v-col>
@@ -107,7 +107,7 @@
           >
             <v-text-field
               :label="$t('Address line 1')"
-              :rules="[v => !!v || 'Address line 1 cannot be blank']"
+              :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
               v-model="mailingAddress.addressLine1"
             />
           </v-col>
@@ -124,7 +124,7 @@
           </v-col>
         </v-row>
 
-        <v-row class='ml-5'>
+        <v-row class="ml-5">
           <v-col
             cols="6"
             md="5"
@@ -132,7 +132,7 @@
           >
             <v-text-field
               :label="$t('City')"
-              :rules="[v => !!v || ' City cannot be blank']"
+              :rules="[v => !!v || $t(' City cannot be blank')]"
               v-model="mailingAddress.city"
             />
           </v-col>
@@ -144,7 +144,7 @@
           >
             <v-text-field
               :label="$t('State')"
-              :rules="[v => !!v || 'State cannot be blank']"
+              :rules="[v => !!v || $t('State cannot be blank')]"
               v-model="mailingAddress.state"
             />
           </v-col>
@@ -155,7 +155,7 @@
           >
             <v-text-field
               :label="$t('County')"
-              :rules="[v => !!v || 'County cannot be blank']"
+              :rules="[v => !!v || $t('County cannot be blank')]"
               v-model="mailingAddress.county"
             />
           </v-col>
@@ -166,7 +166,7 @@
           >
             <v-text-field
               :label="$t('Zip')"
-              :rules="[v => !!v || 'Zip cannot be blank']"
+              :rules="[v => !!v || $t('Zip cannot be blank')]"
               v-model="mailingAddress.zip"
             />
           </v-col>
@@ -178,7 +178,7 @@
           >
             <v-text-field
               :label="$t('Country')"
-              :rules="[v => !!v || 'Country cannot be blank']"
+              :rules="[v => !!v || $t('Country cannot be blank')]"
               v-model="mailingAddress.country"
             />
           </v-col>
