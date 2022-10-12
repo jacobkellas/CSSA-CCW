@@ -1,16 +1,9 @@
 import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
+import { PersonalInfoType } from '@shared-utils/types/defaultTypes';
 
 export const usePersonalInfoStore = defineStore('personalInfo', () => {
-  const personalInfo = ref({
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    maidenName: '',
-    suffix: '',
-    ssn: '',
-    maritalStatus: '',
-  });
+  const personalInfo = ref({} as PersonalInfoType);
   const getPersonalInfo = computed(() => personalInfo.value);
 
   function setPersonalInfo(payload) {
@@ -22,6 +15,7 @@ export const usePersonalInfoStore = defineStore('personalInfo', () => {
       lastName: '',
       firstName: '',
       middleName: '',
+      noMiddleName: false,
       maidenName: '',
       suffix: '',
       ssn: '',

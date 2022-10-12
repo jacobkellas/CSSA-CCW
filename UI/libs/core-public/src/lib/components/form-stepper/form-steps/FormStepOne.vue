@@ -161,6 +161,7 @@
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"
+      @save="handleSave(true)"
     />
     <FormErrorAlert
       v-if="errors.length > 0"
@@ -171,8 +172,10 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useAliasStore } from '@shared-ui/stores/alias';
 import { usePersonalInfoStore } from '@shared-ui/stores/personalInfo';
+import { useRouter } from 'vue-router/composables';
 import AliasDialog from '@core-public/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
 import { AliasType, PersonalInfoType } from '@shared-utils/types/defaultTypes';
@@ -197,6 +200,9 @@ let ssnConfirm = ref('');
 
 const aliasStore = useAliasStore();
 const personalInfoStore = usePersonalInfoStore();
+const completeApplicationStore = useCompleteApplicationStore();
+
+const router = useRouter();
 
 function handleSubmit() {
   if (!personalInfo.maritalStatus) {
@@ -204,7 +210,23 @@ function handleSubmit() {
   } else {
     personalInfoStore.setPersonalInfo(personalInfo);
     aliasStore.addAlias(aliases.value);
+    handleSave(false);
     props.handleNextSection();
+  }
+}
+
+function handleSave(fromButton: boolean) {
+  const alias = aliasStore.getAliases;
+  const personalInfo = personalInfoStore.getPersonalInfo;
+
+  const payload = {
+    alias,
+    personalInfo,
+  };
+
+  completeApplicationStore.setCompleteApplication(payload);
+  if (fromButton) {
+    router.push('/');
   }
 }
 

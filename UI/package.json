@@ -20,7 +20,7 @@
     "storybook-admin": "nx storybook core-admin -p 5007",
     "format": "nx format:write --uncommitted",
     "format:check": "nx format:check --uncommitted",
-    "lint": "nx affected --target=lint --uncommitted",
+    "lint": "nx affected --target=lint --fix --uncommitted",
     "stylelint": "nx affected --target=stylelint --uncommitted",
     "postinstall": "node node_modules/@nx-plus/vue/patch-nx-dep-graph.js",
     "prepare": "cd .. && husky install UI/.husky",

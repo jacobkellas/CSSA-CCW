@@ -6,10 +6,7 @@
         <slot></slot>
       </v-main>
     </template>
-    <v-footer
-      padless
-      fixed
-    >
+    <v-footer padless>
       <v-col
         class="text-center"
         cols="12"
@@ -20,5 +17,4 @@
   </div>
 </template>
 <script setup lang="ts">
-import NavBar from '../navbar/NavBar.vue';
-</script>
+import NavBar from '../navbar/NavBar.vue';</script>

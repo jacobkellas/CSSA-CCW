@@ -8,8 +8,8 @@
       <v-skeleton-loader
         fluid
         class="fill-height"
-        type="list-item, 
-        divider, list-item-three-line, 
+        type="list-item,
+        divider, list-item-three-line,
         card-heading, image, image, image,
         image, actions"
       >
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 import initialize from '@core-public/api/config';
 import { useBrandStore } from '@core-public/stores/brandStore';

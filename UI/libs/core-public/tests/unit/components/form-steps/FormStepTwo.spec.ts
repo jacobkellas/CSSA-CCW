@@ -43,8 +43,7 @@ describe('FormStepTwo', () => {
   });
 
   it('should render the alert if no DOB is present', () => {
-    const alerts = wrapper.findAllComponents('.v-alert')
-    expect(alerts.at(0).element.textContent).toContain('Date of birth')
+    const alerts = wrapper.findAllComponents('.v-alert');
+    expect(alerts.at(0).element.textContent).toContain('Date of birth');
   });
-
 });
