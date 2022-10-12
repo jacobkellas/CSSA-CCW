@@ -28,13 +28,11 @@ describe('AddressTable', () => {
 
   it('Should render the address table in the correct order', () => {
     //@ts-ignore
-    const wrapper = shallowMount(AddressTable, {
+    const wrapper = mount(AddressTable, {
       localVue,
       vuetify,
       mocks: {
-        $t: text => {
-          text;
-        },
+        $t: text => text,
       },
       propsData: {
         addresses: [

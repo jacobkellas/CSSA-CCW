@@ -94,6 +94,7 @@
       <v-divider />
       <v-row class="ml-5 my-5">
         <v-checkbox
+          id='different-mailing'
           :label="$t('Different Mailing address')"
           v-model="differentMailingAddress"
         />
@@ -258,7 +259,7 @@ function handleSubmit() {
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: flex-start;
+   justify-content: flex-start;
   align-items: flex-start;
 }
 </style>

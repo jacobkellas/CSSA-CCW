@@ -34,11 +34,7 @@
           :step-index="stepIndex.step"
           :step-names="formTwoStepName"
         />
-        <FormSecondStepItems
-          :step-index="stepIndex.step"
-          :handle-next-section="handleNextSection"
-          :handle-reset="handleResetForm"
-        />
+        <FormSecondStepItems :handle-next-section="handleNextSection" />
       </v-stepper>
     </v-card>
   </div>
@@ -52,12 +48,13 @@ import {
   formTwoStepName,
 } from '@shared-utils/lists/defaultConstants';
 import { useFormStep } from '@core-public/stores/formStep';
-import { useRoute } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router/composables';
 import { reactive } from 'vue';
 import FormSecondStepItems from '@core-public/components/form-stepper/FormSecondStepItems.vue';
 
 const { getFormStep, setFormStep } = useFormStep();
 const route = useRoute();
+const router = useRouter();
 
 const stepIndex = reactive({
   step: getFormStep,
@@ -71,6 +68,7 @@ function handleNextSection() {
 function handleResetForm() {
   setFormStep(1);
   stepIndex.step = 1;
+  router.push('/form-2');
 }
 </script>
 

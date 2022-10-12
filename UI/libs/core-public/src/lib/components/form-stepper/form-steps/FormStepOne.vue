@@ -15,6 +15,7 @@
           sm="3"
         >
           <v-text-field
+            id="last-name-field"
             :label="$t('Last name')"
             :rules="[v => !!v || $t('Last name is required')]"
             v-model="personalInfo.lastName"
