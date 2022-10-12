@@ -25,6 +25,6 @@ const completeApplicationStore = useCompleteApplicationStore();
 const { isLoading } = useQuery(
   ['completeApplication'],
   completeApplicationStore.getCompleteApplicationFromApi,
-  { refetchOnMount: false, refetchOnWindowFocus: false }
+  { refetchOnMount: false }
 );
 </script>

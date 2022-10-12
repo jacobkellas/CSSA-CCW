@@ -32,7 +32,6 @@ export const useCompleteApplicationStore = defineStore(
      * Get the complete application from the backend
      */
     async function getCompleteApplicationFromApi() {
-      console.log('at Api call');
       const res: any | AxiosResponse = await axios
         .get(`${publicConfigStore.getPublicAppConfig.apiBaseUrl}`)
         .catch(err => console.warn(err));

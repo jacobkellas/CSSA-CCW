@@ -87,7 +87,6 @@ export default defineComponent({
       brandStore.getBrandSettingApi,
       {
         enabled: apiUrl,
-        refetchOnWindowFocus: false,
       }
     );
 

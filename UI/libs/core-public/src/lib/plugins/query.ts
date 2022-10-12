@@ -8,6 +8,7 @@ const vueQueryPluginOptions: VueQueryPluginOptions = {
         retry: 1,
         retryDelay: 2000,
         staleTime: 3600 * 1000,
+        refetchOnWindowFocus: false,
       },
     },
   },
