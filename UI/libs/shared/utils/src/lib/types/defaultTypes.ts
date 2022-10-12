@@ -76,3 +76,23 @@ export type WeaponInfoType = {
   caliber: string;
   serialNumber: string;
 };
+
+export type CompleteApplication = {
+  aliases?: Array<AliasType>;
+  applicationType?: string;
+  citizenship?: {
+    citizen: boolean;
+    militaryStatus: string;
+  };
+  contact?: ContactInfoType;
+  currentAddress?: AddressInfoType;
+  differentMailing?: boolean;
+  DOB?: DOBType;
+  employment?: string;
+  id?: IdType;
+  mailingAddress?: AddressInfoType;
+  personalInfo?: PersonalInfoType;
+  physicalAppearance?: AppearanceInfoType;
+  previousAddress?: Array<AliasType>;
+  weapons?: Array<WeaponInfoType>;
+};

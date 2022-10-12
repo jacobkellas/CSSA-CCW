@@ -1,10 +1,12 @@
+import { VuetifyThemeItem } from 'vuetify/types/services/theme';
+
 export type BrandType = {
   id?: string;
   agencyName: string;
   agencySheriffName: string;
   chiefOfPoliceName: string;
-  primaryThemeColor: string;
-  secondaryThemeColor: string;
+  primaryThemeColor: string | VuetifyThemeItem;
+  secondaryThemeColor: string | VuetifyThemeItem;
   agencyLogoDataURL: string | ArrayBuffer | null;
 };
 

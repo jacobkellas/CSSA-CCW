@@ -9,7 +9,7 @@ const initialize = async () => {
   const config = {
     apiBaseUrl: res.data.Configuration.ServicesBaseUrl,
     apiSubscription: res.data.Configuration.Subscription,
-    authority: res.data.Authentication.AuthorityUrl,
+    authorityUrl: res.data.Authentication.AuthorityUrl,
     knownAuthorities: res.data.Authentication.KnownAuthorities,
     clientId: res.data.Authentication.ClientId,
     defaultCounty: res.data.Configuration.DefaultCounty,
@@ -20,13 +20,13 @@ const initialize = async () => {
   };
 
   configStore.setPublicAppConfig(config);
-  const { clientId, authority, knownAuthorities, loginType, refreshTime } =
+  const { clientId, authorityUrl, knownAuthorities, loginType, refreshTime } =
     config;
 
   import('@shared-ui/api/auth/authentication').then(auth => {
     auth.default.setupAuth(
       clientId,
-      authority,
+      authorityUrl,
       knownAuthorities,
       loginType,
       refreshTime
