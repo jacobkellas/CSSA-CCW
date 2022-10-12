@@ -20,11 +20,11 @@ public class SystemSettingsController : ControllerBase
     }
 
     [HttpGet("get")]
-    public async Task<AgencyProfileSettings> Get(string applicationId)
+    public async Task<AgencyProfileSettings> Get()
     {
         try
         {
-            var response = _cosmosDbService.GetSettingsAsync(applicationId, cancellationToken: default);
+            var response = _cosmosDbService.GetSettingsAsync(cancellationToken: default);
 
             return response.Result;
 
@@ -37,25 +37,15 @@ public class SystemSettingsController : ControllerBase
         }
     }
 
-    [Route("create")]
+    [Route("update")]
     [HttpPut]
-    public async Task<AgencyProfileSettings> Create([FromBody] AgencyProfileRequestModel agencyProfile)
+    public async Task<AgencyProfileSettings> Update([FromBody] AgencyProfileRequestModel agencyProfileRequest)
     {
         try
         {
-            AgencyProfileSettings agencyProfileSettings = new AgencyProfileSettings
-            {
-                Id = Guid.NewGuid().ToString(),
-                AgencySheriffName = agencyProfile.AgencySheriffName,
-                AgencyName = agencyProfile.AgencyName,
-                ChiefOfPoliceName = agencyProfile.ChiefOfPoliceName,
-                PrimaryThemeColor = agencyProfile.PrimaryThemeColor,
-                SecondaryThemeColor = agencyProfile.SecondaryThemeColor,
-                AgencyLogo = agencyProfile.AgencyLogo,
-                AgencyLogoDataURL = agencyProfile.AgencyLogoDataURL,
-            };
+            AgencyProfileSettings agencyProfileSettings = CreateNewAgencyProfileSettings(agencyProfileRequest);
 
-            var newAgencyProfile = await _cosmosDbService.AddAsync(agencyProfileSettings, cancellationToken: default);
+            var newAgencyProfile = await _cosmosDbService.UpdateSettingsAsync(agencyProfileSettings, cancellationToken: default);
 
             return newAgencyProfile;
 
@@ -66,5 +56,22 @@ public class SystemSettingsController : ControllerBase
 
             throw new Exception("An error occur while trying to retrieve agency settings.");
         }
+    }
+
+    private AgencyProfileSettings CreateNewAgencyProfileSettings(AgencyProfileRequestModel agencyProfileRequest)
+    {
+        AgencyProfileSettings agencyProfileSettings = new AgencyProfileSettings
+        {
+            Id = Guid.NewGuid().ToString(),
+            AgencySheriffName = agencyProfileRequest.AgencySheriffName,
+            AgencyName = agencyProfileRequest.AgencyName,
+            ChiefOfPoliceName = agencyProfileRequest.ChiefOfPoliceName,
+            PrimaryThemeColor = agencyProfileRequest.PrimaryThemeColor,
+            SecondaryThemeColor = agencyProfileRequest.SecondaryThemeColor,
+            AgencyLogo = agencyProfileRequest.AgencyLogo,
+            AgencyLogoDataURL = agencyProfileRequest.AgencyLogoDataURL,
+        };
+
+        return agencyProfileSettings;
     }
 }

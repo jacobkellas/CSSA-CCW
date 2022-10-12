@@ -16,16 +16,12 @@ public class CosmosDbService : ICosmosDbService
         _container = cosmosDbClient.GetContainer(databaseName, containerName);
     }
 
-    public async Task<AgencyProfileSettings> GetSettingsAsync(string agencyId, CancellationToken cancellationToken)
+    public async Task<AgencyProfileSettings> GetSettingsAsync(CancellationToken cancellationToken)
     {
         try
         {
-            var query = "SELECT * FROM agencies p WHERE p.id = @agencyId";
-            (string paramName, object paramValue)[] parameters = {
-                ("@agencyId", agencyId)
-            };
-
-            using var feedIterator = CreateFeedIterator<AgencyProfileSettings>(_container, query, parameters);
+            var query = "SELECT * FROM agencies";
+            using var feedIterator = CreateFeedIterator<AgencyProfileSettings>(_container, query);
 
             if (feedIterator.HasMoreResults)
             {
@@ -47,14 +43,37 @@ public class CosmosDbService : ICosmosDbService
         }
     }
 
-    public async Task<AgencyProfileSettings> AddAsync(AgencyProfileSettings agencyProfile, CancellationToken cancellationToken)
+    public async Task<AgencyProfileSettings> AddSettingsAsync(AgencyProfileSettings agencyProfile, CancellationToken cancellationToken)
     {
         AgencyProfileSettings createdItem = await _container.CreateItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id));
+
         return createdItem;
     }
 
-    private static FeedIterator<T> CreateFeedIterator<T>(Container container, string query,
-        (string paramName, object paramValue)[] parameters)
+    public async Task<AgencyProfileSettings> UpdateSettingsAsync(AgencyProfileSettings agencyProfile, CancellationToken cancellationToken)
+    {
+        var storedProfile = await GetSettingsAsync(cancellationToken);
+        if (storedProfile == null)
+        {
+            AgencyProfileSettings createdItem = await _container.CreateItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id));
+
+            return createdItem;
+        }
+
+        storedProfile.AgencySheriffName = agencyProfile.AgencySheriffName;
+        storedProfile.AgencyName = agencyProfile.AgencySheriffName;
+        storedProfile.AgencyLogo = agencyProfile.AgencySheriffName;
+        storedProfile.AgencyLogoDataURL = agencyProfile.AgencySheriffName;
+        storedProfile.ChiefOfPoliceName = agencyProfile.AgencySheriffName;
+        storedProfile.PrimaryThemeColor = agencyProfile.AgencySheriffName;
+        storedProfile.SecondaryThemeColor = agencyProfile.AgencySheriffName;
+
+        var result =  await _container.UpsertItemAsync(storedProfile);
+
+        return result;
+    }
+
+    private static FeedIterator<T> CreateFeedIterator<T>(Container container, string query, params (string paramName, object paramValue)[] parameters)
     {
         var queryDefinition = new QueryDefinition(query);
 
@@ -64,6 +83,7 @@ public class CosmosDbService : ICosmosDbService
         }
 
         using var feedIterator = container.GetItemQueryIterator<T>(queryDefinition);
+
         return feedIterator;
     }
 }
