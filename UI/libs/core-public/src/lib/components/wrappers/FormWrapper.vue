@@ -26,10 +26,7 @@
 import FormStepHeader from '../form-stepper/FormStepHeader.vue';
 import FormStepItems from '../form-stepper/FormStepItems.vue';
 import { formOneStepNames } from '@shared-utils/lists/defaultConstants';
-import { useRouter } from 'vue-router/composables';
 import { reactive } from 'vue';
-
-const router = useRouter();
 
 const stepIndex = reactive({
   step: 1,
@@ -41,7 +38,6 @@ function handleNextSection() {
 
 function handleResetForm() {
   stepIndex.step = 1;
-  router.push('/form-2');
 }
 </script>
 
