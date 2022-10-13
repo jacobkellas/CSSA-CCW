@@ -27,6 +27,12 @@ const routes: Array<RouteConfig> = [
     name: 'form-2',
     component: FormView,
   },
+  {
+    // keep this at the very end
+    path: '*',
+    component: () =>
+      import(/* webpackChunkName: "404" */ '@core-public/views/NotFound.vue'),
+  },
 ];
 
 export const router = new VueRouter({

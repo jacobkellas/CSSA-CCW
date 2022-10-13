@@ -16,6 +16,12 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "brand" */ '@core-admin/views/Brand.vue'),
   },
+  {
+    // keep this at the very end
+    path: '*',
+    component: () =>
+      import(/* webpackChunkName: "404" */ '@core-admin/views/NotFound.vue'),
+  },
 ];
 
 export const router = new VueRouter({

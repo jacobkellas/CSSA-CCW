@@ -9,7 +9,7 @@
       <router-link :to="{ path: '/application' }">
         <Button
           color="primary"
-          text="Start New Application"
+          text="NEW Concealed Carry Weapon License"
         >
         </Button>
       </router-link>
