@@ -10,15 +10,15 @@
       v-else
       fluid
     >
-      <FormContainer />
+      <SecondFormContainer />
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormContainer from '@core-public/components/containers/FormContainer.vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import SecondFormContainer from '@core-public/components/containers/SecondFormContainer.vue';
 import { useQuery } from '@tanstack/vue-query';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 
 const completeApplicationStore = useCompleteApplicationStore();
 
@@ -27,3 +27,5 @@ const { isLoading } = useQuery(
   completeApplicationStore.getCompleteApplicationFromApi
 );
 </script>
+
+<style lang="scss" scoped></style>

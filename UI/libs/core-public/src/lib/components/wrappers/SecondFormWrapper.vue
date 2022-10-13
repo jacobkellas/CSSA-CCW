@@ -10,38 +10,25 @@
       >
         <FormStepHeader
           :step-index="stepIndex.step"
-          :step-names="formOneStepNames"
+          :step-names="formTwoStepName"
         />
-        <FormStepItems
-          :step-index="stepIndex.step"
-          :handle-next-section="handleNextSection"
-          :handle-reset="handleResetForm"
-        />
+        <FormSecondStepItems :handle-next-section="handleNextSection" />
       </v-stepper>
     </v-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormStepHeader from '../form-stepper/FormStepHeader.vue';
-import FormStepItems from '../form-stepper/FormStepItems.vue';
-import { formOneStepNames } from '@shared-utils/lists/defaultConstants';
-import { useRouter } from 'vue-router/composables';
+import FormStepHeader from '@core-public/components/form-stepper/FormStepHeader.vue';
+import FormSecondStepItems from '@core-public/components/form-stepper/FormSecondStepItems.vue';
+import { formTwoStepName } from '@shared-utils/lists/defaultConstants';
 import { reactive } from 'vue';
-
-const router = useRouter();
 
 const stepIndex = reactive({
   step: 1,
 });
-
 function handleNextSection() {
   stepIndex.step = stepIndex.step + 1;
-}
-
-function handleResetForm() {
-  stepIndex.step = 1;
-  router.push('/form-2');
 }
 </script>
 
