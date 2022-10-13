@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, reactive } from 'vue';
 import { useAppConfigStore } from '@shared-ui/stores/appConfig';
 import axios from 'axios';
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
@@ -8,23 +8,84 @@ export const useCompleteApplicationStore = defineStore(
   'completeApplicationStore',
   () => {
     const appConfigStore = useAppConfigStore();
-    // TODO: Create the complete Application type
-    const completeApplication = ref<CompleteApplication>(
-      {} as CompleteApplication
-    );
+
+    let completeApplication = reactive<CompleteApplication>({
+      personalInfo: {
+        lastName: '',
+        firstName: '',
+        middleName: '',
+        maidenName: '',
+        noMiddleName: false,
+        maritalStatus: '',
+        ssn: '',
+        suffix: '',
+      },
+      DOB: {
+        DOB: '',
+        birthCity: '',
+        birthCountry: '',
+        birthState: '',
+        currentAge: null,
+      },
+      aliases: [],
+      applicationType: '',
+      citizenship: { citizen: false, militaryStatus: '' },
+      contact: {
+        cellPhoneNumber: '',
+        faxPhoneNumber: '',
+        primaryPhoneNumber: '',
+        textMessageUpdates: false,
+        workPhoneNumber: '',
+      },
+      currentAddress: {
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        country: '',
+        county: '',
+        state: '',
+        zip: '',
+      },
+      differentMailing: false,
+      employment: '',
+      id: {
+        idNumber: '',
+        issuingState: '',
+      },
+      mailingAddress: {
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        country: '',
+        county: '',
+        state: '',
+        zip: '',
+      },
+      physicalAppearance: {
+        eyeColor: '',
+        gender: '',
+        hairColor: '',
+        heightFeet: null,
+        heightInch: null,
+        physicalDesc: '',
+        weight: null,
+      },
+      previousAddress: [],
+      weapons: [],
+    } as CompleteApplication);
 
     /**
      * Get the complete application from the stored value
      * @type {ComputedRef<UnwrapRef<CompleteApplication>>}
      */
-    const getCompleteApplication = computed(() => completeApplication.value);
+    const getCompleteApplication = computed(() => completeApplication);
 
     /**
      * Used to set the stored value from either the api call or the form
      * @param {CompleteApplication} payload
      */
     function setCompleteApplication(payload: CompleteApplication) {
-      completeApplication.value = payload;
+      completeApplication = payload;
     }
 
     //
@@ -48,6 +109,7 @@ export const useCompleteApplicationStore = defineStore(
       return res?.data;
     }
     return {
+      completeApplication,
       getCompleteApplication,
       setCompleteApplication,
       getCompleteApplicationFromApi,

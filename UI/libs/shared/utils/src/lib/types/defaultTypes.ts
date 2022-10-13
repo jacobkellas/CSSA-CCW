@@ -19,9 +19,9 @@ export type AliasType = {
 
 export type AppearanceInfoType = {
   gender: string;
-  heightFeet: number;
-  heightInch: number;
-  weight: number;
+  heightFeet: number | null;
+  heightInch: number | null;
+  weight: number | null;
   hairColor: string;
   eyeColor: string;
   physicalDesc: string;
@@ -45,7 +45,7 @@ export type DOBType = {
   birthCity: string;
   birthState: string;
   birthCountry: string;
-  currentAge: 0;
+  currentAge: number | null;
 };
 
 export type IdType = {
@@ -78,23 +78,32 @@ export type WeaponInfoType = {
 };
 
 export type CompleteApplication = {
-  aliases?: Array<AliasType>;
-  applicationType?: string;
-  citizenship?: {
+  aliases: Array<AliasType>;
+  applicationType: string;
+  citizenship: {
     citizen: boolean;
     militaryStatus: string;
   };
-  contact?: ContactInfoType;
-  currentAddress?: AddressInfoType;
-  differentMailing?: boolean;
-  DOB?: DOBType;
-  employment?: string;
-  id?: IdType;
-  mailingAddress?: AddressInfoType;
-  personalInfo?: PersonalInfoType;
-  physicalAppearance?: AppearanceInfoType;
-  previousAddress?: Array<AliasType>;
-  weapons?: Array<WeaponInfoType>;
+  contact: ContactInfoType;
+  currentAddress: AddressInfoType;
+  differentMailing: boolean;
+  DOB: DOBType;
+  employment: string;
+  id: IdType;
+  mailingAddress: AddressInfoType;
+  personalInfo: {
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    noMiddleName: boolean;
+    maidenName: string;
+    suffix: string;
+    ssn: string;
+    maritalStatus: string;
+  };
+  physicalAppearance: AppearanceInfoType;
+  previousAddress: Array<AddressInfoType>;
+  weapons: Array<WeaponInfoType>;
 };
 
 export type AppConfigType = {

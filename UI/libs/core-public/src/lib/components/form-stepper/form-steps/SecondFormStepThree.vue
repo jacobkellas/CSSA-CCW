@@ -15,7 +15,7 @@
           ]"
           @input="
             v => {
-              state.application = v;
+              completeApplicationStore.completeApplication.applicationType = v;
               state.valid = true;
             }
           "
@@ -25,7 +25,10 @@
         dense
         outlined
         type="warning"
-        v-if="state.application === 'judicial'"
+        v-if="
+          completeApplicationStore.completeApplication.applicationType ===
+          'judicial'
+        "
       >
         <strong>
           {{ $t('Judicial-warning') }}
@@ -35,7 +38,10 @@
         dense
         outlined
         type="warning"
-        v-if="state.application === 'reserve'"
+        v-if="
+          completeApplicationStore.completeApplication.applicationType ===
+          'reserve'
+        "
       >
         <strong>
           {{ $t('Judicial-reserve') }}
@@ -46,6 +52,7 @@
     <FormButtonContainer
       :valid="state.valid"
       @submit="handleSubmit"
+      @save="handleSave"
     />
   </div>
 </template>
@@ -53,7 +60,7 @@
 <script setup lang="ts">
 import ApplicationInfoSection from '@shared-ui/components/info-sections/ApplicationInfoSection';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import { useApplicationStore } from '@shared-ui/stores/application';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { reactive } from 'vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 
@@ -62,18 +69,20 @@ interface ISecondFormStepThreeProps {
 }
 
 const props = defineProps<ISecondFormStepThreeProps>();
-
-const applicationStore = useApplicationStore();
+const completeApplicationStore = useCompleteApplicationStore();
 
 const state = reactive({
-  application: '',
   valid: false,
 });
 
 function handleSubmit() {
-  applicationStore.setApplicationType(state.application);
   props.handleNextSection();
 }
+
+function handleSave() {
+  completeApplicationStore.postCompleteApplicationFromApi;
+}
+
 </script>
 
 <style lang="scss" scoped></style>

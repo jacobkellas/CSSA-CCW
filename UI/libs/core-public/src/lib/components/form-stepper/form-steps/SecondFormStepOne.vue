@@ -17,7 +17,8 @@
             :rules="[v => !!v || $t(' Employment status is required')]"
             @change="
               v => {
-                state.employment = v.toLowerCase();
+                completeApplicationStore.completeApplication.employment =
+                  v.toLowerCase();
               }
             "
           >
@@ -26,7 +27,9 @@
       </v-row>
     </v-form>
     <div>
-      <WeaponsTable :weapons="state.weapons" />
+      <WeaponsTable
+        :weapons="completeApplicationStore.completeApplication.weapons"
+      />
       <WeaponsDialog :save-weapon="getWeaponFromDialog" />
     </div>
     <v-divider />
@@ -39,10 +42,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { useEmploymentStore } from '@shared-ui/stores/employment';
-import { useWeaponsStore } from '@shared-ui/stores/weapons';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { employmentStatus } from '@shared-utils/lists/defaultConstants';
-import { WeaponInfoType } from '@shared-utils/types/defaultTypes';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
@@ -50,25 +51,20 @@ import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
 interface ISecondFormStepOneProps {
   handleNextSection: CallableFunction;
 }
+const completeApplicationStore = useCompleteApplicationStore();
 
 const props = defineProps<ISecondFormStepOneProps>();
+
 const state = reactive({
-  employment: '',
-  weapons: [] as Array<WeaponInfoType>,
   valid: false,
 });
 
-const employmentStore = useEmploymentStore();
-const weaponStore = useWeaponsStore();
-
 function handleSubmit() {
-  employmentStore.setEmployment(state.employment);
-  weaponStore.setWeapons(state.weapons);
   props.handleNextSection();
 }
 
 function getWeaponFromDialog(weapon) {
-  state.weapons.push(weapon);
+  completeApplicationStore.completeApplication.weapons.push(weapon);
 }
 </script>
 

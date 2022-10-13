@@ -16,7 +16,10 @@
           <v-text-field
             :label="$t('Address line 1')"
             :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
-            v-model="address.addressLine1"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress
+                .addressLine1
+            "
           />
         </v-col>
 
@@ -27,7 +30,10 @@
         >
           <v-text-field
             :label="$t('Address line 2')"
-            v-model="address.addressLine2"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress
+                .addressLine2
+            "
           />
         </v-col>
       </v-row>
@@ -41,7 +47,9 @@
           <v-text-field
             :label="$t('City')"
             :rules="[v => !!v || $t('City cannot be blank')]"
-            v-model="address.city"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress.city
+            "
           />
         </v-col>
 
@@ -53,7 +61,9 @@
           <v-text-field
             :label="$t('State')"
             :rules="[v => !!v || $t('State cannot be blank')]"
-            v-model="address.state"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress.state
+            "
           />
         </v-col>
         <v-col
@@ -64,7 +74,9 @@
           <v-text-field
             :label="$t('County')"
             :rules="[v => !!v || $t('County cannot be blank')]"
-            v-model="address.county"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress.county
+            "
           />
         </v-col>
         <v-col
@@ -75,7 +87,9 @@
           <v-text-field
             :label="$t('Zip')"
             :rules="[v => !!v || $t('Zip cannot be blank')]"
-            v-model="address.zip"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress.zip
+            "
           />
         </v-col>
 
@@ -87,7 +101,10 @@
           <v-text-field
             :label="$t('Country')"
             :rules="[v => !!v || 'Country cannot be blank']"
-            v-model="address.country"
+            v-model="
+              completeApplicationStore.completeApplication.currentAddress
+                .country
+            "
           />
         </v-col>
       </v-row>
@@ -96,10 +113,12 @@
         <v-checkbox
           id="different-mailing"
           :label="$t('Different Mailing address')"
-          v-model="differentMailingAddress"
+          v-model="
+            completeApplicationStore.completeApplication.differentMailing
+          "
         />
       </v-row>
-      <div v-if="differentMailingAddress">
+      <div v-if="completeApplicationStore.completeApplication.differentMailing">
         <v-row class="ml-5">
           <v-col
             cols="6"
@@ -109,7 +128,10 @@
             <v-text-field
               :label="$t('Address line 1')"
               :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
-              v-model="mailingAddress.addressLine1"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress
+                  .addressLine1
+              "
             />
           </v-col>
 
@@ -120,7 +142,10 @@
           >
             <v-text-field
               :label="$t('Address line 2')"
-              v-model="mailingAddress.addressLine2"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress
+                  .addressLine2
+              "
             />
           </v-col>
         </v-row>
@@ -134,7 +159,9 @@
             <v-text-field
               :label="$t('City')"
               :rules="[v => !!v || $t(' City cannot be blank')]"
-              v-model="mailingAddress.city"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress.city
+              "
             />
           </v-col>
 
@@ -146,7 +173,10 @@
             <v-text-field
               :label="$t('State')"
               :rules="[v => !!v || $t('State cannot be blank')]"
-              v-model="mailingAddress.state"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress
+                  .state
+              "
             />
           </v-col>
           <v-col
@@ -157,7 +187,10 @@
             <v-text-field
               :label="$t('County')"
               :rules="[v => !!v || $t('County cannot be blank')]"
-              v-model="mailingAddress.county"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress
+                  .county
+              "
             />
           </v-col>
           <v-col
@@ -168,7 +201,9 @@
             <v-text-field
               :label="$t('Zip')"
               :rules="[v => !!v || $t('Zip cannot be blank')]"
-              v-model="mailingAddress.zip"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress.zip
+              "
             />
           </v-col>
 
@@ -180,7 +215,10 @@
             <v-text-field
               :label="$t('Country')"
               :rules="[v => !!v || $t('Country cannot be blank')]"
-              v-model="mailingAddress.country"
+              v-model="
+                completeApplicationStore.completeApplication.mailingAddress
+                  .country
+              "
             />
           </v-col>
         </v-row>
@@ -190,7 +228,11 @@
         {{ $t(' Previous Address') }}
       </v-subheader>
       <div class="previous-address-container">
-        <address-table :addresses="previousAddress" />
+        <address-table
+          :addresses="
+            completeApplicationStore.completeApplication.previousAddress
+          "
+        />
         <PreviousAddressDialog
           :get-previous-address-from-dialog="getPreviousAddressFromDialog"
         />
@@ -198,21 +240,19 @@
       <FormButtonContainer
         :valid="valid"
         @submit="handleSubmit"
+        @save="handleSave"
       />
     </v-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import { useCurrentAddressStore } from '@shared-ui/stores/currentAddress';
-import { usePreviousAddressesStore } from '@shared-ui/stores/previousAddress';
+import { ref } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
 import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
 import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import { useDifferentMailingAddressStore } from '@shared-ui/stores/differentMailing';
-import { useMailingAddressStore } from '@shared-ui/stores/mailingAddress';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;
@@ -222,32 +262,20 @@ const props = withDefaults(defineProps<FormStepThreeProps>(), {
   handleNextSection: () => null,
 });
 
-const address = reactive({} as AddressInfoType);
-const previousAddress = ref([] as Array<AddressInfoType>);
 const valid = ref(false);
-const differentMailingAddress = ref(false);
-const mailingAddress = reactive({} as AddressInfoType);
 
-const currentAddressStore = useCurrentAddressStore();
-const previousAddressesStore = usePreviousAddressesStore();
-const differentMailingAddressStore = useDifferentMailingAddressStore();
-const mailingAddressStore = useMailingAddressStore();
+const completeApplicationStore = useCompleteApplicationStore();
 
 function getPreviousAddressFromDialog(address: AddressInfoType) {
-  previousAddress.value.push(address);
+  completeApplicationStore.completeApplication.previousAddress.push(address);
 }
 
 function handleSubmit() {
-  currentAddressStore.setCurrentAddress(address);
-  previousAddressesStore.setPreviousAddresses(previousAddress.value);
-  if (differentMailingAddress) {
-    differentMailingAddressStore.setDifferentMailingAddress(
-      differentMailingAddress.value
-    );
-    mailingAddressStore.setMailingAddress(mailingAddress);
-  }
-
   props.handleNextSection();
+}
+
+function handleSave() {
+  completeApplicationStore.postCompleteApplicationFromApi;
 }
 </script>
 
