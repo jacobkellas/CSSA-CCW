@@ -5,18 +5,22 @@
       <v-col>
         <PersonalInfoSection
           :color="'teal lighten-5'"
-          :personal-info="state.personalInfo"
+          :personal-info="
+            completeApplicationStore.completeApplication.personalInfo
+          "
         />
       </v-col>
       <v-col>
         <CitizenInfoSection
           :color="'pink lighten-5'"
-          :citizenship-info="state.citizenshipInfo"
+          :citizenship-info="
+            completeApplicationStore.completeApplication.citizenship
+          "
         />
         <IdInfoSection
           class="mt-2"
           :color="'indigo lighten-5'"
-          :id-info="state.id"
+          :id-info="completeApplicationStore.completeApplication.id"
         />
       </v-col>
     </v-row>
@@ -25,7 +29,7 @@
       <v-col>
         <AliasInfoSection
           :color="'teal lighten-5'"
-          :alias-info="state.aliases"
+          :alias-info="completeApplicationStore.completeApplication.aliases"
         />
       </v-col>
     </v-row>
@@ -34,21 +38,25 @@
       <v-col>
         <DOBinfoSection
           :color="'pink lighten-5'"
-          :d-o-b-info="state.DOBInfo"
+          :d-o-b-info="completeApplicationStore.completeApplication.DOB"
         />
       </v-col>
     </v-row>
     <v-row class="my-1">
       <AppearanceInfoSection
         :color="'indigo lighten-5'"
-        :appearance-info="state.appearance"
+        :appearance-info="
+          completeApplicationStore.completeApplication.physicalAppearance
+        "
       />
     </v-row>
     <v-divider />
     <v-row class="my-1">
       <AddressInfoSection
         :color="'teal lighten-5'"
-        :address-info="state.address"
+        :address-info="
+          completeApplicationStore.completeApplication.currentAddress
+        "
       />
     </v-row>
 
@@ -56,7 +64,9 @@
     <v-row class="my-1">
       <PreviousAddressInfoSection
         :color="'indigo lighten-5'"
-        :previous-address="state.previousAddress"
+        :previous-address="
+          completeApplicationStore.completeApplication.previousAddress
+        "
       />
     </v-row>
 
@@ -64,7 +74,7 @@
     <v-row class="my-1">
       <ContactInfoSection
         :color="'teal lighten-5'"
-        :contact-info="state.contact"
+        :contact-info="completeApplicationStore.completeApplication.contact"
       />
     </v-row>
     <v-row>
@@ -77,16 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCurrentAddressStore } from '@shared-ui/stores/currentAddress';
-import { useAliasStore } from '@shared-ui/stores/alias';
-import { usePhysicalAppearanceStore } from '@shared-ui/stores/physicalAppearance';
-import { useCitizenshipStore } from '@shared-ui/stores/citizenship';
-import { reactive } from 'vue';
-import { useContactStore } from '@shared-ui/stores/contact';
-import { useDOBStore } from '@shared-ui/stores/DOB';
-import { useIdStore } from '@shared-ui/stores/id';
-import { usePersonalInfoStore } from '@shared-ui/stores/personalInfo';
-import { usePreviousAddressesStore } from '@shared-ui/stores/previousAddress';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 
 import PersonalInfoSection from '@shared-ui/components/info-sections/PersonalInfoSection.vue';
 import CitizenInfoSection from '@shared-ui/components/info-sections/CitizenInfoSection.vue';
@@ -97,39 +98,17 @@ import AppearanceInfoSection from '@shared-ui/components/info-sections/Appearanc
 import AddressInfoSection from '@shared-ui/components/info-sections/AddressInfoSection.vue';
 import PreviousAddressInfoSection from '@shared-ui/components/info-sections/PreviousAddressInfoSection.vue';
 import ContactInfoSection from '@shared-ui/components/info-sections/ContactInfoSection.vue';
-import ConfirmationSelectionContainer from '@shared-ui/components/containers/ConfimationSelectionContainer.vue';
-import { useFormStep } from '@core-public/stores/formStep';
+import ConfirmationSelectionContainer
+  from '@shared-ui/components/containers/ConfimationSelectionContainer.vue';
 
-const addressStore = useCurrentAddressStore();
-const aliaseStore = useAliasStore();
-const appearanceStore = usePhysicalAppearanceStore();
-const citizenshipStore = useCitizenshipStore();
-const contactStore = useContactStore();
-const DOBStore = useDOBStore();
-const idStore = useIdStore();
-const personalInfoStore = usePersonalInfoStore();
-const previousAddressStore = usePreviousAddressesStore();
-const step = useFormStep();
+const completeApplicationStore = useCompleteApplicationStore();
 
 interface IFormStepSixProps {
   resetForm: CallableFunction;
 }
 const props = defineProps<IFormStepSixProps>();
 
-const state = reactive({
-  address: addressStore.getCurrentAddress,
-  aliases: aliaseStore.getAliases,
-  appearance: appearanceStore.getPhysicalAppearance,
-  citizenshipInfo: citizenshipStore.getCitizenshipInfo,
-  contact: contactStore.getContactInfo,
-  DOBInfo: DOBStore.getDOBInfo,
-  id: idStore.getId,
-  personalInfo: personalInfoStore.getPersonalInfo,
-  previousAddress: previousAddressStore.getPreviousAddresses,
-});
-
 function onConfirm() {
-  step.setFormStep(1);
   props.resetForm();
 }
 function onCancel() {

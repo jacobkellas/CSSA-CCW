@@ -14,7 +14,7 @@
           sm="3"
         >
           <v-text-field
-            v-model="id.idNumber"
+            v-model="completeApplicationStore.completeApplication.id.idNumber"
             :label="$t('Id number')"
             :rules="[v => !!v || $t('Id  number is required')]"
             required
@@ -29,7 +29,9 @@
           <v-text-field
             :label="$t(' Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"
-            v-model="id.issuingState"
+            v-model="
+              completeApplicationStore.completeApplication.id.issuingState
+            "
           />
         </v-col>
       </v-row>
@@ -46,14 +48,14 @@
           sm="3"
         >
           <v-date-picker
-            v-model="DOBInfo.DOB"
+            v-model="completeApplicationStore.completeApplication.DOB.DOB"
             label="Date of birth"
           />
           <v-alert
             dense
             outlined
             type="error"
-            v-if="!DOBInfo.DOB"
+            v-if="!completeApplicationStore.completeApplication.DOB.DOB"
           >
             {{ $t('Date of birth cannot be blank!') }}
           </v-alert>
@@ -67,22 +69,28 @@
           <v-text-field
             :label="$t('Current Age')"
             :rules="[v => !!v || $t('Current age is required')]"
-            v-model="DOBInfo.currentAge"
+            v-model="
+              completeApplicationStore.completeApplication.DOB.currentAge
+            "
           />
           <v-text-field
             :label="$t('Birth city')"
             :rules="[v => !!v || $t('Birth city cannot be blank')]"
-            v-model="DOBInfo.birthCity"
+            v-model="completeApplicationStore.completeApplication.DOB.birthCity"
           />
           <v-text-field
             :label="$t('Birth state')"
             :rules="[v => !!v || $t('Birth state cannot be blank')]"
-            v-model="DOBInfo.birthState"
+            v-model="
+              completeApplicationStore.completeApplication.DOB.birthState
+            "
           />
           <v-text-field
             :label="$t('Birth country')"
             :rules="[v => !!v || $t('Birth country cannot be blank')]"
-            v-model="DOBInfo.birthCountry"
+            v-model="
+              completeApplicationStore.completeApplication.DOB.birthCountry
+            "
           />
         </v-col>
       </v-row>
@@ -108,7 +116,8 @@
             ]"
             @input="
               v => {
-                citizenshipInfo.citizen = v;
+                completeApplicationStore.completeApplication.citizenship.citizen =
+                  v;
               }
             "
           />
@@ -116,7 +125,9 @@
             dense
             outlined
             type="error"
-            v-if="!citizenshipInfo.citizen"
+            v-if="
+              !completeApplicationStore.completeApplication.citizenship.citizen
+            "
           >
             {{ $t('Must select Yes or No!') }}
           </v-alert>
@@ -128,7 +139,10 @@
           sm="3"
         >
           <v-select
-            v-model="citizenshipInfo.militaryStatus"
+            v-model="
+              completeApplicationStore.completeApplication.citizenship
+                .militaryStatus
+            "
             :items="items"
             :label="$t('Military Status')"
           />
@@ -137,7 +151,10 @@
             dense
             outlined
             type="error"
-            v-if="!citizenshipInfo.militaryStatus"
+            v-if="
+              !completeApplicationStore.completeApplication.citizenship
+                .militaryStatus
+            "
           >
             {{ $t('Must select a status') }}
           </v-alert>
@@ -148,22 +165,16 @@
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"
+      @save="handleSave"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import { useIdStore } from '@shared-ui/stores/id';
-import { useDOBStore } from '@shared-ui/stores/DOB';
-import { useCitizenshipStore } from '@shared-ui/stores/citizenship';
+import { ref } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import {
-  CitizenshipType,
-  DOBType,
-  IdType,
-} from '@shared-utils/types/defaultTypes';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
@@ -173,20 +184,16 @@ const props = withDefaults(defineProps<FormStepOneProps>(), {
   handleNextSection: () => null,
 });
 
-const id = reactive({} as IdType);
-const DOBInfo = reactive({} as DOBType);
-const citizenshipInfo = reactive({} as CitizenshipType);
 const items = ref(['Active', 'Reserve', 'Discharged', 'Retired', 'N/A']);
 const valid = ref(false);
 
-const idStore = useIdStore();
-const DOBStore = useDOBStore();
-const citizenshipStore = useCitizenshipStore();
+const completeApplicationStore = useCompleteApplicationStore();
 
 function handleSubmit() {
-  idStore.setId(id);
-  DOBStore.setDOBInfo(DOBInfo);
-  citizenshipStore.setCitizenshipInfo(citizenshipInfo);
   props.handleNextSection();
+}
+
+function handleSave() {
+  completeApplicationStore.postCompleteApplicationFromApi;
 }
 </script>
