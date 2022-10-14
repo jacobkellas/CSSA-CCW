@@ -48,14 +48,14 @@
           sm="3"
         >
           <v-date-picker
-            v-model="completeApplicationStore.completeApplication.DOB.DOB"
+            v-model="completeApplicationStore.completeApplication.DOB.birthDate"
             label="Date of birth"
           />
           <v-alert
             dense
             outlined
             type="error"
-            v-if="!completeApplicationStore.completeApplication.DOB.DOB"
+            v-if="!completeApplicationStore.completeApplication.DOB.birthDate"
           >
             {{ $t('Date of birth cannot be blank!') }}
           </v-alert>

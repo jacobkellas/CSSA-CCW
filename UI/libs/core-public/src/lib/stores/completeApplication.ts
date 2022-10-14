@@ -21,7 +21,7 @@ export const useCompleteApplicationStore = defineStore(
         suffix: '',
       },
       DOB: {
-        DOB: '',
+        birthDate: '',
         birthCity: '',
         birthCountry: '',
         birthState: '',
