@@ -41,7 +41,7 @@ export type ContactInfoType = {
 };
 
 export type DOBType = {
-  DOB: string;
+  birthDate: string;
   birthCity: string;
   birthState: string;
   birthCountry: string;
@@ -118,3 +118,4 @@ export type AppConfigType = {
   loginType: string;
   refreshTime: number;
 };
+///////////
