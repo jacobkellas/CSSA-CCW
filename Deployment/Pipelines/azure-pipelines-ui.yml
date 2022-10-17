@@ -14,8 +14,6 @@ trigger:
 
 variables:
   DATE_COUNTER: $[counter(format('UI{0:yyyy}{0:MM}{0:dd}', pipeline.startTime), 1)]
-  PATH_FILTER_UI_1: 'UI/'
-  PATH_FILTER_UI_2: 'UI/libs/shared/'
 
 pool:
   vmImage: ubuntu-latest
@@ -25,8 +23,8 @@ stages:
     displayName: "Building CCW UI Project"
     
     jobs:
-      - job: UI_Initialize
-        displayName: 'Initializing UI Build'
+      - job: UI_Build
+        displayName: 'Building UI'
         steps:
           - checkout: self
             displayName: "Branch Checkout"
@@ -54,38 +52,31 @@ stages:
             continueOnError: false
             workingDirectory: 'UI/'
 
-          - bash: | 
-              if [ -d UI/dist/apps/admin ]
+          - bash: |
+              if [ -d UI/dist/apps/admin ]; 
               then
-                echo "##vso[task.setVariable variable=ADMIN_EXISTS]true"
+                echo "##vso[task.setVariable variable=ADMINEXISTS]true"
                 echo "Admin folder exists!"
               else
-                echo "##vso[task.setVariable variable=ADMIN_EXISTS]false"
-                echo "Admin folder does not exist..."
+                echo "Admin folder does not exist"
               fi
             name: check_admin_changes
-            displayName: 'Check changed files in Admin'
-          
-          - bash: | 
-              if [ -d UI/dist/apps/public ]
+            displayName: 'Check Admin files'
+
+          - bash: |
+              if [ -d UI/dist/apps/public ]; 
               then
-                echo "##vso[task.setVariable variable=PUBLIC_EXISTS]true"
+                echo "##vso[task.setVariable variable=PUBLICEXISTS]true"
                 echo "Public folder exists!"
               else
-                echo "##vso[task.setVariable variable=PUBLIC_EXISTS]false"
-                echo "Public folder does not exist..."
+                echo "Public folder does not exist"
               fi
             name: check_public_changes
-            displayName: 'Check changed files in Public'
+            displayName: 'Check Public files'
 
-      - job: UI_Admin
-        displayName: "Building UI Admin"
-        dependsOn: UI_Initialize
-        condition: eq(variables.ADMIN_EXISTS, 'true')
-        
-        steps:
           - task: CopyFiles@2
             displayName: "Copy Admin Config"
+            condition: eq(variables['ADMINEXISTS'], 'true')
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)/UI/apps/admin'
               Contents: '*.config.json'
@@ -93,6 +84,7 @@ stages:
 
           - task: ArchiveFiles@2
             displayName: "Archive Admin Build files"
+            condition: eq(variables['ADMINEXISTS'], 'true')
             inputs:
               rootFolderOrFile: '$(Build.SourcesDirectory)/UI/dist/apps/admin'
               includeRootFolder: true
@@ -102,6 +94,7 @@ stages:
 
           - task: ArchiveFiles@2
             displayName: "Archive Admin Config"
+            condition: eq(variables['ADMINEXISTS'], 'true')
             inputs:
               rootFolderOrFile: '$(Build.SourcesDirectory)/UI/apps/admin/config'
               includeRootFolder: true
@@ -109,14 +102,9 @@ stages:
               archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-admin-config.zip'
               replaceExistingArchive: true
 
-      - job: UI_Public
-        displayName: "Building UI Public"
-        dependsOn: UI_Initialize
-        condition: eq(variables.PUBLIC_EXISTS, 'true')
-        
-        steps:
           - task: CopyFiles@2
             displayName: "Copy Public Config"
+            condition: eq(variables['PUBLICEXISTS'], 'true')
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)/UI/apps/public'
               Contents: '*.config.json'
@@ -124,6 +112,7 @@ stages:
 
           - task: ArchiveFiles@2
             displayName: "Archive Public Build Files"
+            condition: eq(variables['PUBLICEXISTS'], 'true')
             inputs:
               rootFolderOrFile: '$(Build.SourcesDirectory)/UI/dist/apps/public'
               includeRootFolder: true
@@ -133,6 +122,7 @@ stages:
 
           - task: ArchiveFiles@2
             displayName: "Archive Public Config"
+            condition: eq(variables['PUBLICEXISTS'], 'true')
             inputs:
               rootFolderOrFile: '$(Build.SourcesDirectory)/UI/apps/public/config'
               includeRootFolder: true
@@ -140,13 +130,123 @@ stages:
               archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-public-config.zip'
               replaceExistingArchive: true
 
-  - stage: Publish
-    displayName: "Publishing CCW UI Project"
+        #  - bash: | 
+        #      if [ -d UI/dist/apps/admin ]
+        #      then
+        #        echo "Admin folder exists!"
+        #      else
+        #        echo "Admin folder does not exist..."
+        #      fi
+        #    name: check_admin_changes
+        #    displayName: 'Check changed files in Admin'
+          
+#          - bash: | 
+#              if [ -d UI/dist/apps/public ]
+#              then
+#                echo "Public folder exists!"
+#              else
+#                echo "Public folder does not exist..."
+#              fi
+#            name: check_public_changes
+#            displayName: 'Check changed files in Public'
+
+#      - job: UI_Admin
+#        displayName: "Building UI Admin"
+#        dependsOn: UI_Initialize
+        
+#        steps:
+#          - bash: | 
+#              if [ -d '$(Build.SourcesDirectory)/UI/dist/apps/admin' ]
+#              then
+#                echo "##vso[task.setVariable variable=ADMIN_EXISTS]true"
+#                echo "Admin folder exists!"
+#              else
+#                echo "Admin folder does not exist...skipping UI_Admin..."
+#              fi
+#            name: check_admin_changes
+#            displayName: 'Check changed files in Admin'
+
+#          - task: CopyFiles@2
+#            displayName: "Copy Admin Config"
+#            condition: eq(variables.ADMIN_EXISTS, 'true')
+#            inputs:
+#              SourceFolder: '$(Build.SourcesDirectory)/UI/apps/admin'
+#              Contents: '*.config.json'
+#              TargetFolder: '$(Build.SourcesDirectory)/UI/dist/apps/admin'
+
+#          - task: ArchiveFiles@2
+#            displayName: "Archive Admin Build files"
+#            condition: eq(variables.ADMIN_EXISTS, 'true')
+#            inputs:
+#              rootFolderOrFile: '$(Build.SourcesDirectory)/UI/dist/apps/admin'
+#              includeRootFolder: true
+#              archiveType: 'zip'
+#              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-admin.zip'
+#              replaceExistingArchive: true
+
+#          - task: ArchiveFiles@2
+#            displayName: "Archive Admin Config"
+#            condition: eq(variables.ADMIN_EXISTS, 'true')
+#            inputs:
+#              rootFolderOrFile: '$(Build.SourcesDirectory)/UI/apps/admin/config'
+#              includeRootFolder: true
+#              archiveType: 'zip'
+#              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-admin-config.zip'
+#              replaceExistingArchive: true
+
+#      - job: UI_Public
+#        displayName: "Building UI Public"
+#        dependsOn: UI_Initialize
+        
+#        steps:
+#          - bash: | 
+#              if [ -d '$(Build.SourcesDirectory)/UI/dist/apps/public' ]
+#              then
+#                echo "##vso[task.setVariable variable=PUBLIC_EXISTS]true"
+#                echo "Public folder exists!"
+#              else
+#                echo "Public folder does not exist...skipping UI_Public..."
+#              fi
+#            name: check_public_changes
+#            displayName: 'Check changed files in Public'
+
+#          - task: CopyFiles@2
+#            displayName: "Copy Public Config"
+#            condition: eq(variables.PUBLIC_EXISTS, 'true')
+#            inputs:
+#              SourceFolder: '$(Build.SourcesDirectory)/UI/apps/public'
+#              Contents: '*.config.json'
+#              TargetFolder: '$(Build.SourcesDirectory)/UI/dist/apps/public'
+
+#          - task: ArchiveFiles@2
+#            displayName: "Archive Public Build Files"
+#            condition: eq(variables.PUBLIC_EXISTS, 'true')
+#            inputs:
+#              rootFolderOrFile: '$(Build.SourcesDirectory)/UI/dist/apps/public'
+#              includeRootFolder: true
+#              archiveType: 'zip'
+#              archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-public.zip'
+#              replaceExistingArchive: true
+
+#          - task: ArchiveFiles@2
+#            displayName: "Archive Public Config"
+#            condition: eq(variables.PUBLIC_EXISTS, 'true')
+#            inputs:
+              # rootFolderOrFile: '$(Build.SourcesDirectory)/UI/apps/public/config'
+              # includeRootFolder: true
+              # archiveType: 'zip'
+              # archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-public-config.zip'
+              # replaceExistingArchive: true
+
+  # - stage: Publish
+  #   displayName: "Publishing CCW UI Project"
+  #   dependsOn: Build
     
-    jobs:
-      - job: Publish_Build
-        displayName: 'Publishing UI Build'
-        steps:
+  #   jobs:
+      # - job: Publish_Build
+      #   displayName: 'Publishing UI Build'
+      #   dependsOn: UI_Build
+      #   steps:
 
           - task: PublishBuildArtifacts@1
             displayName: "Publish Artifacts"
