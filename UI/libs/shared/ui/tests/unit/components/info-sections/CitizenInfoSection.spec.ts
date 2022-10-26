@@ -23,6 +23,7 @@ describe('CitizenInfoSection', () => {
           citizen: true,
           militaryStatus: 'active',
         },
+        immigrantInfo: {},
       },
     });
   });
