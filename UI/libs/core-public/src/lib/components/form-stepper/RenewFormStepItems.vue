@@ -17,7 +17,7 @@
     </v-stepper-content>
 
     <v-stepper-content step="5">
-      <FormStepFive />
+      <RenewFormStepFive />
     </v-stepper-content>
   </v-stepper-items>
 </template>
@@ -27,7 +27,7 @@ import RenewFormStepOne from './form-steps/RenewFormStepOne.vue';
 import FormStepTwo from './form-steps/FormStepTwo.vue';
 import FormStepThree from './form-steps/FormStepThree.vue';
 import FormStepFour from '@core-public/components/form-stepper/form-steps/FormStepFour.vue';
-import FormStepFive from '@core-public/components/form-stepper/form-steps/FormStepFive.vue';
+import RenewFormStepFive from '@core-public/components/form-stepper/form-steps/RenewFormStepFive.vue';
 
 interface RenewFormStepItemsProps {
   stepIndex?: number;

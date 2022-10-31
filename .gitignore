@@ -366,3 +366,9 @@ UI/apps/public/dist/*
 #Azure Pipelines testing folder
 Deployment/Pipelines/testing/
 
+API/.idea/.idea.CCW/.idea/.name
+API/.idea/.idea.CCW/.idea/encodings.xml
+API/.idea/.idea.CCW/.idea/indexLayout.xml
+API/.idea/.idea.CCW/.idea/vcs.xml
+API/.idea/.idea.CCW/.idea/projectSettingsUpdater.xml
+API/.idea/.idea.CCW/.idea/workspace.xml
