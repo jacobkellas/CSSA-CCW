@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import SecondFormContainer from '@core-public/components/containers/SecondFormContainer.vue';
-import { useQuery } from '@tanstack/vue-query';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useQuery } from '@tanstack/vue-query';
 
 const completeApplicationStore = useCompleteApplicationStore();
 

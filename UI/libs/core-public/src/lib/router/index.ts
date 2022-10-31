@@ -2,12 +2,13 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '@core-public/views/Home.vue';
 import ApplicationView from '@core-public/views/ApplicationView.vue';
+import FinalizeView from '@core-public/views/FinalizeView.vue';
 import FormView from '@core-public/views/FormView.vue';
-import SecondFormView from '@core-public/views/SecondFormView.vue';
+import MoreInformationView from '@core-public/views/MoreInformationView.vue';
 import RenewApplicationView from '@core-public/views/RenewApplicationView.vue';
 import RenewFormView from '@core-public/views/RenewFormView.vue';
-import FinalizeView from '@core-public/views/FinalizeView.vue';
-import MoreInformationView from '@core-public/views/MoreInformationView.vue';
+import RenewSecondFormView from '@core-public/views/RenewSecondFormView.vue';
+import SecondFormView from '@core-public/views/SecondFormView.vue';
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,11 @@ const routes: Array<RouteConfig> = [
     path: '/renew-form',
     name: 'RenewForm',
     component: RenewFormView,
+  },
+  {
+    path: '/renew-form-2',
+    name: ' RenewForm2',
+    component: RenewSecondFormView,
   },
   {
     // keep this at the very end

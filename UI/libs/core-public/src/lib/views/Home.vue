@@ -45,7 +45,7 @@
                 >
                   mdi-card-account-details-star
                 </v-icon>
-                {{ $t('RENEW CCW License') }}
+                {{ $t('Modify/renew CCW License') }}
               </div>
             </v-btn>
           </div>

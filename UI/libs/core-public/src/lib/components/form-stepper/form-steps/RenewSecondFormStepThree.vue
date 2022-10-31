@@ -9,9 +9,28 @@
         <RadioGroupInput
           :layout="'column'"
           :options="[
-            { label: 'Standard', value: 'standard' },
-            { label: 'Judicial', value: 'judicial', color: 'warning' },
-            { label: 'Reserve', value: 'reserve', color: 'warning' },
+            { label: 'Renew Standard', value: 'renew-standard' },
+            {
+              label: 'Renew Judicial',
+              value: 'renew-judicial',
+              color: 'warning',
+            },
+            {
+              label: 'Renew Reserve',
+              value: 'renew-reserve',
+              color: 'warning',
+            },
+            { label: 'Modify Standard', value: 'modify-standard' },
+            {
+              label: 'Modify Judicial',
+              value: 'modify-judicial',
+              color: 'warning',
+            },
+            {
+              label: 'Modify Reserve',
+              value: 'modify-reserve',
+              color: 'warning',
+            },
           ]"
           @input="
             v => {
@@ -27,7 +46,9 @@
         type="warning"
         v-if="
           completeApplicationStore.completeApplication.applicationType ===
-          'judicial'
+            'renew-judicial' ||
+          completeApplicationStore.completeApplication.applicationType ===
+            'modify-judicial'
         "
       >
         <strong>
@@ -40,7 +61,9 @@
         type="warning"
         v-if="
           completeApplicationStore.completeApplication.applicationType ===
-          'reserve'
+            'renew-reserve' ||
+          completeApplicationStore.completeApplication.applicationType ===
+            'modify-reserve'
         "
       >
         <strong>

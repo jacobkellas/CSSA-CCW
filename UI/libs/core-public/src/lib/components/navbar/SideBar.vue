@@ -7,7 +7,7 @@
     permanent
   >
     <v-list nav>
-      <v-list-item>
+      <v-list-item to="/">
         <v-list-item-avatar
           height="36"
           width="36"
