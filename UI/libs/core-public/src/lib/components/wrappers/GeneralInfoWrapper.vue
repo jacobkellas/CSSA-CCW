@@ -31,7 +31,7 @@
       <v-btn
         text
         color="primary"
-        @click="handleRouteChange"
+        @click="router.push('/more-information')"
       >
         {{ $t('Further Info') }}
       </v-btn>
@@ -43,10 +43,6 @@
 import { useRouter } from 'vue-router/composables';
 
 const router = useRouter();
-
-function handleRouteChange() {
-  router.push('/more-information');
-}
 </script>
 
 <style lang="scss" scoped>
