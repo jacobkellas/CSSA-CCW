@@ -8,21 +8,159 @@
       <v-subheader class="sub-header font-weight-bold">
         {{ $t('File Upload') }}
       </v-subheader>
-      <div class="text-left text-line">
-        <h4>{{ $t('NOTE: ') }}</h4>
-        <p class="ml-3">
-          {{ $t('Rename') }}
-        </p>
-      </div>
-      <v-file-input
-        show-size
-        small-chips
-        multiple
-        v-model="state.files"
-        @change="handleFileUpload"
-      />
+      <v-row>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".png, .jpeg"
+            :label="$t('Driver License')"
+            @change="handleFileUpload($event, 'driver-license')"
+          />
+        </v-col>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('Proof of Residence 1')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('Proof of Residence 2')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+      </v-row>
+      <v-divider />
+      <v-subheader class="sub-header font-weight-bold">
+        {{ $t(' Military') }}
+      </v-subheader>
+      <v-row>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('Military Document')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+      </v-row>
+      <v-divider />
+      <v-subheader class="sub-header font-weight-bold">
+        {{ $t(' Not born in US') }}
+      </v-subheader>
+      <v-row>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('CitizenShip Documents')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+      </v-row>
+
+      <v-divider />
+      <v-subheader class="sub-header font-weight-bold">
+        {{ $t(' Supporting Documents') }}
+      </v-subheader>
+      <v-row>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            multiple
+            :label="$t('Supporting Documents')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+      </v-row>
+      <v-divider />
+
+      <v-subheader class="sub-header font-weight-bold">
+        {{ $t(' Legal name change') }}
+      </v-subheader>
+      <v-row>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('Name change documents')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+      </v-row>
+      <v-divider />
+      <v-subheader class="sub-header font-weight-bold">
+        {{ $t(' License Type Documents') }}
+      </v-subheader>
+      <v-row>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('Judicial documents')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+        <v-col
+          cols="4"
+          lg="4"
+          sm="1"
+        >
+          <v-file-input
+            show-size
+            small-chips
+            accept=".pdf, .doc, .dox"
+            :label="$t('Reserve documents')"
+            @change="handleFileUpload"
+          />
+        </v-col>
+      </v-row>
+      <v-divider />
     </v-form>
-    <v-divider />
     <FormButtonContainer
       :valid="state.valid"
       @submit="handleSubmit"
@@ -32,8 +170,11 @@
 
 <script setup lang="ts">
 import DocumentInfoSection from '@shared-ui/components/info-sections/DocumentInfoSection.vue';
-import { reactive } from 'vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import { reactive } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+
+const applicationStore = useCompleteApplicationStore();
 
 interface ISecondFormStepTwoProps {
   handleNextSection: CallableFunction;
@@ -46,14 +187,18 @@ const state = reactive({
   valid: false,
 });
 
-function handleFileUpload() {
-  if (state.files) {
-    state.valid = true;
-  }
+function handleFileUpload(event: HTMLInputElement, target: string) {
+  // need to add the application id to this.
+  const newFileName = `${applicationStore.completeApplication.personalInfo.lastName}-${applicationStore.completeApplication.personalInfo.firstName}_${target}`;
+  const newFile = new File([event], newFileName, event.type);
+
+  state.files.push(newFile);
 }
 
 function handleSubmit() {
-  window.console.log(state.files);
+  // TODO: Create another function to loop throught the files and call the api call
+  // Function will also need to set a loading state till the call is finished.
+
   props.handleNextSection();
 }
 </script>

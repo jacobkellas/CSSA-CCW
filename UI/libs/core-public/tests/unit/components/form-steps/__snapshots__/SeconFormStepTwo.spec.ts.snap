@@ -78,34 +78,238 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
     <div class="v-subheader sub-header font-weight-bold theme--light">
       File Upload
     </div>
-    <div class="text-left text-line">
-      <h4>NOTE: </h4>
-      <p class="ml-3">
-        Rename
-      </p>
-    </div>
-    <div class="v-input theme--light v-text-field v-file-input">
-      <div class="v-input__prepend-outer">
-        <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
-      </div>
-      <div class="v-input__control">
-        <div class="v-input__slot">
-          <div class="v-text-field__slot">
-            <div class="v-file-input__text v-file-input__text--chips"></div><input id="input-6" type="file" multiple="multiple">
+    <div class="row">
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
-          <div class="v-input__append-inner">
-            <div></div>
-          </div>
-        </div>
-        <div class="v-text-field__details">
-          <div class="v-messages theme--light">
-            <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-6" class="v-label theme--light" style="left: 0px; position: absolute;">Driver License</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".png, .jpeg" id="input-6" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-10" class="v-label theme--light" style="left: 0px; position: absolute;">Proof of Residence 1</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-10" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-14" class="v-label theme--light" style="left: 0px; position: absolute;">Proof of Residence 2</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-14" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="v-subheader sub-header font-weight-bold theme--light">
+      Military
+    </div>
+    <div class="row">
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-20" class="v-label theme--light" style="left: 0px; position: absolute;">Military Document</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-20" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="v-subheader sub-header font-weight-bold theme--light">
+      Not born in US
+    </div>
+    <div class="row">
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-26" class="v-label theme--light" style="left: 0px; position: absolute;">CitizenShip Documents</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-26" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="v-subheader sub-header font-weight-bold theme--light">
+      Supporting Documents
+    </div>
+    <div class="row">
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-32" class="v-label theme--light" style="left: 0px; position: absolute;">Supporting Documents</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input id="input-32" type="file" multiple="multiple">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="v-subheader sub-header font-weight-bold theme--light">
+      Legal name change
+    </div>
+    <div class="row">
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-38" class="v-label theme--light" style="left: 0px; position: absolute;">Name change documents</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-38" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
+    <div class="v-subheader sub-header font-weight-bold theme--light">
+      License Type Documents
+    </div>
+    <div class="row">
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-44" class="v-label theme--light" style="left: 0px; position: absolute;">Judicial documents</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-44" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1 col-lg-4 col-4">
+        <div class="v-input theme--light v-text-field v-file-input">
+          <div class="v-input__prepend-outer">
+            <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
+          </div>
+          <div class="v-input__control">
+            <div class="v-input__slot">
+              <div class="v-text-field__slot"><label for="input-48" class="v-label theme--light" style="left: 0px; position: absolute;">Reserve documents</label>
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-48" type="file">
+              </div>
+              <div class="v-input__append-inner">
+                <div></div>
+              </div>
+            </div>
+            <div class="v-text-field__details">
+              <div class="v-messages theme--light">
+                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
   </form>
-  <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
   <div class="form-btn-container"><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default success "><span class="v-btn__content">
     Continue
   </span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default secondary mx-2"><span class="v-btn__content">
