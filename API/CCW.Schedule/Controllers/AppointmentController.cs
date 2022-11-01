@@ -51,6 +51,7 @@ public class AppointmentController : ControllerBase
                 {
                     AppointmentWindow appt = new AppointmentWindow
                     {
+                        Id = Guid.NewGuid().ToString(),
                         ApplicantId = null,
                         End = record.End,
                         Start = record.Start,
@@ -59,7 +60,10 @@ public class AppointmentController : ControllerBase
                         Permit = null,
                         Payment = null,
                         IsManuallyCreated = false,
-                        Id = Guid.NewGuid().ToString(),
+                        Name = null,
+                        Payment = null,
+                        Permit = null,
+                        Status = null,
                     };
                     appointments.Add(appt);
                 }
