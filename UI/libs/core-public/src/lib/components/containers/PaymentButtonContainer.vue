@@ -16,6 +16,7 @@
         <v-btn
           class="payment-button"
           color="success"
+          @click="onlinePayment"
         >
           {{ $t('Pay Online ') }}
         </v-btn>
@@ -46,6 +47,7 @@ import { reactive } from 'vue';
 
 interface IPaymentButtonContainerProps {
   cashPayment: CallableFunction;
+  onlinePayment: CallableFunction;
 }
 
 const props = defineProps<IPaymentButtonContainerProps>();
@@ -58,8 +60,6 @@ function handleCashPayment() {
   state.showInfo = true;
   // TODO: need to save the payment status and amount to the complete application.
 }
-
-//TODO: need a function for the handle online payment that save to the application and routes to payment.
 </script>
 
 <style lang="scss" scoped>

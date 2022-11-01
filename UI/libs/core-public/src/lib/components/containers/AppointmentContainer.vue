@@ -130,6 +130,12 @@
 import { EventType } from '@shared-utils/types/defaultTypes';
 import { onMounted, reactive } from 'vue';
 
+interface IProps {
+  toggleAppointment: CallableFunction;
+}
+
+const props = defineProps<IProps>();
+
 const state = reactive({
   focus: '',
   type: 'month',
@@ -162,6 +168,7 @@ function handleConfirm() {
   state.events = state.events.filter(
     event => event.start !== state.selectedEvent.start
   );
+  props.toggleAppointment();
 }
 
 /**
