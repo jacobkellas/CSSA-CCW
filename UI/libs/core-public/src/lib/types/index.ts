@@ -13,6 +13,7 @@ export type BrandType = {
   reserveCost: number;
   creditFee: number;
   convenienceFee: number;
+  paymentURL: string;
 };
 
 export type PublicAppConfigType = {

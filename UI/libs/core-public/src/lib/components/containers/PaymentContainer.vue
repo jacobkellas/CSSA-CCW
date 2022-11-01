@@ -8,7 +8,10 @@
         />
       </v-col>
       <v-col>
-        <PaymentButtonContainer :cash-payment="handleCashPayment" />
+        <PaymentButtonContainer
+          :cash-payment="handleCashPayment"
+          :online-payment="handleOnlinePayment"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -21,8 +24,14 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import PaymentWrapper from '@core-public/components/wrappers/PaymentWrapper.vue';
 import PaymentButtonContainer from '@core-public/components/containers/PaymentButtonContainer.vue';
 
+interface IProps {
+  togglePayment: CallableFunction;
+}
+
 const brandStore = useBrandStore();
 const application = useCompleteApplicationStore();
+
+const props = defineProps<IProps>();
 
 const state = reactive({
   payment: {
@@ -61,6 +70,13 @@ function handleCashPayment() {
   state.payment.creditFee = 0;
   state.payment.totalCost =
     state.payment.applicationCost + state.payment.convenienceFee;
+  props.togglePayment();
+}
+
+// TODO: update with a confirmation somehow and update a payment field in the application object.
+function handleOnlinePayment() {
+  window.open(brandStore.brand.paymentURL, '_blank');
+  props.togglePayment();
 }
 </script>
 

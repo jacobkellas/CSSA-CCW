@@ -20,6 +20,7 @@ export const useBrandStore = defineStore('BrandStore', () => {
     reserveCost: 157,
     creditFee: 0.05,
     convenienceFee: 5,
+    paymentURL: 'https://buy.stripe.com/test_fZe00ugG5guI0YU4gg',
   });
 
   const getBrand = computed(() => brand.value);
