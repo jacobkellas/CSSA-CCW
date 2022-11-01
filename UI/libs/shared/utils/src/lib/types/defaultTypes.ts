@@ -96,6 +96,44 @@ export type LicenseType = {
   issuingCounty: string;
   expirationDate: string;
 };
+
+export type QualifyingQuestions = {
+  questionOne: boolean;
+  questionOneExp: string;
+  questionTwo: boolean;
+  questionTwoExp: string;
+  questionThree: boolean;
+  questionThreeExp: string;
+  questionFour: boolean;
+  questionFourExp: string;
+  questionFive: boolean;
+  questionFiveExp: string;
+  questionSix: boolean;
+  questionSixExp: string;
+  questionSeven: boolean;
+  questionSevenExp: string;
+  questionEight: boolean;
+  questionEightExp: string;
+  questionNine: boolean;
+  questionNineExp: string;
+  questionTen: boolean;
+  questionTenExp: string;
+  questionEleven: boolean;
+  questionElevenExp: string;
+  questionTwelve: boolean;
+  questionTwelveExp: string;
+  questionThirteen: boolean;
+  questionThirteenExp: string;
+  questionFourteen: boolean;
+  questionFourteenExp: string;
+  questionFifteen: boolean;
+  questionFifteenExp: string;
+  questionSixteen: boolean;
+  questionSixteenExp: string;
+  questionSeventeen: boolean;
+  questionSeventeenExp: string;
+};
+
 export type PaymentInfoType = {
   applicationCost: number;
   convenienceFee: number;
@@ -186,6 +224,7 @@ export type CompleteApplication = {
   };
   physicalAppearance: AppearanceInfoType;
   previousAddress: Array<AddressInfoType>;
+  qualifyingQuestions: QualifyingQuestions;
   spouseAddressInformation: AddressInfoType;
   spouseInformation: SpouseInfoType;
   userEmail: string;

@@ -49,6 +49,7 @@ function handleSave() {
 .form-btn-container {
   width: 90%;
   margin-top: 0.5rem;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: flex-end;
 }
