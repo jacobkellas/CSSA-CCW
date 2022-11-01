@@ -103,7 +103,7 @@ async function handleSubmit() {
   }
 
   // leave this here till api is completed
-  await router.push('/finalize');
+  await router.push('/qualifying-questions');
 }
 
 function handleCanvasClear() {
