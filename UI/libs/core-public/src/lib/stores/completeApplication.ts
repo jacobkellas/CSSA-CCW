@@ -9,16 +9,6 @@ export const useCompleteApplicationStore = defineStore(
   () => {
     let completeApplication = reactive<CompleteApplication>({
       id: '',
-      personalInfo: {
-        lastName: '',
-        firstName: '',
-        middleName: '',
-        maidenName: '',
-        noMiddleName: false,
-        maritalStatus: '',
-        ssn: '',
-        suffix: '',
-      },
       DOB: {
         birthDate: '',
         birthCity: '',
