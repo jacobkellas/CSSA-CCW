@@ -180,15 +180,19 @@
     <FormButtonContainer
       :valid="state.valid"
       @submit="handleSubmit"
+      @save="handleSave"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { employmentStatus } from '@shared-utils/lists/defaultConstants';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import { employmentStatus } from '@shared-utils/lists/defaultConstants';
+import { reactive } from 'vue';
+import { updateApplication } from '@core-public/senders/applicationSenders';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useRouter } from 'vue-router/composables';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
 
@@ -198,13 +202,29 @@ interface ISecondFormStepOneProps {
 const completeApplicationStore = useCompleteApplicationStore();
 
 const props = defineProps<ISecondFormStepOneProps>();
+const authStore = useAuthStore();
+const router = useRouter();
 
 const state = reactive({
   valid: false,
 });
 
-function handleSubmit() {
+async function handleSubmit() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Step six complete',
+    authStore.auth.userEmail
+  );
   props.handleNextSection();
+}
+
+async function handleSave() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and quit',
+    authStore.auth.userEmail
+  );
+  router.push('/');
 }
 
 function getWeaponFromDialog(weapon) {

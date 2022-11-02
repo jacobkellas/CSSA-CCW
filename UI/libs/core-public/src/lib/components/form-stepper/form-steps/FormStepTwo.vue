@@ -300,29 +300,45 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
+import { ref } from 'vue';
+import { updateApplication } from '@core-public/senders/applicationSenders';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useRouter } from 'vue-router/composables';
+import { useAuthStore } from '@shared-ui/stores/auth';
 
-interface FormStepOneProps {
+interface FormStepTwoProps {
   handleNextSection: () => void;
 }
 
-const props = withDefaults(defineProps<FormStepOneProps>(), {
+const props = withDefaults(defineProps<FormStepTwoProps>(), {
   handleNextSection: () => null,
 });
+
+const router = useRouter();
+const authStore = useAuthStore();
 
 const items = ref(['Active', 'Reserve', 'Discharged', 'Retired', 'N/A']);
 const valid = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
 
-function handleSubmit() {
+async function handleSubmit() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Step two complete',
+    authStore.auth.userEmail
+  );
   props.handleNextSection();
 }
 
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
+async function handleSave() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and quit',
+    authStore.auth.userEmail
+  );
+  router.push('/');
 }
 </script>

@@ -183,11 +183,11 @@ interface ISecondFormStepTwoProps {
 const props = defineProps<ISecondFormStepTwoProps>();
 
 const state = reactive({
-  files: [],
+  files: [] as Array<File>,
   valid: false,
 });
 
-function handleFileUpload(event: HTMLInputElement, target: string) {
+function handleFileUpload(event, target: string) {
   // need to add the application id to this.
   const newFileName = `${applicationStore.completeApplication.personalInfo.lastName}-${applicationStore.completeApplication.personalInfo.firstName}_${target}`;
   const newFile = new File([event], newFileName, event.type);

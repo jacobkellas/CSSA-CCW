@@ -111,6 +111,8 @@ import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useRouter } from 'vue-router/composables';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { updateApplication } from '@core-public/senders/applicationSenders';
 
 const router = useRouter();
 
@@ -119,15 +121,26 @@ const state = reactive({
 });
 
 const completeApplicationStore = useCompleteApplicationStore();
+const authStore = useAuthStore();
 
-function handleSubmit() {
+async function handleSubmit() {
   formatInputs();
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Step five complete',
+    authStore.auth.userEmail
+  );
   router.push('/form-2');
 }
 
-function handleSave() {
+async function handleSave() {
   formatInputs();
-  completeApplicationStore.postCompleteApplicationFromApi;
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and quit',
+    authStore.auth.userEmail
+  );
+  router.push('/');
 }
 
 function formatInputs() {

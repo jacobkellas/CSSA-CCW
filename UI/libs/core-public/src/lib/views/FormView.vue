@@ -1,15 +1,6 @@
 <template>
   <div>
-    <v-container
-      v-if="isLoading"
-      fluid
-    >
-      <v-skeleton-loader fluid />
-    </v-container>
-    <v-container
-      v-else
-      fluid
-    >
+    <v-container fluid>
       <FormContainer />
     </v-container>
   </div>
@@ -17,13 +8,7 @@
 
 <script setup lang="ts">
 import FormContainer from '@core-public/components/containers/FormContainer.vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useQuery } from '@tanstack/vue-query';
+// import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 
-const completeApplicationStore = useCompleteApplicationStore();
-
-const { isLoading } = useQuery(
-  ['completeApplication'],
-  completeApplicationStore.getCompleteApplicationFromApi
-);
+// const completeApplicationStore = useCompleteApplicationStore();
 </script>

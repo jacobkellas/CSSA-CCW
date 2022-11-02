@@ -336,6 +336,8 @@ import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import { updateApplication } from '@core-public/senders/applicationSenders';
+import { useAuthStore } from '@shared-ui/stores/auth';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
@@ -352,22 +354,32 @@ const show2 = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
+const authStore = useAuthStore();
 
 const router = useRouter();
 
-function handleSubmit() {
+async function handleSubmit() {
   if (
     !completeApplicationStore.completeApplication.personalInfo.maritalStatus
   ) {
     errors.value.push('Marital Status');
   } else {
     runFormatters();
+    await updateApplication(
+      completeApplicationStore.completeApplication,
+      'Step one complete',
+      authStore.auth.userEmail
+    );
     props.handleNextSection();
   }
 }
 
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
+async function handleSave() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and quit',
+    authStore.auth.userEmail
+  );
   router.push('/');
 }
 

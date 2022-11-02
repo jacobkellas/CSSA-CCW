@@ -63,6 +63,9 @@ import FormButtonContainer from '@core-public/components/containers/FormButtonCo
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { useRouter } from 'vue-router/composables';
+import { updateApplication } from '@core-public/senders/applicationSenders';
 
 interface ISecondFormStepThreeProps {
   handleNextSection: CallableFunction;
@@ -70,17 +73,29 @@ interface ISecondFormStepThreeProps {
 
 const props = defineProps<ISecondFormStepThreeProps>();
 const completeApplicationStore = useCompleteApplicationStore();
+const authStore = useAuthStore();
+const router = useRouter();
 
 const state = reactive({
   valid: false,
 });
 
-function handleSubmit() {
+async function handleSubmit() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Step eight complete',
+    authStore.auth.userEmail
+  );
   props.handleNextSection();
 }
 
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
+async function handleSave() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and quit',
+    authStore.auth.userEmail
+  );
+  router.push('/');
 }
 </script>
 

@@ -200,6 +200,9 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import { eyeColors, hairColors } from '@shared-utils/lists/defaultConstants';
+import { updateApplication } from '@core-public/senders/applicationSenders';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { useRouter } from 'vue-router/composables';
 
 interface FormStepFourProps {
   handleNextSection: () => void;
@@ -212,12 +215,25 @@ const props = withDefaults(defineProps<FormStepFourProps>(), {
 const state = reactive({
   valid: false,
 });
-
+const authStore = useAuthStore();
 const completeApplicationStore = useCompleteApplicationStore();
+const router = useRouter();
 
-function handleSubmit() {
+async function handleSubmit() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Step four complete',
+    authStore.auth.userEmail
+  );
   props.handleNextSection();
 }
 
-function handleSave() {}
+async function handleSave() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and quit',
+    authStore.auth.userEmail
+  );
+  router.push('/');
+}
 </script>

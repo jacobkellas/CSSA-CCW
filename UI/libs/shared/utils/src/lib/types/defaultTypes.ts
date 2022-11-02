@@ -79,6 +79,12 @@ export type EventType = {
   timed: boolean;
 };
 
+export type HistoryType = {
+  change: string;
+  dateTime: string;
+  changeMadeBy: string;
+};
+
 export type IdType = {
   idNumber: string;
   issuingState: string;
@@ -198,25 +204,26 @@ export type AppointmentType = {
 };
 
 export type CompleteApplication = {
-  id?: string;
-  aliases?: Array<AliasType>;
-  applicationType?: string;
-  citizenship?: {
+  id: string;
+  aliases: Array<AliasType>;
+  applicationType: string;
+  citizenship: {
     citizen: boolean;
     militaryStatus: string;
   };
-  contact?: ContactInfoType;
-  currentAddress?: AddressInfoType;
-  differentMailing?: boolean;
-  differentSpouseAddress?: boolean;
-  DOB?: DOBType;
-  employment?: string;
-  idInfo?: IdType;
-  immigrantInformation?: ImmigrantInformation;
-  isComplete?: boolean;
-  license?: LicenseType;
-  mailingAddress?: AddressInfoType;
-  personalInfo?: {
+  contact: ContactInfoType;
+  currentAddress: AddressInfoType;
+  differentMailing: boolean;
+  differentSpouseAddress: boolean;
+  DOB: DOBType;
+  employment: string;
+  history: Array<HistoryType>;
+  idInfo: IdType;
+  immigrantInformation: ImmigrantInformation;
+  isComplete: boolean;
+  license: LicenseType;
+  mailingAddress: AddressInfoType;
+  personalInfo: {
     lastName: string;
     firstName: string;
     middleName: string;
@@ -226,14 +233,14 @@ export type CompleteApplication = {
     ssn: string;
     maritalStatus: string;
   };
-  physicalAppearance?: AppearanceInfoType;
-  previousAddress?: Array<AddressInfoType>;
-  qualifyingQuestions?: QualifyingQuestions;
-  spouseAddressInformation?: AddressInfoType;
-  spouseInformation?: SpouseInfoType;
-  userEmail?: string;
-  weapons?: Array<WeaponInfoType>;
-  workInformation?: WorkInformationType;
+  physicalAppearance: AppearanceInfoType;
+  previousAddresses: Array<AddressInfoType>;
+  qualifyingQuestions: QualifyingQuestions;
+  spouseAddressInformation: AddressInfoType;
+  spouseInformation: SpouseInfoType;
+  userEmail: string;
+  weapons: Array<WeaponInfoType>;
+  workInformation: WorkInformationType;
 };
 
 export type ThemeConfigType = {

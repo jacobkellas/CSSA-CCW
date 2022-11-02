@@ -15,7 +15,16 @@ export const useCompleteApplicationStore = defineStore(
         birthCountry: '',
         birthState: '',
       },
-      aliases: [],
+      aliases: [
+        {
+          prevLastName: '',
+          prevFirstName: '',
+          prevMiddleName: '',
+          cityWhereChanged: '',
+          stateWhereChanged: '',
+          courtFileNumber: '',
+        },
+      ],
       applicationType: '',
       citizenship: { citizen: false, militaryStatus: '' },
       contact: {
@@ -37,6 +46,13 @@ export const useCompleteApplicationStore = defineStore(
       differentMailing: false,
       differentSpouseAddress: false,
       employment: '',
+      history: [
+        {
+          change: '',
+          dateTime: '',
+          changeMadeBy: '',
+        },
+      ],
       idInfo: {
         idNumber: '',
         issuingState: '',
@@ -62,6 +78,16 @@ export const useCompleteApplicationStore = defineStore(
         state: '',
         zip: '',
       },
+      personalInfo: {
+        lastName: '',
+        firstName: '',
+        middleName: '',
+        noMiddleName: false,
+        maidenName: '',
+        suffix: '',
+        ssn: '',
+        maritalStatus: '',
+      },
       physicalAppearance: {
         eyeColor: '',
         gender: '',
@@ -71,7 +97,17 @@ export const useCompleteApplicationStore = defineStore(
         physicalDesc: '',
         weight: null,
       },
-      previousAddress: [],
+      previousAddresses: [
+        {
+          addressLine1: '',
+          addressLine2: '',
+          city: '',
+          country: '',
+          county: '',
+          state: '',
+          zip: '',
+        },
+      ],
       qualifyingQuestions: {
         questionOne: false,
         questionOneExp: '',
@@ -154,31 +190,19 @@ export const useCompleteApplicationStore = defineStore(
     /**
      * Get the complete application from the backend
      */
-    async function getCompleteApplicationFromApi() {
+    async function getCompleteApplicationFromApi(
+      userEmail: string,
+      isComplete: boolean
+    ) {
       const res = await axios
-        .get(Endpoints.GET_PERMIT_ENDPOINT)
+        .get(Endpoints.GET_PERMIT_ENDPOINT, {
+          params: { userEmail, isComplete },
+        })
+
         .catch(err => console.warn(err));
 
       //TODO: add back in once the api is corrected.
       //setCompleteApplication(res?.data);
-      return res?.data;
-    }
-
-    async function postCompleteApplicationFromApi(
-      payload: CompleteApplication
-    ) {
-      if (payload.id) {
-        const res = await axios
-          .put(Endpoints.PUT_UPDATE_PERMIT_ENDPOINT, payload)
-          .catch(err => console.warn(err));
-
-        return res?.data;
-      }
-
-      const res = await axios
-        .put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, payload)
-        .catch(err => console.warn(err));
-
       return res?.data;
     }
 
@@ -187,7 +211,6 @@ export const useCompleteApplicationStore = defineStore(
       getCompleteApplication,
       setCompleteApplication,
       getCompleteApplicationFromApi,
-      postCompleteApplicationFromApi,
     };
   }
 );

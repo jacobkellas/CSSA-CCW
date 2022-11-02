@@ -542,6 +542,9 @@ import { AddressInfoType } from '@shared-utils/types/defaultTypes';
 import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
 import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import { updateApplication } from '@core-public/senders/applicationSenders';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { useRouter } from 'vue-router/composables';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;
@@ -554,17 +557,29 @@ const props = withDefaults(defineProps<FormStepThreeProps>(), {
 const valid = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
+const authStore = useAuthStore();
+const router = useRouter();
 
 function getPreviousAddressFromDialog(address: AddressInfoType) {
-  completeApplicationStore.completeApplication.previousAddress.push(address);
+  completeApplicationStore.completeApplication.previousAddresses.push(address);
 }
 
-function handleSubmit() {
+async function handleSubmit() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Step three complete',
+    authStore.auth.userEmail
+  );
   props.handleNextSection();
 }
 
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
+async function handleSave() {
+  await updateApplication(
+    completeApplicationStore.completeApplication,
+    'Save and exited',
+    authStore.auth.userEmail
+  );
+  router.push('/');
 }
 </script>
 
