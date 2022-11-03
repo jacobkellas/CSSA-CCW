@@ -31,7 +31,7 @@
       <v-btn
         text
         color="primary"
-        @click="router.push('/more-information')"
+        @click="router.push(Routes.MORE_INFORMATION_ROUTE_PATH)"
       >
         {{ $t('Further Info') }}
       </v-btn>
@@ -40,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import Routes from '@core-public/router/routes';
 import { useRouter } from 'vue-router/composables';
 
 const router = useRouter();

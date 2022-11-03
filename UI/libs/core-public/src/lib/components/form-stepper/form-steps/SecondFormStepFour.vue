@@ -56,6 +56,7 @@
 
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import Routes from '@core-public/router/routes';
 import { sendPostImage } from '@core-public/senders/documentSenders';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useMutation } from '@tanstack/vue-query';
@@ -96,11 +97,11 @@ async function handleSubmit() {
 
   if (data.value) {
     // this might need to change depending on payment setup.
-    await router.push('/finalize');
+    await router.push(Routes.FINALIZE_ROUTE_PATH);
   }
 
   // leave this here till api is completed
-  await router.push('/qualifying-questions');
+  await router.push(Routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
 }
 
 function handleCanvasClear() {

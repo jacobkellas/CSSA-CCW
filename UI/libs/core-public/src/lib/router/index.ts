@@ -1,66 +1,67 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
 import ApplicationView from '@core-public/views/ApplicationView.vue';
-import Home from '@core-public/views/Home.vue';
 import FinalizeView from '@core-public/views/FinalizeView.vue';
 import FormView from '@core-public/views/FormView.vue';
+import Home from '@core-public/views/Home.vue';
 import MoreInformationView from '@core-public/views/MoreInformationView.vue';
 import QualifyingQuestionView from '@core-public/views/QualifyingQuestionsView.vue';
 import RenewApplicationView from '@core-public/views/RenewApplicationView.vue';
 import RenewFormView from '@core-public/views/RenewFormView.vue';
 import RenewSecondFormView from '@core-public/views/RenewSecondFormView.vue';
+import Routes from '@core-public/router/routes';
 import SecondFormView from '@core-public/views/SecondFormView.vue';
+import Vue from 'vue';
+import VueRouter, { RouteConfig } from 'vue-router';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: Routes.HOME_ROUTE_PATH,
     name: 'Home',
     component: Home,
   },
   {
-    path: '/application',
+    path: Routes.APPLICATION_ROUTE_PATH,
     name: 'Application',
     component: ApplicationView,
   },
   {
-    path: '/finalize',
+    path: Routes.FINALIZE_ROUTE_PATH,
     name: 'finalize',
     component: FinalizeView,
   },
   {
-    path: '/form',
+    path: Routes.FORM_ROUTE_PATH,
     name: 'form',
     component: FormView,
   },
   {
-    path: '/form-2',
+    path: Routes.FORM_TWO_ROUTE_PATH,
     name: 'form-2',
     component: SecondFormView,
   },
   {
-    path: '/more-information',
+    path: Routes.MORE_INFORMATION_ROUTE_PATH,
     name: 'more-information',
     component: MoreInformationView,
   },
   {
-    path: '/qualifying-questions',
+    path: Routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
     name: 'qualifying-questions',
     component: QualifyingQuestionView,
   },
   {
-    path: '/renew-application',
+    path: Routes.RENEW_APPLICATION_ROUTE_PATH,
     name: 'RenewApplication',
     component: RenewApplicationView,
   },
   {
-    path: '/renew-form',
+    path: Routes.RENEW_FORM_ROUTE_PATH,
     name: 'RenewForm',
     component: RenewFormView,
   },
   {
-    path: '/renew-form-2',
+    path: Routes.RENEW_FORM_TWO_ROUTE_PATH,
     name: ' RenewForm2',
     component: RenewSecondFormView,
   },

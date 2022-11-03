@@ -6,20 +6,23 @@
     class="sidebar"
     permanent
   >
-    <v-list class="mt-1">
+    <v-list
+      class="mt-1"
+      nav
+    >
       <v-list-item
         class="px-2 logo"
-        to="/"
+        :to="Routes.HOME_ROUTE_PATH"
         link
       >
         <v-list-item-avatar
-          height="36"
-          width="36"
+          height="32"
+          width="32"
         >
           <img
-            src="/img/icons/agency_logo.svg"
-            width="36"
-            height="36"
+            :src="brandStore.getDocuments.agencyLogo"
+            width="32"
+            height="32"
             alt="Image"
             loading="lazy"
           />
@@ -40,7 +43,7 @@
         dense
       >
         <v-list-item
-          to="dashboard"
+          :to="Routes.DASHBOARD_ROUTE_PATH"
           link
         >
           <v-list-item-icon>
@@ -49,7 +52,7 @@
           <v-list-item-title>{{ $t('Dashboard') }}</v-list-item-title>
         </v-list-item>
         <v-list-item
-          to="/appointments"
+          :to="Routes.APPOINTMENTS_ROUTE_PATH"
           link
         >
           <v-list-item-icon>
@@ -69,7 +72,7 @@
           </v-list-item-title>
         </v-list-item>
         <v-list-item
-          to="/permits"
+          :to="Routes.PERMITS_ROUTE_PATH"
           link
         >
           <v-list-item-icon>
@@ -87,7 +90,7 @@
           <v-list-item-title>{{ $t('My Work') }}</v-list-item-title>
         </v-list-item>
         <v-list-item
-          to="/numbers"
+          :to="Routes.NUMBERS_ROUTE_PATH"
           link
         >
           <v-list-item-icon>
@@ -96,13 +99,13 @@
           <v-list-item-title>{{ $t('Numbers') }}</v-list-item-title>
         </v-list-item>
         <v-list-item
-          to="/brand"
+          :to="Routes.SETTINGS_ROUTE_PATH"
           link
         >
           <v-list-item-icon>
             <v-icon>mdi-cog</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>{{ $t('Settings') }}</v-list-item-title>
+          <v-list-item-title>{{ $t('System Settings') }}</v-list-item-title>
         </v-list-item>
       </v-list>
 
@@ -118,14 +121,17 @@
 
 <script setup lang="ts">
 import LoginButton from '@core-admin/components/login/LoginButton.vue';
+import Routes from '@core-admin/router/routes';
 import SearchBar from '@core-admin/components/search/SearchBar.vue';
 import { useAppConfigStore } from '@shared-ui/stores/appConfig';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
+import { useBrandStore } from '@core-admin/stores/brandStore';
 import { computed, ref } from 'vue';
 
 const drawer = ref(true);
 const aptStore = useAppointmentsStore();
 const appStore = useAppConfigStore();
+const brandStore = useBrandStore();
 
 const getAppTitle = computed(() => {
   switch (appStore.getAppConfig.environmentName) {

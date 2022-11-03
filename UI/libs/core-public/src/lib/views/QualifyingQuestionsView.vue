@@ -761,10 +761,11 @@
 
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useRouter } from 'vue-router/composables';
-import { useMutation } from '@tanstack/vue-query';
+import Routes from '@core-public/router/routes';
 import { i18n } from '@shared-ui/plugins';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
 
 const applicationStore = useCompleteApplicationStore();
 const completeApplication = applicationStore.completeApplication.application;
@@ -775,7 +776,7 @@ const updateMutation = useMutation({
     return applicationStore.updateApplication('Qualifying question complete.');
   },
   onSuccess: () => {
-    router.push('/finalize');
+    router.push(Routes.FINALIZE_ROUTE_PATH);
   },
   onError: () => {
     alert(' Api error');

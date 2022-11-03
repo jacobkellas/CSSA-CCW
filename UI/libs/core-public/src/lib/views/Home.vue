@@ -2,9 +2,9 @@
   <div class="home">
     <!-- TODO: Make this the custom logo -->
     <img
-      v-if="store.getBrand.agencyLogoDataURL"
+      v-if="store.getDocuments.agencyLandingPageImage"
       alt="Application logo"
-      :src="store.getBrand.agencyLogoDataURL"
+      :src="store.getDocuments.agencyLandingPageImage"
     />
     <v-container fluid>
       <v-row>
@@ -18,7 +18,7 @@
               outlined
               color="primary"
               class="option-button"
-              @click="handleRoute('/application')"
+              @click="handleRoute(Routes.APPLICATION_ROUTE_PATH)"
             >
               <div class="option-inner">
                 <v-icon
@@ -35,7 +35,7 @@
               color="primary"
               class="option-button"
               outlined
-              @click="handleRoute('/renew-application')"
+              @click="handleRoute(Routes.RENEW_APPLICATION_ROUTE_PATH)"
             >
               <div class="option-inner">
                 <v-icon
@@ -70,8 +70,9 @@
 </template>
 
 <script setup lang="ts">
-import GeneralInfoWrapper from '@core-public/components/wrappers/GeneralInfoWrapper';
+import GeneralInfoWrapper from '@core-public/components/wrappers/GeneralInfoWrapper.vue';
 import PriceInfoWrapper from '@core-public/components/wrappers/PriceInfoWrapper.vue';
+import Routes from '@core-public/router/routes';
 import { useBrandStore } from '@core-public/stores/brandStore';
 import { useRouter } from 'vue-router/composables';
 

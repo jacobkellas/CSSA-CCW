@@ -93,6 +93,7 @@
 <script setup lang="ts">
 import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import Routes from '@core-public/router/routes';
 import { formatPhoneNumber } from '@shared-utils/formatters/defaultFormatters';
 import { i18n } from '@shared-ui/plugins';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
@@ -116,7 +117,7 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step five complete');
   },
   onSuccess: () => {
-    router.push('/form-2');
+    router.push(Routes.FORM_TWO_ROUTE_PATH);
   },
   onError: error => {
     alert(error);
@@ -128,7 +129,7 @@ const saveMutation = useMutation({
     return completeApplicationStore.updateApplication('Save and quit');
   },
   onSuccess: () => {
-    router.push('/');
+    router.push(Routes.HOME_ROUTE_PATH);
   },
   onError: () => {
     alert(i18n.t('Save unsuccessful, please try again'));

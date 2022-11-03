@@ -1,9 +1,9 @@
 <template>
   <div class="application">
     <img
-      v-if="store.getBrand.agencyLogoDataURL"
+      v-if="store.getDocuments.agencyLogo"
       alt="Application logo"
-      :src="store.getBrand.agencyLogoDataURL"
+      :src="store.getDocuments.agencyLogo"
     />
     <v-container v-if="!state.selected">
       <v-sheet>
@@ -60,15 +60,13 @@
 </template>
 
 <script setup lang="ts">
-import { useBrandStore } from '@core-public/stores/brandStore';
 import AcknowledgementContainer from '@core-public/components/containers/AcknowledgementContainer.vue';
 import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 
-const store = useBrandStore();
 const applicationStore = useCompleteApplicationStore();
 const applicationTypeStore = useApplicationTypeStore();
 const authStore = useAuthStore();

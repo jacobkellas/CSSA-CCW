@@ -40,7 +40,7 @@ describe('FormStepTwo', () => {
   it('should render all the text inputs', () => {
     const textFields = wrapper.findAllComponents('.v-text-field');
 
-    expect(textFields).toHaveLength(8);
+    expect(textFields).toHaveLength(6);
   });
 
   it('should render the alert if no DOB is present', () => {
