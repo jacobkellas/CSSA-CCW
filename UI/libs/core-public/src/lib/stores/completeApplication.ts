@@ -1,7 +1,4 @@
-import {
-  CompleteApplication,
-  HistoryType,
-} from '@shared-utils/types/defaultTypes';
+import { CompleteApplication, HistoryType } from '@shared-utils/types/defaultTypes';
 import Endpoints from '@shared-ui/api/endpoints';
 import axios from 'axios';
 import { defineStore } from 'pinia';
