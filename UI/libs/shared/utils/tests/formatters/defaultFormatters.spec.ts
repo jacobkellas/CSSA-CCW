@@ -2,7 +2,7 @@ import { formatPhoneNumber, formatSSN } from '@shared-utils/formatters/defaultFo
 
 describe('formatSSN', () => {
   it('Should return a correctly formatted SSN', () => {
-    const result = formatSSN('1112223333');
+    const result = formatSSN('111223333');
 
     expect(result).toBe('111-22-3333');
   });
