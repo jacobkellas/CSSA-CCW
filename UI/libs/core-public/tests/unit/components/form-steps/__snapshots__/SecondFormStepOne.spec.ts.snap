@@ -10,7 +10,7 @@ exports[`SecondFormStepOne Should match the snapshot 1`] = `
       <div class="col col-6">
         <div class="v-input theme--light v-text-field v-select">
           <div class="v-input__control">
-            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-4" class="v-input__slot">
+            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-5" class="v-input__slot">
               <div class="v-select__slot"><label for="select" class="v-label theme--light" style="left: 0px; position: absolute;"> Employment Status</label>
                 <div class="v-select__selections"><input id="select" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
                 <div class="v-input__append-inner">

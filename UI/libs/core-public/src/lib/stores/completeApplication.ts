@@ -1,12 +1,14 @@
-import { CompleteApplication } from '@shared-utils/types/defaultTypes';
+import { CompleteApplication, HistoryType } from '@shared-utils/types/defaultTypes';
 import Endpoints from '@shared-ui/api/endpoints';
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
+import { useAuthStore } from '@shared-ui/stores/auth';
 
 export const useCompleteApplicationStore = defineStore(
   'completeApplicationStore',
   () => {
+    const authStore = useAuthStore();
     let completeApplication = reactive<CompleteApplication>({
       id: '',
       DOB: {
@@ -92,10 +94,10 @@ export const useCompleteApplicationStore = defineStore(
         eyeColor: '',
         gender: '',
         hairColor: '',
-        heightFeet: null,
-        heightInch: null,
+        heightFeet: '',
+        heightInch: '',
         physicalDesc: '',
-        weight: null,
+        weight: '',
       },
       previousAddresses: [
         {
@@ -206,11 +208,60 @@ export const useCompleteApplicationStore = defineStore(
       return res?.data;
     }
 
+    async function createApplication() {
+      const applicationId = completeApplication.id;
+      const date = new Date(Date.now()).toUTCString();
+      const historyLog: HistoryType = {
+        change: 'Created application',
+        dateTime: date,
+        changeMadeBy: authStore.auth.userEmail,
+      };
+
+      completeApplication.history.push(historyLog);
+      const body = {
+        application: completeApplication,
+        id: applicationId,
+      };
+
+      await axios.put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, body).catch(err => {
+        window.console.log(err);
+
+        return Promise.reject();
+      });
+    }
+
+    async function updateApplication(changeMessage: string) {
+      const date = new Date(Date.now()).toUTCString();
+      const historyLog: HistoryType = {
+        change: changeMessage,
+        dateTime: date,
+        changeMadeBy: authStore.auth.userEmail,
+      };
+
+      completeApplication.history.push(historyLog);
+      const application = {
+        application: completeApplication,
+        id: completeApplication.id,
+      };
+
+      const res = await axios
+        .put(Endpoints.PUT_UPDATE_PERMIT_ENDPOINT, application)
+        .catch(err => {
+          console.warn(err);
+
+          return Promise.reject();
+        });
+
+      return res?.data;
+    }
+
     return {
       completeApplication,
+      createApplication,
       getCompleteApplication,
       setCompleteApplication,
       getCompleteApplicationFromApi,
+      updateApplication,
     };
   }
 );

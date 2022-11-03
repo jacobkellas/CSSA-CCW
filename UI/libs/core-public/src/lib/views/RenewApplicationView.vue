@@ -66,8 +66,7 @@ import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
-import { useQuery } from '@tanstack/vue-query';
-import { createNewApplication } from '@core-public/senders/applicationSenders';
+import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const store = useBrandStore();
 const applicationStore = useCompleteApplicationStore();
@@ -88,6 +87,16 @@ const { isLoading } = useQuery(['getCompleteApplications'], () => {
   res.then(data => (state.applications = data));
 });
 
+const createMutation = useMutation({
+  mutationFn: applicationStore.createApplication,
+  onSuccess: () => {
+    state.selected = true;
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
 async function handleModifyApplication() {
   applicationTypeStore.state.type = 'modify';
   applicationStore.completeApplication = state.applications[0].application;
@@ -97,18 +106,8 @@ async function handleModifyApplication() {
 async function handleRenewApplication() {
   applicationTypeStore.state.type = 'renewal';
   applicationStore.completeApplication.userEmail = authStore.auth.userEmail;
-
-  const res = await createNewApplication(
-    applicationStore.completeApplication,
-    'Created Renewal Application',
-    authStore.auth.userEmail
-  );
-
-  if (res) {
-    applicationStore.completeApplication.id = res;
-  }
-
-  state.selected = true;
+  applicationStore.completeApplication.id = window.crypto.randomUUID();
+  createMutation.mutate();
 }
 </script>
 

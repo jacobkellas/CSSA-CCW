@@ -179,22 +179,22 @@
     <v-divider />
     <FormButtonContainer
       :valid="state.valid"
-      @submit="handleSubmit"
-      @save="handleSave"
+      @submit="updateMutation.mutate"
+      @save="saveMutation.mutate"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import { employmentStatus } from '@shared-utils/lists/defaultConstants';
-import { reactive } from 'vue';
-import { updateApplication } from '@core-public/senders/applicationSenders';
-import { useAuthStore } from '@shared-ui/stores/auth';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useRouter } from 'vue-router/composables';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
+import { employmentStatus } from '@shared-utils/lists/defaultConstants';
+import { i18n } from '@shared-ui/plugins';
+import { reactive } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
 
 interface ISecondFormStepOneProps {
   handleNextSection: CallableFunction;
@@ -202,30 +202,35 @@ interface ISecondFormStepOneProps {
 const completeApplicationStore = useCompleteApplicationStore();
 
 const props = defineProps<ISecondFormStepOneProps>();
-const authStore = useAuthStore();
 const router = useRouter();
 
 const state = reactive({
   valid: false,
 });
 
-async function handleSubmit() {
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Step six complete',
-    authStore.auth.userEmail
-  );
-  props.handleNextSection();
-}
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step six complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
 
-async function handleSave() {
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Save and quit',
-    authStore.auth.userEmail
-  );
-  router.push('/');
-}
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 
 function getWeaponFromDialog(weapon) {
   completeApplicationStore.completeApplication.weapons.push(weapon);

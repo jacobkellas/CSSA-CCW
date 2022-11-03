@@ -528,22 +528,22 @@
       </div>
       <FormButtonContainer
         :valid="valid"
-        @submit="handleSubmit"
-        @save="handleSave"
+        @submit="updateMutation.mutate"
+        @save="saveMutation.mutate"
       />
     </v-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
 import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import { updateApplication } from '@core-public/senders/applicationSenders';
-import { useAuthStore } from '@shared-ui/stores/auth';
+import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
+import { AddressInfoType } from '@shared-utils/types/defaultTypes';
+import { i18n } from '@shared-ui/plugins';
+import { ref } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 
 interface FormStepThreeProps {
@@ -557,29 +557,34 @@ const props = withDefaults(defineProps<FormStepThreeProps>(), {
 const valid = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
-const authStore = useAuthStore();
 const router = useRouter();
+
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step one complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 
 function getPreviousAddressFromDialog(address: AddressInfoType) {
   completeApplicationStore.completeApplication.previousAddresses.push(address);
-}
-
-async function handleSubmit() {
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Step three complete',
-    authStore.auth.userEmail
-  );
-  props.handleNextSection();
-}
-
-async function handleSave() {
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Save and exited',
-    authStore.auth.userEmail
-  );
-  router.push('/');
 }
 </script>
 

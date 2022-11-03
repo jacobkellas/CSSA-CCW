@@ -6,6 +6,6 @@
         public string CellPhoneNumber { get; set; }
         public string WorkPhoneNumber { get; set; }
         public string FaxPhoneNumber { get; set; }
-        public string TextMessageUpdates { get; set; }
+        public bool TextMessageUpdates { get; set; }
     }
 }

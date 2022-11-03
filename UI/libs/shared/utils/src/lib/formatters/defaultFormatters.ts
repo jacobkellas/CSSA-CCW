@@ -6,8 +6,8 @@
  */
 export function formatSSN(ssn: string): string {
   const part1 = ssn.slice(0, 3);
-  const part2 = ssn.slice(3, 6);
-  const part3 = ssn.slice(6);
+  const part2 = ssn.slice(3, 5);
+  const part3 = ssn.slice(5);
 
   return `${part1}-${part2}-${part3}`;
 }

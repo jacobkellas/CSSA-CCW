@@ -31,12 +31,11 @@ import AppointmentContainer from '@core-public/components/containers/Appointment
 import FinalizeContainer from '@core-public/components/containers/FinalizeContainer.vue';
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
-import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { reactive } from 'vue';
-import { useAuthStore } from '@shared-ui/stores/auth';
-import { updateApplication } from '@core-public/senders/applicationSenders';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-//TODO: make the api call here to get the appointments and pass as a prop to the appointmentContainer.
+import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
+import { useMutation } from '@tanstack/vue-query';
+
 const currentInfoSectionStore = useCurrentInfoSection();
 
 const options = [
@@ -57,9 +56,16 @@ const state = reactive({
   paymentComplete: false,
   appointmentComplete: false,
 });
-
-const authStore = useAuthStore();
 const completeApplicationStore = useCompleteApplicationStore();
+
+//TODO: make the api call here to get the appointments and pass as a prop to the appointmentContainer.
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Application Complete');
+  },
+  onSuccess: () => {},
+  onError: () => {},
+});
 
 function handleSelection(target: number) {
   currentInfoSectionStore.setCurrentInfoSection(target);
@@ -67,11 +73,7 @@ function handleSelection(target: number) {
 
 async function handleSubmit() {
   completeApplicationStore.completeApplication.isComplete = true;
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Step one complete',
-    authStore.auth.userEmail
-  );
+  updateMutation.mutate();
 }
 
 function togglePaymentComplete() {

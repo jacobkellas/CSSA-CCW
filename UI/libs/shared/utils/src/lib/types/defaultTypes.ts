@@ -32,9 +32,9 @@ export type AppConfigType = {
 
 export type AppearanceInfoType = {
   gender: string;
-  heightFeet: number | null;
-  heightInch: number | null;
-  weight: number | null;
+  heightFeet: string;
+  heightInch: string;
+  weight: string;
   hairColor: string;
   eyeColor: string;
   physicalDesc: string;

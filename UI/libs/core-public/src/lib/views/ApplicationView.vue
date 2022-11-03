@@ -59,8 +59,7 @@ import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStor
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useBrandStore } from '@core-public/stores/brandStore';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useQuery } from '@tanstack/vue-query';
-import { createNewApplication } from '@core-public/senders/applicationSenders';
+import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const applicationTypeStore = useApplicationTypeStore();
 const store = useBrandStore();
@@ -81,21 +80,21 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
   res.then(data => (state.applications = data));
 });
 
+const createMutation = useMutation({
+  mutationFn: applicationStore.createApplication,
+  onSuccess: () => {
+    state.selected = true;
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
 async function handleCreateApplication() {
   applicationTypeStore.state.type = 'new';
   applicationStore.completeApplication.userEmail = authStore.auth.userEmail;
-
-  const res = await createNewApplication(
-    applicationStore.completeApplication,
-    'Created Application',
-    authStore.auth.userEmail
-  );
-
-  if (res) {
-    applicationStore.completeApplication.id = res;
-  }
-
-  state.selected = true;
+  applicationStore.completeApplication.id = window.crypto.randomUUID();
+  createMutation.mutate();
 }
 </script>
 

@@ -188,21 +188,21 @@
     <v-divider />
     <FormButtonContainer
       :valid="state.valid"
-      @submit="handleSubmit"
-      @save="handleSave"
+      @submit="updateMutation.mutate"
+      @save="saveMutation.mutate"
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
+import { i18n } from '@shared-ui/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import { eyeColors, hairColors } from '@shared-utils/lists/defaultConstants';
-import { updateApplication } from '@core-public/senders/applicationSenders';
-import { useAuthStore } from '@shared-ui/stores/auth';
+import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
+import { eyeColors, hairColors } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepFourProps {
   handleNextSection: () => void;
@@ -215,25 +215,30 @@ const props = withDefaults(defineProps<FormStepFourProps>(), {
 const state = reactive({
   valid: false,
 });
-const authStore = useAuthStore();
 const completeApplicationStore = useCompleteApplicationStore();
 const router = useRouter();
 
-async function handleSubmit() {
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Step four complete',
-    authStore.auth.userEmail
-  );
-  props.handleNextSection();
-}
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step four complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
 
-async function handleSave() {
-  await updateApplication(
-    completeApplicationStore.completeApplication,
-    'Save and quit',
-    authStore.auth.userEmail
-  );
-  router.push('/');
-}
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 </script>
