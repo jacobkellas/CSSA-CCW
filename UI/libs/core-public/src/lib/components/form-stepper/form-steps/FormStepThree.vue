@@ -528,20 +528,23 @@
       </div>
       <FormButtonContainer
         :valid="valid"
-        @submit="handleSubmit"
-        @save="handleSave"
+        @submit="updateMutation.mutate"
+        @save="saveMutation.mutate"
       />
     </v-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
 import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
+import { AddressInfoType } from '@shared-utils/types/defaultTypes';
+import { i18n } from '@shared-ui/plugins';
+import { ref } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;
@@ -554,17 +557,34 @@ const props = withDefaults(defineProps<FormStepThreeProps>(), {
 const valid = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
+const router = useRouter();
+
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step one complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 
 function getPreviousAddressFromDialog(address: AddressInfoType) {
-  completeApplicationStore.completeApplication.previousAddress.push(address);
-}
-
-function handleSubmit() {
-  props.handleNextSection();
-}
-
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
+  completeApplicationStore.completeApplication.previousAddresses.push(address);
 }
 </script>
 

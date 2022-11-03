@@ -193,7 +193,28 @@ exports[`FormStepOne Should match the snapshot 1`] = `
                 <th>Court file number</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+                <td>
+
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

@@ -1,13 +1,10 @@
-import {
-  formatPhoneNumber,
-  formatSSN,
-} from '@shared-utils/formatters/defaultFormatters';
+import { formatPhoneNumber, formatSSN } from '@shared-utils/formatters/defaultFormatters';
 
 describe('formatSSN', () => {
   it('Should return a correctly formatted SSN', () => {
-    const result = formatSSN('1112223333');
+    const result = formatSSN('111223333');
 
-    expect(result).toBe('111-222-3333');
+    expect(result).toBe('111-22-3333');
   });
 });
 

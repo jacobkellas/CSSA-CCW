@@ -104,7 +104,6 @@ async function handleSubmit() {
 }
 
 function handleCanvasClear() {
-  //const canvas = document.getElementById('signature-canvas');
   const canvas = signatureCanvas.value;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore

@@ -179,18 +179,22 @@
     <v-divider />
     <FormButtonContainer
       :valid="state.valid"
-      @submit="handleSubmit"
+      @submit="updateMutation.mutate"
+      @save="saveMutation.mutate"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { employmentStatus } from '@shared-utils/lists/defaultConstants';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
+import { employmentStatus } from '@shared-utils/lists/defaultConstants';
+import { i18n } from '@shared-ui/plugins';
+import { reactive } from 'vue';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
 
 interface ISecondFormStepOneProps {
   handleNextSection: CallableFunction;
@@ -198,14 +202,35 @@ interface ISecondFormStepOneProps {
 const completeApplicationStore = useCompleteApplicationStore();
 
 const props = defineProps<ISecondFormStepOneProps>();
+const router = useRouter();
 
 const state = reactive({
   valid: false,
 });
 
-function handleSubmit() {
-  props.handleNextSection();
-}
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step six complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 
 function getWeaponFromDialog(weapon) {
   completeApplicationStore.completeApplication.weapons.push(weapon);

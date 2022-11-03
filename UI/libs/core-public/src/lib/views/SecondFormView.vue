@@ -1,31 +1,12 @@
 <template>
   <div>
-    <v-container
-      v-if="isLoading"
-      fluid
-    >
-      <v-skeleton-loader fluid />
-    </v-container>
-    <v-container
-      v-else
-      fluid
-    >
+    <v-container fluid>
       <SecondFormContainer />
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import SecondFormContainer from '@core-public/components/containers/SecondFormContainer.vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useQuery } from '@tanstack/vue-query';
-
-const completeApplicationStore = useCompleteApplicationStore();
-
-const { isLoading } = useQuery(
-  ['completeApplication'],
-  completeApplicationStore.getCompleteApplicationFromApi
-);
-</script>
+import SecondFormContainer from '@core-public/components/containers/SecondFormContainer.vue';</script>
 
 <style lang="scss" scoped></style>

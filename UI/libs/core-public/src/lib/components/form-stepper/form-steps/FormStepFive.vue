@@ -107,9 +107,11 @@
 import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import { formatPhoneNumber } from '@shared-utils/formatters/defaultFormatters';
+import { i18n } from '@shared-ui/plugins';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 
 const router = useRouter();
@@ -120,14 +122,38 @@ const state = reactive({
 
 const completeApplicationStore = useCompleteApplicationStore();
 
-function handleSubmit() {
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step five complete');
+  },
+  onSuccess: () => {
+    router.push('/form-2');
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
+
+async function handleSubmit() {
   formatInputs();
-  router.push('/form-2');
+  updateMutation.mutate();
 }
 
-function handleSave() {
+async function handleSave() {
   formatInputs();
-  completeApplicationStore.postCompleteApplicationFromApi;
+  saveMutation.mutate();
 }
 
 function formatInputs() {

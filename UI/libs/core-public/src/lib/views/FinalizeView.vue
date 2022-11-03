@@ -12,10 +12,14 @@
       <v-btn
         :disabled="!state.appointmentComplete || !state.paymentComplete"
         color="primary"
+        @click="handleSubmit"
       >
         {{ $t('Submit Application') }}
       </v-btn>
-      <v-btn color="error">
+      <v-btn
+        color="error"
+        to="/"
+      >
         {{ $t('Cancel') }}
       </v-btn>
     </v-container>
@@ -27,9 +31,11 @@ import AppointmentContainer from '@core-public/components/containers/Appointment
 import FinalizeContainer from '@core-public/components/containers/FinalizeContainer.vue';
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
-import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { reactive } from 'vue';
-//TODO: make the api call here to get the appointments and pass as a prop to the appointmentContainer.
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
+import { useMutation } from '@tanstack/vue-query';
+
 const currentInfoSectionStore = useCurrentInfoSection();
 
 const options = [
@@ -50,9 +56,24 @@ const state = reactive({
   paymentComplete: false,
   appointmentComplete: false,
 });
+const completeApplicationStore = useCompleteApplicationStore();
+
+//TODO: make the api call here to get the appointments and pass as a prop to the appointmentContainer.
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Application Complete');
+  },
+  onSuccess: () => {},
+  onError: () => {},
+});
 
 function handleSelection(target: number) {
   currentInfoSectionStore.setCurrentInfoSection(target);
+}
+
+async function handleSubmit() {
+  completeApplicationStore.completeApplication.isComplete = true;
+  updateMutation.mutate();
 }
 
 function togglePaymentComplete() {

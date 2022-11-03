@@ -1,31 +1,32 @@
-import { CompleteApplication } from '@shared-utils/types/defaultTypes';
+import { CompleteApplication, HistoryType } from '@shared-utils/types/defaultTypes';
 import Endpoints from '@shared-ui/api/endpoints';
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
+import { useAuthStore } from '@shared-ui/stores/auth';
 
 export const useCompleteApplicationStore = defineStore(
   'completeApplicationStore',
   () => {
+    const authStore = useAuthStore();
     let completeApplication = reactive<CompleteApplication>({
       id: '',
-      personalInfo: {
-        lastName: '',
-        firstName: '',
-        middleName: '',
-        maidenName: '',
-        noMiddleName: false,
-        maritalStatus: '',
-        ssn: '',
-        suffix: '',
-      },
       DOB: {
         birthDate: '',
         birthCity: '',
         birthCountry: '',
         birthState: '',
       },
-      aliases: [],
+      aliases: [
+        {
+          prevLastName: '',
+          prevFirstName: '',
+          prevMiddleName: '',
+          cityWhereChanged: '',
+          stateWhereChanged: '',
+          courtFileNumber: '',
+        },
+      ],
       applicationType: '',
       citizenship: { citizen: false, militaryStatus: '' },
       contact: {
@@ -47,6 +48,13 @@ export const useCompleteApplicationStore = defineStore(
       differentMailing: false,
       differentSpouseAddress: false,
       employment: '',
+      history: [
+        {
+          change: '',
+          dateTime: '',
+          changeMadeBy: '',
+        },
+      ],
       idInfo: {
         idNumber: '',
         issuingState: '',
@@ -72,16 +80,36 @@ export const useCompleteApplicationStore = defineStore(
         state: '',
         zip: '',
       },
+      personalInfo: {
+        lastName: '',
+        firstName: '',
+        middleName: '',
+        noMiddleName: false,
+        maidenName: '',
+        suffix: '',
+        ssn: '',
+        maritalStatus: '',
+      },
       physicalAppearance: {
         eyeColor: '',
         gender: '',
         hairColor: '',
-        heightFeet: null,
-        heightInch: null,
+        heightFeet: '',
+        heightInch: '',
         physicalDesc: '',
-        weight: null,
+        weight: '',
       },
-      previousAddress: [],
+      previousAddresses: [
+        {
+          addressLine1: '',
+          addressLine2: '',
+          city: '',
+          country: '',
+          county: '',
+          state: '',
+          zip: '',
+        },
+      ],
       qualifyingQuestions: {
         questionOne: false,
         questionOneExp: '',
@@ -164,9 +192,15 @@ export const useCompleteApplicationStore = defineStore(
     /**
      * Get the complete application from the backend
      */
-    async function getCompleteApplicationFromApi() {
+    async function getCompleteApplicationFromApi(
+      userEmail: string,
+      isComplete: boolean
+    ) {
       const res = await axios
-        .get(Endpoints.GET_PERMIT_ENDPOINT)
+        .get(Endpoints.GET_PERMIT_ENDPOINT, {
+          params: { userEmail, isComplete },
+        })
+
         .catch(err => console.warn(err));
 
       //TODO: add back in once the api is corrected.
@@ -174,30 +208,60 @@ export const useCompleteApplicationStore = defineStore(
       return res?.data;
     }
 
-    async function postCompleteApplicationFromApi(
-      payload: CompleteApplication
-    ) {
-      if (payload.id) {
-        const res = await axios
-          .put(Endpoints.PUT_UPDATE_PERMIT_ENDPOINT, payload)
-          .catch(err => console.warn(err));
+    async function createApplication() {
+      const applicationId = completeApplication.id;
+      const date = new Date(Date.now()).toUTCString();
+      const historyLog: HistoryType = {
+        change: 'Created application',
+        dateTime: date,
+        changeMadeBy: authStore.auth.userEmail,
+      };
 
-        return res?.data;
-      }
+      completeApplication.history.push(historyLog);
+      const body = {
+        application: completeApplication,
+        id: applicationId,
+      };
+
+      await axios.put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, body).catch(err => {
+        window.console.log(err);
+
+        return Promise.reject();
+      });
+    }
+
+    async function updateApplication(changeMessage: string) {
+      const date = new Date(Date.now()).toUTCString();
+      const historyLog: HistoryType = {
+        change: changeMessage,
+        dateTime: date,
+        changeMadeBy: authStore.auth.userEmail,
+      };
+
+      completeApplication.history.push(historyLog);
+      const application = {
+        application: completeApplication,
+        id: completeApplication.id,
+      };
 
       const res = await axios
-        .put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, payload)
-        .catch(err => console.warn(err));
+        .put(Endpoints.PUT_UPDATE_PERMIT_ENDPOINT, application)
+        .catch(err => {
+          console.warn(err);
+
+          return Promise.reject();
+        });
 
       return res?.data;
     }
 
     return {
       completeApplication,
+      createApplication,
       getCompleteApplication,
       setCompleteApplication,
       getCompleteApplicationFromApi,
-      postCompleteApplicationFromApi,
+      updateApplication,
     };
   }
 );

@@ -315,7 +315,7 @@
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"
-      @save="handleSave"
+      @save="saveMutation.mutate"
     />
     <FormErrorAlert
       v-if="errors.length > 0"
@@ -325,17 +325,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
-import { formatSSN } from '@shared-utils/formatters/defaultFormatters';
-import { useRouter } from 'vue-router/composables';
 import AliasDialog from '@core-public/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
 import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
+import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
+import { formatSSN } from '@shared-utils/formatters/defaultFormatters';
+import { ref } from 'vue';
+import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
+import { i18n } from '@shared-ui/plugins';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
@@ -355,20 +357,39 @@ const completeApplicationStore = useCompleteApplicationStore();
 
 const router = useRouter();
 
-function handleSubmit() {
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step one complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
+
+async function handleSubmit() {
   if (
     !completeApplicationStore.completeApplication.personalInfo.maritalStatus
   ) {
     errors.value.push('Marital Status');
   } else {
     runFormatters();
-    props.handleNextSection();
+    updateMutation.mutate();
   }
-}
-
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
-  router.push('/');
 }
 
 function getAliasFromDialog(alias) {

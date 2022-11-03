@@ -15,9 +15,9 @@ export default function interceptors() {
       req.headers.Authorization = `Bearer ${authStore.jwtToken}`;
 
       return req;
-    },
-    error => {
-      return Promise.reject(error);
     }
+    // error => {
+    //   return Promise.reject(error);
+    // }
   );
 }

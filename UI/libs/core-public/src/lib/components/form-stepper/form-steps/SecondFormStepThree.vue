@@ -51,8 +51,8 @@
     <v-divider />
     <FormButtonContainer
       :valid="state.valid"
-      @submit="handleSubmit"
-      @save="handleSave"
+      @submit="updateMutation.mutate"
+      @save="saveMutation.mutate"
     />
   </div>
 </template>
@@ -63,6 +63,9 @@ import FormButtonContainer from '@core-public/components/containers/FormButtonCo
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useRouter } from 'vue-router/composables';
+import { i18n } from '@shared-ui/plugins';
+import { useMutation } from '@tanstack/vue-query';
 
 interface ISecondFormStepThreeProps {
   handleNextSection: CallableFunction;
@@ -70,18 +73,35 @@ interface ISecondFormStepThreeProps {
 
 const props = defineProps<ISecondFormStepThreeProps>();
 const completeApplicationStore = useCompleteApplicationStore();
+const router = useRouter();
 
 const state = reactive({
   valid: false,
 });
 
-function handleSubmit() {
-  props.handleNextSection();
-}
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step seven complete');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: error => {
+    alert(error);
+  },
+});
 
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
-}
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push('/');
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -32,9 +32,9 @@ export type AppConfigType = {
 
 export type AppearanceInfoType = {
   gender: string;
-  heightFeet: number | null;
-  heightInch: number | null;
-  weight: number | null;
+  heightFeet: string;
+  heightInch: string;
+  weight: string;
   hairColor: string;
   eyeColor: string;
   physicalDesc: string;
@@ -77,6 +77,12 @@ export type EventType = {
   end: Date;
   color: string;
   timed: boolean;
+};
+
+export type HistoryType = {
+  change: string;
+  dateTime: string;
+  changeMadeBy: string;
 };
 
 export type IdType = {
@@ -198,7 +204,7 @@ export type AppointmentType = {
 };
 
 export type CompleteApplication = {
-  id?: string;
+  id: string;
   aliases: Array<AliasType>;
   applicationType: string;
   citizenship: {
@@ -211,6 +217,7 @@ export type CompleteApplication = {
   differentSpouseAddress: boolean;
   DOB: DOBType;
   employment: string;
+  history: Array<HistoryType>;
   idInfo: IdType;
   immigrantInformation: ImmigrantInformation;
   isComplete: boolean;
@@ -227,7 +234,7 @@ export type CompleteApplication = {
     maritalStatus: string;
   };
   physicalAppearance: AppearanceInfoType;
-  previousAddress: Array<AddressInfoType>;
+  previousAddresses: Array<AddressInfoType>;
   qualifyingQuestions: QualifyingQuestions;
   spouseAddressInformation: AddressInfoType;
   spouseInformation: SpouseInfoType;

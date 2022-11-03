@@ -16,6 +16,7 @@ export const useBrandStore = defineStore('BrandStore', () => {
     primaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.primary,
     secondaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.secondary,
     agencyLogoDataURL: undefined,
+    paymentURL: 'https://buy.stripe.com/test_fZe00ugG5guI0YU4gg',
   });
 
   const getBrand = computed(() => brand.value);
