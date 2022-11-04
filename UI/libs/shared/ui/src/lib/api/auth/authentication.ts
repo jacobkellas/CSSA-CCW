@@ -96,7 +96,6 @@ export default {
       this.isAuthenticated();
       this.acquireToken();
       this.setUser();
-      this.tokenInterval();
     }
   },
 
@@ -176,7 +175,7 @@ export default {
   },
 
   tokenInterval() {
-    window.setInterval(() => this.acquireToken(), this.refreshTime * 60000);
+    this.acquireToken();
   },
 
   setUser() {

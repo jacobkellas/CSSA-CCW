@@ -22,9 +22,7 @@
         <div class="info-section">
           <SpouseInfoSection
             :color="'info'"
-            :spouse-info="
-              completeApplication.spouseInformation
-            "
+            :spouse-info="completeApplication.spouseInformation"
           />
         </div>
       </v-carousel-item>
@@ -55,9 +53,7 @@
           <CitizenInfoSection
             :color="'info'"
             :citizenship-info="completeApplication.citizenship"
-            :immigrant-info="
-              completeApplication.immigrantInformation
-            "
+            :immigrant-info="completeApplication.immigrantInformation"
           />
         </div>
       </v-carousel-item>
@@ -91,9 +87,7 @@
       <v-carousel-item>
         <div class="info-section">
           <PreviousAddressInfoSection
-            :previous-address="
-              completeApplication.previousAddress
-            "
+            :previous-address="completeApplication.previousAddress"
             :color="'info'"
           />
         </div>
@@ -113,9 +107,7 @@
         <div class="info-section">
           <AppearanceInfoSection
             color="info"
-            :appearance-info="
-              completeApplication.physicalAppearance
-            "
+            :appearance-info="completeApplication.physicalAppearance"
           />
         </div>
       </v-carousel-item>
@@ -132,17 +124,13 @@
           <EmploymentInfoSection
             :employment-info="completeApplication.employment"
             color="info"
-            :work-information="
-              completeApplication.workInformation
-            "
+            :work-information="completeApplication.workInformation"
           />
         </div>
       </v-carousel-item>
       <v-carousel-item>
         <div class="info-section">
-          <WeaponInfoSection
-            :weapons="completeApplication.weapons"
-          />
+          <WeaponInfoSection :weapons="completeApplication.weapons" />
         </div>
       </v-carousel-item>
     </v-carousel>

@@ -7,13 +7,18 @@ export type BrandType = {
   chiefOfPoliceName: string;
   primaryThemeColor: string | VuetifyThemeItem;
   secondaryThemeColor: string | VuetifyThemeItem;
-  agencyLogoDataURL: string | undefined;
   standardCost: number;
   judicialCost: number;
   reserveCost: number;
   creditFee: number;
   convenienceFee: number;
   paymentURL: string;
+  refreshTokenTime: number;
+};
+
+export type AgencyDocumentsType = {
+  agencyLogo: string | undefined;
+  agencyLandingPageImage: string | undefined;
 };
 
 export type PublicAppConfigType = {

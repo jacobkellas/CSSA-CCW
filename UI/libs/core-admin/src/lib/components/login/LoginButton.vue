@@ -34,20 +34,19 @@
 import auth from '@shared-ui/api/auth/authentication';
 import { onMounted } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
+import { useBrandStore } from '@core-admin/stores/brandStore';
+import useInterval from '@shared-ui/composables/useInterval';
 import { useQuery } from '@tanstack/vue-query';
 
 const authStore = useAuthStore();
+const brandStore = useBrandStore();
 
 onMounted(() => {
   if (authStore.getAuthState.isAuthenticated) {
     useQuery(['verifyEmail'], authStore.postVerifyUserApi);
+    useInterval(auth.tokenInterval, brandStore.getBrand.refreshTokenTime);
   }
 });
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function logout() {
-  await auth.signOut();
-}
 
 function handleLogIn() {
   auth.signIn();

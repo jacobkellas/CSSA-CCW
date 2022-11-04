@@ -1,6 +1,18 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <v-container class="brand-form-container">
+    <v-snackbar
+      :value="snackbar"
+      :timeout="2000"
+      app
+      absolute
+      bottom
+      color="primary"
+      left
+      text
+    >
+      {{ $t('Updated settings') }} <strong>{{ $t('successfully.') }}</strong>
+    </v-snackbar>
     <v-container
       v-if="isLoading && !isError"
       fluid
@@ -15,336 +27,130 @@
       >
       </v-skeleton-loader>
     </v-container>
-    <v-form
+    <v-stepper
       else
-      ref="form"
-      v-model="valid"
-      lazy-validation
+      v-model="stepIndex"
+      class="elevation-0"
+      vertical
     >
       <v-subheader class="sub-header font-weight-bold">
-        {{ $t('BRAND SETTINGS') }}
+        {{ $t('System Settings') }}
       </v-subheader>
-      <v-row>
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <v-file-input
-            v-model="agencyLogo"
-            :label="$t('Agency Logo')"
-            :rules="[v => !!v || 'Agency Logo is required']"
-            :show-size="1000"
-            @change="readFileAsync"
-            placeholder="Select your file"
-            prepend-icon="mdi-camera"
-            accept="image/png, image/jpeg"
-            truncate-length="50"
-            counter
-            required
-          >
-            <template #selection="{ index, text }">
-              <v-chip
-                v-if="index < 2"
-                color="deep-purple accent-4"
-                dark
-                label
-                small
-              >
-                {{ text }}
-              </v-chip>
-            </template>
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-asterisk
-              </v-icon>
-            </template>
-          </v-file-input>
-        </v-col>
-        <v-col>
-          <img
-            alt="Application logo"
-            :src="brandStore.brand.agencyLogoDataURL"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <v-text-field
-            :label="$t('Agency Name')"
-            :rules="[v => !!v || 'Agency Name is required']"
-            v-model="brandStore.getBrand.agencyName"
-            required
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-asterisk
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <v-text-field
-            :label="$t('Agency Sheriff Name')"
-            :rules="[v => !!v || 'Agency Sheriff Name is required']"
-            v-model="brandStore.getBrand.agencySheriffName"
-            required
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-asterisk
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <v-text-field
-            :label="$t('Chief of Police Name')"
-            :rules="[v => !!v || 'Chief of Police name is required']"
-            v-model="brandStore.getBrand.chiefOfPoliceName"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-                v-icon
-              >
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <v-text-field
-            :label="$t('Primary Theme Color')"
-            :rules="[
-              v => !!v || $t('Primary Theme color is required'),
-              v =>
-                (v && v.length <= 7) ||
-                $t('Primary Theme must be less than 7 characters'),
-              v =>
-                (v && v.length > 0 && v.startsWith('#')) ||
-                $t('Primary Theme must start with #'),
-            ]"
-            v-model="brandStore.getBrand.primaryThemeColor"
-            placeholder="#XXXXXX"
-            required
-          >
-            <template #append>
-              <v-menu
-                v-model="primaryMenu"
-                top
-                nudge-bottom="105"
-                nudge-left="16"
-                :close-on-content-click="false"
-              >
-                <template #activator="{ on }">
-                  <div
-                    :style="primarySwatchStyle"
-                    v-on="on"
-                  />
-                </template>
-                <v-card>
-                  <v-card-text class="pa-0">
-                    <v-color-picker
-                      v-model="brandStore.getBrand.primaryThemeColor"
-                      flat
-                    />
-                  </v-card-text>
-                </v-card>
-              </v-menu>
-            </template>
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-asterisk
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-          class="shrink"
-          style="min-width: 220px"
-        >
-          <v-text-field
-            :label="$t('Secondary Theme Color')"
-            :rules="[
-              v => !!v || $t('Secondary Theme color is required'),
-              v =>
-                (v && v.length <= 7) ||
-                $t('Secondary Theme must be less than 7 characters'),
-              v =>
-                (v && v.length > 0 && v.startsWith('#')) ||
-                $t('Secondary Theme must start with #'),
-            ]"
-            v-model="brandStore.getBrand.secondaryThemeColor"
-            v-mask="'#XXXXXX'"
-            placeholder="#XXXXXX"
-            required
-          >
-            <template #append>
-              <v-menu
-                v-model="secondaryMenu"
-                top
-                nudge-bottom="105"
-                nudge-left="16"
-                :close-on-content-click="false"
-              >
-                <template #activator="{ on }">
-                  <div
-                    :style="secondarySwatchStyle"
-                    v-on="on"
-                  />
-                </template>
-                <v-card>
-                  <v-card-text class="pa-0">
-                    <v-color-picker
-                      v-model="brandStore.getBrand.secondaryThemeColor"
-                      flat
-                    />
-                  </v-card-text>
-                </v-card>
-              </v-menu>
-            </template>
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-asterisk
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row justify="space-between">
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <v-btn>
-            {{ $t('Cancel') }}
-          </v-btn>
-        </v-col>
-        <v-col
-          cols="12"
-          sm="6"
-        >
-          <v-btn
-            color="primary"
-            :disabled="!valid"
-            @click="getFormValues"
-          >
-            {{ $t('Publish') }}
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-spacer></v-spacer>
-    </v-form>
+      <v-stepper-step
+        :complete="stepIndex > 1"
+        editable
+        step="1"
+      >
+        Agency
+      </v-stepper-step>
+
+      <v-stepper-content step="1">
+        <AgencyFormStep
+          :handle-next-step="handleNextStep"
+          :handle-back-step="handleBackStep"
+          :handle-reset-step="handleResetStep"
+        />
+      </v-stepper-content>
+
+      <v-stepper-step
+        :complete="stepIndex > 2"
+        editable
+        step="2"
+      >
+        Assets
+      </v-stepper-step>
+
+      <v-stepper-content step="2">
+        <AssetsFormStep
+          :handle-next-step="handleNextStep"
+          :handle-back-step="handleBackStep"
+          :handle-reset-step="handleResetStep"
+        />
+      </v-stepper-content>
+
+      <v-stepper-step
+        :complete="stepIndex > 3"
+        editable
+        step="3"
+      >
+        Color Scheme
+      </v-stepper-step>
+
+      <v-stepper-content step="3">
+        <ColorSchemeFormStep
+          :handle-next-step="handleNextStep"
+          :handle-back-step="handleBackStep"
+          :handle-reset-step="handleResetStep"
+        />
+      </v-stepper-content>
+
+      <v-stepper-step
+        :complete="stepIndex > 4"
+        editable
+        step="4"
+      >
+        {{ $t('Configuration') }}
+      </v-stepper-step>
+      <v-stepper-content step="4">
+        <ConfigurationFormStep
+          :handle-next-step="handleNextStep"
+          :handle-back-step="handleBackStep"
+          :handle-reset-step="handleResetStep"
+        />
+      </v-stepper-content>
+
+      <v-stepper-step
+        editable
+        step="5"
+      >
+        {{ $t('Fees') }}
+      </v-stepper-step>
+      <v-stepper-content step="5">
+        <FeesFormStep
+          :handle-next-step="handleNextStep"
+          :handle-back-step="handleBackStep"
+          :handle-reset-step="handleResetStep"
+        />
+      </v-stepper-content>
+    </v-stepper>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import AgencyFormStep from './steps/AgencyFormStep.vue';
+import AssetsFormStep from './steps/AssetsFormStep.vue';
+import ColorSchemeFormStep from './steps/ColorSchemeFormStep.vue';
+import ConfigurationFormStep from './steps/ConfigurationFormStep.vue';
+import FeesFormStep from './steps/FeesFormStep.vue';
+import { ref } from 'vue';
 import { useBrandStore } from '@core-admin/stores/brandStore';
 import { useQuery } from '@tanstack/vue-query';
-import { computed, ref } from 'vue';
+
+const stepIndex = ref(1);
+const snackbar = ref(false);
 
 const brandStore = useBrandStore();
-const valid = ref(false);
-const agencyLogo = ref<Blob | null>(null);
-const primaryMenu = ref(false);
-const secondaryMenu = ref(false);
-
-const primarySwatchStyle = computed(() => {
-  return {
-    backgroundColor: brandStore.getBrand.primaryThemeColor,
-    cursor: 'pointer',
-    height: '30px',
-    width: '30px',
-    marginBottom: '2px',
-    borderRadius: primaryMenu.value ? '50%' : '4px',
-    transition: 'border-radius 200ms ease-in-out',
-  };
-});
-
-const secondarySwatchStyle = computed(() => {
-  return {
-    backgroundColor: brandStore.getBrand.secondaryThemeColor,
-    cursor: 'pointer',
-    height: '30px',
-    width: '30px',
-    marginBottom: '2px',
-    borderRadius: primaryMenu.value ? '50%' : '4px',
-    transition: 'border-radius 200ms ease-in-out',
-  };
-});
-
 const { isLoading, isError } = useQuery(
   ['brandSetting'],
   brandStore.getBrandSettingApi
 );
 
-function readFileAsync() {
-  return new Promise((resolve, reject) => {
-    let file = agencyLogo.value;
-    let reader = new FileReader();
-
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(brandStore.setLogoDataURL(reader.result));
-      };
-      reader.onerror = reject;
-    }
-  });
+function handleNextStep() {
+  snackbar.value = true;
+  stepIndex.value++;
 }
 
-async function getFormValues() {
-  brandStore.setBrandSettingApi();
+function handleBackStep() {
+  stepIndex.value--;
+}
+
+function handleResetStep() {
+  stepIndex.value = 0;
 }
 </script>
 
 <style lang="scss" scoped>
 .sub-header {
   font-size: 1.5rem;
-}
-
-.brand-form-container {
-  min-height: 100vh;
-
-  img {
-    max-width: 35%;
-  }
 }
 </style>

@@ -92,6 +92,14 @@ export default defineComponent({
       }
     );
 
+    useQuery(['logo'], brandStore.getAgencyLogoDocumentsApi, {
+      enabled: apiUrl,
+    });
+
+    useQuery(['landingPageImage'], brandStore.getAgencyLandingPageImageApi, {
+      enabled: apiUrl,
+    });
+
     return { isLoading, isBrandLoading, isError };
   },
 });

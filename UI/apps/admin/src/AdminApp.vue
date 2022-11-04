@@ -92,6 +92,14 @@ export default defineComponent({
       }
     );
 
+    useQuery(['logo'], brandStore.getAgencyLogoDocumentsApi, {
+      enabled: apiUrl,
+    });
+
+    useQuery(['landingPageImage'], brandStore.getAgencyLandingPageImageApi, {
+      enabled: apiUrl,
+    });
+
     app.proxy.$vuetify.theme.dark = themeStore.getThemeConfig.isDark;
 
     return { isLoading, isBrandLoading, isError };

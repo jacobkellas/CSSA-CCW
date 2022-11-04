@@ -1,4 +1,5 @@
 import Home from '@core-admin/views/HomeView.vue';
+import Routes from '@core-admin/router/routes';
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
@@ -6,18 +7,18 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: Routes.HOME_ROUTE_PATH,
     name: 'Home',
     component: Home,
   },
   {
-    path: '/brand',
+    path: Routes.SETTINGS_ROUTE_PATH,
     name: 'Brand',
     component: () =>
       import(/* webpackChunkName: "brand" */ '@core-admin/views/BrandView.vue'),
   },
   {
-    path: '/appointments',
+    path: Routes.APPOINTMENTS_ROUTE_PATH,
     name: 'Appointments',
     component: () =>
       import(

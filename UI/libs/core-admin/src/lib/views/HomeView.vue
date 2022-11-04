@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <img
-      v-if="store.getBrand.agencyLogoDataURL"
-      alt="Agency logo"
-      :src="store.getBrand.agencyLogoDataURL"
+      v-if="store.getDocuments.agencyLandingPageImage"
+      alt="Agency landing page image"
+      :src="store.getDocuments.agencyLandingPageImage"
     />
     <v-container>
       <div class="option-section">

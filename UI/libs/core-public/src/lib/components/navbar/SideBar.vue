@@ -7,15 +7,15 @@
     permanent
   >
     <v-list nav>
-      <v-list-item to="/">
+      <v-list-item :to="Routes.HOME_ROUTE_PATH">
         <v-list-item-avatar
-          height="36"
-          width="36"
+          height="32"
+          width="32"
         >
           <img
-            src="/img/icons/agency_logo.svg"
-            width="36"
-            height="36"
+            :src="brandStore.getDocuments.agencyLogo"
+            width="32"
+            height="32"
             alt="Image"
             loading="lazy"
           />
@@ -49,7 +49,11 @@
 </template>
 
 <script setup lang="ts">
+import Routes from '@core-public/router/routes';
 import { reactive } from 'vue';
+import { useBrandStore } from '@core-public/stores/brandStore';
+
+const brandStore = useBrandStore();
 
 interface ISideNavProps {
   handleSelection: CallableFunction;

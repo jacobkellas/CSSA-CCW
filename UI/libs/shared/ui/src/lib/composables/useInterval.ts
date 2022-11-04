@@ -1,15 +1,15 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted } from 'vue';
 
 /**
  * useInterval composable which emits every x milliseconds
  * @param delay number in milliseconds
  */
 export default function useInterval(fn, delay: number) {
-  const interval = ref<TimerHandler>;
+  let interval;
 
   onMounted(() => {
-    interval.value = window.setInterval(fn, delay);
+    interval = window.setInterval(fn, delay);
   });
 
-  onBeforeUnmount(() => window.clearInterval(interval.value));
+  onBeforeUnmount(() => window.clearInterval(interval));
 }

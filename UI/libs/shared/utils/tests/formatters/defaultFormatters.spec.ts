@@ -1,4 +1,7 @@
-import { formatPhoneNumber, formatSSN } from '@shared-utils/formatters/defaultFormatters';
+import {
+  formatPhoneNumber,
+  formatSSN,
+} from '@shared-utils/formatters/defaultFormatters';
 
 describe('formatSSN', () => {
   it('Should return a correctly formatted SSN', () => {

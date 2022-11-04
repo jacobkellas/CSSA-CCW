@@ -106,6 +106,7 @@
 <script setup lang="ts">
 import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import Routes from '@core-public/router/routes';
 import { formatPhoneNumber } from '@shared-utils/formatters/defaultFormatters';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
@@ -122,7 +123,7 @@ const completeApplicationStore = useCompleteApplicationStore();
 
 function handleSubmit() {
   formatInputs();
-  router.push('/renew-form-2');
+  router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
 }
 
 function handleSave() {

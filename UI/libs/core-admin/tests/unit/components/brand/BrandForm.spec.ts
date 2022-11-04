@@ -1,8 +1,8 @@
 import BrandForm from '@core-admin/components/brand/BrandForm.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import { createTestingPinia } from '@pinia/testing';
 import { useQuery } from '@tanstack/vue-query';
+import { createLocalVue, mount } from '@vue/test-utils';
 
 const localVue = createLocalVue();
 const pinia = createTestingPinia();
@@ -24,7 +24,7 @@ describe('BrandForm', () => {
       data: null,
       isLoading: true,
     };
-    (useQuery as jest.Mock).mockImplementationOnce(() => result);
+    (useQuery as jest.Mock).mockImplementation(() => result);
   });
 
   it('Should render logo label', () => {

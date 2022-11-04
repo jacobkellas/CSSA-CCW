@@ -44,36 +44,38 @@ export default class Endpoints {
   /********APPOINTMENTS******************/
 
   static get GET_APPOINTMENTS_ENDPOINT() {
-    return `${
-      useAppConfigStore().getAppConfig.apiBaseUrl
-    }/schedule/v1/appointment/getAll`;
+    return `http://localhost:5108/api/schedule/v1/appointment/getAll`;
   }
 
   /********USER PROFILE******************/
 
   static get POST_VERIFY_USER_ENDPOINT() {
-    return `${
-      useAppConfigStore().getAppConfig.apiBaseUrl
-    }/userprofile/v1/user/verifyEmail`;
+    return `http://localhost:5177/api/userprofile/v1/user/verifyEmail`;
   }
 
   static get PUT_CREATE_USER_ENDPOINT() {
-    return `${
-      useAppConfigStore().getAppConfig.apiBaseUrl
-    }/userprofile/v1/user/create`;
+    return `http://localhost:5177/api/userprofile/v1/user/create`;
   }
 
   /********DOCUMENTS******************/
 
-  static get POST_DOCUMENT_FILE_ENDPOINT() {
-    return `${
-      useAppConfigStore().getAppConfig.apiBaseUrl
-    }/document/v1/document/uploadImage`;
+  static get GET_DOCUMENT_AGENCY_ENDPOINT() {
+    return `http://localhost:5148/api/document/v1/document/downloadAgencyLogo`;
+  }
+
+  static get POST_DOCUMENT_AGENCY_ENDPOINT() {
+    return `http://localhost:5148/api/document/v1/document/uploadAgencyLogo`;
   }
 
   static get POST_DOCUMENT_IMAGE_ENDPOINT() {
     return `${
       useAppConfigStore().getAppConfig.apiBaseUrl
-    }/document/v1/document/uploadFile`;
+    }/document/v1/document/uploadImage`;
+  }
+
+  static get POST_DOCUMENT_FILE_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.apiBaseUrl
+    }/document/v1/document/uploadImage`;
   }
 }
