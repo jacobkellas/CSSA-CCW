@@ -46,12 +46,17 @@ const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
+  // TODO: once the is current step is added to the object change this to route to the current step is
+  stepIndex.step = 0;
   const res = applicationStore.getCompleteApplicationFromApi(
     authStore.auth.userEmail,
     false
   );
 
-  res.then(data => (applicationStore.completeApplication = data.application));
+  res.then(data => {
+    applicationStore.setCompleteApplication(data);
+    stepIndex.step = 1;
+  });
 });
 
 function handleNextSection() {

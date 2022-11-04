@@ -87,7 +87,7 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
           <div class="v-input__control">
             <div class="v-input__slot">
               <div class="v-text-field__slot"><label for="input-6" class="v-label theme--light" style="left: 0px; position: absolute;">Driver License</label>
-                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".png, .jpeg" id="input-6" type="file">
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept="image/png, image/jpeg" id="input-6" type="file">
               </div>
               <div class="v-input__append-inner">
                 <div></div>
@@ -109,7 +109,7 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
           <div class="v-input__control">
             <div class="v-input__slot">
               <div class="v-text-field__slot"><label for="input-10" class="v-label theme--light" style="left: 0px; position: absolute;">Proof of Residence 1</label>
-                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-10" type="file">
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .docx" id="input-10" type="file">
               </div>
               <div class="v-input__append-inner">
                 <div></div>
@@ -131,7 +131,7 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
           <div class="v-input__control">
             <div class="v-input__slot">
               <div class="v-text-field__slot"><label for="input-14" class="v-label theme--light" style="left: 0px; position: absolute;">Proof of Residence 2</label>
-                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-14" type="file">
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .docx" id="input-14" type="file">
               </div>
               <div class="v-input__append-inner">
                 <div></div>
@@ -159,7 +159,7 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
           <div class="v-input__control">
             <div class="v-input__slot">
               <div class="v-text-field__slot"><label for="input-20" class="v-label theme--light" style="left: 0px; position: absolute;">Military Document</label>
-                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-20" type="file">
+                <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .docx" id="input-20" type="file">
               </div>
               <div class="v-input__append-inner">
                 <div></div>
@@ -186,7 +186,7 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
           </div>
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-26" class="v-label theme--light" style="left: 0px; position: absolute;">CitizenShip Documents</label>
+              <div class="v-text-field__slot"><label for="input-26" class="v-label theme--light" style="left: 0px; position: absolute;">Citizenship Documents</label>
                 <div class="v-file-input__text v-file-input__text--chips"></div><input accept=".pdf, .doc, .dox" id="input-26" type="file">
               </div>
               <div class="v-input__append-inner">
@@ -317,5 +317,15 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
   </span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default error mr-2"><span class="v-btn__content">
     Cancel
   </span></button></div>
+  <div class="v-snack v-snack--bottom v-snack--has-background">
+    <transition-stub name="v-snack-transition">
+      <div class="v-snack__wrapper v-sheet theme--dark" style="display: none;">
+        <div role="status" aria-live="polite" class="v-snack__content">
+          error message
+        </div>
+        <div class="v-snack__action "></div>
+      </div>
+    </transition-stub>
+  </div>
 </div>
 `;

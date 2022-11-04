@@ -1,19 +1,31 @@
 <template>
   <v-stepper-items>
-    <v-stepper-content step="1">
-      <SecondFormStepOne :handle-next-section="handleNextSection" />
+    <v-stepper-content step="6">
+      <SecondFormStepOne
+        v-if="props.stepIndex === 6"
+        :handle-next-section="handleNextSection"
+      />
     </v-stepper-content>
 
-    <v-stepper-content step="2">
-      <SecondFormStepThree :handle-next-section="handleNextSection" />
+    <v-stepper-content step="7">
+      <SecondFormStepThree
+        v-if="props.stepIndex === 7"
+        :handle-next-section="handleNextSection"
+      />
     </v-stepper-content>
 
-    <v-stepper-content step="3">
-      <SecondFormStepTwo :handle-next-section="handleNextSection" />
+    <v-stepper-content step="8">
+      <SecondFormStepTwo
+        v-if="props.stepIndex === 8"
+        :handle-next-section="handleNextSection"
+      />
     </v-stepper-content>
 
-    <v-stepper-content step="4">
-      <SecondFormStepFour :handle-next-section="handleNextSection" />
+    <v-stepper-content step="9">
+      <SecondFormStepFour
+        v-if="props.stepIndex === 9"
+        :handle-next-section="handleNextSection"
+      />
     </v-stepper-content>
   </v-stepper-items>
 </template>
@@ -25,10 +37,12 @@ import SecondFormStepThree from '@core-public/components/form-stepper/form-steps
 import SecondFormStepFour from '@core-public/components/form-stepper/form-steps/SecondFormStepFour.vue';
 
 interface IFormSecondStepItemsProps {
+  stepIndex?: number;
   handleNextSection: CallableFunction;
 }
 const props = withDefaults(defineProps<IFormSecondStepItemsProps>(), {
   handleNextSection: () => null,
+  stepIndex: 6,
 });
 </script>
 

@@ -10,7 +10,7 @@
       <v-row>
         <v-col
           cols="3"
-          lg="3"
+          lg="2"
           sm="1"
         >
           <div class="option-section">
@@ -59,7 +59,7 @@
         </v-col>
         <v-col
           cols="6"
-          lg="4"
+          lg="5"
           sm="1"
         >
           <PriceInfoWrapper />

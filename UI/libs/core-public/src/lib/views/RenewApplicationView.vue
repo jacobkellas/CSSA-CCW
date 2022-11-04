@@ -70,6 +70,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query';
 const applicationStore = useCompleteApplicationStore();
 const applicationTypeStore = useApplicationTypeStore();
 const authStore = useAuthStore();
+const completeApplication = applicationStore.completeApplication.application;
 
 const state = reactive({
   selected: false,
@@ -97,13 +98,14 @@ const createMutation = useMutation({
 
 async function handleModifyApplication() {
   applicationTypeStore.state.type = 'modify';
-  applicationStore.completeApplication = state.applications[0].application;
+  applicationStore.setCompleteApplication(state.applications[0].application);
+
   state.selected = true;
 }
 
 async function handleRenewApplication() {
   applicationTypeStore.state.type = 'renewal';
-  applicationStore.completeApplication.userEmail = authStore.auth.userEmail;
+  completeApplication.userEmail = authStore.auth.userEmail;
   applicationStore.completeApplication.id = window.crypto.randomUUID();
   createMutation.mutate();
 }

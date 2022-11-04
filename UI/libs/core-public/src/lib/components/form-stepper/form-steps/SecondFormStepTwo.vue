@@ -15,11 +15,12 @@
           sm="1"
         >
           <v-file-input
+            ref="driver-license"
             show-size
             small-chips
-            accept=".png, .jpeg"
+            accept="image/png, image/jpeg"
             :label="$t('Driver License')"
-            @change="handleFileUpload($event, 'driver-license')"
+            @change="handleFileInput($event, 'DriverLicense')"
           />
         </v-col>
         <v-col
@@ -30,9 +31,9 @@
           <v-file-input
             show-size
             small-chips
-            accept=".pdf, .doc, .dox"
+            accept=".pdf, .doc, .docx"
             :label="$t('Proof of Residence 1')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'ProofResidency')"
           />
         </v-col>
         <v-col
@@ -43,9 +44,9 @@
           <v-file-input
             show-size
             small-chips
-            accept=".pdf, .doc, .dox"
+            accept=".pdf, .doc, .docx"
             :label="$t('Proof of Residence 2')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'ProofResidency2')"
           />
         </v-col>
       </v-row>
@@ -62,9 +63,9 @@
           <v-file-input
             show-size
             small-chips
-            accept=".pdf, .doc, .dox"
+            accept=".pdf, .doc, .docx"
             :label="$t('Military Document')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'MilitaryDoc')"
           />
         </v-col>
       </v-row>
@@ -82,8 +83,8 @@
             show-size
             small-chips
             accept=".pdf, .doc, .dox"
-            :label="$t('CitizenShip Documents')"
-            @change="handleFileUpload"
+            :label="$t('Citizenship Documents')"
+            @change="handleFileInput($event, 'Citizenship')"
           />
         </v-col>
       </v-row>
@@ -103,7 +104,7 @@
             small-chips
             multiple
             :label="$t('Supporting Documents')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'Supporting')"
           />
         </v-col>
       </v-row>
@@ -123,7 +124,7 @@
             small-chips
             accept=".pdf, .doc, .dox"
             :label="$t('Name change documents')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'NameChange')"
           />
         </v-col>
       </v-row>
@@ -142,7 +143,7 @@
             small-chips
             accept=".pdf, .doc, .dox"
             :label="$t('Judicial documents')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'Judicial')"
           />
         </v-col>
         <v-col
@@ -155,16 +156,28 @@
             small-chips
             accept=".pdf, .doc, .dox"
             :label="$t('Reserve documents')"
-            @change="handleFileUpload"
+            @change="handleFileInput($event, 'Reserve')"
           />
         </v-col>
       </v-row>
       <v-divider />
     </v-form>
+    <v-progress-circular
+      v-if="!state.uploadSuccessful"
+      color="primary"
+      indeterminate
+    />
     <FormButtonContainer
+      v-else
       :valid="state.valid"
       @submit="handleSubmit"
     />
+    <v-snackbar
+      v-model="state.snackbar"
+      :timeout="2000"
+    >
+      {{ $t('error message') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -173,6 +186,8 @@ import DocumentInfoSection from '@shared-ui/components/info-sections/DocumentInf
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import axios from 'axios';
 
 const applicationStore = useCompleteApplicationStore();
 const completeApplication = applicationStore.completeApplication.application;
@@ -184,23 +199,58 @@ interface ISecondFormStepTwoProps {
 const props = defineProps<ISecondFormStepTwoProps>();
 
 const state = reactive({
-  files: [] as Array<File>,
+  driver: {} as File,
+  files: [] as Array<{ form; target }>,
   valid: false,
+  uploadSuccessful: true,
+  snackbar: false,
 });
 
-function handleFileUpload(event, target: string) {
-  // need to add the application id to this.
-  const newFileName = `${applicationStore.completeApplication.id}-${completeApplication.personalInfo.lastName}-${completeApplication.personalInfo.firstName}_${target}`;
-  const newFile = new File([event], newFileName, event.type);
+const fileMutation = useMutation({
+  mutationFn: handleFileUpload,
+  onSuccess: () => {
+    state.uploadSuccessful = true;
+    props.handleNextSection();
+  },
+  onError: () => {
+    state.snackbar = true;
+  },
+});
 
-  state.files.push(newFile);
+function handleFileInput(event: File, target: string) {
+  // need to add the application id to this.
+
+  //TODO: change this to the order id.
+
+  const form = new FormData();
+
+  form.append('fileToPersist', event);
+
+  window.console.log(form);
+  const fileObject = {
+    form,
+    target,
+  };
+
+  state.files.push(fileObject);
+}
+
+async function handleFileUpload() {
+  state.files.forEach(file => {
+    const newFileName = `${applicationStore.completeApplication.id.slice(-7)}_${
+      completeApplication.personalInfo.lastName
+    }_${completeApplication.personalInfo.firstName}_${file.target}`;
+
+    axios.post(
+      `http://localhost:5148/Api/Document/v1/Document/uploadApplicantFile?saveAsFileName=${newFileName}`,
+      file.form
+    );
+  });
 }
 
 function handleSubmit() {
-  // TODO: Create another function to loop throught the files and call the api call
-  // Function will also need to set a loading state till the call is finished.
-
-  props.handleNextSection();
+  state.uploadSuccessful = false;
+  fileMutation.mutate();
 }
 </script>
 
