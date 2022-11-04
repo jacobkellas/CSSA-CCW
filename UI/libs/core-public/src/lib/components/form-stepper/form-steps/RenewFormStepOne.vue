@@ -18,9 +18,7 @@
             id="last-name-field"
             :label="$t('Last name')"
             :rules="[v => !!v || $t('Last name is required')]"
-            v-model="
-              completeApplicationStore.completeApplication.personalInfo.lastName
-            "
+            v-model="completeApplication.personalInfo.lastName"
           >
             <template #prepend>
               <v-icon
@@ -41,10 +39,7 @@
           <v-text-field
             :label="$t('First name')"
             :rules="[v => !!v || $t('First name is required')]"
-            v-model="
-              completeApplicationStore.completeApplication.personalInfo
-                .firstName
-            "
+            v-model="completeApplication.personalInfo.firstName"
           >
             <template #prepend>
               <v-icon
@@ -63,22 +58,14 @@
           sm="3"
         >
           <v-text-field
-            v-if="
-              !completeApplicationStore.completeApplication.personalInfo
-                .noMiddleName
-            "
+            v-if="!completeApplication.personalInfo.noMiddleName"
             :label="$t('Middle name')"
             :rules="[
               v =>
-                (!!v &&
-                  !completeApplicationStore.completeApplication.personalInfo
-                    .noMiddleName) ||
+                (!!v && !completeApplication.personalInfo.noMiddleName) ||
                 $t('Middle name is required or you must select no middle name'),
             ]"
-            v-model="
-              completeApplicationStore.completeApplication.personalInfo
-                .middleName
-            "
+            v-model="completeApplication.personalInfo.middleName"
           >
             <template #prepend>
               <v-icon
@@ -98,10 +85,7 @@
         >
           <v-text-field
             :label="$t('Maiden name')"
-            v-model="
-              completeApplicationStore.completeApplication.personalInfo
-                .maidenName
-            "
+            v-model="completeApplication.personalInfo.maidenName"
           />
         </v-col>
 
@@ -114,8 +98,7 @@
             :label="'No middle name'"
             @input="
               v => {
-                completeApplicationStore.completeApplication.personalInfo.noMiddleName =
-                  v;
+                completeApplication.personalInfo.noMiddleName = v;
               }
             "
           />
@@ -127,9 +110,7 @@
         >
           <v-text-field
             :label="$t('Suffix')"
-            v-model="
-              completeApplicationStore.completeApplication.personalInfo.suffix
-            "
+            v-model="completeApplication.personalInfo.suffix"
           />
         </v-col>
       </v-row>
@@ -142,9 +123,7 @@
           <v-text-field
             :label="$t(' Permit Number')"
             :rules="[v => !!v || $t(' Permit number cannot be blank')]"
-            v-model="
-              completeApplicationStore.completeApplication.license.permitNumber
-            "
+            v-model="completeApplication.license.permitNumber"
           >
             <template #prepend>
               <v-icon
@@ -160,9 +139,7 @@
           <v-text-field
             :label="$t('Issuing county')"
             :rules="[v => !!v || $t('Issuing county cannot be blank')]"
-            v-model="
-              completeApplicationStore.completeApplication.license.issuingCounty
-            "
+            v-model="completeApplication.license.issuingCounty"
           >
             <template #prepend>
               <v-icon
@@ -185,10 +162,7 @@
           >
             <template #activator="{ on, attrs }">
               <v-text-field
-                v-model="
-                  completeApplicationStore.completeApplication.license
-                    .expirationDate
-                "
+                v-model="completeApplication.license.expirationDate"
                 :label="$t('Expiration Date')"
                 prepend-icon="mdi-calendar"
                 readonly
@@ -197,10 +171,7 @@
               ></v-text-field>
             </template>
             <v-date-picker
-              v-model="
-                completeApplicationStore.completeApplication.license
-                  .expirationDate
-              "
+              v-model="completeApplication.license.expirationDate"
               no-title
               scrollable
             >
@@ -223,9 +194,7 @@
           <v-text-field
             :label="$t('Social Security Number')"
             :rules="[v => !!v || $t('Social Security Number cannot be blank')]"
-            v-model="
-              completeApplicationStore.completeApplication.personalInfo.ssn
-            "
+            v-model="completeApplication.personalInfo.ssn"
           >
             <template #prepend>
               <v-icon
@@ -248,9 +217,8 @@
             :rules="[
               v => !!v || 'Confirm ssn cannot be blank',
               v =>
-                v ===
-                  completeApplicationStore.completeApplication.personalInfo
-                    .ssn || $t('SSN\'s do not match'),
+                v === completeApplication.personalInfo.ssn ||
+                $t('SSN\'s do not match'),
             ]"
             v-model="ssnConfirm"
           >
@@ -287,8 +255,7 @@
             :layout="'row'"
             @input="
               v => {
-                completeApplicationStore.completeApplication.personalInfo.maritalStatus =
-                  v;
+                completeApplication.personalInfo.maritalStatus = v;
               }
             "
           />
@@ -297,10 +264,7 @@
           cols="20"
           md="5"
           sm="3"
-          v-if="
-            completeApplicationStore.completeApplication.personalInfo
-              .maritalStatus === 'married'
-          "
+          v-if="completeApplication.personalInfo.maritalStatus === 'married'"
         >
           <v-subheader class="subHeader font-weight-bold">
             {{ $t('Spouse Information') }}
@@ -314,10 +278,7 @@
               <v-text-field
                 :label="$t('Last Name')"
                 :rules="[v => !!v || $t('Last name cannot be blank')]"
-                v-model="
-                  completeApplicationStore.completeApplication.spouseInformation
-                    .lastName
-                "
+                v-model="completeApplication.spouseInformation.lastName"
               >
                 <template #prepend>
                   <v-icon
@@ -331,10 +292,7 @@
 
               <v-text-field
                 :label="$t('Middle Name')"
-                v-model="
-                  completeApplicationStore.completeApplication.spouseInformation
-                    .middleName
-                "
+                v-model="completeApplication.spouseInformation.middleName"
               />
             </v-col>
             <v-col
@@ -345,10 +303,7 @@
               <v-text-field
                 :label="$t('First Name')"
                 :rules="[v => !!v || $t('First name cannot be blank')]"
-                v-model="
-                  completeApplicationStore.completeApplication.spouseInformation
-                    .firstName
-                "
+                v-model="completeApplication.spouseInformation.firstName"
               >
                 <template #prepend>
                   <v-icon
@@ -361,10 +316,7 @@
               </v-text-field>
               <v-text-field
                 :label="$t('Maiden Name')"
-                v-model="
-                  completeApplicationStore.completeApplication.spouseInformation
-                    .maidenName
-                "
+                v-model="completeApplication.spouseInformation.maidenName"
               />
             </v-col>
           </v-row>
@@ -377,15 +329,13 @@
       {{ $t('aliases') }}
     </v-subheader>
     <div class="alias-components-container">
-      <AliasTable
-        :aliases="completeApplicationStore.completeApplication.aliases"
-      />
+      <AliasTable :aliases="completeApplication.aliases" />
       <AliasDialog :save-alias="getAliasFromDialog" />
     </div>
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"
-      @save="handleSave"
+      @save="saveMutation.mutate"
     />
     <FormErrorAlert
       v-if="errors.length > 0"
@@ -404,6 +354,9 @@ import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import { useMutation } from '@tanstack/vue-query';
+import Routes from '@core-public/router/routes';
+import { i18n } from '@core-public/plugins';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
@@ -419,22 +372,41 @@ const menu = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
+const completeApplication =
+  completeApplicationStore.completeApplication.application;
 
 const router = useRouter();
 
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Renewal Step one');
+  },
+  onSuccess: () => {
+    props.handleNextSection();
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push(Routes.HOME_ROUTE_PATH);
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
+
 function handleSubmit() {
-  if (
-    !completeApplicationStore.completeApplication.personalInfo.maritalStatus
-  ) {
+  if (!completeApplication.personalInfo.maritalStatus) {
     errors.value.push('Marital Status');
   } else {
-    props.handleNextSection();
+    updateMutation.mutate();
   }
-}
-
-function handleSave() {
-  completeApplicationStore.postCompleteApplicationFromApi;
-  router.push('/');
 }
 
 function getAliasFromDialog(alias) {

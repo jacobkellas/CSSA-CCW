@@ -17,6 +17,7 @@
         v-model="stepIndex.step"
       >
         <FormStepHeader
+          :previous-index="stepIndex.previousStep"
           :step-index="stepIndex.step"
           :step-names="formOneStepNames"
         />
@@ -44,6 +45,7 @@ const authStore = useAuthStore();
 
 const stepIndex = reactive({
   step: 1,
+  previousStep: 0,
 });
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
@@ -62,6 +64,7 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
 });
 
 function handleNextSection() {
+  stepIndex.previousStep = stepIndex.step;
   stepIndex.step += 1;
 }
 

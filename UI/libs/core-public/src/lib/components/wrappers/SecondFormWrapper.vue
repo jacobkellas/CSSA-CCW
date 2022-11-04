@@ -1,6 +1,14 @@
 <template>
   <div>
+    <v-container v-if="isLoading">
+      <v-skeleton-loader
+        fluid
+        class="fill-height"
+        type=" list-item"
+      />
+    </v-container>
     <v-card
+      v-else
       class="rounded elevation-2 form-card"
       :class="{ 'dark-card': $vuetify.theme.dark }"
     >
@@ -9,10 +17,15 @@
         v-model="stepIndex.step"
       >
         <FormStepHeader
+          :previous-index="stepIndex.previousStep"
+          :starting-step="6"
           :step-index="stepIndex.step"
           :step-names="formTwoStepName"
         />
-        <FormSecondStepItems :handle-next-section="handleNextSection" />
+        <FormSecondStepItems
+          :step-index="stepIndex.step"
+          :handle-next-section="handleNextSection"
+        />
       </v-stepper>
     </v-card>
   </div>
@@ -23,12 +36,33 @@ import FormStepHeader from '@core-public/components/form-stepper/FormStepHeader.
 import FormSecondStepItems from '@core-public/components/form-stepper/FormSecondStepItems.vue';
 import { formTwoStepName } from '@shared-utils/lists/defaultConstants';
 import { reactive } from 'vue';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useQuery } from '@tanstack/vue-query';
+
+const applicationStore = useCompleteApplicationStore();
+const authStore = useAuthStore();
 
 const stepIndex = reactive({
-  step: 1,
+  step: 6,
+  previousStep: 5,
+});
+
+const { isLoading } = useQuery(['getIncompleteApplication'], () => {
+  stepIndex.step = 5;
+  const res = applicationStore.getCompleteApplicationFromApi(
+    authStore.auth.userEmail,
+    false
+  );
+
+  res.then(data => {
+    applicationStore.setCompleteApplication(data);
+    stepIndex.step = 6;
+  });
 });
 
 function handleNextSection() {
+  stepIndex.previousStep = stepIndex.step;
   stepIndex.step += 1;
 }
 </script>

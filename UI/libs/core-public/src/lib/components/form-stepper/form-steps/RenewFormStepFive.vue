@@ -16,10 +16,7 @@
           <v-text-field
             :label="$t('Primary phone number')"
             :rules="phoneRuleSet"
-            v-model="
-              completeApplicationStore.completeApplication.contact
-                .primaryPhoneNumber
-            "
+            v-model="completeApplication.contact.primaryPhoneNumber"
           >
             <template #prepend>
               <v-icon
@@ -39,10 +36,7 @@
           <v-text-field
             :label="$t('Cell phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
-            v-model="
-              completeApplicationStore.completeApplication.contact
-                .cellPhoneNumber
-            "
+            v-model="completeApplication.contact.cellPhoneNumber"
           />
         </v-col>
 
@@ -54,10 +48,7 @@
           <v-text-field
             :label="$t('Work phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
-            v-model="
-              completeApplicationStore.completeApplication.contact
-                .workPhoneNumber
-            "
+            v-model="completeApplication.contact.workPhoneNumber"
           />
         </v-col>
 
@@ -69,10 +60,7 @@
           <v-text-field
             :label="$t('Fax number')"
             :hint="$t('Only numbers no spaces or dashes')"
-            v-model="
-              completeApplicationStore.completeApplication.contact
-                .faxPhoneNumber
-            "
+            v-model="completeApplication.contact.faxPhoneNumber"
           />
         </v-col>
       </v-row>
@@ -87,8 +75,7 @@
             :target="'textMessageUpdates'"
             @input="
               v => {
-                completeApplicationStore.completeApplication.contact.textMessageUpdates =
-                  v;
+                completeApplication.contact.textMessageUpdates = v;
               }
             "
           />
@@ -112,6 +99,8 @@ import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useRouter } from 'vue-router/composables';
+import { useMutation } from '@tanstack/vue-query';
+import { i18n } from '@core-public/plugins';
 
 const router = useRouter();
 
@@ -120,36 +109,58 @@ const state = reactive({
 });
 
 const completeApplicationStore = useCompleteApplicationStore();
+const completeApplication =
+  completeApplicationStore.completeApplication.application;
+
+const updateMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Step five complete');
+  },
+  onSuccess: () => {
+    router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
+
+const saveMutation = useMutation({
+  mutationFn: () => {
+    return completeApplicationStore.updateApplication('Save and quit');
+  },
+  onSuccess: () => {
+    router.push(Routes.HOME_ROUTE_PATH);
+  },
+  onError: () => {
+    alert(i18n.t('Save unsuccessful, please try again'));
+  },
+});
 
 function handleSubmit() {
   formatInputs();
-  router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
+  updateMutation.mutate();
 }
 
 function handleSave() {
   formatInputs();
-  completeApplicationStore.postCompleteApplicationFromApi;
+  saveMutation.mutate();
 }
 
 function formatInputs() {
-  completeApplicationStore.completeApplication.contact.primaryPhoneNumber =
-    formatPhoneNumber(
-      completeApplicationStore.completeApplication.contact.primaryPhoneNumber
-    );
+  completeApplication.contact.primaryPhoneNumber = formatPhoneNumber(
+    completeApplication.contact.primaryPhoneNumber
+  );
 
-  completeApplicationStore.completeApplication.contact.cellPhoneNumber =
-    formatPhoneNumber(
-      completeApplicationStore.completeApplication.contact.cellPhoneNumber
-    );
+  completeApplication.contact.cellPhoneNumber = formatPhoneNumber(
+    completeApplication.contact.cellPhoneNumber
+  );
 
-  completeApplicationStore.completeApplication.contact.faxPhoneNumber =
-    formatPhoneNumber(
-      completeApplicationStore.completeApplication.contact.faxPhoneNumber
-    );
+  completeApplication.contact.faxPhoneNumber = formatPhoneNumber(
+    completeApplication.contact.faxPhoneNumber
+  );
 
-  completeApplicationStore.completeApplication.contact.workPhoneNumber =
-    formatPhoneNumber(
-      completeApplicationStore.completeApplication.contact.workPhoneNumber
-    );
+  completeApplication.contact.workPhoneNumber = formatPhoneNumber(
+    completeApplication.contact.workPhoneNumber
+  );
 }
 </script>

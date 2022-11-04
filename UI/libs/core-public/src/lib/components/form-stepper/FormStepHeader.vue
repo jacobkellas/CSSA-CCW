@@ -7,8 +7,8 @@
         :key="index"
       >
         <v-stepper-step
-          :complete="stepIndex > index + 1"
-          :step="index + 1"
+          :complete="stepIndex > startingStep + index"
+          :step="startingStep + index"
         >
           {{ $t(`${name}`) }}
         </v-stepper-step>
@@ -22,12 +22,15 @@
 
 <script setup lang="ts">
 interface FormStepHeaderProps {
-  stepIndex?: number;
+  stepIndex: number;
+  startingStep: number;
+  previousIndex: number;
   stepNames: Array<string>;
 }
 
 const props = withDefaults(defineProps<FormStepHeaderProps>(), {
   stepIndex: 1,
+  startingStep: 1,
   stepNames: () => [],
 });
 </script>

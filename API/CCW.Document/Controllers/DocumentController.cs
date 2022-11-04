@@ -26,6 +26,7 @@ public class DocumentController : ControllerBase
         await _azureStorage.UploadApplicantFileAsync(fileToPersist, saveAsFileName, cancellationToken: default);
 
         return Ok();
+
     }
 
     [HttpPost("uploadAgencyLogo", Name = "uploadAgencyLogo")]
