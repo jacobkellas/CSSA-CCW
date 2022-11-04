@@ -200,7 +200,7 @@ const props = defineProps<ISecondFormStepTwoProps>();
 
 const state = reactive({
   driver: {} as File,
-  files: [] as Array<File>,
+  files: [] as Array<{ form; target }>,
   valid: false,
   uploadSuccessful: true,
   snackbar: false,
@@ -210,6 +210,7 @@ const fileMutation = useMutation({
   mutationFn: handleFileUpload,
   onSuccess: () => {
     state.uploadSuccessful = true;
+    props.handleNextSection();
   },
   onError: () => {
     state.snackbar = true;
@@ -218,40 +219,31 @@ const fileMutation = useMutation({
 
 function handleFileInput(event: File, target: string) {
   // need to add the application id to this.
-  let filetype = '';
-
-  switch (event.type) {
-    case 'application/pdf':
-      filetype = '.pdf';
-      break;
-    case 'image/jpeg':
-      filetype = '.jpeg';
-      break;
-    case 'application/msword':
-      filetype = '.doc';
-      break;
-    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-      filetype = ".docx"
-    default:
-      return;
-  }
 
   //TODO: change this to the order id.
-  const newFileName = `${applicationStore.completeApplication.id.slice(-7)}_${
-    completeApplication.personalInfo.lastName
-  }_${completeApplication.personalInfo.firstName}_${target}${filetype}`;
-  const newFile = new File([event], newFileName, { type: event.type });
 
-  window.console.log(newFile);
+  const form = new FormData();
 
-  state.files.push(newFile);
+  form.append('fileToPersist', event);
+
+  window.console.log(form);
+  const fileObject = {
+    form,
+    target,
+  };
+
+  state.files.push(fileObject);
 }
 
 async function handleFileUpload() {
   state.files.forEach(file => {
+    const newFileName = `${applicationStore.completeApplication.id.slice(-7)}_${
+      completeApplication.personalInfo.lastName
+    }_${completeApplication.personalInfo.firstName}_${file.target}`;
+
     axios.post(
-      'http://localhost:5148/Api/Document/v1/Document/uploadApplicantFile',
-      file
+      `http://localhost:5148/Api/Document/v1/Document/uploadApplicantFile?saveAsFileName=${newFileName}`,
+      file.form
     );
   });
 }

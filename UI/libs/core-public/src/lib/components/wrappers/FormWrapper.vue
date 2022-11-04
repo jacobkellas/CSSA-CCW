@@ -18,6 +18,7 @@
       >
         <FormStepHeader
           :previous-index="stepIndex.previousStep"
+          :starting-step="1"
           :step-index="stepIndex.step"
           :step-names="formOneStepNames"
         />
