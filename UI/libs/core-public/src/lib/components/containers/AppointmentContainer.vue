@@ -80,7 +80,7 @@
           interval-width="80"
           interval-count="16"
           :type="state.type"
-          :events="state.events"
+          :events="props.events"
           @click:date="viewDay($event)"
           @click:event="selectEvent($event)"
         >
@@ -122,29 +122,89 @@
           </v-card>
         </v-menu>
       </v-sheet>
+      <v-snackbar
+        color="error"
+        v-model="state.snackbar"
+        :timeout="5000"
+        class="font-weight-bold"
+      >
+        {{
+          $t(
+            'Appointment is no longer available. Please select another appointment.'
+          )
+        }}
+      </v-snackbar>
+      <v-snackbar
+        color="success"
+        v-model="state.snackbarOk"
+        :timeout="5000"
+        class="font-weight-bold"
+      >
+        {{ $t(`Appointment is confirmed for: `) }}
+        {{ state.selectedEvent.start }} - {{ state.selectedEvent.end }}
+      </v-snackbar>
     </v-col>
   </v-row>
 </template>
 
 <script setup lang="ts">
-import { EventType } from '@shared-utils/types/defaultTypes';
+import { AppointmentType } from '@shared-utils/types/defaultTypes';
 import { onMounted, reactive } from 'vue';
+import { useMutation } from '@tanstack/vue-query';
+import { sendAppointmentCheck } from '@core-public/senders/appointmentSenders';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 
 interface IProps {
   toggleAppointment: CallableFunction;
+  events: Array<AppointmentType>;
 }
 
 const props = defineProps<IProps>();
+const applicationStore = useCompleteApplicationStore();
 
 const state = reactive({
   focus: '',
   type: 'month',
-  selectedEvent: {} as EventType,
+  selectedEvent: {} as AppointmentType,
   selectedOpen: false,
   selectedElement: null,
   selectedDay: '',
-  // TODO: this need to change to a props with the api.
-  events: [] as Array<EventType>,
+  isLoading: false,
+  checkAppointment: true,
+  setAppointment: false,
+  snackbar: false,
+  snackbarOk: false,
+});
+
+const appointmentMutation = useMutation({
+  mutationFn: () => {
+    const body: AppointmentType = {
+      applicantId: applicationStore.completeApplication.id,
+      date: '',
+      end: new Date(state.selectedEvent.end).toISOString(),
+      isManuallyCreated: false,
+      id: state.selectedEvent.id,
+      name: '',
+      payment: '',
+      permit: '',
+      start: new Date(state.selectedEvent.start).toISOString(),
+      status: '',
+      time: '',
+    };
+
+    return sendAppointmentCheck(body);
+  },
+  onSuccess: () => {
+    state.isLoading = false;
+    state.setAppointment = true;
+    state.snackbarOk = true;
+    props.toggleAppointment();
+  },
+  onError: () => {
+    state.snackbar = true;
+    state.checkAppointment = false;
+    state.isLoading = false;
+  },
 });
 
 function viewDay({ date }) {
@@ -165,10 +225,10 @@ function selectEvent(event) {
 
 function handleConfirm() {
   // TODO: Call the api to confirm that the appointment is still available
-  state.events = state.events.filter(
-    event => event.start !== state.selectedEvent.start
-  );
-  props.toggleAppointment();
+  state.isLoading = true;
+  state.checkAppointment = true;
+
+  appointmentMutation.mutate();
 }
 
 /**

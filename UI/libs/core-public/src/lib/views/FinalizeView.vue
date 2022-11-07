@@ -15,7 +15,10 @@
       />
       <FinalizeContainer />
       <PaymentContainer :toggle-payment="togglePaymentComplete" />
-      <AppointmentContainer :toggle-appointment="toggleAppointmentComplete" />
+      <AppointmentContainer
+        :events="state.appointments"
+        :toggle-appointment="toggleAppointmentComplete"
+      />
       <v-container class="finalize-submit">
         <v-btn
           :disabled="!state.appointmentComplete || !state.paymentComplete"
@@ -46,6 +49,8 @@ import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
+import { getAppointments } from '@core-public/senders/appointmentSenders';
+import { AppointmentType } from '@shared-utils/types/defaultTypes';
 
 const currentInfoSectionStore = useCurrentInfoSection();
 
@@ -66,6 +71,7 @@ const options = [
 const state = reactive({
   paymentComplete: false,
   appointmentComplete: false,
+  appointments: [] as Array<AppointmentType>,
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
@@ -96,6 +102,28 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       completeApplicationStore.setCompleteApplication(data);
     });
   }
+
+  const appRes = getAppointments();
+
+  appRes.then((data: Array<AppointmentType>) => {
+    data.forEach(event => {
+      let start = new Date(event.start);
+      let end = new Date(event.end);
+
+      let formatedStart = `${start.getFullYear()}-${
+        start.getMonth() + 1
+      }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
+
+      let formatedEnd = `${end.getFullYear()}-${
+        end.getMonth() + 1
+      }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
+
+      event.start = formatedStart;
+      event.end = formatedEnd;
+    });
+    window.console.log(data);
+    state.appointments = data;
+  });
 });
 
 //TODO: make the api call here to get the appointments and pass as a prop to the appointmentContainer.
