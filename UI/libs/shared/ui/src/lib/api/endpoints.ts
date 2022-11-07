@@ -53,6 +53,14 @@ export default class Endpoints {
     return `http://localhost:5108/api/schedule/v1/appointment/getAll`;
   }
 
+  static get GET_AVAILABLE_APPOINTMENTS_ENDPOINT() {
+    return `http://localhost:5108/api/schedule/v1/appointment/getAvailability`;
+  }
+
+  static get PUT_APPOINTMENTS_ENDPOINT() {
+    return `http://localhost:5108/api/schedule/v1/appointment/update`;
+  }
+
   /********USER PROFILE******************/
 
   static get POST_VERIFY_USER_ENDPOINT() {

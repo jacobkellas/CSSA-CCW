@@ -223,10 +223,6 @@ const fileMutation = useMutation({
 });
 
 function handleFileInput(event: File, target: string) {
-  // need to add the application id to this.
-
-  //TODO: change this to the order id.
-
   const form = new FormData();
 
   form.append('fileToPersist', event);
@@ -242,6 +238,7 @@ function handleFileInput(event: File, target: string) {
 
 async function handleFileUpload() {
   state.files.forEach(file => {
+    //TODO: change this to the order id.
     const newFileName = `${applicationStore.completeApplication.id.slice(-7)}_${
       completeApplication.personalInfo.lastName
     }_${completeApplication.personalInfo.firstName}_${file.target}`;
