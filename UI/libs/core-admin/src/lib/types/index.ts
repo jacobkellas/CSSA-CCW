@@ -1,3 +1,4 @@
+import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import { VuetifyThemeItem } from 'vuetify/types/services/theme';
 
 export type BrandType = {
@@ -32,4 +33,17 @@ export type AdminAppConfigType = {
   environmentName: string;
   loginType: string;
   refreshTime: number;
+};
+
+export type PermitsType = {
+  id: string;
+  application: {
+    personalInfo: CompleteApplication.personalInfo;
+    currentAddress: CompleteApplication.currentAddress;
+    isComplete: boolean;
+    userEmail: string;
+    applicationType: string;
+    paymentStatus: string;
+    appointmentStatus: string;
+  };
 };

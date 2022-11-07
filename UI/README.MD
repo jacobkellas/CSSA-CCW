@@ -25,8 +25,10 @@ Please spend few minutes reading through this concepts to understand the [Mental
 - [Nx Dependency Graph Support](#nx-dependency-graph-support)
 - [Core Coding Principals](#core-coding-principals)
 - [Schematics (i.e. code generation)](#schematics-ie-code-generation)
-- [Pinia State management + Library)](#pinia)
-- [Vuetify Material Design Framework)](#vuetify)
+- [Pinia (State management + Library)](#pinia)
+- [Vuetify (Material Design Framework)](#vuetify)
+- [Vue-Query (Data Fetching Library)](#vue-query)
+- [Internationalization](#internationalization-i18n)
 - [PWA (Progressive Web App)](#PWA)
 - [Builders (i.e. task runners)](#builders-ie-task-runners)
 - [Enforced Project Boundaries](#enforced-project-boundaries)
@@ -36,6 +38,7 @@ Please spend few minutes reading through this concepts to understand the [Mental
 - [Git Hooks](#git-hooks)
 - [Modify the Webpack Configuration](#modify-the-webpack-configuration)
 - [Updating Nx Plus Vue](#updating-nx-plus-vue)
+- [Cheat sheet](#nx-cheat-sheet)
 
 ## Prerequisite
 
@@ -89,12 +92,16 @@ Public application: `public —> core-public —> [shared-ui, shared-utils]`
 
 5. Try to adopt Composition API vs Options API since this project is already on Vue 2.7, doing so will make Vue3 migration simple and easier.
 
-6. Please use our automated GIT branching and PR strategy script located at root folder [git.sh](../git.sh) for creating a new branch, rebasing, and rasing PR urls.
+6. Always try to tie your HTTP API functions to respective pinia actions and then use vue-query to fetch those API functions from vue components. This is bring better control, performance, readability and amazing dev tools experience.
 
-7. Make sure to lint, format, unit test and most importantly rebase/squash your code before raising a PR and delete the stale branches once PR is merged.
+7. Please use our automated GIT branching and PR strategy script located at root folder [git.sh](../git.sh) for creating a new branch, rebasing, and rasing PR urls.
+
+8. Make sure to lint, format, unit test and most importantly rebase/squash your code before raising a PR and delete the stale branches once PR is merged.
 
 >[Vue - Patterns](https://learn-vuejs.github.io/vue-patterns/patterns)
+
 >[Vue - Composition API](https://vuejs.org/guide/typescript/composition-api.html)
+
 >[Vue - Useful links and Performance](https://learn-vuejs.github.io/vue-patterns/patterns)
 
 `HAPPY CODING! 🎉`
@@ -257,6 +264,47 @@ export const vuetify = new Vuetify({
 })
 
 ```
+
+## Vue-Query
+
+[Vue-Query](https://tanstack.com/query/v4/docs/adapters/vue-query) is a data fetching library for Vue.js
+
+While most traditional state management libraries are great for working with client state, they are not so great at working with async or server state. This is because server state is totally different. For starters, server state:
+
+- Is persisted remotely in a location you do not control or own
+- Requires asynchronous APIs for fetching and updating
+- Implies shared ownership and can be changed by other people without your knowledge
+- Can potentially become "out of date" in your applications if you're not careful
+
+Once you grasp the nature of server state in your application, even more challenges will arise as you go, for example:
+
+- Caching... (possibly the hardest thing to do in programming)
+- Deduping multiple requests for the same data into a single request
+- Updating "out of date" data in the background
+- Knowing when data is "out of date"
+- Reflecting updates to data as quickly as possible
+- Performance optimizations like pagination and lazy loading data
+- Managing memory and garbage collection of server state
+- Memoizing query results with structural sharing
+
+> Vue Query is hands down one of the best libraries for managing server state. It works amazingly well out-of-the-box, with zero-config, and can be customized to your liking as your application grows.
+
+> Vue Query allows you to defeat and overcome the tricky challenges and hurdles of server state and control your app data before it starts to control you.
+
+On a more technical note, Vue-Query will likely:
+
+1. Help you remove many lines of complicated and misunderstood code from your application and replace with just a handful of lines of React Query logic.
+2. Make your application more maintainable and easier to build new features without worrying about wiring up new server state data sources
+3. Have a direct impact on your end-users by making your application feel faster and more responsive than ever before.
+4. Potentially help you save on bandwidth and increase memory performance
+
+Basic Usage Example:
+
+```ts
+const { data, isLoading, isError } = useQuery(['config'], initialize);
+```
+
+>`data` is the response from API, `isLoading` and `isError` are API states and `initialize` is an actual async function which fetches the API.
 
 ## Internationalization (I18n)
 
@@ -546,7 +594,7 @@ Not only do we migrate the version of Nx Plus Vue, but we also update the versio
 
 We recommend waiting for Nx Plus Vue to update these dependencies for you as we verify that these versions work together.
 
-## How to Migrate
+### How to Migrate
 
 #### Generate migrations.json
 
@@ -574,7 +622,7 @@ Now, you can inspect `package.json` to see if the changes make sense and install
 nx migrate --run-migrations=migrations.json
 ```
 
-#### Cheat Sheet
+## Nx Cheat Sheet
 
 For any new developers who are adopting Nx workspaces, following cheat sheet should help speed up the development process
 <br>

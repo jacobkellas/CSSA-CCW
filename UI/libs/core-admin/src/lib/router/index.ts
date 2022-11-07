@@ -13,7 +13,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: Routes.SETTINGS_ROUTE_PATH,
-    name: 'Brand',
+    name: 'Settings',
     component: () =>
       import(/* webpackChunkName: "brand" */ '@core-admin/views/BrandView.vue'),
   },
@@ -23,6 +23,22 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(
         /* webpackChunkName: "appointment" */ '@core-admin/views/AppointmentView.vue'
+      ),
+  },
+  {
+    path: Routes.PERMITS_ROUTE_PATH,
+    name: 'Permits',
+    component: () =>
+      import(
+        /* webpackChunkName: "permits" */ '@core-admin/views/PermitsView.vue'
+      ),
+  },
+  {
+    path: `${Routes.PERMITS_ROUTE_PATH}/:orderId`,
+    name: 'PermitDetail',
+    component: () =>
+      import(
+        /* webpackChunkName: "permitdetail" */ '@core-admin/views/PermitDetailView.vue'
       ),
   },
   {
