@@ -16,13 +16,15 @@
         v-model="stepIndex.step"
       >
         <FormStepHeader
+          :starting-step="0"
+          :previous-index="stepIndex.previousStep"
           :step-index="stepIndex.step"
           :step-names="formOneStepNames"
         />
         <RenewFormStepItems
           :step-index="stepIndex.step"
           :handle-next-section="handleNextSection"
-          :handle-reset="handleResetForm"
+          :handle-previous-section="handlePreviousSection"
         />
       </v-stepper>
     </v-card>
@@ -40,6 +42,7 @@ import { useQuery } from '@tanstack/vue-query';
 
 const stepIndex = reactive({
   step: 1,
+  previousStep: 0,
 });
 
 const applicationStore = useCompleteApplicationStore();
@@ -60,11 +63,13 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
 });
 
 function handleNextSection() {
+  stepIndex.previousStep = stepIndex.step;
   stepIndex.step += 1;
 }
 
-function handleResetForm() {
-  stepIndex.step = 1;
+function handlePreviousSection() {
+  stepIndex.previousStep = stepIndex.step - 2;
+  stepIndex.step -= 1;
 }
 </script>
 

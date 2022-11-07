@@ -30,7 +30,11 @@
           {{ $t('Work Information') }}
         </v-subheader>
         <v-row>
-          <v-col>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-text-field
               :label="$t('Employer Name')"
               :rules="[v => !!v || $t('You must enter a employer name')]"
@@ -45,7 +49,34 @@
                 </v-icon>
               </template>
             </v-text-field>
-
+          </v-col>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
+            <v-text-field
+              :label="$t('Occupation')"
+              :rules="[v => !!v || $t('You must enter a occupation')]"
+              v-model="completeApplication.workInformation.occupation"
+            >
+              <template #prepend>
+                <v-icon
+                  x-small
+                  color="error"
+                >
+                  mdi-asterisk
+                </v-icon>
+              </template>
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-text-field
               :label="$t('Employer Address Line 1')"
               :rules="[v => !!v || $t('You must enter a address')]"
@@ -60,11 +91,25 @@
                 </v-icon>
               </template>
             </v-text-field>
+          </v-col>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-text-field
               :label="$t('Employer Address Line 2')"
               v-model="completeApplication.workInformation.employerAddressLine2"
             >
             </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-text-field
               :label="$t('Employer City')"
               :rules="[v => !!v || $t('You must enter a city')]"
@@ -80,7 +125,11 @@
               </template>
             </v-text-field>
           </v-col>
-          <v-col>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-autocomplete
               :items="states"
               :label="$t('Employer State')"
@@ -96,6 +145,14 @@
                 </v-icon>
               </template>
             </v-autocomplete>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-text-field
               :label="$t('Employer Zip Code')"
               :rules="[v => !!v || $t('You must enter a Zip Code')]"
@@ -110,6 +167,12 @@
                 </v-icon>
               </template>
             </v-text-field>
+          </v-col>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-text-field
               :label="$t('Employer Phone number')"
               :rules="[v => !!v || $t('You must enter a phone number')]"
@@ -124,6 +187,14 @@
                 </v-icon>
               </template>
             </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="6"
+            lg="4"
+            sm="1"
+          >
             <v-autocomplete
               :items="countries"
               :label="$t('Employer Country')"
@@ -152,6 +223,8 @@
       :valid="state.valid"
       @submit="updateMutation.mutate"
       @save="saveMutation.mutate"
+      @back="router.push('/form')"
+      @cancel="router.push('/')"
     />
   </div>
 </template>
@@ -160,7 +233,11 @@
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
-import { employmentStatus, states } from '@shared-utils/lists/defaultConstants';
+import {
+  countries,
+  employmentStatus,
+  states,
+} from '@shared-utils/lists/defaultConstants';
 import { i18n } from '@shared-ui/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';

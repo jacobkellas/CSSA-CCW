@@ -268,6 +268,8 @@
       :valid="valid"
       @submit="updateMutation.mutate"
       @save="saveMutation.mutate"
+      @back="handlePreviousSection"
+      @cancel="router.push('/')"
     />
   </div>
 </template>
@@ -284,6 +286,7 @@ import { countries, states } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepTwoProps {
   handleNextSection: () => void;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = withDefaults(defineProps<FormStepTwoProps>(), {

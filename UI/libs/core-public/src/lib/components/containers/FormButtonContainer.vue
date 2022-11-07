@@ -1,27 +1,37 @@
 <template>
   <div class="form-btn-container">
-    <v-btn
-      color="success "
-      @click="handleSubmit"
-      :disabled="!valid"
-    >
-      {{ $t('Continue') }}
-    </v-btn>
-    <!-- TODO: this needs to save to save the current state to local storage or call the api to save in
-      the db
-       -->
+    <div>
+      <v-btn
+        color="success "
+        @click="handleSubmit"
+        :disabled="!valid"
+      >
+        {{ $t('Continue') }}
+      </v-btn>
 
-    <v-btn
-      color="secondary mx-2"
-      @click="handleSave"
-    >
-      {{ $t('Save and Exit') }}
-    </v-btn>
+      <v-btn
+        color="secondary mx-2"
+        @click="handleSave"
+      >
+        {{ $t('Save and Exit') }}
+      </v-btn>
+    </div>
+    <div>
+      <v-btn
+        color="warning mx-2"
+        @click="handleBack"
+      >
+        {{ $t('Go back') }}
+      </v-btn>
 
-    <!-- TODO: Make this return to the home page with out saving the form at all -->
-    <v-btn color="error mr-2">
-      {{ $t('Cancel') }}
-    </v-btn>
+      <!-- TODO: Make this return to the home page with out saving the form at all -->
+      <v-btn
+        color="error mr-2"
+        @click="handleCancel"
+      >
+        {{ $t('Cancel') }}
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -34,7 +44,7 @@ const props = withDefaults(defineProps<FormButtonContainerProps>(), {
   valid: false,
 });
 
-const emit = defineEmits(['submit', 'save']);
+const emit = defineEmits(['submit', 'save', 'back', 'cancel']);
 
 function handleSubmit() {
   emit('submit');
@@ -42,6 +52,14 @@ function handleSubmit() {
 
 function handleSave() {
   emit('save');
+}
+
+function handleBack() {
+  emit('back');
+}
+
+function handleCancel() {
+  emit('cancel');
 }
 </script>
 
@@ -51,6 +69,6 @@ function handleSave() {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 </style>

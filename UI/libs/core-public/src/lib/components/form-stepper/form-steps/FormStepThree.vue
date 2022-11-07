@@ -470,6 +470,8 @@
         :valid="valid"
         @submit="updateMutation.mutate"
         @save="saveMutation.mutate"
+        @back="handlePreviousSection"
+        @cancel="router.push('/')"
       />
     </v-form>
   </div>
@@ -489,6 +491,7 @@ import { countries, states } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = withDefaults(defineProps<FormStepThreeProps>(), {

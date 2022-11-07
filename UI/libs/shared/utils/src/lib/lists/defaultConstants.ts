@@ -65,7 +65,6 @@ export const defaultPermitState = {
     differentMailing: false,
     differentSpouseAddress: false,
     employment: '',
-    history: [],
     idInfo: {
       idNumber: '',
       issuingState: '',
@@ -173,7 +172,9 @@ export const defaultPermitState = {
       employerPhone: '',
       employerState: '',
       employerZip: '',
+      occupation: '',
     },
+    history: [],
   },
   id: '',
 };

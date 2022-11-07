@@ -11,6 +11,7 @@
       <FormStepTwo
         v-if="props.stepIndex === 2"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
 
@@ -18,6 +19,7 @@
       <FormStepThree
         v-if="props.stepIndex === 3"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
 
@@ -25,11 +27,15 @@
       <FormStepFour
         v-if="props.stepIndex === 4"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
 
     <v-stepper-content step="5">
-      <FormStepFive v-if="props.stepIndex === 5" />
+      <FormStepFive
+        v-if="props.stepIndex === 5"
+        :handle-previous-section="handlePreviousSection"
+      />
     </v-stepper-content>
   </v-stepper-items>
 </template>
@@ -44,6 +50,7 @@ import FormStepFive from '@core-public/components/form-stepper/form-steps/FormSt
 interface FormStepItemsProps {
   stepIndex?: number;
   handleNextSection?: CallableFunction;
+  handlePreviousSection: CallableFunction;
   handleReset: CallableFunction;
 }
 

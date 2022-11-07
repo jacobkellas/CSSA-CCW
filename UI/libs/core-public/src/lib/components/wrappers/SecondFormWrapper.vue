@@ -25,6 +25,7 @@
         <FormSecondStepItems
           :step-index="stepIndex.step"
           :handle-next-section="handleNextSection"
+          :handle-previous-section="handlePreviousSection"
         />
       </v-stepper>
     </v-card>
@@ -64,6 +65,11 @@ const { isLoading } = useQuery(['getIncompleteApplication'], () => {
 function handleNextSection() {
   stepIndex.previousStep = stepIndex.step;
   stepIndex.step += 1;
+}
+
+function handlePreviousSection() {
+  stepIndex.previousStep = stepIndex.step - 2;
+  stepIndex.step -= 1;
 }
 </script>
 

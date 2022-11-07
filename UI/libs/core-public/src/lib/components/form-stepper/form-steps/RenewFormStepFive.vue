@@ -86,6 +86,8 @@
       :valid="state.valid"
       @submit="handleSubmit"
       @save="handleSave"
+      @back="handlePreviousSection"
+      @cancel="router.push('/')"
     />
   </div>
 </template>
@@ -107,6 +109,11 @@ const router = useRouter();
 const state = reactive({
   valid: false,
 });
+
+interface IProps {
+  handlePreviousSection: CallableFunction;
+}
+const props = defineProps<IProps>();
 
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =

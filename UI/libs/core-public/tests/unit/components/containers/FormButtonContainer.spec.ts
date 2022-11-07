@@ -33,7 +33,7 @@ describe('FormButtonContainer', () => {
   });
 
   it('should render all three buttons', () => {
-    expect(wrapper.findAll('button')).toHaveLength(3);
+    expect(wrapper.findAll('button')).toHaveLength(4);
   });
 
   it('Should emit on button press', () => {

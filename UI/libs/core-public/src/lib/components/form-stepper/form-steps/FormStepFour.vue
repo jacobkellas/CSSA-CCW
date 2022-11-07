@@ -174,6 +174,8 @@
       :valid="state.valid"
       @submit="updateMutation.mutate"
       @save="saveMutation.mutate"
+      @back="handlePreviousSection"
+      @cancel="router.push('/')"
     />
   </div>
 </template>
@@ -190,6 +192,7 @@ import { eyeColors, hairColors } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepFourProps {
   handleNextSection: () => void;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = withDefaults(defineProps<FormStepFourProps>(), {

@@ -10,6 +10,7 @@
     <v-stepper-content step="2">
       <FormStepTwo
         v-if="props.stepIndex === 2"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
@@ -17,6 +18,7 @@
     <v-stepper-content step="3">
       <FormStepThree
         v-if="props.stepIndex === 3"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
@@ -24,12 +26,16 @@
     <v-stepper-content step="4">
       <FormStepFour
         v-if="props.stepIndex === 4"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
 
     <v-stepper-content step="5">
-      <RenewFormStepFive v-if="props.stepIndex === 5" />
+      <RenewFormStepFive
+        v-if="props.stepIndex === 5"
+        :handle-previous-section="handlePreviousSection"
+      />
     </v-stepper-content>
   </v-stepper-items>
 </template>
@@ -44,13 +50,12 @@ import RenewFormStepFive from '@core-public/components/form-stepper/form-steps/R
 interface RenewFormStepItemsProps {
   stepIndex?: number;
   handleNextSection?: CallableFunction;
-  handleReset: CallableFunction;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = withDefaults(defineProps<RenewFormStepItemsProps>(), {
   stepIndex: 1,
   handleNextSection: () => null,
-  handleReset: () => null,
 });
 </script>
 

@@ -3,10 +3,7 @@ import axios from 'axios';
 import { defaultPermitState } from '@shared-utils/lists/defaultConstants';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '@shared-ui/stores/auth';
-import {
-  CompleteApplication,
-  HistoryType,
-} from '@shared-utils/types/defaultTypes';
+import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import { computed, reactive } from 'vue';
 
 export const useCompleteApplicationStore = defineStore(
@@ -51,36 +48,32 @@ export const useCompleteApplicationStore = defineStore(
     }
 
     async function createApplication() {
-      const applicationId = completeApplication.id;
-      const date = new Date(Date.now()).toUTCString();
-      const historyLog: Array<HistoryType> = [
+      const date = new Date(Date.now()).toISOString();
+
+      completeApplication.application.history = [
         {
           change: 'Created application',
-          dateTime: date,
+          changeDateTimeUtc: date,
           changeMadeBy: authStore.auth.userEmail,
         },
       ];
 
-      completeApplication.application.history = historyLog;
-      const body = {
-        application: completeApplication,
-        id: applicationId,
-      };
+      await axios
+        .put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, completeApplication)
+        .catch(err => {
+          window.console.log(err);
 
-      await axios.put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, body).catch(err => {
-        window.console.log(err);
-
-        return Promise.reject();
-      });
+          return Promise.reject();
+        });
     }
 
     async function updateApplication(changeMessage: string) {
-      const date = new Date(Date.now()).toUTCString();
+      const date = new Date(Date.now()).toISOString();
 
       completeApplication.application.history = [
         {
           change: changeMessage,
-          dateTime: date,
+          changeDateTimeUtc: date,
           changeMadeBy: authStore.auth.userEmail,
         },
       ];

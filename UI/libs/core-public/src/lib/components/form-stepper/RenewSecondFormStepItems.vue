@@ -3,6 +3,7 @@
     <v-stepper-content step="6">
       <SecondFormStepOne
         v-if="props.stepIndex === 6"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
@@ -10,6 +11,7 @@
     <v-stepper-content step="7">
       <RenewSecondFormStepThree
         v-if="props.stepIndex === 7"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
@@ -17,6 +19,7 @@
     <v-stepper-content step="8">
       <SecondFormStepTwo
         v-if="props.stepIndex === 8"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
@@ -24,6 +27,7 @@
     <v-stepper-content step="9">
       <SecondFormStepFour
         v-if="props.stepIndex === 9"
+        :handle-previous-section="handlePreviousSection"
         :handle-next-section="handleNextSection"
       />
     </v-stepper-content>
@@ -38,6 +42,7 @@ import RenewSecondFormStepThree from '@core-public/components/form-stepper/form-
 
 interface IFormSecondStepItemsProps {
   handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
   stepIndex: number;
 }
 

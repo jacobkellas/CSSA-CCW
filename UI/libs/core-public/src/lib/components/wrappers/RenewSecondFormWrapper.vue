@@ -16,10 +16,15 @@
         v-model="stepIndex.step"
       >
         <FormStepHeader
+          :previous-index="stepIndex.previousStep"
+          :starting-step="6"
           :step-index="stepIndex.step"
           :step-names="formTwoStepName"
         />
-        <RenewSecondFormStepItems :handle-next-section="handleNextSection" />
+        <RenewSecondFormStepItems
+          :handle-previous-section="handlePreviousSection"
+          :handle-next-section="handleNextSection"
+        />
       </v-stepper>
     </v-card>
   </div>
@@ -38,6 +43,7 @@ const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
 
 const stepIndex = reactive({
+  previousStep: 5,
   step: 6,
 });
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
@@ -56,7 +62,13 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
 });
 
 function handleNextSection() {
+  stepIndex.previousStep = stepIndex.step;
   stepIndex.step += 1;
+}
+
+function handlePreviousSection() {
+  stepIndex.previousStep = stepIndex.step - 2;
+  stepIndex.step -= 1;
 }
 </script>
 

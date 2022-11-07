@@ -47,6 +47,8 @@
       :valid="state.valid"
       @submit="updateMutation.mutate"
       @save="saveMutation.mutate"
+      @back="handlePreviousSection"
+      @cancel="router.push('/')"
     />
   </div>
 </template>
@@ -63,6 +65,7 @@ import { useRouter } from 'vue-router/composables';
 
 interface ISecondFormStepThreeProps {
   handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = defineProps<ISecondFormStepThreeProps>();

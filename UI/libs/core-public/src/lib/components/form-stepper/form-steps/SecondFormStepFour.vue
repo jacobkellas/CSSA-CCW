@@ -44,6 +44,8 @@
       <FormButtonContainer
         :valid="state.valid"
         @submit="handleSubmit"
+        @cancel="router.push('/')"
+        @back="handlePreviousSection"
       />
     </v-container>
     <template v-if="isLoading">
@@ -65,6 +67,7 @@ import { reactive, ref, watch } from 'vue';
 
 interface ISecondFormStepFourProps {
   handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = defineProps<ISecondFormStepFourProps>();
