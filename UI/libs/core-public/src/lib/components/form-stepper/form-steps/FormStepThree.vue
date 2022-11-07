@@ -68,7 +68,8 @@
           md="5"
           sm="3"
         >
-          <v-text-field
+          <v-autocomplete
+            :items="states"
             :label="$t('State')"
             :rules="[v => !!v || $t('State cannot be blank')]"
             v-model="completeApplication.currentAddress.state"
@@ -81,7 +82,7 @@
                 mdi-asterisk
               </v-icon>
             </template>
-          </v-text-field>
+          </v-autocomplete>
         </v-col>
         <v-col
           cols="6"
@@ -129,7 +130,8 @@
           md="5"
           sm="3"
         >
-          <v-text-field
+          <v-autocomplete
+            :items="countries"
             :label="$t('Country')"
             :rules="[v => !!v || 'Country cannot be blank']"
             v-model="completeApplication.currentAddress.country"
@@ -142,7 +144,7 @@
                 mdi-asterisk
               </v-icon>
             </template>
-          </v-text-field>
+          </v-autocomplete>
         </v-col>
       </v-row>
       <v-divider />
@@ -229,7 +231,8 @@
             md="5"
             sm="3"
           >
-            <v-text-field
+            <v-autocomplete
+              :items="states"
               :label="$t('Spouse\'s State')"
               :rules="[v => !!v || $t('Spouse\'s State cannot be blank')]"
               v-model="completeApplication.spouseAddressInformation.state"
@@ -242,7 +245,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
           </v-col>
           <v-col
             cols="6"
@@ -290,7 +293,8 @@
             md="5"
             sm="3"
           >
-            <v-text-field
+            <v-autocomplete
+              :items="countries"
               :label="$t('Spouse\'s Country')"
               :rules="[v => !!v || $t('Spouse\'s Country cannot be blank')]"
               v-model="completeApplication.spouseAddressInformation.country"
@@ -303,7 +307,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
           </v-col>
         </v-row>
         <v-divider />
@@ -372,7 +376,8 @@
             md="5"
             sm="3"
           >
-            <v-text-field
+            <v-autocomplete
+              :items="states"
               :label="$t('State')"
               :rules="[v => !!v || $t('State cannot be blank')]"
               v-model="completeApplication.mailingAddress.state"
@@ -385,7 +390,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
           </v-col>
           <v-col
             cols="6"
@@ -433,7 +438,8 @@
             md="5"
             sm="3"
           >
-            <v-text-field
+            <v-autocomplete
+              :items="countries"
               :label="$t('Country')"
               :rules="[v => !!v || $t('Country cannot be blank')]"
               v-model="completeApplication.mailingAddress.country"
@@ -446,7 +452,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
           </v-col>
         </v-row>
       </div>
@@ -479,6 +485,7 @@ import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
+import { countries, states } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;

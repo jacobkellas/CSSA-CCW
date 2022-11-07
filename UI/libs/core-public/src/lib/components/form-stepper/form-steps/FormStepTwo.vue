@@ -96,7 +96,8 @@
               </v-icon>
             </template>
           </v-text-field>
-          <v-text-field
+          <v-autocomplete
+            :items="states"
             :label="$t('Birth state')"
             :rules="[v => !!v || $t('Birth state cannot be blank')]"
             v-model="completeApplication.dob.birthState"
@@ -109,9 +110,10 @@
                 mdi-asterisk
               </v-icon>
             </template>
-          </v-text-field>
+          </v-autocomplete>
 
-          <v-text-field
+          <v-autocomplete
+            :items="countries"
             :label="$t('Birth country')"
             :rules="[v => !!v || $t('Birth country cannot be blank')]"
             v-model="completeApplication.dob.birthCountry"
@@ -124,7 +126,7 @@
                 mdi-asterisk
               </v-icon>
             </template>
-          </v-text-field>
+          </v-autocomplete>
         </v-col>
       </v-row>
 
@@ -196,7 +198,8 @@
         </v-subheader>
         <v-row class="ml-5">
           <v-col>
-            <v-text-field
+            <v-autocomplete
+              :items="countries"
               :label="$t('Country of Citizenship')"
               :rules="[v => !!v || $t('You must enter a country')]"
               v-model="
@@ -211,7 +214,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
             <RadioGroupInput
               :label="'Immigrant Alien'"
               :layout="'row'"
@@ -241,7 +244,8 @@
             />
           </v-col>
           <v-col>
-            <v-text-field
+            <v-autocomplete
+              :items="countries"
               :label="$t('Country of Birth')"
               :rules="[v => !!v || $t('You must enter a country')]"
               v-model="completeApplication.immigrantInformation.countryOfBirth"
@@ -254,7 +258,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
           </v-col>
         </v-row>
       </v-container>
@@ -276,6 +280,7 @@ import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
+import { countries, states } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepTwoProps {
   handleNextSection: () => void;

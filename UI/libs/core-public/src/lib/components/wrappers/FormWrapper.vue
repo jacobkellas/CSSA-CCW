@@ -40,6 +40,7 @@ import { reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
@@ -58,6 +59,21 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
     );
 
     res.then(data => {
+      data.application.contact.primaryPhoneNumber = unformatNumber(
+        data.application.contact.primaryPhoneNumber
+      );
+      data.application.contact.cellPhoneNumber = unformatNumber(
+        data.application.contact.cellPhoneNumber
+      );
+      data.application.contact.workPhoneNumber = unformatNumber(
+        data.application.contact.workPhoneNumber
+      );
+      data.application.contact.faxPhoneNumber = unformatNumber(
+        data.application.contact.faxPhoneNumber
+      );
+      data.application.personalInfo.ssn = unformatNumber(
+        data.application.personalInfo.ssn
+      );
       applicationStore.setCompleteApplication(data);
       stepIndex.step = 1;
     });

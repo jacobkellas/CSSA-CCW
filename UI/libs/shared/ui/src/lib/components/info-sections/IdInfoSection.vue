@@ -48,7 +48,7 @@ interface IIdInfoSectionProps {
 const props = defineProps<IIdInfoSectionProps>();
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .confirm-info-section {
   width: 80%;
   height: 100%;
@@ -60,15 +60,17 @@ const props = defineProps<IIdInfoSectionProps>();
   display: flex;
   flex-direction: row;
   margin-left: 0.5rem;
+  min-height: 1vh;
+  max-height: 2vh;
 }
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 1.8em;
+  height: 2.5vh;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;
-  padding-top: 0.2rem;
+  padding-top: 0.5rem;
   background-color: rgba(211, 241, 241, 0.3);
   border-bottom: 1px solid #666;
   border-radius: 5px;
