@@ -272,7 +272,7 @@ import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import { formatSSN } from '@shared-utils/formatters/defaultFormatters';
 import { i18n } from '@shared-ui/plugins';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -297,6 +297,12 @@ const completeApplication =
   completeApplicationStore.completeApplication.application;
 
 const router = useRouter();
+
+onMounted(() => {
+  if (completeApplication.personalInfo.ssn) {
+    ssnConfirm.value = completeApplication.personalInfo.ssn;
+  }
+});
 
 const updateMutation = useMutation({
   mutationFn: () => {

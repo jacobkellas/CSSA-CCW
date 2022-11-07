@@ -79,7 +79,8 @@
               md="5"
               sm="3"
             >
-              <v-text-field
+              <v-autocomplete
+                :items="states"
                 id="state"
                 v-model="address.state"
                 label="State"
@@ -93,7 +94,7 @@
                     mdi-asterisk
                   </v-icon>
                 </template>
-              </v-text-field>
+              </v-autocomplete>
             </v-col>
             <v-col
               cols="6"
@@ -186,6 +187,7 @@
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
 import { reactive, ref } from 'vue';
+import { states } from '@shared-utils/lists/defaultConstants';
 
 interface PreviousAddressDialogProps {
   getPreviousAddressFromDialog?: (address: AddressInfoType) => void;

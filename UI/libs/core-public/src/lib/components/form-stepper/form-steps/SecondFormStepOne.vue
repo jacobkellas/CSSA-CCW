@@ -81,7 +81,8 @@
             </v-text-field>
           </v-col>
           <v-col>
-            <v-text-field
+            <v-autocomplete
+              :items="states"
               :label="$t('Employer State')"
               :rules="[v => !!v || $t('You must enter a state')]"
               v-model="completeApplication.workInformation.employerCity"
@@ -94,7 +95,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
             <v-text-field
               :label="$t('Employer Zip Code')"
               :rules="[v => !!v || $t('You must enter a Zip Code')]"
@@ -123,7 +124,8 @@
                 </v-icon>
               </template>
             </v-text-field>
-            <v-text-field
+            <v-autocomplete
+              :items="countries"
               :label="$t('Employer Country')"
               :rules="[v => !!v || $t('You must enter a country')]"
               v-model="completeApplication.workInformation.employerCountry"
@@ -136,7 +138,7 @@
                   mdi-asterisk
                 </v-icon>
               </template>
-            </v-text-field>
+            </v-autocomplete>
           </v-col>
         </v-row>
       </div>
@@ -158,7 +160,7 @@
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
-import { employmentStatus } from '@shared-utils/lists/defaultConstants';
+import { employmentStatus, states } from '@shared-utils/lists/defaultConstants';
 import { i18n } from '@shared-ui/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
