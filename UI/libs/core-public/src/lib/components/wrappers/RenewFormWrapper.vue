@@ -39,6 +39,7 @@ import { reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 
 const stepIndex = reactive({
   step: 1,
@@ -50,16 +51,33 @@ const authStore = useAuthStore();
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
   // TODO: once the is current step is added to the object change this to route to the current step is
-  stepIndex.step = 0;
-  const res = applicationStore.getCompleteApplicationFromApi(
-    authStore.auth.userEmail,
-    false
-  );
+  if (!applicationStore.completeApplication.id) {
+    stepIndex.step = 0;
+    const res = applicationStore.getCompleteApplicationFromApi(
+      authStore.auth.userEmail,
+      false
+    );
 
-  res.then(data => {
-    applicationStore.setCompleteApplication(data);
-    stepIndex.step = 1;
-  });
+    res.then(data => {
+      data.application.contact.primaryPhoneNumber = unformatNumber(
+        data.application.contact.primaryPhoneNumber
+      );
+      data.application.contact.cellPhoneNumber = unformatNumber(
+        data.application.contact.cellPhoneNumber
+      );
+      data.application.contact.workPhoneNumber = unformatNumber(
+        data.application.contact.workPhoneNumber
+      );
+      data.application.contact.faxPhoneNumber = unformatNumber(
+        data.application.contact.faxPhoneNumber
+      );
+      data.application.personalInfo.ssn = unformatNumber(
+        data.application.personalInfo.ssn
+      );
+      applicationStore.setCompleteApplication(data);
+      stepIndex.step = 1;
+    });
+  }
 });
 
 function handleNextSection() {
