@@ -60,21 +60,8 @@
           <v-text-field
             v-if="!completeApplication.personalInfo.noMiddleName"
             :label="$t('Middle name')"
-            :rules="[
-              v =>
-                (!!v && !completeApplication.personalInfo.noMiddleName) ||
-                $t('Middle name is required or you must select no middle name'),
-            ]"
             v-model="completeApplication.personalInfo.middleName"
           >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-asterisk
-              </v-icon>
-            </template>
           </v-text-field>
         </v-col>
 
@@ -86,21 +73,6 @@
           <v-text-field
             :label="$t('Maiden name')"
             v-model="completeApplication.personalInfo.maidenName"
-          />
-        </v-col>
-
-        <v-col
-          cols="6"
-          md="5"
-        >
-          <CheckboxInput
-            :target="'noMiddleName'"
-            :label="'No middle name'"
-            @input="
-              v => {
-                completeApplication.personalInfo.noMiddleName = v;
-              }
-            "
           />
         </v-col>
         <v-col
@@ -153,7 +125,6 @@
         </v-col>
         <v-col>
           <v-menu
-            ref="menu"
             v-model="menu"
             :close-on-content-click="true"
             transition="scale-transition"
@@ -161,14 +132,14 @@
             min-width="auto"
           >
             <template #activator="{ on, attrs }">
-              <v-text-field
+              <v-combobox
                 v-model="completeApplication.license.expirationDate"
                 :label="$t('Expiration Date')"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
                 v-on="on"
-              ></v-text-field>
+              ></v-combobox>
             </template>
             <v-date-picker
               v-model="completeApplication.license.expirationDate"
@@ -190,10 +161,12 @@
           md="5"
           m="3"
         >
-          <!-- TODO: Add further validation to this once we decide of SSN formatting -->
           <v-text-field
             :label="$t('Social Security Number')"
-            :rules="[v => !!v || $t('Social Security Number cannot be blank')]"
+            :rules="ssnRuleSet"
+            :type="show1 ? 'text' : 'password'"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show1 = !show1"
             v-model="completeApplication.personalInfo.ssn"
           >
             <template #prepend>
@@ -215,12 +188,15 @@
           <v-text-field
             :label="$t('Confirm SSN')"
             :rules="[
-              v => !!v || 'Confirm ssn cannot be blank',
+              ...ssnRuleSet,
               v =>
                 v === completeApplication.personalInfo.ssn ||
                 $t('SSN\'s do not match'),
             ]"
+            :type="show2 ? 'text' : 'password'"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="ssnConfirm"
+            @click:append="show2 = !show2"
           >
             <template #prepend>
               <v-icon
@@ -352,13 +328,13 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import { useRouter } from 'vue-router/composables';
 import AliasDialog from '@core-public/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
-import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import { useMutation } from '@tanstack/vue-query';
 import Routes from '@core-public/router/routes';
 import { i18n } from '@core-public/plugins';
+import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
@@ -371,6 +347,8 @@ const props = withDefaults(defineProps<FormStepOneProps>(), {
 const errors = ref([] as Array<string>);
 const valid = ref(false);
 const menu = ref(false);
+const show1 = ref(false);
+const show2 = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
