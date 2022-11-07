@@ -86,6 +86,8 @@
       :valid="state.valid"
       @submit="handleSubmit"
       @save="handleSave"
+      @back="handlePreviousSection"
+      @cancel="router.push('/')"
     />
   </div>
 </template>
@@ -101,6 +103,12 @@ import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
+
+interface IProps {
+  handlePreviousSection: CallableFunction;
+}
+
+const props = defineProps<IProps>();
 
 const router = useRouter();
 

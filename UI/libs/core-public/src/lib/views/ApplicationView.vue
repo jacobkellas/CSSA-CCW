@@ -81,6 +81,7 @@ import { useAuthStore } from '@shared-ui/stores/auth';
 import { useBrandStore } from '@core-public/stores/brandStore';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation, useQuery } from '@tanstack/vue-query';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 
 const applicationTypeStore = useApplicationTypeStore();
 const store = useBrandStore();
@@ -122,7 +123,21 @@ async function handleCreateApplication() {
 }
 
 function handleSelectedApplication(selected) {
-  window.console.log(`On Selection: ${selected}`);
+  selected.application.contact.primaryPhoneNumber = unformatNumber(
+    selected.application.contact.primaryPhoneNumber
+  );
+  selected.application.contact.cellPhoneNumber = unformatNumber(
+    selected.application.contact.cellPhoneNumber
+  );
+  selected.application.contact.workPhoneNumber = unformatNumber(
+    selected.application.contact.workPhoneNumber
+  );
+  selected.application.contact.faxPhoneNumber = unformatNumber(
+    selected.application.contact.faxPhoneNumber
+  );
+  selected.application.personalInfo.ssn = unformatNumber(
+    selected.application.personalInfo.ssn
+  );
   applicationStore.setCompleteApplication(selected);
   state.selected = true;
 }

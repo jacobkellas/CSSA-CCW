@@ -171,6 +171,8 @@
       v-else
       :valid="state.valid"
       @submit="handleSubmit"
+      @back="handlePreviousSection"
+      @cancel="router.push('/')"
     />
     <v-snackbar
       v-model="state.snackbar"
@@ -188,12 +190,15 @@ import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import axios from 'axios';
+import { useRouter } from 'vue-router/composables';
 
 const applicationStore = useCompleteApplicationStore();
 const completeApplication = applicationStore.completeApplication.application;
+const router = useRouter();
 
 interface ISecondFormStepTwoProps {
   handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
 }
 
 const props = defineProps<ISecondFormStepTwoProps>();

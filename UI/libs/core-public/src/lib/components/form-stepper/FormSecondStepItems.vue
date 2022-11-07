@@ -4,6 +4,7 @@
       <SecondFormStepOne
         v-if="props.stepIndex === 6"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
 
@@ -11,6 +12,7 @@
       <SecondFormStepThree
         v-if="props.stepIndex === 7"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
 
@@ -18,6 +20,7 @@
       <SecondFormStepTwo
         v-if="props.stepIndex === 8"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
 
@@ -25,6 +28,7 @@
       <SecondFormStepFour
         v-if="props.stepIndex === 9"
         :handle-next-section="handleNextSection"
+        :handle-previous-section="handlePreviousSection"
       />
     </v-stepper-content>
   </v-stepper-items>
@@ -39,6 +43,7 @@ import SecondFormStepFour from '@core-public/components/form-stepper/form-steps/
 interface IFormSecondStepItemsProps {
   stepIndex?: number;
   handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
 }
 const props = withDefaults(defineProps<IFormSecondStepItemsProps>(), {
   handleNextSection: () => null,

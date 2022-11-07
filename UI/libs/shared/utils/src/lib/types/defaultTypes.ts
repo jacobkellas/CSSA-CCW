@@ -81,7 +81,7 @@ export type EventType = {
 
 export type HistoryType = {
   change: string;
-  dateTime: string;
+  changeDateTimeUtc: string;
   changeMadeBy: string;
 };
 
@@ -187,6 +187,7 @@ export type WorkInformationType = {
   employerZip: string;
   employerCountry: string;
   employerPhone: string;
+  occupation: string;
 };
 
 export type AppointmentType = {
@@ -217,7 +218,6 @@ export type CompleteApplication = {
     differentSpouseAddress: boolean;
     dob: DOBType;
     employment: string;
-    history: Array<HistoryType>;
     idInfo: IdType;
     immigrantInformation: ImmigrantInformation;
     isComplete: boolean;
@@ -242,6 +242,7 @@ export type CompleteApplication = {
     weapons: Array<WeaponInfoType>;
     workInformation: WorkInformationType;
   };
+  history: Array<HistoryType>;
   id: string;
 };
 

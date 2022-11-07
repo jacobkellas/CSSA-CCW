@@ -24,7 +24,7 @@
                 <v-list-item-content>
                   {{
                     $t(
-                      ' No previously completed applications. Please go to back to new applications'
+                      ' No previously completed applications. Please go back to new applications'
                     )
                   }}
                 </v-list-item-content>
@@ -66,10 +66,12 @@ import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStor
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation, useQuery } from '@tanstack/vue-query';
+import { useBrandStore } from '@core-public/stores/brandStore';
 
 const applicationStore = useCompleteApplicationStore();
 const applicationTypeStore = useApplicationTypeStore();
 const authStore = useAuthStore();
+const store = useBrandStore();
 const completeApplication = applicationStore.completeApplication.application;
 
 const state = reactive({

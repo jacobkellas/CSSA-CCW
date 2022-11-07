@@ -336,6 +336,8 @@
       :valid="valid"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
+      @back="router.push('/application')"
+      @cancel="router.push('/')"
     />
     <FormErrorAlert
       v-if="errors.length > 0"

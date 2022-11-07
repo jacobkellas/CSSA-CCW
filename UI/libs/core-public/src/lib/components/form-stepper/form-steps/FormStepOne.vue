@@ -256,6 +256,8 @@
       :valid="valid"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
+      @back="router.push('/')"
+      @cancel="router.push('/')"
     />
     <FormErrorAlert
       v-if="errors.length > 0"
@@ -353,11 +355,6 @@ function runFormatters() {
   font-size: 1.5rem;
 }
 
-.form-btn-container {
-  display: flex;
-  width: 90%;
-  justify-content: flex-end;
-}
 .alias-components-container {
   display: flex;
   flex-direction: column;

@@ -25,6 +25,7 @@
         <FormStepItems
           :step-index="stepIndex.step"
           :handle-next-section="handleNextSection"
+          :handle-previous-section="handlePreviousSection"
           :handle-reset="handleResetForm"
         />
       </v-stepper>
@@ -74,6 +75,7 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       data.application.personalInfo.ssn = unformatNumber(
         data.application.personalInfo.ssn
       );
+
       applicationStore.setCompleteApplication(data);
       stepIndex.step = 1;
     });
@@ -83,6 +85,11 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
 function handleNextSection() {
   stepIndex.previousStep = stepIndex.step;
   stepIndex.step += 1;
+}
+
+function handlePreviousSection() {
+  stepIndex.previousStep = stepIndex.step - 2;
+  stepIndex.step -= 1;
 }
 
 function handleResetForm() {
