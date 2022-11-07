@@ -29,6 +29,12 @@ export default class Endpoints {
     }/application/v1/permitapplication/get`;
   }
 
+  static get GET_ALL_PERMITS_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.apiBaseUrl
+    }/application/v1/permitapplication/getAll`;
+  }
+
   static get PUT_UPDATE_PERMIT_ENDPOINT() {
     return `${
       useAppConfigStore().getAppConfig.apiBaseUrl

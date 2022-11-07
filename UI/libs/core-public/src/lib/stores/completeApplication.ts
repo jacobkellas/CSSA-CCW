@@ -1,156 +1,20 @@
-import { CompleteApplication, HistoryType } from '@shared-utils/types/defaultTypes';
 import Endpoints from '@shared-ui/api/endpoints';
 import axios from 'axios';
+import { defaultPermitState } from '@shared-utils/lists/defaultConstants';
 import { defineStore } from 'pinia';
-import { computed, reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
+import {
+  CompleteApplication,
+  HistoryType,
+} from '@shared-utils/types/defaultTypes';
+import { computed, reactive } from 'vue';
 
 export const useCompleteApplicationStore = defineStore(
   'completeApplicationStore',
   () => {
     const authStore = useAuthStore();
-    const completeApplication = reactive<CompleteApplication>({
-      application: {
-        dob: {
-          birthDate: '',
-          birthCity: '',
-          birthCountry: '',
-          birthState: '',
-        },
-        aliases: [],
-        applicationType: '',
-        citizenship: { citizen: true, militaryStatus: '' },
-        contact: {
-          cellPhoneNumber: '',
-          faxPhoneNumber: '',
-          primaryPhoneNumber: '',
-          textMessageUpdates: false,
-          workPhoneNumber: '',
-        },
-        currentAddress: {
-          addressLine1: '',
-          addressLine2: '',
-          city: '',
-          country: '',
-          county: '',
-          state: '',
-          zip: '',
-        },
-        differentMailing: false,
-        differentSpouseAddress: false,
-        employment: '',
-        history: [],
-        idInfo: {
-          idNumber: '',
-          issuingState: '',
-        },
-        immigrantInformation: {
-          countryOfCitizenship: '',
-          countryOfBirth: '',
-          immigrantAlien: false,
-          nonImmigrantAlien: false,
-        },
-        isComplete: false,
-        license: {
-          permitNumber: '',
-          issuingCounty: '',
-          expirationDate: '',
-        },
-        mailingAddress: {
-          addressLine1: '',
-          addressLine2: '',
-          city: '',
-          country: '',
-          county: '',
-          state: '',
-          zip: '',
-        },
-        personalInfo: {
-          lastName: '',
-          firstName: '',
-          middleName: '',
-          noMiddleName: false,
-          maidenName: '',
-          suffix: '',
-          ssn: '',
-          maritalStatus: '',
-        },
-        physicalAppearance: {
-          eyeColor: '',
-          gender: '',
-          hairColor: '',
-          heightFeet: '',
-          heightInch: '',
-          physicalDesc: '',
-          weight: '',
-        },
-        previousAddresses: [],
-        qualifyingQuestions: {
-          questionOne: false,
-          questionOneExp: '',
-          questionTwo: false,
-          questionTwoExp: '',
-          questionThree: false,
-          questionThreeExp: '',
-          questionFour: false,
-          questionFourExp: '',
-          questionFive: false,
-          questionFiveExp: '',
-          questionSix: false,
-          questionSixExp: '',
-          questionSeven: false,
-          questionSevenExp: '',
-          questionEight: false,
-          questionEightExp: '',
-          questionNine: false,
-          questionNineExp: '',
-          questionTen: false,
-          questionTenExp: '',
-          questionEleven: false,
-          questionElevenExp: '',
-          questionTwelve: false,
-          questionTwelveExp: '',
-          questionThirteen: false,
-          questionThirteenExp: '',
-          questionFourteen: false,
-          questionFourteenExp: '',
-          questionFifteen: false,
-          questionFifteenExp: '',
-          questionSixteen: false,
-          questionSixteenExp: '',
-          questionSeventeen: false,
-          questionSeventeenExp: '',
-        },
-        spouseInformation: {
-          lastName: '',
-          firstName: '',
-          middleName: '',
-          maidenName: '',
-        },
-        spouseAddressInformation: {
-          addressLine1: '',
-          addressLine2: '',
-          city: '',
-          country: '',
-          county: '',
-          state: '',
-          zip: '',
-        },
-        userEmail: '',
-        weapons: [],
-        workInformation: {
-          employerName: '',
-          employerAddressLine1: '',
-          employerAddressLine2: '',
-          employerCity: '',
-          employerCountry: 'United States',
-          employerPhone: '',
-          employerState: '',
-          employerZip: '',
-        },
-      },
-      id: '',
-    });
+    const completeApplication =
+      reactive<CompleteApplication>(defaultPermitState);
     /**
      * Get the complete application from the stored value
      * @type {ComputedRef<UnwrapRef<CompleteApplication>>}

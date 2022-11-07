@@ -27,7 +27,7 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
   async function getAppointmentsApi() {
     const res = await axios
       .get(Endpoints.GET_APPOINTMENTS_ENDPOINT)
-      .catch(err => window.window.console.log(err));
+      .catch(err => window.console.log(err));
 
     const appointmentsData: Array<AppointmentType> = res?.data?.map(data => ({
       ...data,

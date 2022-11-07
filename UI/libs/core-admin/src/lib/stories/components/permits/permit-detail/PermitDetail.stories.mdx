@@ -1,0 +1,43 @@
+<!-- Appointments.stories.mdx -->
+
+import { Canvas, Meta, Props, Story, Source } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+import PermitDetail from '@core-admin/components/permits/permit-detail/PermitDetail.vue';
+
+<Meta
+  title="Admin/Components/Permits/Permit Detail/PermitDetail"
+  component={PermitDetail}
+/>
+
+# PermitDetail
+
+With `MDX`, we can define a story for `PermitDetail` component right in the middle of our Markdown documentation.
+
+<Props of={PermitDetail} />
+
+<Canvas>
+  <Story name="Primary">
+    {{
+      components: { PermitDetail },
+      template: `
+      <div>
+        <PermitDetail />
+      </div>`,
+    }}
+  </Story>
+</Canvas>
+
+## Fetching the PermitDetail
+
+<Source
+  language="js"
+  dark
+  format={true}
+  code={dedent`
+const { isLoading, isError, data } = useQuery({
+  queryKey: ['permitDetail'],
+  queryFn: getPermitDetailApi(route.params.orderId),
+});
+`}
+/>
+;

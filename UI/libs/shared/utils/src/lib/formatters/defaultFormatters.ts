@@ -57,3 +57,47 @@ export function formatTime(dateStr: string): string {
     }) || dateStr
   );
 }
+
+/**
+ * Function to format persons's first name and last ame
+ * @param {object} data
+ * @returns {string}
+ */
+export function formatFullName(data): string {
+  return (
+    `${data?.application?.personalInfo?.lastName}, ${data?.application?.personalInfo?.firstName}` ||
+    ''
+  );
+}
+
+/**
+ * Function to format persons's address
+ * @param {object} data
+ * @returns {string}
+ */
+export function formatAddress(data): string {
+  const {
+    application: {
+      currentAddress: { addressLine1, addressLine2, city, state, country, zip },
+    },
+  } = data;
+
+  return (
+    `${addressLine1}, ${addressLine2}, ${city}, ${state},
+        ${country}, ${zip}
+      ` || ''
+  );
+}
+
+/**
+ * Function to format persons initials
+ * @param {object} data
+ * @returns {string}
+ */
+export function formatInitials(data): string {
+  return (
+    `${data?.application?.personalInfo?.firstName.charAt(
+      0
+    )}${data?.application?.personalInfo?.lastName.charAt(0)}` || ''
+  );
+}
