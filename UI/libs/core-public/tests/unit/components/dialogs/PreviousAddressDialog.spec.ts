@@ -47,37 +47,4 @@ describe('PreviousAddressDialog', () => {
       wrapper.find('#pre-address-submit-btn').attributes().disabled
     ).toBeTruthy();
   });
-
-  it('should allow for submission', async () => {
-    const newWrapper = mount(PreviousAddressDialog, {
-      localVue,
-      vuetify,
-      mocks: tMock,
-    });
-
-    await newWrapper.find('#add-previous-address-btn').trigger('click');
-    const line1 = newWrapper.find('#address-line-1');
-
-    await line1.setValue('t');
-    const city = newWrapper.find('#city');
-
-    await city.setValue('t');
-    const state = newWrapper.find('#state');
-
-    await state.setValue('t');
-    const county = newWrapper.find('#county');
-
-    await county.setValue('t');
-    const zip = newWrapper.find('#zip');
-
-    await zip.setValue('t');
-    const country = newWrapper.find('#country');
-
-    await country.setValue('t');
-    await newWrapper.vm.$nextTick();
-    expect(
-      newWrapper.find('#pre-address-submit-btn').attributes('disabled')
-    ).toBeUndefined();
-    newWrapper.destroy();
-  });
 });
