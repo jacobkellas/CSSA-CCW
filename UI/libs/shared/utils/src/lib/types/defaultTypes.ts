@@ -241,8 +241,8 @@ export type CompleteApplication = {
     userEmail: string;
     weapons: Array<WeaponInfoType>;
     workInformation: WorkInformationType;
+    history: Array<HistoryType>;
   };
-  history: Array<HistoryType>;
   id: string;
 };
 

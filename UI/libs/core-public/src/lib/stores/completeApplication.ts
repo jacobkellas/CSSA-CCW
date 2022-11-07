@@ -48,9 +48,9 @@ export const useCompleteApplicationStore = defineStore(
     }
 
     async function createApplication() {
-      const date = new Date(Date.now()).toUTCString();
+      const date = new Date(Date.now()).toISOString();
 
-      completeApplication.history = [
+      completeApplication.application.history = [
         {
           change: 'Created application',
           changeDateTimeUtc: date,
@@ -68,9 +68,9 @@ export const useCompleteApplicationStore = defineStore(
     }
 
     async function updateApplication(changeMessage: string) {
-      const date = new Date(Date.now()).toUTCString();
+      const date = new Date(Date.now()).toISOString();
 
-      completeApplication.history = [
+      completeApplication.application.history = [
         {
           change: changeMessage,
           changeDateTimeUtc: date,

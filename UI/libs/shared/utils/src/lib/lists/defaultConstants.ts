@@ -174,8 +174,8 @@ export const defaultPermitState = {
       employerZip: '',
       occupation: '',
     },
+    history: [],
   },
-  history: [],
   id: '',
 };
 
