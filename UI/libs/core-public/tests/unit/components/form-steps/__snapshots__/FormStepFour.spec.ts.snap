@@ -12,7 +12,7 @@ exports[`FormStepFour Should match the snapshot 1`] = `
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-asterisk theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-5" class="v-label theme--light" style="left: 0px; position: absolute;">Height feet</label><input id="input-5" type="text"></div>
+              <div class="v-text-field__slot"><label for="input-4" class="v-label theme--light" style="left: 0px; position: absolute;">Height feet</label><input id="input-4" type="text"></div>
             </div>
             <div class="v-text-field__details">
               <div class="v-messages theme--light">
@@ -27,7 +27,7 @@ exports[`FormStepFour Should match the snapshot 1`] = `
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-asterisk theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-9" class="v-label theme--light" style="left: 0px; position: absolute;">Height inches</label><input id="input-9" type="text"></div>
+              <div class="v-text-field__slot"><label for="input-8" class="v-label theme--light" style="left: 0px; position: absolute;">Height inches</label><input id="input-8" type="text"></div>
             </div>
             <div class="v-text-field__details">
               <div class="v-messages theme--light">
@@ -42,7 +42,7 @@ exports[`FormStepFour Should match the snapshot 1`] = `
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-asterisk theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-13" class="v-label theme--light" style="left: 0px; position: absolute;">Weight</label><input id="input-13" type="text"></div>
+              <div class="v-text-field__slot"><label for="input-12" class="v-label theme--light" style="left: 0px; position: absolute;">Weight</label><input id="input-12" type="text"></div>
             </div>
             <div class="v-text-field__details">
               <div class="v-messages theme--light">
@@ -56,9 +56,9 @@ exports[`FormStepFour Should match the snapshot 1`] = `
         <div class="v-input theme--light v-text-field v-select">
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-asterisk theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
-            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-17" class="v-input__slot">
-              <div class="v-select__slot"><label for="input-17" class="v-label theme--light" style="left: 0px; position: absolute;">Hair Color</label>
-                <div class="v-select__selections"><input id="input-17" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-16" class="v-input__slot">
+              <div class="v-select__slot"><label for="input-16" class="v-label theme--light" style="left: 0px; position: absolute;">Hair Color</label>
+                <div class="v-select__selections"><input id="input-16" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
                 <div class="v-input__append-inner">
                   <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
                 </div><input type="hidden">
@@ -79,9 +79,9 @@ exports[`FormStepFour Should match the snapshot 1`] = `
         <div class="v-input theme--light v-text-field v-select">
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-asterisk theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
-            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-23" class="v-input__slot">
-              <div class="v-select__slot"><label for="input-23" class="v-label theme--light" style="left: 0px; position: absolute;">Eye Color</label>
-                <div class="v-select__selections"><input id="input-23" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
+            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-22" class="v-input__slot">
+              <div class="v-select__slot"><label for="input-22" class="v-label theme--light" style="left: 0px; position: absolute;">Eye Color</label>
+                <div class="v-select__selections"><input id="input-22" readonly="readonly" type="text" aria-readonly="false" autocomplete="off"></div>
                 <div class="v-input__append-inner">
                   <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>
                 </div><input type="hidden">
@@ -104,30 +104,27 @@ exports[`FormStepFour Should match the snapshot 1`] = `
     </div>
     <div class="row ml-5">
       <div class="col-sm-3 col-md-5 col-6">
-        <div class="radio-group">
-          <div class="v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row">
-            <div class="v-input__control">
-              <div class="v-input__slot" style="height: auto;">
-                <div role="radiogroup" aria-labelledby="input-31" class="v-input--radio-group__input">
-                  <legend id="input-31" class="v-label theme--light" style="left: 0px; position: relative;">Gender</legend>
-                  <div class="v-radio radio-group text--black theme--light">
-                    <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-32" role="radio" type="radio" name="radio-31" value="male">
-                      <div class="v-input--selection-controls__ripple"></div>
-                    </div><label for="input-32" class="v-label theme--light" style="left: 0px; position: relative;">Male</label>
-                  </div>
-                  <div class="v-radio radio-group text--black theme--light">
-                    <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-34" role="radio" type="radio" name="radio-31" value="female">
-                      <div class="v-input--selection-controls__ripple"></div>
-                    </div><label for="input-34" class="v-label theme--light" style="left: 0px; position: relative;">Female</label>
-                  </div>
+        <div class="v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row">
+          <div class="v-input__control">
+            <div class="v-input__slot" style="height: auto;">
+              <div role="radiogroup" aria-labelledby="input-29" class="v-input--radio-group__input">
+                <legend id="input-29" class="v-label theme--light" style="left: 0px; position: relative;">Gender</legend>
+                <div class="v-radio theme--light">
+                  <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-30" role="radio" type="radio" name="radio-29" value="male">
+                    <div class="v-input--selection-controls__ripple"></div>
+                  </div><label for="input-30" class="v-label theme--light" style="left: 0px; position: relative;">Male</label>
+                </div>
+                <div class="v-radio theme--light">
+                  <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-32" role="radio" type="radio" name="radio-29" value="female">
+                    <div class="v-input--selection-controls__ripple"></div>
+                  </div><label for="input-32" class="v-label theme--light" style="left: 0px; position: relative;">Female</label>
                 </div>
               </div>
-              <div class="v-messages theme--light">
-                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
-              </div>
+            </div>
+            <div class="v-messages theme--light">
+              <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
             </div>
           </div>
-          <!---->
         </div>
         <div role="alert" class="v-alert v-sheet v-sheet--outlined theme--light v-alert--dense v-alert--outlined error--text">
           <div class="v-alert__wrapper"><i aria-hidden="true" class="v-icon notranslate v-alert__icon mdi mdi-alert theme--light error--text"></i>
@@ -141,7 +138,7 @@ exports[`FormStepFour Should match the snapshot 1`] = `
         <div class="v-input v-textarea theme--light v-text-field">
           <div class="v-input__control">
             <div class="v-input__slot">
-              <div class="v-text-field__slot"><label for="input-40" class="v-label theme--light" style="left: 0px; position: absolute;">Physical Description</label><textarea id="input-40" rows="5"></textarea></div>
+              <div class="v-text-field__slot"><label for="input-38" class="v-label theme--light" style="left: 0px; position: absolute;">Physical Description</label><textarea id="input-38" rows="5"></textarea></div>
               <div class="v-input__append-inner">
                 <div></div>
               </div>
@@ -168,6 +165,16 @@ exports[`FormStepFour Should match the snapshot 1`] = `
     </span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default error mr-2"><span class="v-btn__content">
       Cancel
     </span></button></div>
+  </div>
+  <div class="v-snack v-snack--bottom">
+    <transition-stub name="v-snack-transition">
+      <div class="v-snack__wrapper v-sheet v-sheet--outlined theme--light error--text" style="display: none;">
+        <div role="status" aria-live="polite" class="v-snack__content">
+          Section update unsuccessful please try again.
+        </div>
+        <div class="v-snack__action "></div>
+      </div>
+    </transition-stub>
   </div>
 </div>
 `;
