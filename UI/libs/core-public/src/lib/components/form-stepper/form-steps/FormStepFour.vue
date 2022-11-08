@@ -77,6 +77,7 @@
           sm="3"
         >
           <v-select
+            v-model="completeApplication.physicalAppearance.hairColor"
             :items="hairColors"
             :label="$t('Hair Color')"
             :rules="[v => !!v || $t(' Hair color is required')]"
@@ -103,6 +104,7 @@
           sm="3"
         >
           <v-select
+            v-model="completeApplication.physicalAppearance.eyeColor"
             :items="eyeColors"
             :label="$t('Eye Color')"
             :rules="[v => !!v || $t('Eye color is required')]"
@@ -134,19 +136,20 @@
           md="5"
           sm="3"
         >
-          <RadioGroupInput
+          <v-radio-group
             :label="'Gender'"
-            :layout="'row'"
-            :options="[
-              { label: 'Male', value: 'male' },
-              { label: 'Female', value: 'female' },
-            ]"
-            @input="
-              v => {
-                completeApplication.physicalAppearance.gender = v;
-              }
-            "
-          />
+            v-model="completeApplication.physicalAppearance.gender"
+            row
+          >
+            <v-radio
+              :label="'Male'"
+              :value="'male'"
+            />
+            <v-radio
+              :label="'Female'"
+              :value="'female'"
+            />
+          </v-radio-group>
           <v-alert
             dense
             outlined
@@ -177,13 +180,20 @@
       @back="handlePreviousSection"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import { i18n } from '@shared-ui/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -201,6 +211,7 @@ const props = withDefaults(defineProps<FormStepFourProps>(), {
 
 const state = reactive({
   valid: false,
+  snackbar: false,
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
@@ -212,10 +223,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step four complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 5;
     props.handleNextSection();
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    state.snackbar = true;
   },
 });
 
@@ -227,7 +239,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 </script>

@@ -204,6 +204,13 @@ export type AppointmentType = {
   isManuallyCreated: boolean;
 };
 
+export type UploadedDocType = {
+  name: string;
+  uploadedDateTimeUtc: string;
+  uploadedBy: string;
+  DocumentType: string;
+};
+
 export type CompleteApplication = {
   application: {
     aliases: Array<AliasType>;
@@ -241,8 +248,13 @@ export type CompleteApplication = {
     userEmail: string;
     weapons: Array<WeaponInfoType>;
     workInformation: WorkInformationType;
-    history: Array<HistoryType>;
+    currentStep: number;
+    status: number;
+    appointmentStatus: number;
+    orderId: string;
+    uploadedDocuments: Array<UploadedDocType>;
   };
+  history: Array<HistoryType>;
   id: string;
 };
 

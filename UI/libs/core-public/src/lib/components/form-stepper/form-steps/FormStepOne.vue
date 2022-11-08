@@ -165,20 +165,21 @@
           md="5"
           sm="3"
         >
-          <RadioGroupInput
+          <v-radio-group
+            v-model="completeApplication.personalInfo.maritalStatus"
             :label="'Marital status'"
-            :options="[
-              { label: 'Married', value: 'married' },
-              { label: 'Single', value: 'single' },
-            ]"
             :hint="'Marital Status is required'"
             :layout="'row'"
-            @input="
-              v => {
-                completeApplication.personalInfo.maritalStatus = v;
-              }
-            "
-          />
+          >
+            <v-radio
+              :label="'Married'"
+              :value="'married'"
+            />
+            <v-radio
+              :label="'Single'"
+              :value="'single'"
+            />
+          </v-radio-group>
         </v-col>
         <v-col
           cols="20"
@@ -263,6 +264,15 @@
       v-if="errors.length > 0"
       :errors="errors"
     />
+    <v-snackbar
+      :value="snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -271,9 +281,7 @@ import AliasDialog from '@core-public/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import { formatSSN } from '@shared-utils/formatters/defaultFormatters';
-import { i18n } from '@shared-ui/plugins';
 import { onMounted, ref } from 'vue';
 import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
@@ -292,6 +300,7 @@ const errors = ref([] as Array<string>);
 const valid = ref(false);
 const show1 = ref(false);
 const show2 = ref(false);
+const snackbar = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -311,10 +320,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step one complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 2;
     props.handleNextSection();
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    snackbar.value = true;
   },
 });
 
@@ -326,7 +336,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    snackbar.value = true;
   },
 });
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container v-if="!isLoading">
+    <v-container>
       <v-row class="mb-5">
         <v-col
           cols="10"
@@ -44,15 +44,20 @@
       <FormButtonContainer
         :valid="state.valid"
         @submit="handleSubmit"
+        @save="router.push('/')"
         @cancel="router.push('/')"
         @back="handlePreviousSection"
       />
     </v-container>
-    <template v-if="isLoading">
-      <div>
-        {{ $t('loading') }}
-      </div>
-    </template>
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('File upload unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -79,15 +84,17 @@ const state = reactive({
   valid: false,
   file: {},
   signature: '',
+  snackbar: false,
 });
 
 const fileMutation = useMutation({
   mutationFn: handleFileUpload,
   onSuccess: () => {
+    applicationStore.completeApplication.application.currentStep = 9;
     router.push(Routes.FINALIZE_ROUTE_PATH);
   },
   onError: () => {
-    window.console.warn('error');
+    state.snackbar = true;
   },
 });
 
@@ -95,13 +102,14 @@ async function handleSubmit() {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const image = signatureCanvas.value.toDataURL('image/jpeg', 0.5);
+  const file = new File([image], 'file');
   const form = new FormData();
 
-  form.append('fileToPersist', image);
+  form.append('fileToPersist', file);
 
   state.file = form;
 
-  await fileMutation.mutate;
+  fileMutation.mutate();
 }
 
 async function handleFileUpload() {

@@ -11,6 +11,7 @@
       <v-row class="ml-5">
         <v-col cols="6">
           <v-select
+            v-model="completeApplication.employment"
             id="select"
             :items="employmentStatus"
             :label="$t(' Employment Status')"
@@ -226,6 +227,15 @@
       @back="router.push('/form')"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -238,7 +248,6 @@ import {
   employmentStatus,
   states,
 } from '@shared-utils/lists/defaultConstants';
-import { i18n } from '@shared-ui/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -256,6 +265,7 @@ const router = useRouter();
 
 const state = reactive({
   valid: false,
+  snackbar: false,
 });
 
 const updateMutation = useMutation({
@@ -263,10 +273,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step six complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 7;
     props.handleNextSection();
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    state.snackbar = true;
   },
 });
 
@@ -278,7 +289,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 

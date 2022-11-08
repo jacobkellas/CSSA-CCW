@@ -1,3 +1,8 @@
+import {
+  CompleteApplication,
+  UploadedDocType,
+} from '@shared-utils/types/defaultTypes';
+
 export const hairColors = [
   'Black',
   'Blond',
@@ -35,7 +40,7 @@ export const formTwoStepName = [
 
 export const employmentStatus = ['Employed', 'Unemployed', 'Retired'];
 
-export const defaultPermitState = {
+export const defaultPermitState: CompleteApplication = {
   application: {
     dob: {
       birthDate: '',
@@ -174,8 +179,13 @@ export const defaultPermitState = {
       employerZip: '',
       occupation: '',
     },
-    history: [],
+    currentStep: 0,
+    status: 1,
+    appointmentStatus: 1,
+    orderId: '',
+    uploadedDocuments: [] as Array<UploadedDocType>,
   },
+  history: [],
   id: '',
 };
 

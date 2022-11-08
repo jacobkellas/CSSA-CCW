@@ -37,20 +37,22 @@ export const useCompleteApplicationStore = defineStore(
     ) {
       const res = await axios
         .get(Endpoints.GET_PERMIT_ENDPOINT, {
-          params: { userEmail, isComplete },
+          params: {
+            userEmailOrOrderId: userEmail,
+            isOrderId: false,
+            isComplete,
+          },
         })
 
         .catch(err => console.warn(err));
 
-      //TODO: add back in once the api is corrected.
-      //setCompleteApplication(res?.data);
       return res?.data;
     }
 
     async function createApplication() {
       const date = new Date(Date.now()).toISOString();
 
-      completeApplication.application.history = [
+      completeApplication.history = [
         {
           change: 'Created application',
           changeDateTimeUtc: date,
@@ -70,7 +72,7 @@ export const useCompleteApplicationStore = defineStore(
     async function updateApplication(changeMessage: string) {
       const date = new Date(Date.now()).toISOString();
 
-      completeApplication.application.history = [
+      completeApplication.history = [
         {
           change: changeMessage,
           changeDateTimeUtc: date,

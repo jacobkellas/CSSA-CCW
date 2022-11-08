@@ -221,7 +221,7 @@
           md="5"
           sm="3"
         >
-          <RadioGroupInput
+          <v-radio-group
             :label="'Marital status'"
             :options="[
               { label: 'Married', value: 'married' },
@@ -234,7 +234,16 @@
                 completeApplication.personalInfo.maritalStatus = v;
               }
             "
-          />
+          >
+            <v-radio
+              :label="'Married'"
+              :value="'married'"
+            />
+            <v-radio
+              :label="'Single'"
+              :value="'single'"
+            />
+          </v-radio-group>
         </v-col>
         <v-col
           cols="20"
@@ -319,6 +328,15 @@
       v-if="errors.length > 0"
       :errors="errors"
     />
+    <v-snackbar
+      :value="snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -328,12 +346,10 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import { useRouter } from 'vue-router/composables';
 import AliasDialog from '@core-public/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import { useMutation } from '@tanstack/vue-query';
 import Routes from '@core-public/router/routes';
-import { i18n } from '@core-public/plugins';
 import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface FormStepOneProps {
@@ -349,6 +365,7 @@ const valid = ref(false);
 const menu = ref(false);
 const show1 = ref(false);
 const show2 = ref(false);
+const snackbar = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -362,10 +379,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Renewal Step one');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 2;
     props.handleNextSection();
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    snackbar.value = true;
   },
 });
 
@@ -377,7 +395,7 @@ const saveMutation = useMutation({
     router.push(Routes.HOME_ROUTE_PATH);
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    snackbar.value = true;
   },
 });
 

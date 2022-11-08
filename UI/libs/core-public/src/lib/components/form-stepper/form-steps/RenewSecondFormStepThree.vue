@@ -6,49 +6,46 @@
         {{ $t('Application Type') }}
       </v-subheader>
       <div class="ml-5">
-        <RadioGroupInput
-          :layout="'column'"
-          :options="[
-            { label: 'Renew Standard', value: 'renew-standard' },
-            {
-              label: 'Renew Judicial',
-              value: 'renew-judicial',
-              color: 'warning',
-            },
-            {
-              label: 'Renew Reserve',
-              value: 'renew-reserve',
-              color: 'warning',
-            },
-            { label: 'Modify Standard', value: 'modify-standard' },
-            {
-              label: 'Modify Judicial',
-              value: 'modify-judicial',
-              color: 'warning',
-            },
-            {
-              label: 'Modify Reserve',
-              value: 'modify-reserve',
-              color: 'warning',
-            },
-          ]"
-          @input="
-            v => {
-              completeApplication.applicationType = v;
-              state.valid = true;
-            }
-          "
-        />
+        <v-radio-group v-model="completeApplication.applicationType">
+          <v-radio
+            :label="'Renew Standard'"
+            :value="'renew-standard'"
+          />
+          <v-radio
+            :label="'Renew Judicial'"
+            :value="'renew-judicial'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Renew Reserve'"
+            :value="'renew-reserve'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Modify Standard'"
+            :value="'modify-standard'"
+          />
+          <v-radio
+            :label="'Modify Judicial'"
+            :value="'modify-judicial'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Modify Reserve'"
+            :value="'modify-reserve'"
+            color="warning"
+          />
+        </v-radio-group>
       </div>
       <v-alert
         dense
         outlined
         type="warning"
         v-if="
-          completeApplicationStore.completeApplication.applicationType ===
-            'renew-judicial' ||
-          completeApplicationStore.completeApplication.applicationType ===
-            'modify-judicial'
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'renew-judicial' ||
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'modify-judicial'
         "
       >
         <strong>
@@ -60,10 +57,10 @@
         outlined
         type="warning"
         v-if="
-          completeApplicationStore.completeApplication.applicationType ===
-            'renew-reserve' ||
-          completeApplicationStore.completeApplication.applicationType ===
-            'modify-reserve'
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'renew-reserve' ||
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'modify-reserve'
         "
       >
         <strong>
@@ -79,14 +76,21 @@
       @back="handlePreviousSection"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
 <script setup lang="ts">
 import ApplicationInfoSection from '@shared-ui/components/info-sections/ApplicationInfoSection';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import { i18n } from '@core-public/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -105,16 +109,18 @@ const router = useRouter();
 
 const state = reactive({
   valid: false,
+  snackbar: false,
 });
 const updateMutation = useMutation({
   mutationFn: () => {
     return completeApplicationStore.updateApplication('Step one complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 9;
     props.handleNextSection();
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    state.snackbar = true;
   },
 });
 
@@ -126,7 +132,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 </script>

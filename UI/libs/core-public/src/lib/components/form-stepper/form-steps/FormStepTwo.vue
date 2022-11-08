@@ -35,7 +35,8 @@
           md="5"
           sm="3"
         >
-          <v-text-field
+          <v-autocomplete
+            :items="states"
             :label="$t(' Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"
             v-model="completeApplication.idInfo.issuingState"
@@ -48,7 +49,7 @@
                 mdi-asterisk
               </v-icon>
             </template>
-          </v-text-field>
+          </v-autocomplete>
         </v-col>
       </v-row>
 
@@ -142,19 +143,20 @@
           sm="3"
           class="pl-5"
         >
-          <RadioGroupInput
+          <v-radio-group
             :label="'Citizen'"
             :layout="'row'"
-            :options="[
-              { label: 'Yes', value: true },
-              { label: 'No', value: false },
-            ]"
-            @input="
-              v => {
-                completeApplication.citizenship.citizen = v;
-              }
-            "
-          />
+            v-model="completeApplication.citizenship.citizen"
+          >
+            <v-radio
+              :label="'Yes'"
+              :value="true"
+            />
+            <v-radio
+              :label="'No'"
+              :value="false"
+            />
+          </v-radio-group>
         </v-col>
 
         <v-col
@@ -215,33 +217,36 @@
                 </v-icon>
               </template>
             </v-autocomplete>
-            <RadioGroupInput
+            <v-radio-group
               :label="'Immigrant Alien'"
-              :layout="'row'"
-              :options="[
-                { label: 'Yes', value: true },
-                { label: 'No', value: false },
-              ]"
-              @input="
-                v => {
-                  completeApplication.immigrantInformation.immigrantAlien = v;
-                }
-              "
-            />
-            <RadioGroupInput
+              v-model="completeApplication.immigrantInformation.immigrantAlien"
+              row
+            >
+              <v-radio
+                :label="'Yes'"
+                :value="true"
+              />
+              <v-radio
+                :label="'No'"
+                :value="false"
+              />
+            </v-radio-group>
+            <v-radio-group
               :label="'Non-Immigrant Alien'"
-              :layout="'row'"
-              :options="[
-                { label: 'Yes', value: true },
-                { label: 'No', value: false },
-              ]"
-              @input="
-                v => {
-                  completeApplication.immigrantInformation.nonImmigrantAlien =
-                    v;
-                }
+              row
+              v-model="
+                completeApplication.immigrantInformation.nonImmigrantAlien
               "
-            />
+            >
+              <v-radio
+                :label="'Yes'"
+                :value="true"
+              />
+              <v-radio
+                :label="'No'"
+                :value="false"
+              />
+            </v-radio-group>
           </v-col>
           <v-col>
             <v-autocomplete
@@ -271,13 +276,19 @@
       @back="handlePreviousSection"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="snackbar"
+      :timeout="3000"
+      outlined
+      color="error"
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import { i18n } from '@shared-ui/plugins';
 import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -296,6 +307,7 @@ const props = withDefaults(defineProps<FormStepTwoProps>(), {
 const router = useRouter();
 
 const items = ref(['Active', 'Reserve', 'Discharged', 'Retired', 'N/A']);
+const snackbar = ref(false);
 const valid = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -307,10 +319,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step two complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 3;
     props.handleNextSection();
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    snackbar.value = true;
   },
 });
 
@@ -322,7 +335,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    snackbar.value = true;
   },
 });
 </script>
