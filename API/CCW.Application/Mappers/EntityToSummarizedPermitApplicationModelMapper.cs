@@ -8,10 +8,11 @@ public class EntityToSummarizedPermitApplicationModelMapper : IMapper<Summarized
 {
     public SummarizedPermitApplicationResponseModel Map(SummarizedPermitApplication source)
     {
-        return new SummarizedPermitApplicationResponseModel
+        var address = new Address();
+
+        if (source.CurrentAddress != null)
         {
-            Name = source.FirstName + source.LastName,
-            Address = new Address
+            address = new Address
             {
                 AddressLine1 = source.CurrentAddress.AddressLine1,
                 AddressLine2 = source.CurrentAddress.AddressLine2,
@@ -20,12 +21,18 @@ public class EntityToSummarizedPermitApplicationModelMapper : IMapper<Summarized
                 State = source.CurrentAddress.State,
                 Zip = source.CurrentAddress.Zip,
                 Country = source.CurrentAddress.Country,
-            },
-            Status = ApplicationStatus.None, //source.Status,
-            ApplicationID = source.id,
-            AppointmentStatus = AppointmentStatus.Complete, //source.AppointmentStatus,
-            Email = source.UserEmail,
-            OrderID = source.OrderId,
-        };
+            };
+        }
+
+        return new SummarizedPermitApplicationResponseModel
+            {
+                Name = source.FirstName + source.LastName,
+                Address = address,
+                Status = ApplicationStatus.None, //source.Status,
+                ApplicationID = source.id,
+                AppointmentStatus = AppointmentStatus.Complete, //source.AppointmentStatus,
+                Email = source.UserEmail,
+                OrderID = source.OrderId,
+            };
+        }
     }
-}
