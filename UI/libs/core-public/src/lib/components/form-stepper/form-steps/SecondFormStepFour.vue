@@ -59,11 +59,11 @@
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
-import { sendPostImage } from '@core-public/senders/documentSenders';
-import { useAuthStore } from '@shared-ui/stores/auth';
+import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { reactive, ref, watch } from 'vue';
+import axios from 'axios';
 
 interface ISecondFormStepFourProps {
   handleNextSection: CallableFunction;
@@ -72,7 +72,8 @@ interface ISecondFormStepFourProps {
 
 const props = defineProps<ISecondFormStepFourProps>();
 const signatureCanvas = ref<HTMLCanvasElement | null>(null);
-const authStore = useAuthStore();
+const applicationStore = useCompleteApplicationStore();
+const router = useRouter();
 
 const state = reactive({
   valid: false,
@@ -80,31 +81,40 @@ const state = reactive({
   signature: '',
 });
 
-const { isLoading, data, mutateAsync } = useMutation(() =>
-  sendPostImage(state.file)
-);
-
-const router = useRouter();
+const fileMutation = useMutation({
+  mutationFn: handleFileUpload,
+  onSuccess: () => {
+    router.push(Routes.FINALIZE_ROUTE_PATH);
+  },
+  onError: () => {
+    window.console.warn('error');
+  },
+});
 
 async function handleSubmit() {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const image = signatureCanvas.value.toDataURL('image/jpeg', 0.5);
+  const form = new FormData();
 
-  state.file = new File(
-    [image],
-    `${authStore.getAuthState.userEmail}-signature`,
-    { type: 'image/jpeg' }
+  form.append('fileToPersist', image);
+
+  state.file = form;
+
+  await fileMutation.mutate;
+}
+
+async function handleFileUpload() {
+  const newFileName = `${applicationStore.completeApplication.id.slice(-7)}_${
+    applicationStore.completeApplication.application.personalInfo.lastName
+  }_${
+    applicationStore.completeApplication.application.personalInfo.firstName
+  }_signature`;
+
+  await axios.post(
+    `http://localhost:5148/Api/Document/v1/Document/uploadApplicantFile?saveAsFileName=${newFileName}`,
+    state.file
   );
-  await mutateAsync();
-
-  if (data.value) {
-    // this might need to change depending on payment setup.
-    await router.push(Routes.FINALIZE_ROUTE_PATH);
-  }
-
-  // leave this here till api is completed
-  await router.push(Routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
 }
 
 function handleCanvasClear() {

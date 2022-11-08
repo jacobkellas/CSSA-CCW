@@ -227,7 +227,6 @@ function handleFileInput(event: File, target: string) {
 
   form.append('fileToPersist', event);
 
-  window.console.log(form);
   const fileObject = {
     form,
     target,
