@@ -1,0 +1,9 @@
+﻿namespace CCW.Application.Entities;
+
+public class UploadedDocument
+{
+    public string Name { get; set; }
+    public DateTime UploadedDateTimeUtc { get; set; }
+    public DateTime UploadedBy { get; set; }
+    public string DocumentType { get; set; }
+}

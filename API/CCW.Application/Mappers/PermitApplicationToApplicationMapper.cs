@@ -21,6 +21,7 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
     private readonly IMapper<PermitApplication, SpouseAddressInformation> _spouseAddressInfoMapper;
     private readonly IMapper<PermitApplication, Weapon[]> _weaponMapper;
     private readonly IMapper<PermitApplication, QualifyingQuestions> _qualifyingQuestionsMapper;
+    //private readonly IMapper<PermitApplication, UploadedDocument[]> _uploadedDocMapper;
 
     public PermitApplicationToApplicationMapper(
         IMapper<PermitApplication, Alias[]> aliasMapper,
@@ -58,6 +59,7 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
         _spouseAddressInfoMapper = spouseAddressInfoMapper;
         _weaponMapper = weaponMapper;
         _qualifyingQuestionsMapper = qualifyingQuestionsMapper;
+        //_uploadedDocMapper = uploadedDocMapper;
     }
 
     public Entities.Application Map(PermitApplication source)
@@ -95,8 +97,8 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
             CurrentStep = source.Application.CurrentStep,
             AppointmentStatus = source.Application.AppointmentStatus,
             Status = source.Application.Status,
+            OrderId = source.Application.OrderId,
+            //UploadedDocuments = MapIfNotNull(source.Application.UploadedDocuments, () => _uploadedDocMapper.Map(source)),
         };
     }
-
-    
 }
