@@ -21,7 +21,7 @@ namespace CCW.Application.Mappers
             return new PermitApplication
             {
                 Application = _applicationMapper.Map(source),
-                Id = isNewApplication ? Guid.NewGuid() : source.Id,
+                Id = source.Id,
                 History = _historyMapper.Map(source),
             };
         }

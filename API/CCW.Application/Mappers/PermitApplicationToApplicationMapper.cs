@@ -21,7 +21,7 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
     private readonly IMapper<PermitApplication, SpouseAddressInformation> _spouseAddressInfoMapper;
     private readonly IMapper<PermitApplication, Weapon[]> _weaponMapper;
     private readonly IMapper<PermitApplication, QualifyingQuestions> _qualifyingQuestionsMapper;
-    //private readonly IMapper<PermitApplication, UploadedDocument[]> _uploadedDocMapper;
+    private readonly IMapper<PermitApplication, UploadedDocument[]> _uploadedDocMapper;
 
     public PermitApplicationToApplicationMapper(
         IMapper<PermitApplication, Alias[]> aliasMapper,
@@ -40,7 +40,8 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
         IMapper<PermitApplication, ImmigrantInformation> immigrationMapper,
         IMapper<PermitApplication, SpouseAddressInformation> spouseAddressInfoMapper,
         IMapper<PermitApplication, Weapon[]> weaponMapper,
-        IMapper<PermitApplication, QualifyingQuestions> qualifyingQuestionsMapper)
+        IMapper<PermitApplication, QualifyingQuestions> qualifyingQuestionsMapper,
+        IMapper<PermitApplication, UploadedDocument[]> uploadedDocMapper)
     {
         _aliasMapper = aliasMapper;
         _addressMapper = addressMapper;
@@ -59,7 +60,7 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
         _spouseAddressInfoMapper = spouseAddressInfoMapper;
         _weaponMapper = weaponMapper;
         _qualifyingQuestionsMapper = qualifyingQuestionsMapper;
-        //_uploadedDocMapper = uploadedDocMapper;
+        _uploadedDocMapper = uploadedDocMapper;
     }
 
     public Entities.Application Map(PermitApplication source)
@@ -98,7 +99,7 @@ public class PermitApplicationToApplicationMapper : IMapper<PermitApplication, E
             AppointmentStatus = source.Application.AppointmentStatus,
             Status = source.Application.Status,
             OrderId = source.Application.OrderId,
-            //UploadedDocuments = MapIfNotNull(source.Application.UploadedDocuments, () => _uploadedDocMapper.Map(source)),
+            UploadedDocuments = MapIfNotNull(source.Application.UploadedDocuments, () => _uploadedDocMapper.Map(source)),
         };
     }
 }

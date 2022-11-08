@@ -1,4 +1,5 @@
 ﻿using CCW.Application.Entities;
+using CCW.Application.Enum;
 using CCW.Application.Models;
 
 namespace CCW.Application.Mappers;
@@ -22,6 +23,7 @@ public class PermitRequestApplicationToApplicationMapper : IMapper<PermitApplica
     private readonly IMapper<PermitApplicationRequestModel, SpouseAddressInformation> _spouseAddressInfoMapper;
     private readonly IMapper<PermitApplicationRequestModel, Weapon[]> _weaponMapper;
     private readonly IMapper<PermitApplicationRequestModel, QualifyingQuestions> _qualifyingQuestionsMapper;
+    private readonly IMapper<PermitApplicationRequestModel, UploadedDocument[]> _uploadedDocMapper;
 
     public PermitRequestApplicationToApplicationMapper(
             IMapper<PermitApplicationRequestModel, Alias[]> aliasMapper,
@@ -40,7 +42,8 @@ public class PermitRequestApplicationToApplicationMapper : IMapper<PermitApplica
             IMapper<PermitApplicationRequestModel, ImmigrantInformation> immigrationMapper,
             IMapper<PermitApplicationRequestModel, SpouseAddressInformation> spouseAddressInfoMapper,
             IMapper<PermitApplicationRequestModel, Weapon[]> weaponMapper,
-            IMapper<PermitApplicationRequestModel, QualifyingQuestions> qualifyingQuestionsMapper)
+            IMapper<PermitApplicationRequestModel, QualifyingQuestions> qualifyingQuestionsMapper,
+            IMapper<PermitApplicationRequestModel, UploadedDocument[]> uploadedDocMapper)
     {
         _aliasMapper = aliasMapper;
         _addressMapper = addressMapper;
@@ -59,36 +62,46 @@ public class PermitRequestApplicationToApplicationMapper : IMapper<PermitApplica
         _spouseAddressInfoMapper = spouseAddressInfoMapper;
         _weaponMapper = weaponMapper;
         _qualifyingQuestionsMapper = qualifyingQuestionsMapper;
+        _uploadedDocMapper = uploadedDocMapper;
     }
 
     public Entities.Application Map(PermitApplicationRequestModel source)
     {
+        T? MapIfNotNull<T>(T? sourceType, Func<T> factoryFunc)
+        {
+            return sourceType == null ? sourceType : factoryFunc();
+        }
+
         return new Entities.Application
         {
-            Aliases = source.Application.Aliases != null ? _aliasMapper.Map(source) : null,
-            ApplicationType = source.Application.ApplicationType ?? null,
-            CurrentAddress = source.Application.CurrentAddress != null ? _addressMapper.Map(source) : null,
-            Citizenship = source.Application.Citizenship != null ? _citizenshipMapper.Map(source) : null,
-            Contact = source.Application.Contact != null ? _contactMapper.Map(source) : null,
-            DOB = source.Application.DOB != null ? _dobMapper.Map(source) : null,
-            Employment = source.Application.Employment ?? null,
-            IdInfo = source.Application.IdInfo != null ? _idInfoMapper.Map(source) : null,
-            PhysicalAppearance = source.Application.PhysicalAppearance != null ? _physicalAppearanceMapper.Map(source) : null,
-            License = source.Application.License != null ? _licenseMapper.Map(source) : null,
-            DifferentMailing = source.Application.DifferentMailing ?? null,
-            DifferentSpouseAddress = source.Application.DifferentSpouseAddress ?? null,
+            Aliases = MapIfNotNull(source.Application.Aliases, () => _aliasMapper.Map(source)),
+            ApplicationType = source.Application.ApplicationType,
+            CurrentAddress = MapIfNotNull(source.Application.CurrentAddress, () => _addressMapper.Map(source)),
+            Citizenship = MapIfNotNull(source.Application.Citizenship, () => _citizenshipMapper.Map(source)),
+            Contact = MapIfNotNull(source.Application.Contact, () => _contactMapper.Map(source)),
+            DOB = MapIfNotNull(source.Application.DOB, () => _dobMapper.Map(source)),
+            Employment = source.Application.Employment,
+            IdInfo = MapIfNotNull(source.Application.IdInfo, () => _idInfoMapper.Map(source)),
+            PhysicalAppearance = MapIfNotNull(source.Application.PhysicalAppearance, () => _physicalAppearanceMapper.Map(source)),
+            License = MapIfNotNull(source.Application.License, () => _licenseMapper.Map(source)),
+            DifferentMailing = source.Application.DifferentMailing,
+            DifferentSpouseAddress = source.Application.DifferentSpouseAddress,
             IsComplete = source.Application.IsComplete,
-            ImmigrantInformation = source.Application.ImmigrantInformation != null ? _immigrationMapper.Map(source) : null,
-            SpouseInformation = source.Application.SpouseInformation != null ? _spouseInfoMapper.Map(source) : null,
-            WorkInformation = source.Application.WorkInformation != null ? _workInfoMapper.Map(source) : null,
-            PersonalInfo = source.Application.PersonalInfo != null ? _personalInfoMapper.Map(source) : null,
-            MailingAddress = source.Application.MailingAddress != null ? _mailingAddressMapper.Map(source) : null,
-            PreviousAddresses = source.Application.PreviousAddresses != null ? _previousAddressMapper.Map(source) : null,
-            SpouseAddressInformation = source.Application.SpouseAddressInformation != null ? _spouseAddressInfoMapper.Map(source) : null,
+            ImmigrantInformation = MapIfNotNull(source.Application.ImmigrantInformation, () => _immigrationMapper.Map(source)),
+            SpouseInformation = MapIfNotNull(source.Application.SpouseInformation, () => _spouseInfoMapper.Map(source)),
+            WorkInformation = MapIfNotNull(source.Application.WorkInformation, () => _workInfoMapper.Map(source)),
+            PersonalInfo = MapIfNotNull(source.Application.PersonalInfo, () => _personalInfoMapper.Map(source)),
+            MailingAddress = MapIfNotNull(source.Application.MailingAddress, () => _mailingAddressMapper.Map(source)),
+            PreviousAddresses = MapIfNotNull(source.Application.PreviousAddresses, () => _previousAddressMapper.Map(source)),
+            SpouseAddressInformation = MapIfNotNull(source.Application.SpouseAddressInformation, () => _spouseAddressInfoMapper.Map(source)),
             UserEmail = source.Application.UserEmail,
-            Weapons = source.Application.Weapons != null ? _weaponMapper.Map(source) : null,
-            QualifyingQuestions = source.Application.QualifyingQuestions != null ? _qualifyingQuestionsMapper.Map(source) : null,
+            Weapons = MapIfNotNull(source.Application.Weapons, () => _weaponMapper.Map(source)),
+            QualifyingQuestions = MapIfNotNull(source.Application.QualifyingQuestions, () => _qualifyingQuestionsMapper.Map(source)),
             CurrentStep = source.Application.CurrentStep,
+            AppointmentStatus = source.Application.AppointmentStatus,
+            Status = source.Application.Status,
+            OrderId = source.Application.OrderId,
+            UploadedDocuments = MapIfNotNull(source.Application.UploadedDocuments, () => _uploadedDocMapper.Map(source)),
         };
     }
 }
