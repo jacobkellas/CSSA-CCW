@@ -322,11 +322,11 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
       Cancel
     </span></button></div>
   </div>
-  <div class="v-snack v-snack--bottom v-snack--has-background">
+  <div class="v-snack v-snack--bottom">
     <transition-stub name="v-snack-transition">
-      <div class="v-snack__wrapper v-sheet theme--dark" style="display: none;">
+      <div class="v-snack__wrapper v-sheet v-sheet--outlined theme--light error--text" style="display: none;">
         <div role="status" aria-live="polite" class="v-snack__content">
-          error message
+          Section update unsuccessful please try again.
         </div>
         <div class="v-snack__action "></div>
       </div>

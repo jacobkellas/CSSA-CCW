@@ -40,6 +40,7 @@ import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
+import { useRouter } from 'vue-router/composables';
 
 const stepIndex = reactive({
   step: 1,
@@ -48,6 +49,7 @@ const stepIndex = reactive({
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
+const router = useRouter();
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
   // TODO: once the is current step is added to the object change this to route to the current step is
@@ -76,7 +78,14 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       );
       applicationStore.setCompleteApplication(data);
       stepIndex.step = 1;
+      checkForCorrectForm();
     });
+  }
+
+  function checkForCorrectForm() {
+    if (applicationStore.completeApplication.application.currentStep > 5) {
+      router.push('/renew-form-2');
+    }
   }
 });
 

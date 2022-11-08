@@ -47,7 +47,7 @@
                     {{ app.application.userEmail }} -
                     {{
                       new Date(
-                        app.application.history[0].changeDateTimeUtc
+                        app.history[0]?.changeDateTimeUtc
                       ).toLocaleDateString()
                     }}
                   </v-btn>
@@ -119,6 +119,7 @@ async function handleCreateApplication() {
   applicationStore.completeApplication.application.userEmail =
     authStore.auth.userEmail;
   applicationStore.completeApplication.id = window.crypto.randomUUID();
+  applicationStore.completeApplication.application.currentStep = 1;
   createMutation.mutate();
 }
 

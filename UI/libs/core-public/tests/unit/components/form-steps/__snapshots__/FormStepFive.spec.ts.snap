@@ -94,5 +94,15 @@ exports[`FormStepFive Should match the snapshot 1`] = `
       Cancel
     </span></button></div>
   </div>
+  <div class="v-snack v-snack--bottom">
+    <transition-stub name="v-snack-transition">
+      <div class="v-snack__wrapper v-sheet v-sheet--outlined theme--light error--text" style="display: none;">
+        <div role="status" aria-live="polite" class="v-snack__content">
+          Section update unsuccessful please try again.
+        </div>
+        <div class="v-snack__action "></div>
+      </div>
+    </transition-stub>
+  </div>
 </div>
 `;

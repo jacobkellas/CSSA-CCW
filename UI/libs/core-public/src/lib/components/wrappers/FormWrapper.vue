@@ -37,18 +37,25 @@
 import FormStepHeader from '../form-stepper/FormStepHeader.vue';
 import FormStepItems from '../form-stepper/FormStepItems.vue';
 import { formOneStepNames } from '@shared-utils/lists/defaultConstants';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
+import { useRouter } from 'vue-router/composables';
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
+const router = useRouter();
 
 const stepIndex = reactive({
   step: 1,
   previousStep: 0,
+});
+
+onMounted(() => {
+  stepIndex.step = applicationStore.completeApplication.application.currentStep;
+  checkForCorrectForm();
 });
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
@@ -77,7 +84,9 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       );
 
       applicationStore.setCompleteApplication(data);
-      stepIndex.step = 1;
+      stepIndex.step =
+        applicationStore.completeApplication.application.currentStep;
+      checkForCorrectForm();
     });
   }
 });
@@ -94,6 +103,12 @@ function handlePreviousSection() {
 
 function handleResetForm() {
   stepIndex.step = 1;
+}
+
+function checkForCorrectForm() {
+  if (applicationStore.completeApplication.application.currentStep > 5) {
+    router.push('/form-2');
+  }
 }
 </script>
 

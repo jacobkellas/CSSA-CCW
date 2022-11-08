@@ -129,32 +129,27 @@ exports[`FormStepOne Should match the snapshot 1`] = `
     </div>
     <div class="row ml-1">
       <div class="col-sm-3 col-md-5 col-10">
-        <div class="radio-group">
-          <div class="v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--row">
-            <div class="v-input__control">
-              <div class="v-input__slot" style="height: auto;">
-                <div role="radiogroup" aria-labelledby="input-38" class="v-input--radio-group__input">
-                  <legend id="input-38" class="v-label theme--light" style="left: 0px; position: relative;">Marital status</legend>
-                  <div class="v-radio radio-group text--black theme--light">
-                    <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-39" role="radio" type="radio" name="radio-38" value="married">
-                      <div class="v-input--selection-controls__ripple"></div>
-                    </div><label for="input-39" class="v-label theme--light" style="left: 0px; position: relative;">Married</label>
-                  </div>
-                  <div class="v-radio radio-group text--black theme--light">
-                    <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-41" role="radio" type="radio" name="radio-38" value="single">
-                      <div class="v-input--selection-controls__ripple"></div>
-                    </div><label for="input-41" class="v-label theme--light" style="left: 0px; position: relative;">Single</label>
-                  </div>
+        <div layout="row" class="v-input theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--column">
+          <div class="v-input__control">
+            <div class="v-input__slot" style="height: auto;">
+              <div role="radiogroup" aria-labelledby="input-37" class="v-input--radio-group__input">
+                <legend id="input-37" class="v-label theme--light" style="left: 0px; position: relative;">Marital status</legend>
+                <div class="v-radio theme--light">
+                  <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-38" role="radio" type="radio" name="radio-37" value="married">
+                    <div class="v-input--selection-controls__ripple"></div>
+                  </div><label for="input-38" class="v-label theme--light" style="left: 0px; position: relative;">Married</label>
+                </div>
+                <div class="v-radio theme--light">
+                  <div class="v-input--selection-controls__input"><i aria-hidden="true" class="v-icon notranslate mdi mdi-radiobox-blank theme--light"></i><input aria-checked="false" id="input-40" role="radio" type="radio" name="radio-37" value="single">
+                    <div class="v-input--selection-controls__ripple"></div>
+                  </div><label for="input-40" class="v-label theme--light" style="left: 0px; position: relative;">Single</label>
                 </div>
               </div>
-              <div class="v-messages theme--light">
-                <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper">
-                  <div class="v-messages__message">Marital Status is required</div>
-                </transition-group-stub>
-              </div>
+            </div>
+            <div class="v-messages theme--light">
+              <transition-group-stub tag="div" name="message-transition" class="v-messages__wrapper"></transition-group-stub>
             </div>
           </div>
-          <!---->
         </div>
       </div>
       <!---->
@@ -205,5 +200,15 @@ exports[`FormStepOne Should match the snapshot 1`] = `
     </span></button></div>
   </div>
   <!---->
+  <div class="v-snack v-snack--bottom">
+    <transition-stub name="v-snack-transition">
+      <div class="v-snack__wrapper v-sheet v-sheet--outlined theme--light error--text" style="display: none;">
+        <div role="status" aria-live="polite" class="v-snack__content">
+          Section update unsuccessful please try again.
+        </div>
+        <div class="v-snack__action "></div>
+      </div>
+    </transition-stub>
+  </div>
 </div>
 `;

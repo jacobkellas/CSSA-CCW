@@ -474,6 +474,16 @@
         @cancel="router.push('/')"
       />
     </v-form>
+
+    <v-snackbar
+      :value="snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -482,7 +492,6 @@ import { AddressInfoType } from '@shared-utils/types/defaultTypes';
 import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
-import { i18n } from '@shared-ui/plugins';
 import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -499,6 +508,7 @@ const props = withDefaults(defineProps<FormStepThreeProps>(), {
 });
 
 const valid = ref(false);
+const snackbar = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
@@ -510,11 +520,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step three complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 4;
     props.handleNextSection();
   },
-  onError: error => {
-    // TODO: Change alerts to a snack bar if there is one in vuetify.
-    alert(error);
+  onError: () => {
+    snackbar.value = true;
   },
 });
 
@@ -526,7 +536,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    snackbar.value = true;
   },
 });
 

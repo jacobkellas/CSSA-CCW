@@ -36,7 +36,7 @@
 import FormStepHeader from '@core-public/components/form-stepper/FormStepHeader.vue';
 import FormSecondStepItems from '@core-public/components/form-stepper/FormSecondStepItems.vue';
 import { formTwoStepName } from '@shared-utils/lists/defaultConstants';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
@@ -49,6 +49,10 @@ const stepIndex = reactive({
   previousStep: 5,
 });
 
+onMounted(() => {
+  stepIndex.step = applicationStore.completeApplication.application.currentStep;
+});
+
 const { isLoading } = useQuery(['getIncompleteApplication'], () => {
   stepIndex.step = 5;
   const res = applicationStore.getCompleteApplicationFromApi(
@@ -58,7 +62,8 @@ const { isLoading } = useQuery(['getIncompleteApplication'], () => {
 
   res.then(data => {
     applicationStore.setCompleteApplication(data);
-    stepIndex.step = 6;
+    stepIndex.step =
+      applicationStore.completeApplication.application.currentStep;
   });
 });
 

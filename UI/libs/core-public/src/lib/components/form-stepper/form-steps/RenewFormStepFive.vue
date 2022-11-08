@@ -89,6 +89,15 @@
       @back="handlePreviousSection"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -102,12 +111,12 @@ import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useRouter } from 'vue-router/composables';
 import { useMutation } from '@tanstack/vue-query';
-import { i18n } from '@core-public/plugins';
 
 const router = useRouter();
 
 const state = reactive({
   valid: false,
+  snackbar: false,
 });
 
 interface IProps {
@@ -124,10 +133,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step five complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 6;
     router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 
@@ -139,7 +149,7 @@ const saveMutation = useMutation({
     router.push(Routes.HOME_ROUTE_PATH);
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 

@@ -89,6 +89,15 @@
       @back="handlePreviousSection"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -97,7 +106,6 @@ import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
 import { formatPhoneNumber } from '@shared-utils/formatters/defaultFormatters';
-import { i18n } from '@shared-ui/plugins';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
@@ -114,6 +122,7 @@ const router = useRouter();
 
 const state = reactive({
   valid: false,
+  snackbar: false,
 });
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -125,10 +134,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step five complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 6;
     router.push(Routes.FORM_TWO_ROUTE_PATH);
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    state.snackbar = true;
   },
 });
 
@@ -140,7 +150,7 @@ const saveMutation = useMutation({
     router.push(Routes.HOME_ROUTE_PATH);
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 

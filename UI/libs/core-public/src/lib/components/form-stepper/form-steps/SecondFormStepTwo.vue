@@ -177,8 +177,11 @@
     <v-snackbar
       v-model="state.snackbar"
       :timeout="2000"
+      bottom
+      color="error"
+      outlined
     >
-      {{ $t('error message') }}
+      {{ $t('Section update unsuccessful please try again.') }}
     </v-snackbar>
   </div>
 </template>
@@ -215,6 +218,7 @@ const fileMutation = useMutation({
   mutationFn: handleFileUpload,
   onSuccess: () => {
     state.uploadSuccessful = true;
+    completeApplication.currentStep = 9;
     props.handleNextSection();
   },
   onError: () => {
@@ -227,7 +231,6 @@ function handleFileInput(event: File, target: string) {
 
   form.append('fileToPersist', event);
 
-  window.console.log(form);
   const fileObject = {
     form,
     target,

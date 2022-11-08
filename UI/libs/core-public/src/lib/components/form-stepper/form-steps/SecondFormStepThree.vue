@@ -1,25 +1,27 @@
 <template>
   <div>
     <ApplicationInfoSection />
-    <v-form>
+    <v-form v-model="state.valid">
       <v-subheader class="sub-header font-weight-bold">
         {{ $t('Application Type') }}
       </v-subheader>
       <div class="ml-5">
-        <RadioGroupInput
-          :layout="'column'"
-          :options="[
-            { label: 'Standard', value: 'standard' },
-            { label: 'Judicial', value: 'judicial', color: 'warning' },
-            { label: 'Reserve', value: 'reserve', color: 'warning' },
-          ]"
-          @input="
-            v => {
-              completeApplication.applicationType = v;
-              state.valid = true;
-            }
-          "
-        />
+        <v-radio-group v-model="completeApplication.applicationType">
+          <v-radio
+            :label="'Standard'"
+            :value="'standard'"
+          />
+          <v-radio
+            :label="'Judicial'"
+            :value="'judicial'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Reserve'"
+            :value="'reserve'"
+            color="warning"
+          />
+        </v-radio-group>
       </div>
       <v-alert
         dense
@@ -50,14 +52,21 @@
       @back="handlePreviousSection"
       @cancel="router.push('/')"
     />
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
 <script setup lang="ts">
 import ApplicationInfoSection from '@shared-ui/components/info-sections/ApplicationInfoSection';
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import RadioGroupInput from '@shared-ui/components/inputs/RadioGroupInput.vue';
-import { i18n } from '@shared-ui/plugins';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -76,6 +85,7 @@ const router = useRouter();
 
 const state = reactive({
   valid: false,
+  snackbar: false,
 });
 
 const updateMutation = useMutation({
@@ -83,10 +93,11 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Step seven complete');
   },
   onSuccess: () => {
+    completeApplication.currentStep = 8;
     props.handleNextSection();
   },
-  onError: error => {
-    alert(error);
+  onError: () => {
+    state.snackbar = true;
   },
 });
 
@@ -98,7 +109,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    state.snackbar = true;
   },
 });
 </script>
