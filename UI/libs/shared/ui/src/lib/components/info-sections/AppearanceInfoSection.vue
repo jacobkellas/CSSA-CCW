@@ -146,12 +146,12 @@ const props = defineProps<IAppearanceInfoSectionProps>();
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 1.8em;
+  height: 6.5em;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;
   padding-top: 0.2rem;
-  background-color: #c3f3f3;
+  background-color: rgba(211, 241, 241, 0.3);
   border-bottom: 1px solid #666;
   border-radius: 5px;
   font-size: 1.2em;

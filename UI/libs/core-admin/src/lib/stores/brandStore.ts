@@ -16,12 +16,12 @@ export const useBrandStore = defineStore('BrandStore', () => {
     chiefOfPoliceName: '',
     primaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.primary,
     secondaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.secondary,
-    standardCost: 113.0,
-    judicialCost: 135.0,
-    reserveCost: 157.0,
-    creditFee: 0.05,
-    convenienceFee: 5.0,
-    paymentURL: 'https://buy.stripe.com/test_fZe00ugG5guI0YU4gg',
+    standardCost: 0,
+    judicialCost: 0,
+    reserveCost: 0,
+    creditFee: 0,
+    convenienceFee: 0,
+    paymentURL: '',
     refreshTokenTime: 30,
   });
 

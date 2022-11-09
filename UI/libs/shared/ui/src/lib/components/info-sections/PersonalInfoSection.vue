@@ -160,7 +160,7 @@ const props = defineProps<personalInfoSectionProps>();
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 2.5vh;
+  height: 6.5em;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;
@@ -168,7 +168,7 @@ const props = defineProps<personalInfoSectionProps>();
   background-color: rgba(211, 241, 241, 0.3);
   border-bottom: 1px solid #666;
   border-radius: 5px;
-  font-size: 0.5em;
+  font-size: 1.2em;
   font-weight: bold;
 }
 </style>

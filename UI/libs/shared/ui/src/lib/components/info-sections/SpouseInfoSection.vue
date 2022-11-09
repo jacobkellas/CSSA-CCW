@@ -76,4 +76,33 @@ interface ISpouseInfoSectionProps {
 const props = defineProps<ISpouseInfoSectionProps>();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.info-section-container {
+  width: 80%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.info-row {
+  display: flex;
+  flex-direction: row;
+  max-height: 2vh;
+  min-height: 1vh;
+  margin-left: 0.5rem;
+}
+
+.info-text {
+  margin-left: 0.5rem;
+  text-align: start;
+  height: 6.5em;
+  width: 50%;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+  background-color: rgba(211, 241, 241, 0.3);
+  border-bottom: 1px solid #666;
+  border-radius: 5px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+</style>

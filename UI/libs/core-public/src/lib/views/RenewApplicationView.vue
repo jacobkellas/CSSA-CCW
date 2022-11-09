@@ -19,33 +19,46 @@
               >
               </v-skeleton-loader>
             </v-container>
-            <v-list v-else>
-              <v-list-item v-if="state.applications.length === 0">
-                <v-list-item-content>
-                  {{
-                    $t(
-                      ' No previously completed applications. Please go back to new applications'
-                    )
-                  }}
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item
-                v-for="app in state.applications"
-                :key="app"
-                v-else
-              >
-                {{ app.application.userEmail }}
-              </v-list-item>
-            </v-list>
+            <v-card v-else>
+              <v-card-title>
+                {{ $t('Select Application to modify') }}
+              </v-card-title>
+              <v-list>
+                <v-list-item v-if="state.applications.length === 0">
+                  <v-list-item-content>
+                    {{
+                      $t(
+                        ' No previously completed applications. Please go back to new applications'
+                      )
+                    }}
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                  v-for="app in state.applications"
+                  :key="app"
+                  v-else
+                >
+                  <v-btn
+                    outlined
+                    color="primary"
+                    @click="handleSelectedApplication(app)"
+                  >
+                    {{ app.application.orderId }}-
+                    {{ app.application.isComplete }}
+                  </v-btn>
+                </v-list-item>
+              </v-list>
+            </v-card>
           </v-col>
           <v-col
             lg="4"
             sm="1"
           >
-            <v-btn @click="handleModifyApplication">
-              {{ $t(' Modify Application') }}
-            </v-btn>
-            <v-btn @click="handleRenewApplication">
+            <v-btn
+              color="primary"
+              class="mt-5"
+              @click="handleRenewApplication"
+            >
               {{ $t(' Create Renewal Application') }}
             </v-btn>
           </v-col>
@@ -67,6 +80,8 @@ import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { useBrandStore } from '@core-public/stores/brandStore';
+import { CompleteApplication } from '@shared-utils/types/defaultTypes';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 
 const applicationStore = useCompleteApplicationStore();
 const applicationTypeStore = useApplicationTypeStore();
@@ -76,7 +91,7 @@ const completeApplication = applicationStore.completeApplication.application;
 
 const state = reactive({
   selected: false,
-  applications: [] as Array<any>,
+  applications: [] as Array<CompleteApplication>,
 });
 
 const { isLoading } = useQuery(['getCompleteApplications'], () => {
@@ -85,7 +100,7 @@ const { isLoading } = useQuery(['getCompleteApplications'], () => {
     true
   );
 
-  res.then(data => (state.applications = data));
+  res.then(data => state.applications.push(data));
 });
 
 const createMutation = useMutation({
@@ -98,10 +113,24 @@ const createMutation = useMutation({
   },
 });
 
-async function handleModifyApplication() {
+function handleSelectedApplication(selected) {
+  selected.application.contact.primaryPhoneNumber = unformatNumber(
+    selected.application.contact.primaryPhoneNumber
+  );
+  selected.application.contact.cellPhoneNumber = unformatNumber(
+    selected.application.contact.cellPhoneNumber
+  );
+  selected.application.contact.workPhoneNumber = unformatNumber(
+    selected.application.contact.workPhoneNumber
+  );
+  selected.application.contact.faxPhoneNumber = unformatNumber(
+    selected.application.contact.faxPhoneNumber
+  );
+  selected.application.personalInfo.ssn = unformatNumber(
+    selected.application.personalInfo.ssn
+  );
+  applicationStore.setCompleteApplication(selected);
   applicationTypeStore.state.type = 'modify';
-  applicationStore.setCompleteApplication(state.applications[0].application);
-
   state.selected = true;
 }
 

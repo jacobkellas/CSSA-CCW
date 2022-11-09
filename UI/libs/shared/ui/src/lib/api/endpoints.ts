@@ -98,12 +98,12 @@ export default class Endpoints {
   static get POST_DOCUMENT_IMAGE_ENDPOINT() {
     return `${
       useAppConfigStore().getAppConfig.documentApiBaseUrl
-    }/document/v1/document/uploadImage`;
+    }/document/v1/document/uploadApplicantFile`;
   }
 
   static get POST_DOCUMENT_FILE_ENDPOINT() {
     return `${
       useAppConfigStore().getAppConfig.documentApiBaseUrl
-    }/document/v1/document/uploadImage`;
+    }/document/v1/document/uploadApplicantFile`;
   }
 }

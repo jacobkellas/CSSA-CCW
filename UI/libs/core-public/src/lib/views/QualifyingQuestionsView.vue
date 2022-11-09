@@ -756,17 +756,27 @@
         @save="saveMutation.mutate"
       />
     </v-sheet>
+    <v-snackbar
+      :value="snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
-import { i18n } from '@shared-ui/plugins';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
+import { ref } from 'vue';
 
+const snackbar = ref(false);
 const applicationStore = useCompleteApplicationStore();
 const completeApplication = applicationStore.completeApplication.application;
 const router = useRouter();
@@ -779,7 +789,7 @@ const updateMutation = useMutation({
     router.push(Routes.FINALIZE_ROUTE_PATH);
   },
   onError: () => {
-    alert(' Api error');
+    snackbar.value = true;
   },
 });
 
@@ -791,7 +801,7 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
-    alert(i18n.t('Save unsuccessful, please try again'));
+    snackbar.value = true;
   },
 });
 </script>

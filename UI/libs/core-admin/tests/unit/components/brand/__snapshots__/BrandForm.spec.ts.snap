@@ -318,13 +318,13 @@ exports[`BrandForm Should render logo label 1`] = `
               </div>
               <div class="row">
                 <div class="col-md-6 col-12">
-                  <div class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field">
+                  <div class="v-input theme--light v-text-field">
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-83" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Payment URL</label><input required="required" id="input-83" type="text"></div>
+                        <div class="v-text-field__slot"><label for="input-83" class="v-label theme--light" style="left: 0px; position: absolute;">Payment URL</label><input required="required" id="input-83" type="text"></div>
                         <div class="v-input__append-inner">
-                          <div class="v-input__icon v-input__icon--clear"><button type="button" aria-label="clear icon" tabindex="-1" class="v-icon notranslate v-icon--link mdi mdi-close theme--light"></button></div>
+                          <div></div>
                         </div>
                       </div>
                       <div class="v-text-field__details">
@@ -375,8 +375,8 @@ exports[`BrandForm Should render logo label 1`] = `
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-99" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Standard Cost</label>
-                          <div class="v-text-field__prefix">$</div><input required="required" id="input-99" type="number">
+                        <div class="v-text-field__slot"><label for="input-98" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Standard Cost</label>
+                          <div class="v-text-field__prefix">$</div><input required="required" id="input-98" type="number">
                         </div>
                         <div class="v-input__append-inner">
                           <div class="v-input__icon v-input__icon--clear"><button type="button" aria-label="clear icon" tabindex="-1" class="v-icon notranslate v-icon--link mdi mdi-close theme--light"></button></div>
@@ -397,8 +397,8 @@ exports[`BrandForm Should render logo label 1`] = `
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-104" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Judicial Cost</label>
-                          <div class="v-text-field__prefix">$</div><input required="required" id="input-104" type="number">
+                        <div class="v-text-field__slot"><label for="input-103" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Judicial Cost</label>
+                          <div class="v-text-field__prefix">$</div><input required="required" id="input-103" type="number">
                         </div>
                         <div class="v-input__append-inner">
                           <div class="v-input__icon v-input__icon--clear"><button type="button" aria-label="clear icon" tabindex="-1" class="v-icon notranslate v-icon--link mdi mdi-close theme--light"></button></div>
@@ -419,8 +419,8 @@ exports[`BrandForm Should render logo label 1`] = `
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-109" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Reserve Cost</label>
-                          <div class="v-text-field__prefix">$</div><input required="required" id="input-109" type="number">
+                        <div class="v-text-field__slot"><label for="input-108" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Reserve Cost</label>
+                          <div class="v-text-field__prefix">$</div><input required="required" id="input-108" type="number">
                         </div>
                         <div class="v-input__append-inner">
                           <div class="v-input__icon v-input__icon--clear"><button type="button" aria-label="clear icon" tabindex="-1" class="v-icon notranslate v-icon--link mdi mdi-close theme--light"></button></div>
@@ -441,8 +441,8 @@ exports[`BrandForm Should render logo label 1`] = `
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-114" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Credit Fee</label>
-                          <div class="v-text-field__prefix">$</div><input required="required" id="input-114" type="number">
+                        <div class="v-text-field__slot"><label for="input-113" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Credit Fee</label>
+                          <div class="v-text-field__prefix">$</div><input required="required" id="input-113" type="number">
                         </div>
                         <div class="v-input__append-inner">
                           <div class="v-input__icon v-input__icon--clear"><button type="button" aria-label="clear icon" tabindex="-1" class="v-icon notranslate v-icon--link mdi mdi-close theme--light"></button></div>
@@ -463,8 +463,8 @@ exports[`BrandForm Should render logo label 1`] = `
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
                       <div class="v-input__slot">
-                        <div class="v-text-field__slot"><label for="input-119" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Convenience Fee</label>
-                          <div class="v-text-field__prefix">$</div><input required="required" id="input-119" type="number">
+                        <div class="v-text-field__slot"><label for="input-118" class="v-label v-label--active theme--light" style="left: 0px; position: absolute;">Convenience Fee</label>
+                          <div class="v-text-field__prefix">$</div><input required="required" id="input-118" type="number">
                         </div>
                         <div class="v-input__append-inner">
                           <div class="v-input__icon v-input__icon--clear"><button type="button" aria-label="clear icon" tabindex="-1" class="v-icon notranslate v-icon--link mdi mdi-close theme--light"></button></div>
