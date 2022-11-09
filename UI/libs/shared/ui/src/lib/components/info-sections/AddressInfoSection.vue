@@ -147,7 +147,7 @@ const props = defineProps<IAddressInfoSectionProps>();
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 1.8em;
+  height: 6.5em;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;

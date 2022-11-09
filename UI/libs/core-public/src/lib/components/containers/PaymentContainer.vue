@@ -43,7 +43,7 @@ const state = reactive({
 });
 
 onMounted(() => {
-  switch (application.completeApplication.applicationType) {
+  switch (application.completeApplication.application.applicationType) {
     case 'standard':
       state.payment.applicationCost = brandStore.brand.standardCost;
       break;

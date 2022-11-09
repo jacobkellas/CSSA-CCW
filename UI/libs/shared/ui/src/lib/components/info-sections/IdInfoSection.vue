@@ -66,7 +66,7 @@ const props = defineProps<IIdInfoSectionProps>();
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 2.5vh;
+  height: 6.5em;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;

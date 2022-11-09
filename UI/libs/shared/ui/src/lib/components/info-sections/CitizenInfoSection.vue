@@ -98,7 +98,10 @@
 </template>
 
 <script setup lang="ts">
-import { CitizenshipType, ImmigrantInformation } from '@shared-utils/types/defaultTypes';
+import {
+  CitizenshipType,
+  ImmigrantInformation,
+} from '@shared-utils/types/defaultTypes';
 
 interface ICitizenShipInfoSectionProps {
   citizenshipInfo: CitizenshipType;
@@ -125,7 +128,7 @@ const props = defineProps<ICitizenShipInfoSectionProps>();
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 2.5vh;
+  height: 6.5em;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;
