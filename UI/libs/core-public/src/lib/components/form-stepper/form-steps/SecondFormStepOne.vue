@@ -224,7 +224,7 @@
       :valid="state.valid"
       @submit="updateMutation.mutate"
       @save="saveMutation.mutate"
-      @back="router.push('/form')"
+      @back="handleBack"
       @cancel="router.push('/')"
     />
     <v-snackbar
@@ -292,6 +292,11 @@ const saveMutation = useMutation({
     state.snackbar = true;
   },
 });
+
+function handleBack() {
+  completeApplication.currentStep = 5;
+  router.push('/form');
+}
 
 function getWeaponFromDialog(weapon) {
   completeApplication.weapons.push(weapon);

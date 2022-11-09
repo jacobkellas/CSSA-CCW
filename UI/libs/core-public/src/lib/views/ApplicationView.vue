@@ -26,7 +26,7 @@
               <v-card-title>
                 {{ $t('In progress applications') }}
               </v-card-title>
-              <v-list>
+              <v-list v-if="!isLoading">
                 <v-list-item v-if="state.applications.length === 0">
                   <v-list-item-content>
                     {{
@@ -44,11 +44,11 @@
                     color="primary"
                     @click="handleSelectedApplication(app)"
                   >
-                    {{ app.application.userEmail }} -
+                    {{ app.application.orderId }} -
                     {{
-                      new Date(
-                        app.history[0]?.changeDateTimeUtc
-                      ).toLocaleDateString()
+                      app.application.isComplete
+                        ? $t('Complete')
+                        : $t('In progress')
                     }}
                   </v-btn>
                 </v-list-item>
@@ -59,7 +59,11 @@
             lg="4"
             sm="1"
           >
-            <v-btn @click="handleCreateApplication">
+            <v-btn
+              color="primary"
+              class="mt-5"
+              @click="handleCreateApplication"
+            >
               {{ $t('New Application') }}
             </v-btn>
           </v-col>

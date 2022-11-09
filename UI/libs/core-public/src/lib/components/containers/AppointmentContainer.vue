@@ -198,6 +198,7 @@ const appointmentMutation = useMutation({
     state.isLoading = false;
     state.setAppointment = true;
     state.snackbarOk = true;
+    applicationStore.completeApplication.application.appointmentStatus = 2;
     props.toggleAppointment();
   },
   onError: () => {

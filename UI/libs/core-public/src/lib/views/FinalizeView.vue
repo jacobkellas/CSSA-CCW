@@ -35,6 +35,15 @@
         </v-btn>
       </v-container>
     </div>
+    <v-snackbar
+      :value="state.snackbar"
+      :timeout="3000"
+      bottom
+      color="error"
+      outlined
+    >
+      {{ $t('Section update unsuccessful please try again.') }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -69,6 +78,7 @@ const options = [
   'Weapons Information',
 ];
 const state = reactive({
+  snackbar: false,
   paymentComplete: false,
   appointmentComplete: false,
   appointments: [] as Array<AppointmentType>,
@@ -126,13 +136,15 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
   });
 });
 
-//TODO: make the api call here to get the appointments and pass as a prop to the appointmentContainer.
+//TODO: Route to a confirmation page
 const updateMutation = useMutation({
   mutationFn: () => {
     return completeApplicationStore.updateApplication('Application Complete');
   },
   onSuccess: () => {},
-  onError: () => {},
+  onError: () => {
+    state.snackbar = true;
+  },
 });
 
 function handleSelection(target: number) {

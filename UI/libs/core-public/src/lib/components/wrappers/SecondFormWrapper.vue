@@ -54,17 +54,19 @@ onMounted(() => {
 });
 
 const { isLoading } = useQuery(['getIncompleteApplication'], () => {
-  stepIndex.step = 5;
-  const res = applicationStore.getCompleteApplicationFromApi(
-    authStore.auth.userEmail,
-    false
-  );
+  if (!applicationStore.completeApplication.id) {
+    stepIndex.step = 5;
+    const res = applicationStore.getCompleteApplicationFromApi(
+      authStore.auth.userEmail,
+      false
+    );
 
-  res.then(data => {
-    applicationStore.setCompleteApplication(data);
-    stepIndex.step =
-      applicationStore.completeApplication.application.currentStep;
-  });
+    res.then(data => {
+      applicationStore.setCompleteApplication(data);
+      stepIndex.step =
+        applicationStore.completeApplication.application.currentStep;
+    });
+  }
 });
 
 function handleNextSection() {

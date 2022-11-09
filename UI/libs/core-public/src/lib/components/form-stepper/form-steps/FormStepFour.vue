@@ -78,15 +78,10 @@
         >
           <v-select
             v-model="completeApplication.physicalAppearance.hairColor"
+            :value="completeApplication.physicalAppearance.hairColor"
             :items="hairColors"
             :label="$t('Hair Color')"
             :rules="[v => !!v || $t(' Hair color is required')]"
-            @change="
-              v => {
-                completeApplication.physicalAppearance.hairColor =
-                  v.toLowerCase();
-              }
-            "
           >
             <template #prepend>
               <v-icon
@@ -105,15 +100,10 @@
         >
           <v-select
             v-model="completeApplication.physicalAppearance.eyeColor"
+            :value="completeApplication.physicalAppearance.eyeColor"
             :items="eyeColors"
             :label="$t('Eye Color')"
             :rules="[v => !!v || $t('Eye color is required')]"
-            @change="
-              v => {
-                completeApplication.physicalAppearance.eyeColor =
-                  v.toLowerCase();
-              }
-            "
           >
             <template #prepend>
               <v-icon

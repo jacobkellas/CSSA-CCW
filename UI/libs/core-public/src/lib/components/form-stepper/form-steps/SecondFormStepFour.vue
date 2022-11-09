@@ -91,7 +91,7 @@ const fileMutation = useMutation({
   mutationFn: handleFileUpload,
   onSuccess: () => {
     applicationStore.completeApplication.application.currentStep = 9;
-    router.push(Routes.FINALIZE_ROUTE_PATH);
+    router.push(Routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
   },
   onError: () => {
     state.snackbar = true;
@@ -113,11 +113,7 @@ async function handleSubmit() {
 }
 
 async function handleFileUpload() {
-  const newFileName = `${applicationStore.completeApplication.id.slice(-7)}_${
-    applicationStore.completeApplication.application.personalInfo.lastName
-  }_${
-    applicationStore.completeApplication.application.personalInfo.firstName
-  }_signature`;
+  const newFileName = `${applicationStore.completeApplication.application.orderId}_${applicationStore.completeApplication.application.personalInfo.lastName}_${applicationStore.completeApplication.application.personalInfo.firstName}_signature`;
 
   await axios.post(
     `http://localhost:5148/Api/Document/v1/Document/uploadApplicantFile?saveAsFileName=${newFileName}`,

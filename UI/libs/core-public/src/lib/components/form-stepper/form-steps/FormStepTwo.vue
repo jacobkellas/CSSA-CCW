@@ -14,20 +14,31 @@
           md="5"
           sm="3"
         >
-          <v-text-field
-            v-model="completeApplication.idInfo.idNumber"
-            :label="$t('Id number')"
-            :rules="[v => !!v || $t('Id  number is required')]"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
+          <v-tooltip bottom>
+            <template #activator="{ on, attrs }">
+              <v-text-field
+                v-model="completeApplication.idInfo.idNumber"
+                :label="$t('Id number')"
+                :rules="[v => !!v || $t('Id  number is required')]"
+                v-bind="attrs"
+                v-on="on"
               >
-                mdi-star
-              </v-icon>
+                <template #prepend>
+                  <v-icon
+                    x-small
+                    color="error"
+                  >
+                    mdi-star
+                  </v-icon>
+                </template>
+              </v-text-field>
             </template>
-          </v-text-field>
+            {{
+              $t(
+                ' IMPORTANT! Must exactly match the information on your drivers license or id.'
+              )
+            }}
+          </v-tooltip>
         </v-col>
 
         <v-col
