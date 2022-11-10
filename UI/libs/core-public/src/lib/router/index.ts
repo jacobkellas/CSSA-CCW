@@ -1,9 +1,11 @@
+import ApplicationStatus from '@core-public/views/ApplicationStatus.vue';
 import ApplicationView from '@core-public/views/ApplicationView.vue';
 import FinalizeView from '@core-public/views/FinalizeView.vue';
 import FormView from '@core-public/views/FormView.vue';
 import Home from '@core-public/views/Home.vue';
 import MoreInformationView from '@core-public/views/MoreInformationView.vue';
 import QualifyingQuestionView from '@core-public/views/QualifyingQuestionsView.vue';
+import RecieptView from '@core-public/views/RecieptView.vue';
 import RenewApplicationView from '@core-public/views/RenewApplicationView.vue';
 import RenewFormView from '@core-public/views/RenewFormView.vue';
 import RenewSecondFormView from '@core-public/views/RenewSecondFormView.vue';
@@ -24,6 +26,11 @@ const routes: Array<RouteConfig> = [
     path: Routes.APPLICATION_ROUTE_PATH,
     name: 'Application',
     component: ApplicationView,
+  },
+  {
+    path: Routes.APPLICATION_STATUS_PATH,
+    name: 'Application Status',
+    component: ApplicationStatus,
   },
   {
     path: Routes.FINALIZE_ROUTE_PATH,
@@ -54,6 +61,11 @@ const routes: Array<RouteConfig> = [
     path: Routes.RENEW_APPLICATION_ROUTE_PATH,
     name: 'RenewApplication',
     component: RenewApplicationView,
+  },
+  {
+    path: Routes.RECIEPT_PATH,
+    name: 'Reciept',
+    component: RecieptView,
   },
   {
     path: Routes.RENEW_FORM_ROUTE_PATH,

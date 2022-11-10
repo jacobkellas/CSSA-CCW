@@ -67,6 +67,12 @@ export default class Endpoints {
     }/schedule/v1/appointment/update`;
   }
 
+  static get GET_SINGLE_APPOINTMENT() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/shedule/v1/appointment/get`;
+  }
+
   /********USER PROFILE******************/
 
   static get POST_VERIFY_USER_ENDPOINT() {

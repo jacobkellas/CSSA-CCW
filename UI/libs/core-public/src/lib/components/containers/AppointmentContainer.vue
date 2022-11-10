@@ -149,18 +149,20 @@
 
 <script setup lang="ts">
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
-import { onMounted, reactive } from 'vue';
-import { useMutation } from '@tanstack/vue-query';
-import { sendAppointmentCheck } from '@core-public/senders/appointmentSenders';
+import { reactive } from 'vue';
+import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
 
 interface IProps {
   toggleAppointment: CallableFunction;
   events: Array<AppointmentType>;
+  reschedule: boolean;
 }
 
 const props = defineProps<IProps>();
 const applicationStore = useCompleteApplicationStore();
+const appointmentStore = useAppointmentsStore();
 
 const state = reactive({
   focus: '',
@@ -192,7 +194,7 @@ const appointmentMutation = useMutation({
       time: '',
     };
 
-    return sendAppointmentCheck(body);
+    return appointmentStore.sendAppointmentCheck(body);
   },
   onSuccess: () => {
     state.isLoading = false;
@@ -231,42 +233,6 @@ function handleConfirm() {
 
   appointmentMutation.mutate();
 }
-
-/**
- * This is a throw away function just to create random data for testing
- */
-function createTestEvent() {
-  for (let i = 0; i < 100; i++) {
-    const year = Math.floor(Math.random() + 0.4) + 2022;
-    const month = Math.floor(Math.random() * 10) + 2;
-    const day = Math.floor(Math.random() * 12) + month;
-    const min = Math.floor(Math.random() + 0.4) * 30;
-
-    const randomDate = new Date(`${year} ${month} ${day} ${month}:${min}`);
-    let endMin = min;
-    let endHour = month;
-
-    if (min >= 30) {
-      endMin = 0;
-      endHour += 1;
-    }
-
-    const endDate = new Date(`${year} ${month} ${day} ${endHour}:${endMin}`);
-    const body = {
-      name: 'opening',
-      start: randomDate,
-      end: endDate,
-      color: 'blue',
-      timed: true,
-    };
-
-    state.events.push(body);
-  }
-}
-
-onMounted(() => {
-  createTestEvent();
-});
 </script>
 
 <style lang="scss" scoped>

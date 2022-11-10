@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <!-- TODO: Make this the custom logo -->
     <img
+      :class="{ dark: $vuetify.theme.dark }"
       v-if="store.getDocuments.agencyLandingPageImage"
       alt="Application logo"
       :src="store.getDocuments.agencyLandingPageImage"
@@ -48,6 +48,23 @@
                 {{ $t('Modify/renew CCW License') }}
               </div>
             </v-btn>
+            <v-btn
+              color="primary"
+              class="option-button"
+              outlined
+              @click="handleRoute(Routes.APPLICATION_STATUS_PATH)"
+            >
+              <div class="option-inner">
+                <v-icon
+                  x-large
+                  color="primary"
+                  class="mb-3"
+                >
+                  mdi-card-account-details-outline
+                </v-icon>
+                {{ $t('Application Status') }}
+              </div>
+            </v-btn>
           </div>
         </v-col>
         <v-col
@@ -88,6 +105,12 @@ function handleRoute(path) {
 img {
   max-width: 30%;
   margin-top: 20px;
+}
+
+img.dark {
+  background-color: #bbb;
+  border-radius: 5px;
+  padding: 5px;
 }
 .option {
   &-inner {

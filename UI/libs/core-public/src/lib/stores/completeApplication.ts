@@ -1,9 +1,9 @@
+import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import Endpoints from '@shared-ui/api/endpoints';
 import axios from 'axios';
 import { defaultPermitState } from '@shared-utils/lists/defaultConstants';
 import { defineStore } from 'pinia';
 import { useAuthStore } from '@shared-ui/stores/auth';
-import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import { computed, reactive } from 'vue';
 
 export const useCompleteApplicationStore = defineStore(

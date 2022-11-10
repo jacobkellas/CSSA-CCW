@@ -12,6 +12,10 @@ export default class Routes {
     return `/application`;
   }
 
+  static get APPLICATION_STATUS_PATH() {
+    return '/application-status';
+  }
+
   static get FINALIZE_ROUTE_PATH() {
     return `/finalize`;
   }
@@ -32,6 +36,9 @@ export default class Routes {
     return `/qualifying-questions`;
   }
 
+  static get RECIEPT_PATH() {
+    return '/reciept';
+  }
   static get RENEW_APPLICATION_ROUTE_PATH() {
     return `/renew-application`;
   }
