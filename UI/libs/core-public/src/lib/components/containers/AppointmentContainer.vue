@@ -149,14 +149,15 @@
 
 <script setup lang="ts">
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
-import { onMounted, reactive } from 'vue';
-import { useMutation } from '@tanstack/vue-query';
 import { sendAppointmentCheck } from '@core-public/senders/appointmentSenders';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { onMounted, reactive } from 'vue';
 
 interface IProps {
   toggleAppointment: CallableFunction;
   events: Array<AppointmentType>;
+  reschedule: boolean;
 }
 
 const props = defineProps<IProps>();

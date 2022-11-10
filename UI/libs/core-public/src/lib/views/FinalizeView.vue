@@ -18,6 +18,7 @@
       <AppointmentContainer
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
+        :reschedule="false"
       />
       <v-container class="finalize-submit">
         <v-btn
@@ -52,6 +53,7 @@ import AppointmentContainer from '@core-public/components/containers/Appointment
 import FinalizeContainer from '@core-public/components/containers/FinalizeContainer.vue';
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
+import Routes from '@core-public/router/routes';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
@@ -60,6 +62,7 @@ import { useAuthStore } from '@shared-ui/stores/auth';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { getAppointments } from '@core-public/senders/appointmentSenders';
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
+import { useRouter } from 'vue-router/composables';
 
 const currentInfoSectionStore = useCurrentInfoSection();
 
@@ -85,6 +88,7 @@ const state = reactive({
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
+const router = useRouter();
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
   if (!completeApplicationStore.completeApplication.id) {
@@ -131,17 +135,17 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       event.start = formatedStart;
       event.end = formatedEnd;
     });
-    window.console.log(data);
     state.appointments = data;
   });
 });
 
-//TODO: Route to a confirmation page
 const updateMutation = useMutation({
   mutationFn: () => {
     return completeApplicationStore.updateApplication('Application Complete');
   },
-  onSuccess: () => {},
+  onSuccess: () => {
+    router.push(Routes.RECIEPT_PATH);
+  },
   onError: () => {
     state.snackbar = true;
   },
