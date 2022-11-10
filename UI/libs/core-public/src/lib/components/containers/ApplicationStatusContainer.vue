@@ -61,9 +61,18 @@
         </v-row>
       </v-sheet>
     </v-container>
+
     <v-container v-if="state.showCalendar">
-      {{ getAllAppointments() }}
+      {{ allAppointmentsMutation.mutate }}
+      <v-skeleton-loader
+        v-if="allAppointmentsMutation.isLoading"
+        fluid
+        class="fill-height"
+        type="list-item"
+      />
+
       <AppointmentContainer
+        v-else
         :events="state.appointments"
         :toggle-appointment="() => {}"
         :reschedule="true"
@@ -74,15 +83,14 @@
 
 <script setup lang="ts">
 import AppointmentContainer from '@core-public/components/containers/AppointmentContainer.vue';
-import axios from 'axios';
-import Endpoints from '@shared-ui/api/endpoints';
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
-import { getAppointments } from '@core-public/senders/appointmentSenders';
+import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useQuery } from '@tanstack/vue-query';
 import { onMounted, reactive } from 'vue';
+import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const applicationStore = useCompleteApplicationStore();
+const appointmentsStore = useAppointmentsStore();
 
 const state = reactive({
   appointment: {} as AppointmentType,
@@ -92,37 +100,40 @@ const state = reactive({
 });
 
 const { isLoading } = useQuery(['getAppointment'], () => {
-  const res = axios.get(Endpoints.GET_SINGLE_APPOINTMENT, {
-    params: {
-      applicationId: applicationStore.completeApplication.id,
-    },
-  });
+  const appointment = appointmentsStore.getSingleAppointment(
+    applicationStore.completeApplication.id
+  );
 
-  res.then(data => {
-    state.appointment = data;
-  });
+  state.appointment = appointment;
 });
 
-function getAllAppointments() {
-  const res = getAppointments();
+const allAppointmentsMutation = useMutation({
+  mutationFn: () => {
+    return (state.appointments = appointmentsStore.getAvailableAppointments);
+  },
+  onSuccess: () => {
+    formatAppointments();
+  },
+  onError: () => {
+    window.console.warn('failed');
+  },
+});
 
-  res.then(data => {
-    data.forEach(event => {
-      let start = new Date(event.start);
-      let end = new Date(event.end);
+function formatAppointments() {
+  state.appointments.forEach((event: AppointmentType) => {
+    let start = new Date(event.start);
+    let end = new Date(event.end);
 
-      let formatedStart = `${start.getFullYear()}-${
-        start.getMonth() + 1
-      }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
+    let formatedStart = `${start.getFullYear()}-${
+      start.getMonth() + 1
+    }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
 
-      let formatedEnd = `${end.getFullYear()}-${
-        end.getMonth() + 1
-      }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
+    let formatedEnd = `${end.getFullYear()}-${
+      end.getMonth() + 1
+    }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
 
-      event.start = formatedStart;
-      event.end = formatedEnd;
-    });
-    state.appointments = data;
+    event.start = formatedStart;
+    event.end = formatedEnd;
   });
 }
 

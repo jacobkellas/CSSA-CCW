@@ -45,6 +45,44 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
   }
 
   // TODO: create a get availableAppointmentsApi
+  async function getAvailableAppointments() {
+    const res = await axios
+      .get(Endpoints.GET_AVAILABLE_APPOINTMENTS_ENDPOINT)
+      .catch(err => {
+        console.warn(err);
+
+        return Promise.reject();
+      });
+
+    return res?.data;
+  }
+
+  async function sendAppointmentCheck(body: AppointmentType) {
+    const res = await axios
+      .put(Endpoints.PUT_APPOINTMENTS_ENDPOINT, body)
+      .catch(err => {
+        console.warn(err);
+
+        return Promise.reject();
+      });
+
+    return res?.data;
+  }
+
+  async function getSingleAppointment(id: string) {
+    const res = axios
+      .get(Endpoints.GET_SINGLE_APPOINTMENT, {
+        params: {
+          applicationId: id,
+        },
+      })
+      .catch(err => {
+        window.console.warn(err);
+        Promise.reject();
+      });
+
+    return res?.data;
+  }
 
   return {
     appointments,
@@ -54,5 +92,8 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     setAppointments,
     setNewAptCount,
     getAppointmentsApi,
+    getAvailableAppointments,
+    getSingleAppointment,
+    sendAppointmentCheck,
   };
 });

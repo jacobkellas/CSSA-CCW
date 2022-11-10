@@ -55,12 +55,12 @@ import PaymentContainer from '@core-public/components/containers/PaymentContaine
 import SideBar from '@core-public/components/navbar/SideBar.vue';
 import Routes from '@core-public/router/routes';
 import { reactive } from 'vue';
+import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
-import { getAppointments } from '@core-public/senders/appointmentSenders';
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
 import { useRouter } from 'vue-router/composables';
 
@@ -87,6 +87,7 @@ const state = reactive({
   appointments: [] as Array<AppointmentType>,
 });
 const completeApplicationStore = useCompleteApplicationStore();
+const appointmentsStore = useAppointmentsStore();
 const authStore = useAuthStore();
 const router = useRouter();
 
@@ -117,7 +118,7 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
     });
   }
 
-  const appRes = getAppointments();
+  const appRes = appointmentsStore.getAvailableAppointments;
 
   appRes.then((data: Array<AppointmentType>) => {
     data.forEach(event => {
