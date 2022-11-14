@@ -11,7 +11,7 @@ exports[`AliasDialog should match the snapshot 1`] = `
           <div class="alias-container">
             <form novalidate="novalidate" class="v-form form-container">
               <div class="row">
-                <div class="col-sm-3 col-md-5 col-6">
+                <div class="col-md-6 col-lg-6 col-12">
                   <div class="v-input theme--light v-text-field">
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
@@ -26,7 +26,7 @@ exports[`AliasDialog should match the snapshot 1`] = `
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-5 col-6">
+                <div class="col-md-6 col-lg-6 col-12">
                   <div class="v-input theme--light v-text-field">
                     <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
                     <div class="v-input__control">
@@ -41,7 +41,7 @@ exports[`AliasDialog should match the snapshot 1`] = `
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-5 col-6">
+                <div class="col-md-6 col-lg-6 col-12">
                   <div class="v-input theme--light v-text-field">
                     <div class="v-input__control">
                       <div class="v-input__slot">
@@ -57,7 +57,7 @@ exports[`AliasDialog should match the snapshot 1`] = `
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-3 col-md-5 col-6">
+                <div class="col-md-6 col-lg-6 col-12">
                   <div class="v-input theme--light v-text-field">
                     <div class="v-input__control">
                       <div class="v-input__slot">
@@ -71,7 +71,7 @@ exports[`AliasDialog should match the snapshot 1`] = `
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-5 col-6">
+                <div class="col-md-6 col-lg-6 col-12">
                   <div class="v-input theme--light v-text-field">
                     <div class="v-input__control">
                       <div class="v-input__slot">
@@ -85,7 +85,7 @@ exports[`AliasDialog should match the snapshot 1`] = `
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-5 col-6">
+                <div class="col-md-6 col-lg-6 col-12">
                   <div class="v-input theme--light v-text-field">
                     <div class="v-input__control">
                       <div class="v-input__slot">
