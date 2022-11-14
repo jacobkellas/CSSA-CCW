@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
 
-namespace CCW.Schedule.Models;
+namespace CCW.Schedule.Entities;
 
 public class AppointmentWindow
 {
     [JsonProperty("id")]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     [JsonProperty("start")]
     public DateTime Start { get; set; }
     [JsonProperty("end")]
     public DateTime End { get; set; }
-    [JsonProperty("applicantId")]
-    public string? ApplicantId { set; get; }
+    [JsonProperty("applicationId")]
+    public string? ApplicationId { set; get; }
     [JsonProperty("status")]
     public string? Status { set; get; }
     [JsonProperty("name")]
