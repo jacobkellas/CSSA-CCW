@@ -4,7 +4,7 @@ exports[`FormStepOne Should match the snapshot 1`] = `
 <div>
   <form novalidate="novalidate" class="v-form">
     <div class="v-subheader subHeader font-weight-bold theme--light">
-      personal info
+      Personal Information
     </div>
     <div class="row ml-5">
       <div class="col-lg-6 col-12">
@@ -125,7 +125,7 @@ exports[`FormStepOne Should match the snapshot 1`] = `
     </div>
     <hr role="separator" aria-orientation="horizontal" class="my-3 v-divider theme--light">
     <div class="v-subheader subHeader font-weight-bold theme--light">
-      marital status
+      Marital Status
     </div>
     <div class="row ml-1">
       <div class="col-lg-6 col-12">
@@ -157,7 +157,7 @@ exports[`FormStepOne Should match the snapshot 1`] = `
   </form>
   <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
   <div class="v-subheader sub-header font-weight-bold theme--light">
-    aliases
+    Aliases
   </div>
   <div class="alias-components-container">
     <div class="container container--fluid">

@@ -15,7 +15,7 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
   const getAppointments = computed(() => appointments.value);
   const getNewAptCount = computed(() => newAptCount.value);
 
-  const currentAppointment = ref<AppointmentType>({});
+  const currentAppointment = ref<AppointmentType>({} as AppointmentType);
 
   function setAppointments(payload: Array<AppointmentType>) {
     appointments.value = payload;

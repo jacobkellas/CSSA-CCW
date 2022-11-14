@@ -4,7 +4,7 @@ exports[`FormStepFive Should match the snapshot 1`] = `
 <div handlenextsection="() => null">
   <form novalidate="novalidate" class="v-form">
     <div class="v-subheader sub-header font-weight-bold theme--light">
-      Contact information
+      Contact Information
     </div>
     <div class="row ml-5">
       <div class="col-lg-6 col-12">
