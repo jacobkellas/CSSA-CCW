@@ -8,7 +8,7 @@
       >
       </v-skeleton-loader>
     </v-container>
-    <v-container>
+    <v-container v-if="state.id">
       <ApplicationStatusContainer />
     </v-container>
   </div>
@@ -16,12 +16,17 @@
 
 <script setup lang="ts">
 import ApplicationStatusContainer from '@core-public/components/containers/ApplicationStatusContainer.vue';
+import { reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
+
+const state = reactive({
+  id: '',
+});
 
 const { isLoading } = useQuery(['getCompleteApplications'], () => {
   const res = applicationStore.getCompleteApplicationFromApi(
@@ -31,6 +36,7 @@ const { isLoading } = useQuery(['getCompleteApplications'], () => {
 
   res.then(data => {
     applicationStore.setCompleteApplication(data);
+    state.id = applicationStore.completeApplication.id;
   });
 });
 </script>

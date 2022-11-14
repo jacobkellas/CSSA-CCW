@@ -198,7 +198,7 @@ export type WorkInformationType = {
 
 export type AppointmentType = {
   id: string;
-  applicantId: string;
+  applicationId: string | null;
   status: string;
   name: string;
   permit: string;
@@ -256,7 +256,7 @@ export type CompleteApplication = {
     workInformation: WorkInformationType;
     currentStep: number;
     status: number;
-    appointmentStatus: number;
+    appointmentStatus: boolean;
     orderId: string;
     uploadedDocuments: Array<UploadedDocType>;
   };

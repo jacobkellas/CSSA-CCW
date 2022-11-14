@@ -5,7 +5,7 @@
       v-model="valid"
     >
       <v-subheader class="subHeader font-weight-bold">
-        {{ $t('personal info') }}
+        {{ $t('Personal Information') }}
       </v-subheader>
 
       <v-row class="ml-5">
@@ -161,7 +161,7 @@
 
       <v-divider class="my-3" />
       <v-subheader class="subHeader font-weight-bold">
-        {{ $t('marital status') }}
+        {{ $t('Marital Status') }}
       </v-subheader>
       <v-row class="ml-1">
         <v-col
@@ -245,7 +245,7 @@
 
     <v-divider />
     <v-subheader class="sub-header font-weight-bold">
-      {{ $t('aliases') }}
+      {{ $t('Aliases') }}
     </v-subheader>
     <div class="alias-components-container">
       <AliasTable :aliases="completeApplication.aliases" />

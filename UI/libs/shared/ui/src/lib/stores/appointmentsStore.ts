@@ -9,15 +9,20 @@ import {
 } from '@shared-utils/formatters/defaultFormatters';
 
 export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
-  // TODO: Create available appointments state;
   const appointments = ref<Array<AppointmentType>>([]);
   const newAptCount = ref<number>(0);
 
   const getAppointments = computed(() => appointments.value);
   const getNewAptCount = computed(() => newAptCount.value);
 
+  const currentAppointment = ref<AppointmentType>({});
+
   function setAppointments(payload: Array<AppointmentType>) {
     appointments.value = payload;
+  }
+
+  function setCurrentAppointment(payload: AppointmentType) {
+    currentAppointment.value = payload;
   }
 
   function setNewAptCount(payload: number) {
@@ -85,10 +90,12 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
 
   return {
     appointments,
+    currentAppointment,
     newAptCount,
     getAppointments,
     getNewAptCount,
     setAppointments,
+    setCurrentAppointment,
     setNewAptCount,
     getAppointmentsApi,
     getAvailableAppointments,

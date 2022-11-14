@@ -70,7 +70,7 @@ export default class Endpoints {
   static get GET_SINGLE_APPOINTMENT() {
     return `${
       useAppConfigStore().getAppConfig.scheduleApiBaseUrl
-    }/shedule/v1/appointment/get`;
+    }/schedule/v1/appointment/get`;
   }
 
   /********USER PROFILE******************/
