@@ -21,7 +21,6 @@
         >
           <v-row>
             <v-col
-              cols="6"
               md="5"
               sm="3"
             >
@@ -43,7 +42,6 @@
               </v-text-field>
             </v-col>
             <v-col
-              cols="6"
               md="5"
               sm="3"
             >
@@ -66,7 +64,6 @@
             </v-col>
 
             <v-col
-              cols="6"
               md="5"
               sm="3"
               class="pl-8"
@@ -77,7 +74,6 @@
               />
             </v-col>
             <v-col
-              cols="6"
               md="5"
               sm="3"
               class="pl-8"
@@ -90,7 +86,6 @@
           </v-row>
           <v-row>
             <v-col
-              cols="6"
               md="5"
               sm="3"
               class="pl-8"
@@ -102,7 +97,6 @@
             </v-col>
 
             <v-col
-              cols="6"
               md="5"
               sm="3"
               class="pl-8"

@@ -9,7 +9,6 @@
       </v-subheader>
       <v-row class="ml-5">
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -29,7 +28,6 @@
           </v-text-field>
         </v-col>
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -41,7 +39,6 @@
         </v-col>
 
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -53,7 +50,6 @@
         </v-col>
 
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -66,7 +62,6 @@
       </v-row>
       <v-row>
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >

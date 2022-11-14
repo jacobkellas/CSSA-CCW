@@ -15,12 +15,12 @@
         <v-form
           ref="form"
           v-model="valid"
+          class="form-container"
         >
           <v-row>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 id="address-line-1"
@@ -40,9 +40,8 @@
             </v-col>
 
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 v-model="address.addressLine2"
@@ -53,9 +52,8 @@
 
           <v-row>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 id="city"
@@ -75,9 +73,8 @@
             </v-col>
 
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-autocomplete
                 :items="states"
@@ -97,9 +94,8 @@
               </v-autocomplete>
             </v-col>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 id="county"
@@ -118,9 +114,8 @@
               </v-text-field>
             </v-col>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 id="zip"
@@ -140,9 +135,8 @@
             </v-col>
 
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
             >
               <v-autocomplete
                 :items="countries"
@@ -187,8 +181,8 @@
 
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import { reactive, ref } from 'vue';
 import { countries, states } from '@shared-utils/lists/defaultConstants';
+import { reactive, ref } from 'vue';
 
 interface PreviousAddressDialogProps {
   getPreviousAddressFromDialog?: (address: AddressInfoType) => void;
@@ -220,7 +214,7 @@ function handleSubmit() {
 .address-container {
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: auto;
   width: 90%;
   justify-content: center;
   align-items: center;
@@ -231,5 +225,10 @@ function handleSubmit() {
   display: flex;
   width: 75%;
   justify-content: flex-end;
+  margin-bottom: 2em;
+}
+.form-container {
+  width: 90%;
+  margin: 2em;
 }
 </style>

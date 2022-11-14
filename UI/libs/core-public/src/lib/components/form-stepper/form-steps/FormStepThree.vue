@@ -9,9 +9,8 @@
     >
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Address line 1')"
@@ -29,9 +28,8 @@
           </v-text-field>
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Address line 2')"
@@ -43,9 +41,8 @@
 
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('City')"
@@ -64,9 +61,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-autocomplete
             :items="states"
@@ -85,9 +81,8 @@
           </v-autocomplete>
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('County')"
@@ -105,9 +100,8 @@
           </v-text-field>
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Zip')"
@@ -126,9 +120,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-autocomplete
             :items="countries"
@@ -149,14 +142,20 @@
       </v-row>
       <v-divider />
       <v-row class="ml-5 my-5">
-        <v-col>
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-checkbox
             id="different-mailing"
             :label="$t('Different Mailing address')"
             v-model="completeApplication.differentMailing"
           />
         </v-col>
-        <v-col>
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-checkbox
             id="different-spouse"
             :label="$t('Different Spouse address')"
@@ -167,9 +166,8 @@
       <div v-if="completeApplication.differentSpouseAddress">
         <v-row class="ml-5">
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Spouse address line 1')"
@@ -190,9 +188,8 @@
           </v-col>
 
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Spouse address line 2')"
@@ -206,9 +203,8 @@
 
         <v-row class="ml-5">
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Spouse\'s City')"
@@ -227,9 +223,8 @@
           </v-col>
 
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-autocomplete
               :items="states"
@@ -248,9 +243,8 @@
             </v-autocomplete>
           </v-col>
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Spouse\'s County')"
@@ -268,9 +262,8 @@
             </v-text-field>
           </v-col>
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Spouse\'s Zip')"
@@ -289,9 +282,8 @@
           </v-col>
 
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-autocomplete
               :items="countries"
@@ -316,9 +308,8 @@
       <div v-if="completeApplication.differentMailing">
         <v-row class="ml-5">
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Address line 1')"
@@ -337,9 +328,8 @@
           </v-col>
 
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Address line 2')"
@@ -351,9 +341,8 @@
 
         <v-row class="ml-5">
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('City')"
@@ -372,9 +361,8 @@
           </v-col>
 
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-autocomplete
               :items="states"
@@ -393,9 +381,8 @@
             </v-autocomplete>
           </v-col>
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('County')"
@@ -413,9 +400,8 @@
             </v-text-field>
           </v-col>
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Zip')"
@@ -434,9 +420,8 @@
           </v-col>
 
           <v-col
-            cols="6"
-            md="5"
-            sm="3"
+            cols="12"
+            lg="6"
           >
             <v-autocomplete
               :items="countries"

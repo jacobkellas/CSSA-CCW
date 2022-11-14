@@ -10,9 +10,8 @@
       </v-subheader>
       <v-row>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-tooltip bottom>
             <template #activator="{ on, attrs }">
@@ -42,9 +41,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-autocomplete
             :items="states"
@@ -71,9 +69,8 @@
 
       <v-row>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-date-picker
             v-model="completeApplication.dob.birthDate"
@@ -90,9 +87,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Birth city')"
@@ -149,9 +145,8 @@
 
       <v-row>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
           class="pl-5"
         >
           <v-radio-group
@@ -171,9 +166,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-select
             v-model="completeApplication.citizenship.militaryStatus"
@@ -259,7 +253,10 @@
               />
             </v-radio-group>
           </v-col>
-          <v-col>
+          <v-col
+            cols="12"
+            lg="6"
+          >
             <v-autocomplete
               :items="countries"
               :label="$t('Country of Birth')"

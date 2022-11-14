@@ -8,14 +8,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-ONE') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -34,7 +32,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionOne"
@@ -51,14 +48,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-TWO') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -77,7 +72,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionTwo"
@@ -94,14 +88,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-THREE') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -120,7 +112,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionThree"
@@ -137,14 +128,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-FOUR') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -163,7 +152,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionFour"
@@ -179,14 +167,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-FIVE') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -205,7 +191,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionFive"
@@ -222,14 +207,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-SIX') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -248,7 +231,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionSix"
@@ -264,14 +246,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-SEVEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -290,7 +270,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionSeven"
@@ -307,14 +286,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-EIGHT') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -333,7 +310,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionEight"
@@ -350,14 +326,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-NINE') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -376,7 +350,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionNine"
@@ -393,14 +366,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-TEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -419,7 +390,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionTen"
@@ -436,14 +406,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-ELEVEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -462,7 +430,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionEleven"
@@ -481,14 +448,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-TWELVE') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -507,7 +472,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionTwelve"
@@ -526,14 +490,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-THIRTEEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -552,7 +514,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionThirteen"
@@ -571,14 +532,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-FOURTEEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -597,7 +556,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionFourteen"
@@ -616,14 +574,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-FIFTEEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -642,7 +598,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionFifteen"
@@ -661,14 +616,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-SIXTEEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -687,7 +640,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionSixteen"
@@ -706,14 +658,12 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            cols="5"
             lg="4"
             sm="1"
           >
             {{ $t('QUESTION-SEVENTEEN') }}
           </v-col>
           <v-col
-            cols="3"
             lg="2"
             sm="1"
           >
@@ -734,7 +684,6 @@
             </v-radio-group>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
             v-if="completeApplication.qualifyingQuestions.questionSeventeen"

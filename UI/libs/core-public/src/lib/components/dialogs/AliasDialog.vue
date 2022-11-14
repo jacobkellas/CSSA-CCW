@@ -20,9 +20,9 @@
         >
           <v-row>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
+              md="6"
             >
               <v-text-field
                 id="last-name"
@@ -42,9 +42,9 @@
               </v-text-field>
             </v-col>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
+              md="6"
             >
               <v-text-field
                 id="first-name"
@@ -65,9 +65,9 @@
             </v-col>
 
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
+              md="6"
             >
               <v-text-field
                 v-model="alias.prevMiddleName"
@@ -77,9 +77,9 @@
           </v-row>
           <v-row>
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
+              md="6"
             >
               <v-text-field
                 v-model="alias.cityWhereChanged"
@@ -88,9 +88,9 @@
             </v-col>
 
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
+              md="6"
             >
               <v-text-field
                 v-model="alias.stateWhereChanged"
@@ -99,9 +99,9 @@
             </v-col>
 
             <v-col
-              cols="6"
-              md="5"
-              sm="3"
+              cols="12"
+              lg="6"
+              md="6"
             >
               <v-text-field
                 v-model="alias.courtFileNumber"
@@ -167,7 +167,7 @@ function handleSubmit() {
 .alias-container {
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: auto;
   width: 90%;
   justify-content: center;
   align-items: center;
@@ -178,9 +178,11 @@ function handleSubmit() {
   display: flex;
   width: 75%;
   justify-content: flex-end;
+  margin: 2em 0;
 }
 
 .form-container {
   width: 90%;
+  margin: 2em;
 }
 </style>

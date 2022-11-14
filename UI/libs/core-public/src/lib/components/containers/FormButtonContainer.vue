@@ -1,36 +1,41 @@
 <template>
   <div class="form-btn-container">
-    <div>
-      <v-btn
-        color="success "
-        @click="handleSubmit"
-        :disabled="!valid"
-      >
-        {{ $t('Continue') }}
-      </v-btn>
+    <div class="form-btn-inner">
+      <div>
+        <v-btn
+          color="success "
+          @click="handleSubmit"
+          :disabled="!valid"
+          class="mt-3"
+        >
+          {{ $t('Continue') }}
+        </v-btn>
 
-      <v-btn
-        color="secondary mx-2"
-        @click="handleSave"
-      >
-        {{ $t('Save and Exit') }}
-      </v-btn>
-    </div>
-    <div>
-      <v-btn
-        color="warning mx-2"
-        @click="handleBack"
-      >
-        {{ $t('Go back') }}
-      </v-btn>
+        <v-btn
+          color="secondary mx-2"
+          @click="handleSave"
+          class="mt-3"
+        >
+          {{ $t('Save and Exit') }}
+        </v-btn>
+      </div>
+      <div>
+        <v-btn
+          color="warning mx-2"
+          @click="handleBack"
+          class="mt-3"
+        >
+          {{ $t('Go back') }}
+        </v-btn>
 
-      <!-- TODO: Make this return to the home page with out saving the form at all -->
-      <v-btn
-        color="error mr-2"
-        @click="handleCancel"
-      >
-        {{ $t('Cancel') }}
-      </v-btn>
+        <v-btn
+          color="error mr-2"
+          @click="handleCancel"
+          class="mt-3"
+        >
+          {{ $t('Cancel') }}
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -64,11 +69,17 @@ function handleCancel() {
 </script>
 
 <style lang="scss" scoped>
-.form-btn-container {
-  width: 90%;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
+.form-btn {
+  &-container {
+    display: flex;
+    justify-content: center;
+  }
+  &-inner {
+    width: 90%;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>

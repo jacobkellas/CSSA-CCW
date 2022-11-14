@@ -3,9 +3,8 @@
     <v-container>
       <v-row class="mb-5">
         <v-col
-          cols="10"
-          md="5"
-          sm="4"
+          cols="12"
+          lg="6"
         >
           <v-form
             ref="form"
@@ -19,15 +18,14 @@
           </v-form>
         </v-col>
         <v-col
-          cols="10"
-          md="5"
-          sm="4"
+          cols="12"
+          lg="6"
         >
           <div class="signature-preview">
             <canvas
               ref="signatureCanvas"
               height="100"
-              width="300"
+              width="250"
             ></canvas>
             <v-btn
               text
@@ -64,11 +62,11 @@
 <script setup lang="ts">
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
+import axios from 'axios';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { reactive, ref, watch } from 'vue';
-import axios from 'axios';
 
 interface ISecondFormStepFourProps {
   handleNextSection: CallableFunction;

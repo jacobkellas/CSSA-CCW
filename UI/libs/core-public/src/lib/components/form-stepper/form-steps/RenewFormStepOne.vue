@@ -10,7 +10,6 @@
 
       <v-row class="ml-5">
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -43,7 +42,6 @@
         </v-col>
 
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -64,7 +62,6 @@
         </v-col>
 
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -77,7 +74,6 @@
         </v-col>
 
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -87,7 +83,6 @@
           />
         </v-col>
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -168,7 +163,6 @@
 
       <v-row class="ml-5">
         <v-col
-          cols="7"
           md="5"
           m="3"
         >
@@ -192,7 +186,6 @@
         </v-col>
 
         <v-col
-          cols="7"
           md="5"
           sm="3"
         >
@@ -228,7 +221,6 @@
       </v-subheader>
       <v-row class="ml-1">
         <v-col
-          cols="10"
           md="5"
           sm="3"
         >
@@ -254,7 +246,6 @@
           </v-radio-group>
         </v-col>
         <v-col
-          cols="20"
           md="5"
           sm="3"
           v-if="completeApplication.personalInfo.maritalStatus === 'married'"
@@ -264,7 +255,6 @@
           </v-subheader>
           <v-row class="ml-5">
             <v-col
-              cols="10"
               md="6"
               sm="4"
             >
@@ -289,7 +279,6 @@
               />
             </v-col>
             <v-col
-              cols="10"
               md="6"
               sm="4"
             >

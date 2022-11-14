@@ -11,7 +11,6 @@
       <v-sheet class="p-5 rounded">
         <v-row>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
           >
@@ -37,7 +36,6 @@
             </v-card>
           </v-col>
           <v-col
-            cols="6"
             lg="5"
             sm="1"
           >

@@ -10,9 +10,8 @@
 
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-tooltip bottom>
             <template #activator="{ on, attrs }">
@@ -43,9 +42,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('First name')"
@@ -64,9 +62,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Middle name')"
@@ -84,9 +81,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Maiden name')"
@@ -95,9 +91,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Suffix')"
@@ -113,9 +108,8 @@
 
       <v-row class="ml-5">
         <v-col
-          cols="7"
-          md="5"
-          m="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Social Security Number')"
@@ -137,9 +131,8 @@
         </v-col>
 
         <v-col
-          cols="7"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Confirm SSN')"
@@ -172,9 +165,8 @@
       </v-subheader>
       <v-row class="ml-1">
         <v-col
-          cols="10"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-radio-group
             v-model="completeApplication.personalInfo.maritalStatus"
@@ -193,9 +185,7 @@
           </v-radio-group>
         </v-col>
         <v-col
-          cols="20"
-          md="5"
-          sm="3"
+          cols="12"
           v-if="completeApplication.personalInfo.maritalStatus === 'married'"
         >
           <v-subheader class="subHeader font-weight-bold">
@@ -203,9 +193,8 @@
           </v-subheader>
           <v-row class="ml-5">
             <v-col
-              cols="10"
-              md="6"
-              sm="4"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 :label="$t('Last Name')"
@@ -228,9 +217,8 @@
               />
             </v-col>
             <v-col
-              cols="10"
-              md="6"
-              sm="4"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 :label="$t('First Name')"
