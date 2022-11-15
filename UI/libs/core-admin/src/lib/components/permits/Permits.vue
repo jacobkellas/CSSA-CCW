@@ -19,7 +19,7 @@
         prevIcon: 'mdi-minus',
         nextIcon: 'mdi-plus',
       }"
-      item-key="id"
+      item-key="orderID"
       item-class="rowClass"
       show-expand
     >
@@ -44,17 +44,17 @@
           </v-container>
         </v-toolbar>
       </template>
-      <template #item.orderId="props">
+      <template #item.orderID="props">
         <router-link
           :to="{
             name: 'PermitDetail',
-            params: { orderId: props.item.orderId },
+            params: { orderId: props.item.orderID },
           }"
           tag="a"
-          target="_blank"
+          target="_self"
           style="text-decoration: none; color: inherit"
         >
-          {{ props.item.orderId }}
+          {{ props.item.orderID }}
         </router-link>
       </template>
       <template #item.name="props">
@@ -73,10 +73,10 @@
         {{ props.item.address }}
       </template>
       <template #item.appointmentStatus="props">
-        {{ props.item.application.appointmentStatus }}
+        {{ props.item.appointmentStatus }}
       </template>
       <template #item.paymentStatus="props">
-        {{ props.item.application.paymentStatus }}
+        {{ props.item.paymentStatus }}
       </template>
       <template #expanded-item="{ item }">
         <td colspan="2">
@@ -104,13 +104,13 @@ const state = reactive({
       text: 'Order Id',
       align: 'start',
       sortable: false,
-      value: 'orderId',
+      value: 'orderID',
     },
     { text: 'Applicant Name', value: 'name' },
-    { text: 'Email', value: 'application.userEmail' },
+    { text: 'Email', value: 'email' },
     { text: 'Address', value: 'address' },
-    { text: 'Payment Status', value: 'application.paymentStatus' },
-    { text: 'Appointment Status', value: 'application.appointmentStatus' },
+    { text: 'Payment Status', value: 'status' },
+    { text: 'Appointment Status', value: 'appointmentStatus' },
     { text: '', value: '' },
   ],
 });

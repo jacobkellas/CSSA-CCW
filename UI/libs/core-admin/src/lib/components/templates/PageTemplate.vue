@@ -2,7 +2,7 @@
   <div>
     <Header />
     <SideBar v-if="authStore.getAuthState.isAuthenticated" />
-    <PermitLog v-if="authStore.getAuthState.isAuthenticated" />
+    <PermitStatus v-if="authStore.getAuthState.isAuthenticated" />
     <template>
       <v-main
         fluid
@@ -31,7 +31,7 @@
 // Remove header and footer as per new comps
 import Header from '../header/Header.vue';
 //import Footer from '../footer/Footer.vue';
-import PermitLog from '@core-admin/components/permits/permit-log/PermitLog.vue';
+import PermitStatus from '@core-admin/components/permits/permit-status/PermitStatus.vue';
 import SideBar from '../navigation/SideBar.vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 

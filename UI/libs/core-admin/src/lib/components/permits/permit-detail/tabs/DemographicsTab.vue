@@ -57,6 +57,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Height feet')"
           :rules="[v => !!v || $t('Height feet is required')]"
           v-model="
@@ -80,6 +82,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Height inches')"
           :rules="[v => !!v || $t('Height inches is required')]"
           v-model="
@@ -104,6 +108,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Weight')"
           :rules="[v => !!v || $t('Weight is required')]"
           v-model="
@@ -131,6 +137,8 @@
           :label="$t('Hair Color')"
           :rules="[v => !!v || $t(' Hair color is required')]"
           autocomplete="nope"
+          dense
+          filled
           v-model="
             permitStore.getPermitDetail.application.physicalAppearance.hairColor
           "
@@ -155,6 +163,8 @@
           :label="$t('Eye Color')"
           :rules="[v => !!v || $t('Eye color is required')]"
           autocomplete="nope"
+          dense
+          filled
           v-model="
             permitStore.getPermitDetail.application.physicalAppearance.eyeColor
           "
@@ -181,7 +191,6 @@
               .physicalDesc
           "
           :label="$t('Physical Description')"
-          clearable
         />
       </v-col>
     </v-row>

@@ -11,9 +11,11 @@ import {
 export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
   const appointments = ref<Array<AppointmentType>>([]);
   const newAptCount = ref<number>(0);
+  const newAppointmentsFile = ref<string | Blob>('');
 
   const getAppointments = computed(() => appointments.value);
   const getNewAptCount = computed(() => newAptCount.value);
+  const getNewAppointmentsFile = computed(() => newAppointmentsFile.value);
 
   const currentAppointment = ref<AppointmentType>({} as AppointmentType);
 
@@ -27,6 +29,10 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
 
   function setNewAptCount(payload: number) {
     newAptCount.value = payload;
+  }
+
+  function setNewAppointmentsFile(payload) {
+    newAppointmentsFile.value = payload;
   }
 
   async function getAppointmentsApi() {
@@ -47,6 +53,17 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     setAppointments(appointmentsData);
 
     return appointments;
+  }
+
+  async function uploadAppointmentsApi() {
+    const formData = new FormData();
+
+    formData.append('fileToPersist', getNewAppointmentsFile.value);
+    const res = await axios
+      .post(`${Endpoints.POST_UPLOAD_APPOINTMENTS_ENDPOINT}`, formData)
+      .catch(err => window.console.log(err));
+
+    return res?.data;
   }
 
   async function getAvailableAppointments() {
@@ -92,14 +109,18 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     appointments,
     currentAppointment,
     newAptCount,
+    newAppointmentsFile,
     getAppointments,
     getNewAptCount,
+    getNewAppointmentsFile,
     setAppointments,
     setCurrentAppointment,
     setNewAptCount,
+    setNewAppointmentsFile,
     getAppointmentsApi,
     getAvailableAppointments,
     getSingleAppointment,
     sendAppointmentCheck,
+    uploadAppointmentsApi,
   };
 });

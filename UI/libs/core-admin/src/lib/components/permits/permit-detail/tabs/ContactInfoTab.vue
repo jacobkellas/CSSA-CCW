@@ -15,9 +15,10 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Primary phone number')"
             :rules="phoneRuleSet"
-            clearable
             v-model="
               permitStore.getPermitDetail.application.contact.primaryPhoneNumber
             "
@@ -42,9 +43,10 @@
           class="pl-8"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Cell phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
-            clearable
             v-model="
               permitStore.getPermitDetail.application.contact.cellPhoneNumber
             "
@@ -61,9 +63,10 @@
           class="pl-8"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Work phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
-            clearable
             v-model="
               permitStore.getPermitDetail.application.contact.workPhoneNumber
             "
@@ -80,9 +83,10 @@
           class="pl-8"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Fax number')"
             :hint="$t('Only numbers no spaces or dashes')"
-            clearable
             v-model="
               permitStore.getPermitDetail.application.contact.faxPhoneNumber
             "
@@ -125,6 +129,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Email address')"
             :hint="$t('user email address (Read Only)')"
             persistent-hint
@@ -161,6 +167,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             v-model="permitStore.getPermitDetail.application.idInfo.idNumber"
             :label="$t('Id number')"
             :rules="[v => !!v || $t('Id  number is required')]"
@@ -181,6 +189,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"
             v-model="
@@ -202,6 +212,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 

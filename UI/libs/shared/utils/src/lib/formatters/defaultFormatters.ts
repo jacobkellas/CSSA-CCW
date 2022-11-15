@@ -83,18 +83,27 @@ export function formatFullName(data): string {
 }
 
 /**
+ * Function to format persons's name
+ * @param {object} data
+ * @returns {string}
+ */
+export function formatName(data): string {
+  const { firstName, lastName } = data || {};
+
+  return `${lastName}, ${firstName}` || '';
+}
+
+/**
  * Function to format persons's address
  * @param {object} data
  * @returns {string}
  */
 export function formatAddress(data): string {
-  const {
-    application: { currentAddress },
-  } = data || {};
+  const { address } = data || {};
 
   return (
-    `${currentAddress?.addressLine1}, ${currentAddress?.addressLine2}, ${currentAddress?.city}, ${currentAddress?.state},
-        ${currentAddress?.country}, ${currentAddress?.zip}
+    `${address?.addressLine1}, ${address?.addressLine2}, ${address?.city}, ${address?.state},
+        ${address?.country}, ${address?.zip}
       ` || ''
   );
 }
@@ -104,10 +113,8 @@ export function formatAddress(data): string {
  * @param {object} data
  * @returns {string}
  */
-export function formatInitials(data): string {
-  return (
-    `${data?.application?.personalInfo?.firstName.charAt(
-      0
-    )}${data?.application?.personalInfo?.lastName.charAt(0)}` || ''
-  );
+export function formatInitials(firstName, lastName): string {
+  const initials = `${firstName?.charAt(0) || ''}${lastName?.charAt(0) || ''}`;
+
+  return initials?.toUpperCase() || '';
 }

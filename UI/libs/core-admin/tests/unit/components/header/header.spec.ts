@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import Header from '@core-admin/components/header/Header.vue';
+import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
-import { createLocalVue, mount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
+import { createLocalVue, mount } from '@vue/test-utils';
 
 const localVue = createLocalVue();
 const pinia = createTestingPinia();
 const tMock = {
   $t: text => text,
 };
+
+localVue.use(VueRouter);
+const router = new VueRouter();
 
 describe('Header', () => {
   let vuetify;
@@ -21,6 +25,7 @@ describe('Header', () => {
       localVue,
       vuetify,
       pinia,
+      router,
       mocks: tMock,
     });
   });

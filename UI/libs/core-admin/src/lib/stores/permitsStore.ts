@@ -10,8 +10,8 @@ import {
 } from '@shared-utils/lists/defaultConstants';
 import {
   formatAddress,
-  formatFullName,
   formatInitials,
+  formatName,
 } from '@shared-utils/formatters/defaultFormatters';
 
 export const usePermitsStore = defineStore('PermitsStore', () => {
@@ -42,22 +42,19 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
 
     const permitsData: Array<PermitsType> = res?.data?.map(data => ({
       ...data,
-      orderId: Math.random().toString(),
-      name: formatFullName(data),
+      status: 'New',
+      appointmentStatus: 'Scheduled',
+      initials: formatInitials(data.firstName, data.lastName),
+      name: formatName(data),
       address: formatAddress(data),
-      initials: formatInitials(data),
-      application: {
-        ...data.application,
-        paymentStatus: 'Paid',
-        appointmentStatus: 'Scheduled',
-      },
       rowClass: 'permits-table__row',
     }));
 
     setOpenPermits(
-      permitsData?.filter(
+      /* permitsData?.filter(
         permit => permit.application.applicationType === 'New'
-      ).length
+      ).length */
+      10
     );
     setPermits(permitsData);
 
@@ -65,11 +62,9 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
   }
 
   async function getPermitDetailApi(orderId: string) {
-    const res = await axios
-      .get(
-        `${Endpoints.GET_PERMIT_ENDPOINT}?userEmailOrOrderId=${orderId}&isOrderId=true`
-      )
-      .catch(err => window.console.log(err));
+    const res = await axios.get(
+      `${Endpoints.GET_PERMIT_ENDPOINT}?userEmailOrOrderId=${orderId}&isOrderId=true`
+    );
 
     setPermitDetail(res?.data);
 

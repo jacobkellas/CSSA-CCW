@@ -24,13 +24,14 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Refresh Token Time (in minutes)')"
             :rules="[v => !!v || $t('Refresh token time is required')]"
             :hint="$t('Add token refresh time in minutes ')"
             v-model="brandStore.getBrand.refreshTokenTime"
             type="number"
             color="blue1"
-            clearable
             required
           >
             <template #prepend>
@@ -50,6 +51,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Payment URL')"
             :rules="[
               v => !!v || $t('Payment URL is required'),
@@ -58,7 +61,6 @@
             :hint="$t('Add your payment URL for processing payment')"
             v-model="brandStore.getBrand.paymentURL"
             color="blue1"
-            clearable
             required
           >
             <template #prepend>

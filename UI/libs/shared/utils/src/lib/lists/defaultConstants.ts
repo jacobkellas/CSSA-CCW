@@ -190,16 +190,12 @@ export const defaultPermitState: CompleteApplication = {
 };
 
 export const defaultAllPermitsState = {
-  id: '',
-  application: {
-    personalInfo: defaultPermitState.application.personalInfo,
-    currentAddress: defaultPermitState.application.currentAddress,
-    isComplete: false,
-    userEmail: '',
-    applicationType: '',
-    paymentStatus: '',
-    appointmentStatus: '',
-  },
+  orderID: '',
+  name: '',
+  address: defaultPermitState.application.currentAddress,
+  appointmentStatus: false,
+  email: '',
+  status: 0,
 };
 
 export const states = [

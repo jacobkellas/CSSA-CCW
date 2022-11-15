@@ -35,7 +35,6 @@
             prepend-icon=""
             accept="image/png, image/jpeg"
             truncate-length="50"
-            clearable
             counter
             required
           >
@@ -76,7 +75,6 @@
             prepend-icon=""
             accept="image/png, image/jpeg"
             truncate-length="50"
-            clearable
             counter
             required
           >

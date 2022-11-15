@@ -118,14 +118,15 @@ export default {
    */
   async signIn() {
     if (this.loginType === 'Popup') {
-      await this.auth
+      const res = await this.auth
         .loginPopup({
           scopes: ['openid', 'profile', 'email', 'offline_access'],
         })
-        .then(this.handleResponse)
         .catch(error => {
           window.console.log(error);
         });
+
+      this.handleResponse(res);
     } else {
       await this.auth.loginRedirect({
         scopes: ['openid', 'profile', 'email', 'offline_access'],

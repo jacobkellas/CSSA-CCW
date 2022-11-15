@@ -214,7 +214,7 @@ export type UploadedDocType = {
   name: string;
   uploadedDateTimeUtc: string;
   uploadedBy: string;
-  DocumentType: string;
+  documentType: string;
 };
 
 export type CompleteApplication = {

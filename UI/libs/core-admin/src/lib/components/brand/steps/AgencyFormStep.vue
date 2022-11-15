@@ -24,12 +24,13 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Agency Name')"
             :rules="[v => !!v || 'Agency Name is required']"
             :hint="$t('Enter your Agency name')"
             color="blue1"
             v-model="brandStore.getBrand.agencyName"
-            clearable
             required
           >
             <template #prepend>
@@ -49,12 +50,13 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Agency Sheriff Name')"
             :rules="[v => !!v || $t('Agency Sheriff Name is required')]"
             :hint="$t('Enter your Sheriff name')"
             color="blue1"
             v-model="brandStore.getBrand.agencySheriffName"
-            clearable
             required
           >
             <template #prepend>
@@ -74,12 +76,13 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Chief of Police Name')"
             :rules="[v => !!v || $t('Chief of Police name is required')]"
             :hint="$t('Optionally, Enter your Chief of Police name')"
             color="blue1"
             v-model="brandStore.getBrand.chiefOfPoliceName"
-            clearable
             class="pl-3"
           >
             <template #prepend>
