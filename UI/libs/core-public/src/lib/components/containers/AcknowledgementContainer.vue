@@ -134,7 +134,7 @@ function handleAccept() {
 }
 
 function handleDecline() {
-  step.index = 0;
+  router.push('/');
 }
 
 function handleFinalAccept() {
