@@ -2,7 +2,7 @@
 <template>
   <v-app>
     <v-container
-      v-if="(isLoading || isBrandLoading) && !isError"
+      v-if="isLoading && !isError"
       fluid
     >
       <v-skeleton-loader
@@ -84,13 +84,10 @@ export default defineComponent({
     const apiUrl = computed(() =>
       Boolean(data.value?.Configuration?.ServicesBaseUrl)
     );
-    const { isLoading: isBrandLoading } = useQuery(
-      ['brandSetting'],
-      brandStore.getBrandSettingApi,
-      {
-        enabled: apiUrl,
-      }
-    );
+
+    useQuery(['brandSetting'], brandStore.getBrandSettingApi, {
+      enabled: apiUrl,
+    });
 
     useQuery(['logo'], brandStore.getAgencyLogoDocumentsApi, {
       enabled: apiUrl,
@@ -100,7 +97,7 @@ export default defineComponent({
       enabled: apiUrl,
     });
 
-    return { isLoading, isBrandLoading, isError };
+    return { isLoading, isError };
   },
 });
 </script>
