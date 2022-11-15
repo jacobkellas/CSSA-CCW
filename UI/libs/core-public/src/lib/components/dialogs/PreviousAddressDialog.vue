@@ -4,14 +4,17 @@
       <template #activator="{ on, attrs }">
         <v-btn
           id="add-previous-address-btn"
-          color="primary my-5"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
           v-bind="attrs"
           v-on="on"
         >
           {{ $t(' Add previous address') }}
         </v-btn>
       </template>
-      <div class="address-container">
+      <div
+        class="address-container"
+        :style="{ background: $vuetify.theme.dark ? '#222' : '#EEE' }"
+      >
         <v-form
           ref="form"
           v-model="valid"
@@ -218,7 +221,6 @@ function handleSubmit() {
   width: 90%;
   justify-content: center;
   align-items: center;
-  background: aliceblue;
   border-radius: 12px;
 }
 .btn-container {

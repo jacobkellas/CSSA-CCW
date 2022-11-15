@@ -53,7 +53,6 @@ const props = defineProps<IAcknowledgementInitialProps>();
 }
 
 .acknowledgement-text {
-  color: #111111;
   font-size: 1.3rem;
 }
 </style>

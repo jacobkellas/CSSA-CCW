@@ -9,8 +9,8 @@
       <v-sheet>
         <v-row>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-container v-if="isLoading">
               <v-skeleton-loader
@@ -19,7 +19,10 @@
               >
               </v-skeleton-loader>
             </v-container>
-            <v-card v-else>
+            <v-card
+              v-else
+              class="ml-5"
+            >
               <v-card-title>
                 {{ $t('Select Application to modify') }}
               </v-card-title>
@@ -43,8 +46,8 @@
                   v-else
                 >
                   <v-btn
-                    outlined
-                    color="primary"
+                    :color="$vuetify.theme.dark ? 'info' : 'primary'"
+                    class="font-weight-bold"
                     @click="handleSelectedApplication(app)"
                   >
                     {{ $t('Order id: ') }}{{ app.application.orderId }} -
@@ -60,8 +63,8 @@
             </v-card>
           </v-col>
           <v-col
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-btn
               color="primary"

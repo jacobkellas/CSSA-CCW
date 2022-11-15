@@ -9,7 +9,7 @@
       class="carousel-body"
       v-model="currentInfoStore.state.selection"
     >
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <PersonalInfoSection
             :color="'info'"
@@ -18,7 +18,7 @@
         </div>
       </v-carousel-item>
 
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <SpouseInfoSection
             :color="'info'"
@@ -27,7 +27,7 @@
         </div>
       </v-carousel-item>
 
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <AliasInfoSection
             :color="'transparent'"
@@ -36,7 +36,7 @@
         </div>
       </v-carousel-item>
 
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <IdInfoSection
             :color="'info'"
@@ -44,11 +44,11 @@
           />
           <DOBinfoSection
             :color="'info'"
-            :d-o-b-info="completeApplication.DOB"
+            :d-o-b-info="completeApplication.dob"
           />
         </div>
       </v-carousel-item>
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <CitizenInfoSection
             :color="'info'"
@@ -57,7 +57,7 @@
           />
         </div>
       </v-carousel-item>
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <AddressInfoSection
             :color="'info'"
@@ -65,9 +65,12 @@
             :address-info="completeApplication.currentAddress"
           />
           <v-container class="different-mailing-container">
-            <v-row class="ml-5">
-              <v-col>
-                <div class="info-row">
+            <v-row>
+              <v-col
+                cols="12"
+                lg="6"
+              >
+                <div class="info-row text-left">
                   <v-chip
                     class="font-weight-bold"
                     label
@@ -93,7 +96,7 @@
         </div>
       </v-carousel-item>
 
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <AddressInfoSection
             :title="'Mailing Address'"
@@ -103,7 +106,7 @@
         </div>
       </v-carousel-item>
 
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <AppearanceInfoSection
             color="info"
@@ -111,7 +114,7 @@
           />
         </div>
       </v-carousel-item>
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <ContactInfoSection
             :contact-info="completeApplication.contact"
@@ -119,7 +122,7 @@
           />
         </div>
       </v-carousel-item>
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <EmploymentInfoSection
             :employment-info="completeApplication.employment"
@@ -128,7 +131,7 @@
           />
         </div>
       </v-carousel-item>
-      <v-carousel-item>
+      <v-carousel-item class="item">
         <div class="info-section">
           <WeaponInfoSection :weapons="completeApplication.weapons" />
         </div>
@@ -163,26 +166,28 @@ const completeApplication = applicationStore.getCompleteApplication.application;
   min-height: 100%;
 }
 .carousel-body {
-  height: 40vh !important;
+  height: auto !important;
 }
 
 .different-mailing-container {
   width: 80%;
   height: 100%;
-  margin: 1.5em;
+  margin: 1.5em 0;
   padding: 0;
 }
 
 .info-section {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 }
+
 .info-row {
   display: flex;
   flex-direction: row;
-  margin-left: 0.5rem;
 }
 
 .info-text {
@@ -196,7 +201,11 @@ const completeApplication = applicationStore.getCompleteApplication.application;
   background-color: rgba(211, 241, 241, 0.3);
   border-bottom: 1px solid #666;
   border-radius: 5px;
-  font-size: 1.2em;
+  font-size: 4.3em;
   font-weight: bold;
+}
+
+.item {
+  height: 100%;
 }
 </style>

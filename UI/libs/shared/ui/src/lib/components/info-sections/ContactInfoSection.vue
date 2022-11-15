@@ -6,7 +6,7 @@
     <v-banner class="font-weight-bold text-xl text-left mb-5">
       {{ $t('Contact Information: ') }}
     </v-banner>
-    <v-row class="ml-5">
+    <v-row>
       <v-col>
         <div class="info-row">
           <v-chip
@@ -36,7 +36,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="ml-5">
+    <v-row>
       <v-col>
         <div class="info-row">
           <v-chip
@@ -66,7 +66,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="ml-5">
+    <v-row>
       <v-col>
         <div class="info-row">
           <v-chip

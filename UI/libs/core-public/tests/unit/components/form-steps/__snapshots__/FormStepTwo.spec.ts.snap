@@ -200,7 +200,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
             </transition-stub>
           </div>
         </div>
-        <div role="alert" class="v-alert v-sheet v-sheet--outlined theme--light v-alert--dense v-alert--outlined error--text">
+        <div role="alert" class="v-alert mt-2 v-sheet v-sheet--outlined theme--light v-alert--dense v-alert--outlined error--text">
           <div class="v-alert__wrapper"><i aria-hidden="true" class="v-icon notranslate v-alert__icon mdi mdi-alert theme--light error--text"></i>
             <div class="v-alert__content">
               Date of birth cannot be blank!

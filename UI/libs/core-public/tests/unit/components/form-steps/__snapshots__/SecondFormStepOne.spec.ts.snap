@@ -59,7 +59,7 @@ exports[`SecondFormStepOne Should match the snapshot 1`] = `
         </div>
       </div>
     </div>
-    <div><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary my-5" id="add-weapon-btn" role="button" aria-haspopup="true" aria-expanded="false"><span class="v-btn__content">
+    <div><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary" id="add-weapon-btn" role="button" aria-haspopup="true" aria-expanded="false"><span class="v-btn__content">
         Add Weapon
       </span></button>
       <div class="v-dialog__container">

@@ -3,29 +3,35 @@
     <v-banner class="font-weight-bold text-xl text-left mb-5">
       {{ $t('Spouse Information: ') }}
     </v-banner>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Spouse last name:') }}
+            {{ $t('Last name:') }}
           </v-chip>
           <div class="info-text">
             {{ props.spouseInfo.lastName }}
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Spouse first name:') }}
+            {{ $t('First name:') }}
           </v-chip>
           <div class="info-text">
             {{ props.spouseInfo.firstName }}
@@ -33,29 +39,35 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t(' Spouse middle name: ') }}
+            {{ $t('Middle name: ') }}
           </v-chip>
           <div class="info-text">
             {{ props.spouseInfo.middleName }}
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Spouse maiden name: ') }}
+            {{ $t('Maiden name: ') }}
           </v-chip>
           <div class="info-text">
             {{ props.spouseInfo.maidenName }}
@@ -88,7 +100,6 @@ const props = defineProps<ISpouseInfoSectionProps>();
   flex-direction: row;
   max-height: 2vh;
   min-height: 1vh;
-  margin-left: 0.5rem;
 }
 
 .info-text {

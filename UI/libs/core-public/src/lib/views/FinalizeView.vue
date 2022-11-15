@@ -174,12 +174,12 @@ function toggleAppointmentComplete() {
 .finalize {
   &-view {
     height: 100%;
-    width: 80%;
+    width: 100%;
   }
   &-submit {
     display: flex;
     justify-content: space-around;
-    height: 10%;
+    height: 20em;
     width: 80%;
   }
 }
