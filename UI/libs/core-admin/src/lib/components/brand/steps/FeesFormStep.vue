@@ -24,6 +24,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Standard Cost')"
             :rules="[v => !!v || $t('Standard Cost is required')]"
             :hint="$t('Add standard cost fees for permit ')"
@@ -31,7 +33,6 @@
             placeholder="XX.XX"
             type="number"
             color="blue1"
-            clearable
             prefix="$"
             required
           >
@@ -52,6 +53,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Judicial Cost')"
             :rules="[v => !!v || $t('Judicial Cost is required')]"
             :hint="$t('Add judicial cost fees for permit ')"
@@ -59,7 +62,6 @@
             placeholder="XX.XX"
             type="number"
             color="blue1"
-            clearable
             prefix="$"
             required
           >
@@ -80,6 +82,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Reserve Cost')"
             :rules="[v => !!v || $t('Reserve Cost is required')]"
             :hint="$t('Add reserve cost fees for permit ')"
@@ -87,7 +91,6 @@
             placeholder="XX.XX"
             type="number"
             color="blue1"
-            clearable
             prefix="$"
             required
           >
@@ -108,6 +111,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Credit Fee')"
             :rules="[v => !!v || $t('Credit Fee is required')]"
             :hint="$t('Add credit fee for permit ')"
@@ -115,7 +120,6 @@
             placeholder="XX.XX"
             type="number"
             color="blue1"
-            clearable
             prefix="$"
             required
           >
@@ -136,6 +140,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Convenience Fee')"
             :rules="[v => !!v || $t('Convenience Fee is required')]"
             :hint="$t('Add Convenience Fee for permit ')"
@@ -143,7 +149,6 @@
             placeholder="XX.XX"
             type="number"
             color="blue1"
-            clearable
             prefix="$"
             required
           >

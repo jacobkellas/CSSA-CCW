@@ -75,6 +75,7 @@ function handleLogIn() {
     &__subtitle {
       text-align: left;
       text-overflow: ellipsis;
+      font-size: 0.76rem;
     }
   }
 

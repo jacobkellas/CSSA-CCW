@@ -179,8 +179,8 @@
 
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import { reactive, ref } from 'vue';
 import { states } from '@shared-utils/lists/defaultConstants';
+import { reactive, ref } from 'vue';
 
 interface PreviousAddressDialogProps {
   getPreviousAddressFromDialog?: (address: AddressInfoType) => void;

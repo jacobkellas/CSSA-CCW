@@ -51,6 +51,7 @@
 import PageTemplate from '@core-admin/components/templates/PageTemplate.vue';
 import initialize from '@core-admin/api/config';
 import { useBrandStore } from '@core-admin/stores/brandStore';
+import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
 import { useThemeStore } from '@shared-ui/stores/themeStore';
 import { computed, defineComponent, getCurrentInstance } from 'vue';
@@ -80,6 +81,7 @@ export default defineComponent({
     const app = getCurrentInstance();
     const brandStore = useBrandStore();
     const themeStore = useThemeStore();
+    const { getAllPermitsApi } = usePermitsStore();
     const { data, isLoading, isError } = useQuery(['config'], initialize);
     const apiUrl = computed(() =>
       Boolean(data.value?.Configuration?.ServicesBaseUrl)
@@ -97,6 +99,10 @@ export default defineComponent({
     });
 
     useQuery(['landingPageImage'], brandStore.getAgencyLandingPageImageApi, {
+      enabled: apiUrl,
+    });
+
+    useQuery(['permits'], getAllPermitsApi, {
       enabled: apiUrl,
     });
 

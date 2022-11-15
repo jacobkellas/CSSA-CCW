@@ -36,14 +36,10 @@ export type AdminAppConfigType = {
 };
 
 export type PermitsType = {
-  id: string;
-  application: {
-    personalInfo: CompleteApplication.personalInfo;
-    currentAddress: CompleteApplication.currentAddress;
-    isComplete: boolean;
-    userEmail: string;
-    applicationType: string;
-    paymentStatus: string;
-    appointmentStatus: string;
-  };
+  orderID: string;
+  name: string;
+  address: CompleteApplication.currentAddress;
+  appointmentStatus: boolean;
+  email: string;
+  status: number;
 };

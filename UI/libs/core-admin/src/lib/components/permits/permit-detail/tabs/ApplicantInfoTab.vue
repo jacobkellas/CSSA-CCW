@@ -17,7 +17,8 @@
           v-model="
             permitStore.getPermitDetail.application.personalInfo.lastName
           "
-          clearable
+          dense
+          filled
           required
         >
           <template #prepend>
@@ -41,7 +42,8 @@
           v-model="
             permitStore.getPermitDetail.application.personalInfo.firstName
           "
-          clearable
+          dense
+          filled
           required
         >
           <template #prepend>
@@ -65,7 +67,7 @@
           v-model="
             permitStore.getPermitDetail.application.personalInfo.middleName
           "
-          clearable
+          filled
         >
         </v-text-field>
       </v-col>
@@ -80,7 +82,7 @@
           v-model="
             permitStore.getPermitDetail.application.personalInfo.maidenName
           "
-          clearable
+          filled
         >
         </v-text-field>
       </v-col>
@@ -93,7 +95,7 @@
         <v-text-field
           :label="$t('Suffix')"
           v-model="permitStore.getPermitDetail.application.personalInfo.suffix"
-          clearable
+          filled
         >
         </v-text-field>
       </v-col>
@@ -109,7 +111,7 @@
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           v-model="permitStore.getPermitDetail.application.personalInfo.ssn"
           @click:append="show1 = !show1"
-          clearable
+          filled
           required
         >
           <template #prepend>
@@ -176,81 +178,82 @@
         'married'
       "
     >
-      <v-row class="ml-5">
-        <v-col
-          cols="12"
-          md="5"
-          sm="3"
+      <v-col
+        cols="12"
+        md="5"
+        sm="3"
+      >
+        <v-text-field
+          :label="$t('Spouse Last Name')"
+          :rules="[v => !!v || $t('Spouse Last name cannot be blank')]"
+          v-model="
+            permitStore.getPermitDetail.application.spouseInformation.lastName
+          "
+          filled
         >
-          <v-text-field
-            :label="$t('Spouse Last Name')"
-            :rules="[v => !!v || $t('Spouse Last name cannot be blank')]"
-            v-model="
-              permitStore.getPermitDetail.application.spouseInformation.lastName
-            "
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          md="5"
-          sm="3"
+          <template #prepend>
+            <v-icon
+              x-small
+              color="error"
+            >
+              mdi-star
+            </v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
+      <v-col
+        cols="12"
+        md="5"
+        sm="3"
+        class="pl-8"
+      >
+        <v-text-field
+          :label="$t('Spouse Middle Name')"
+          v-model="
+            permitStore.getPermitDetail.application.spouseInformation.middleName
+          "
+          filled
+        />
+      </v-col>
+      <v-col
+        cols="12"
+        md="5"
+        sm="3"
+      >
+        <v-text-field
+          :label="$t('Spouse First Name')"
+          :rules="[v => !!v || $t('Spouse First name cannot be blank')]"
+          v-model="
+            permitStore.getPermitDetail.application.spouseInformation.firstName
+          "
+          filled
         >
-          <v-text-field
-            :label="$t('Spouse Middle Name')"
-            v-model="
-              permitStore.getPermitDetail.application.spouseInformation
-                .middleName
-            "
-          />
-        </v-col>
-        <v-col
-          cols="12"
-          md="5"
-          sm="3"
-        >
-          <v-text-field
-            :label="$t('Spouse First Name')"
-            :rules="[v => !!v || $t('Spouse First name cannot be blank')]"
-            v-model="
-              permitStore.getPermitDetail.application.spouseInformation
-                .firstName
-            "
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          md="5"
-          sm="3"
-        >
-          <v-text-field
-            :label="$t('Spouse Maiden Name')"
-            v-model="
-              permitStore.getPermitDetail.application.spouseInformation
-                .maidenName
-            "
-          />
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
+          <template #prepend>
+            <v-icon
+              x-small
+              color="error"
+            >
+              mdi-star
+            </v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
+      <v-col
+        cols="12"
+        md="5"
+        sm="3"
+        class="pl-8"
+      >
+        <v-text-field
+          :label="$t('Spouse Maiden Name')"
+          v-model="
+            permitStore.getPermitDetail.application.spouseInformation.maidenName
+          "
+          filled
+        />
+      </v-col>
     </v-row>
+    <v-divider></v-divider>
   </v-card>
 </template>
 <script setup lang="ts">

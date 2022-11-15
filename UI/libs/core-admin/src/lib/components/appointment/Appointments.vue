@@ -1,3 +1,4 @@
+<!-- eslint-disable vue-a11y/form-has-label -->
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <!-- eslint-disable vue/valid-v-slot -->
 <!-- eslint-disable vue-a11y/no-autofocus -->
@@ -39,6 +40,28 @@
                   hide-details
                 >
                 </v-text-field>
+              </v-col>
+              <v-col
+                md="4"
+                class="mr-1"
+              >
+                <!-- 1. Create the button that will be clicked to select a file -->
+                <v-btn
+                  color="primary"
+                  :loading="state.isSelecting"
+                  @click="handleFileImport"
+                >
+                  Upload New Appointments
+                </v-btn>
+
+                <!-- Create a File Input that will be hidden but triggered with JavaScript -->
+                <input
+                  ref="uploader"
+                  label="Upload New Appointments"
+                  class="d-none"
+                  type="file"
+                  @change="onFileChanged"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -94,17 +117,20 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useQuery } from '@tanstack/vue-query';
+import { reactive, ref } from 'vue';
 
-const { getAppointmentsApi } = useAppointmentsStore();
+const appointmentsStore = useAppointmentsStore();
 const { isLoading, isError, data } = useQuery(
   ['appointments'],
-  getAppointmentsApi
+  appointmentsStore.getAppointmentsApi
 );
 
+const uploader = ref(null);
+
 const state = reactive({
+  isSelecting: false,
   search: '',
   singleExpand: true,
   expanded: [],
@@ -127,6 +153,25 @@ const state = reactive({
     { text: '', value: '' },
   ],
 });
+
+function handleFileImport() {
+  state.isSelecting = true;
+
+  // After obtaining the focus when closing the FilePicker, return the button state to normal
+  window.addEventListener(
+    'focus',
+    () => {
+      state.isSelecting = false;
+    },
+    { once: true }
+  );
+
+  uploader.value.click();
+}
+
+function onFileChanged(e) {
+  appointmentsStore.newAppointmentsFile = e.target.files[0];
+}
 
 function getColor(name) {
   if (name === 'New' || name.match(/^\d/)) return '#eff8ff';

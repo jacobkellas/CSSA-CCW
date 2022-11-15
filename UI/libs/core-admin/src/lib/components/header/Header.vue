@@ -7,6 +7,7 @@
   >
     <ConnectionStatus class="ml-4" />
     <ThemeMode class="ml-4" />
+    <PageTitle class="ml-4" />
     <v-spacer></v-spacer>
     <v-btn
       v-if="authStore.getAuthState.isAuthenticated"
@@ -25,6 +26,7 @@
 
 <script setup lang="ts">
 import ConnectionStatus from '@shared-ui/components/status/ConnectionStatus.vue';
+import PageTitle from '@shared-ui/components/page-title/PageTitle.vue';
 import ThemeMode from '@shared-ui/components/mode/ThemeMode.vue';
 import auth from '@shared-ui/api/auth/authentication';
 import { useAuthStore } from '@shared-ui/stores/auth';

@@ -86,6 +86,8 @@
           sm="3"
         >
           <v-autocomplete
+            dense
+            filled
             :items="countries"
             :label="$t('Country of Citizenship')"
             :rules="[v => !!v || $t('You must enter a country')]"
@@ -111,6 +113,8 @@
           sm="3"
         >
           <v-autocomplete
+            dense
+            filled
             :items="countries"
             :label="$t('Country of Birth')"
             :rules="[v => !!v || $t('You must enter a country')]"

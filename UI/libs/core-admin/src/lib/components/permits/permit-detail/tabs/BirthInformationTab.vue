@@ -19,6 +19,8 @@
         >
           <template #activator="{ on, attrs }">
             <v-text-field
+              dense
+              filled
               v-model="permitStore.getPermitDetail.application.dob.birthDate"
               :label="$t('Date of birth')"
               hint="YYYY-MM-DD format"
@@ -55,6 +57,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Birth city')"
           :rules="[v => !!v || $t('Birth city cannot be blank')]"
           v-model="permitStore.getPermitDetail.application.dob.birthCity"
@@ -69,6 +73,8 @@
           </template>
         </v-text-field>
         <v-autocomplete
+          dense
+          filled
           :items="states"
           :label="$t('Birth state')"
           :rules="[v => !!v || $t('Birth state cannot be blank')]"
@@ -86,6 +92,8 @@
         </v-autocomplete>
 
         <v-autocomplete
+          dense
+          filled
           :items="countries"
           :label="$t('Birth country')"
           :rules="[v => !!v || $t('Birth country cannot be blank')]"

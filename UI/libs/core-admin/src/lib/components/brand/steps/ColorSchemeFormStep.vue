@@ -24,6 +24,8 @@
           md="6"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Primary Theme Color')"
             :rules="[
               v => !!v || $t('Primary Theme color is required'),
@@ -38,7 +40,6 @@
             hint="Enter or pick primary color to apply across the application"
             placeholder="#XXXXXX"
             color="blue1"
-            clearable
             required
           >
             <template #append>
@@ -84,6 +85,8 @@
           style="min-width: 220px"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Secondary Theme Color')"
             :rules="[
               v => !!v || $t('Secondary Theme color is required'),
@@ -98,7 +101,6 @@
             placeholder="#XXXXXX"
             hint="Enter or pick secondary color to apply across the application"
             color="blue1"
-            clearable
             required
           >
             <template #append>

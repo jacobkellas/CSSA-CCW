@@ -21,6 +21,9 @@ exports[`Appointments should match the snapshot 1`] = `
                 </div>
               </div>
             </div>
+            <div class="mr-1 col-md-4 col"><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default primary"><span class="v-btn__content">
+                Upload New Appointments
+              </span></button> <input label="Upload New Appointments" type="file" class="d-none"></div>
           </div>
         </div>
       </div>
@@ -59,10 +62,10 @@ exports[`Appointments should match the snapshot 1`] = `
     <div class="v-data-footer">
       <div class="v-data-footer__select">Rows per page:<div class="v-input v-input--hide-details v-input--is-label-active v-input--is-dirty theme--light v-text-field v-select">
           <div class="v-input__control">
-            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-18" class="v-input__slot">
+            <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-19" class="v-input__slot">
               <div class="v-select__slot">
                 <div class="v-select__selections">
-                  <div class="v-select__selection v-select__selection--comma">15</div><input aria-label="Rows per page:" id="input-18" readonly="readonly" type="text" aria-readonly="false" autocomplete="off">
+                  <div class="v-select__selection v-select__selection--comma">15</div><input aria-label="Rows per page:" id="input-19" readonly="readonly" type="text" aria-readonly="false" autocomplete="off">
                 </div>
                 <div class="v-input__append-inner">
                   <div class="v-input__icon v-input__icon--append"><i aria-hidden="true" class="v-icon notranslate mdi mdi-menu-down theme--light"></i></div>

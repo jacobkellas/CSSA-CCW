@@ -11,6 +11,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Address line 1')"
           :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
           v-model="
@@ -25,6 +27,14 @@
               mdi-star
             </v-icon>
           </template>
+          <template #append>
+            <v-icon
+              medium
+              color="primary"
+            >
+              mdi-checkbox-marked-circle
+            </v-icon>
+          </template>
         </v-text-field>
       </v-col>
       <v-col
@@ -34,6 +44,8 @@
         class="pl-8"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Address line 2')"
           v-model="
             permitStore.getPermitDetail.application.currentAddress.addressLine2
@@ -49,6 +61,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('City')"
           :rules="[v => !!v || $t('City cannot be blank')]"
           v-model="permitStore.getPermitDetail.application.currentAddress.city"
@@ -69,6 +83,8 @@
         sm="3"
       >
         <v-autocomplete
+          dense
+          filled
           :items="states"
           :label="$t('State')"
           :rules="[v => !!v || $t('State cannot be blank')]"
@@ -91,6 +107,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('County')"
           :rules="[v => !!v || $t('County cannot be blank')]"
           v-model="
@@ -113,6 +131,8 @@
         sm="3"
       >
         <v-text-field
+          dense
+          filled
           :label="$t('Zip')"
           :rules="[v => !!v || $t('Zip cannot be blank')]"
           v-model="permitStore.getPermitDetail.application.currentAddress.zip"
@@ -133,6 +153,8 @@
         sm="3"
       >
         <v-autocomplete
+          dense
+          filled
           :items="countries"
           :label="$t('Country')"
           :rules="[v => !!v || 'Country cannot be blank']"
@@ -171,6 +193,10 @@
       </v-col>
     </v-row>
     <div v-if="permitStore.getPermitDetail.application.differentSpouseAddress">
+      <v-divider></v-divider>
+      <v-card-title class="text-h5">
+        {{ $t('Different Spouse Address:') }}
+      </v-card-title>
       <v-row class="ml-5">
         <v-col
           cols="12"
@@ -178,6 +204,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Spouse address line 1')"
             :rules="[v => !!v || $t('Spouse address line 1 cannot be blank')]"
             v-model="
@@ -199,8 +227,11 @@
           cols="12"
           md="5"
           sm="3"
+          class="pl-8"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Spouse address line 2')"
             v-model="
               permitStore.getPermitDetail.application.spouseAddressInformation
@@ -217,6 +248,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Spouse\'s City')"
             :rules="[v => !!v || $t('Spouse\'s City cannot be blank')]"
             v-model="
@@ -240,6 +273,8 @@
           sm="3"
         >
           <v-autocomplete
+            dense
+            filled
             :items="states"
             :label="$t('Spouse\'s State')"
             :rules="[v => !!v || $t('Spouse\'s State cannot be blank')]"
@@ -264,6 +299,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Spouse\'s County')"
             :rules="[v => !!v || $t('Spouse\'s County cannot be blank')]"
             v-model="
@@ -287,6 +324,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Spouse\'s Zip')"
             :rules="[v => !!v || $t('Spouse\'s Zip cannot be blank')]"
             v-model="
@@ -310,6 +349,8 @@
           sm="3"
         >
           <v-autocomplete
+            dense
+            filled
             :items="countries"
             :label="$t('Spouse\'s Country')"
             :rules="[v => !!v || $t('Spouse\'s Country cannot be blank')]"
@@ -332,6 +373,10 @@
       <v-divider />
     </div>
     <div v-if="permitStore.getPermitDetail.application.differentMailing">
+      <v-divider></v-divider>
+      <v-card-title class="text-h5">
+        {{ $t('Different Mailing Address:') }}
+      </v-card-title>
       <v-row class="ml-5">
         <v-col
           cols="12"
@@ -339,6 +384,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Address line 1')"
             :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
             v-model="
@@ -360,8 +407,11 @@
           cols="12"
           md="5"
           sm="3"
+          class="pl-8"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Address line 2')"
             v-model="
               permitStore.getPermitDetail.application.mailingAddress
@@ -378,6 +428,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('City')"
             :rules="[v => !!v || $t(' City cannot be blank')]"
             v-model="
@@ -400,6 +452,8 @@
           sm="3"
         >
           <v-autocomplete
+            dense
+            filled
             :items="states"
             :label="$t('State')"
             :rules="[v => !!v || $t('State cannot be blank')]"
@@ -423,6 +477,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('County')"
             :rules="[v => !!v || $t('County cannot be blank')]"
             v-model="
@@ -445,6 +501,8 @@
           sm="3"
         >
           <v-text-field
+            dense
+            filled
             :label="$t('Zip')"
             :rules="[v => !!v || $t('Zip cannot be blank')]"
             v-model="permitStore.getPermitDetail.application.mailingAddress.zip"
@@ -466,6 +524,8 @@
           sm="3"
         >
           <v-autocomplete
+            dense
+            filled
             :items="countries"
             :label="$t('Country')"
             :rules="[v => !!v || $t('Country cannot be blank')]"
@@ -490,7 +550,7 @@
       <v-card-title class="text-h5">
         {{ $t('Previous Address:') }}
       </v-card-title>
-      <address-table
+      <AddressTable
         :addresses="permitStore.getPermitDetail.application.previousAddresses"
       />
       <PreviousAddressDialog
@@ -501,6 +561,7 @@
 </template>
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
+import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
 import PreviousAddressDialog from '@shared-ui/components/dialogs/PreviousAddressDialog.vue';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { countries, states } from '@shared-utils/lists/defaultConstants';

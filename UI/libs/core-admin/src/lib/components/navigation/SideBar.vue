@@ -50,7 +50,7 @@
         dense
       >
         <v-list-item
-          :to="Routes.DASHBOARD_ROUTE_PATH"
+          :to="Routes.HOME_ROUTE_PATH"
           link
         >
           <v-list-item-icon>
@@ -158,6 +158,11 @@ const getAppTitle = computed(() => {
 <style lang="scss" scoped>
 .sidebar {
   max-width: 265px;
+
+  .v-list--nav {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
 
   .theme--light .logo {
     &::before {
