@@ -67,6 +67,7 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { reactive, ref, watch } from 'vue';
+import Endpoints from '@shared-ui/api/endpoints';
 
 interface ISecondFormStepFourProps {
   handleNextSection: CallableFunction;
@@ -113,10 +114,15 @@ async function handleSubmit() {
 async function handleFileUpload() {
   const newFileName = `${applicationStore.completeApplication.application.orderId}_${applicationStore.completeApplication.application.personalInfo.lastName}_${applicationStore.completeApplication.application.personalInfo.firstName}_signature`;
 
-  await axios.post(
-    `http://localhost:5148/Api/Document/v1/Document/uploadApplicantFile?saveAsFileName=${newFileName}`,
-    state.file
-  );
+  await axios
+    .post(
+      `${Endpoints.POST_DOCUMENT_IMAGE_ENDPOINT}?saveAsFileName=${newFileName}`,
+      state.file
+    )
+    .catch(e => {
+      window.console.warn(e);
+      Promise.reject();
+    });
 }
 
 function handleCanvasClear() {

@@ -45,6 +45,7 @@
                 >
                   <v-btn
                     :color="$vuetify.theme.dark ? 'info' : 'primary'"
+                    large
                     @click="handleSelectedApplication(app)"
                   >
                     <div class="button-content">
