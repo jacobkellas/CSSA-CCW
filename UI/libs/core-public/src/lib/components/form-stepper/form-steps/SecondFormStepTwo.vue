@@ -230,7 +230,6 @@ function handleFileInput(event: File, target: string) {
   };
 
   state.files.push(fileObject);
-  window.console.log(state.files);
 }
 
 async function handleFileUpload() {
