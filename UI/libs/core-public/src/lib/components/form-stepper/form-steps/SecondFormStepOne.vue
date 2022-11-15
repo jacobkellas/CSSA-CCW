@@ -9,7 +9,10 @@
       </v-subheader>
 
       <v-row class="ml-5">
-        <v-col cols="6">
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-select
             v-model="completeApplication.employment"
             :value="completeApplication.employment"
@@ -28,9 +31,8 @@
         </v-subheader>
         <v-row>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Employer Name')"
@@ -48,9 +50,8 @@
             </v-text-field>
           </v-col>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Occupation')"
@@ -70,9 +71,8 @@
         </v-row>
         <v-row>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Employer Address Line 1')"
@@ -90,9 +90,8 @@
             </v-text-field>
           </v-col>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Employer Address Line 2')"
@@ -103,9 +102,8 @@
         </v-row>
         <v-row>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Employer City')"
@@ -123,15 +121,14 @@
             </v-text-field>
           </v-col>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-autocomplete
               :items="states"
               :label="$t('Employer State')"
               :rules="[v => !!v || $t('You must enter a state')]"
-              v-model="completeApplication.workInformation.employerCity"
+              v-model="completeApplication.workInformation.employerState"
             >
               <template #prepend>
                 <v-icon
@@ -146,9 +143,8 @@
         </v-row>
         <v-row>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Employer Zip Code')"
@@ -166,13 +162,12 @@
             </v-text-field>
           </v-col>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-text-field
               :label="$t('Employer Phone number')"
-              :rules="[v => !!v || $t('You must enter a phone number')]"
+              :rules="phoneRuleSet"
               v-model="completeApplication.workInformation.employerPhone"
             >
               <template #prepend>
@@ -188,9 +183,8 @@
         </v-row>
         <v-row>
           <v-col
-            cols="6"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-autocomplete
               :items="countries"
@@ -239,6 +233,7 @@
 import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
+import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';

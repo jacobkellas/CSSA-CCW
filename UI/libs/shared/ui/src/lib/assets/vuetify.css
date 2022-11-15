@@ -2,6 +2,10 @@
   max-width: 500px !important;
 }
 
+.v-input {
+  max-width: 97%;
+}
+
 .v-overlay--active {
   opacity: 0.85 !important;
   background-color: rgb(60, 60, 60) !important;

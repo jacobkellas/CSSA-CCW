@@ -11,9 +11,8 @@
       <v-sheet class="p-5 rounded">
         <v-row>
           <v-col
-            cols="6"
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-card class="text-left">
               <v-card-title class="ml-5">
@@ -37,16 +36,20 @@
             </v-card>
           </v-col>
           <v-col
-            cols="6"
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-card>
               <v-card-title>
                 {{ $t('Appointment Status') }}
               </v-card-title>
               <v-card-text>
-                {{ state.appointment.date }} - {{ state.appointment.time }}
+                {{ $t('Scheduled Appointment') }} -
+                {{
+                  new Date(
+                    appointmentsStore.currentAppointment.start
+                  ).toLocaleString()
+                }}
               </v-card-text>
               <v-card-title>
                 <v-btn
@@ -63,9 +66,8 @@
     </v-container>
 
     <v-container v-if="state.showCalendar">
-      {{ allAppointmentsMutation.mutate }}
       <v-skeleton-loader
-        v-if="allAppointmentsMutation.isLoading"
+        v-if="state.appointmentsLoading"
         fluid
         class="fill-height"
         type="list-item"
@@ -93,10 +95,10 @@ const applicationStore = useCompleteApplicationStore();
 const appointmentsStore = useAppointmentsStore();
 
 const state = reactive({
-  appointment: {} as AppointmentType,
   status: '',
   showCalendar: false,
   appointments: [],
+  appointmentsLoading: true,
 });
 
 const { isLoading } = useQuery(['getAppointment'], () => {
@@ -104,15 +106,20 @@ const { isLoading } = useQuery(['getAppointment'], () => {
     applicationStore.completeApplication.id
   );
 
-  state.appointment = appointment;
+  appointment.then(data => {
+    appointmentsStore.setCurrentAppointment(data);
+  });
 });
 
 const allAppointmentsMutation = useMutation({
   mutationFn: () => {
-    return (state.appointments = appointmentsStore.getAvailableAppointments);
+    return appointmentsStore.getAvailableAppointments().then(data => {
+      state.appointments = data;
+    });
   },
   onSuccess: () => {
     formatAppointments();
+    state.appointmentsLoading = false;
   },
   onError: () => {
     window.console.warn('failed');
@@ -120,7 +127,10 @@ const allAppointmentsMutation = useMutation({
 });
 
 function formatAppointments() {
+  let appointments = [] as Array<AppointmentType>;
+
   state.appointments.forEach((event: AppointmentType) => {
+    let newEvent = event;
     let start = new Date(event.start);
     let end = new Date(event.end);
 
@@ -132,9 +142,12 @@ function formatAppointments() {
       end.getMonth() + 1
     }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
 
-    event.start = formatedStart;
-    event.end = formatedEnd;
+    newEvent.start = formatedStart;
+    newEvent.end = formatedEnd;
+    appointments.push(newEvent);
   });
+
+  state.appointments = appointments;
 }
 
 onMounted(() => {
@@ -163,5 +176,7 @@ onMounted(() => {
     default:
       break;
   }
+
+  allAppointmentsMutation.mutate();
 });
 </script>

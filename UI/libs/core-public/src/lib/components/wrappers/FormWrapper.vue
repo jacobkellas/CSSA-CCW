@@ -21,6 +21,7 @@
           :starting-step="1"
           :step-index="stepIndex.step"
           :step-names="formOneStepNames"
+          :small-size="size"
         />
         <FormStepItems
           :step-index="stepIndex.step"
@@ -37,17 +38,22 @@
 import FormStepHeader from '../form-stepper/FormStepHeader.vue';
 import FormStepItems from '../form-stepper/FormStepItems.vue';
 import { formOneStepNames } from '@shared-utils/lists/defaultConstants';
-import { onMounted, reactive } from 'vue';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
-import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useRouter } from 'vue-router/composables';
+import { getCurrentInstance, onMounted, reactive } from 'vue';
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
 const router = useRouter();
+const app = getCurrentInstance();
 
+const size =
+  !app?.proxy.$vuetify.breakpoint.md &&
+  !app?.proxy.$vuetify.breakpoint.lg &&
+  !app?.proxy.$vuetify.breakpoint.xl;
 const stepIndex = reactive({
   step: 1,
   previousStep: 0,

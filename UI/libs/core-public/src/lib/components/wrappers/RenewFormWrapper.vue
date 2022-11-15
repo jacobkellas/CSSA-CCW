@@ -20,6 +20,7 @@
           :previous-index="stepIndex.previousStep"
           :step-index="stepIndex.step"
           :step-names="formOneStepNames"
+          :small-size="size"
         />
         <RenewFormStepItems
           :step-index="stepIndex.step"
@@ -35,12 +36,12 @@
 import FormStepHeader from '@core-public/components/form-stepper/FormStepHeader.vue';
 import RenewFormStepItems from '@core-public/components/form-stepper/RenewFormStepItems.vue';
 import { formOneStepNames } from '@shared-utils/lists/defaultConstants';
-import { reactive } from 'vue';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
-import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useRouter } from 'vue-router/composables';
+import { getCurrentInstance, onMounted, reactive } from 'vue';
 
 const stepIndex = reactive({
   step: 1,
@@ -50,9 +51,19 @@ const stepIndex = reactive({
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
 const router = useRouter();
+const app = getCurrentInstance();
+
+const size =
+  !app?.proxy.$vuetify.breakpoint.md &&
+  !app?.proxy.$vuetify.breakpoint.lg &&
+  !app?.proxy.$vuetify.breakpoint.xl;
+
+onMounted(() => {
+  stepIndex.step = applicationStore.completeApplication.application.currentStep;
+  checkForCorrectForm();
+});
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
-  // TODO: once the is current step is added to the object change this to route to the current step is
   if (!applicationStore.completeApplication.id) {
     stepIndex.step = 0;
     const res = applicationStore.getCompleteApplicationFromApi(
@@ -81,13 +92,13 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       stepIndex.step = 1;
     });
   }
-
-  function checkForCorrectForm() {
-    if (applicationStore.completeApplication.application.currentStep > 5) {
-      router.push('/renew-form-2');
-    }
-  }
 });
+
+function checkForCorrectForm() {
+  if (applicationStore.completeApplication.application.currentStep > 5) {
+    router.push('/renew-form-2');
+  }
+}
 
 function handleNextSection() {
   stepIndex.previousStep = stepIndex.step;

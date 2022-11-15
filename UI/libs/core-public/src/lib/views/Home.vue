@@ -9,9 +9,8 @@
     <v-container fluid>
       <v-row>
         <v-col
-          cols="3"
+          cols="12"
           lg="2"
-          sm="1"
         >
           <div class="option-section">
             <v-btn
@@ -68,16 +67,14 @@
           </div>
         </v-col>
         <v-col
-          cols="7"
+          cols="12"
           lg="5"
-          sm="1"
         >
           <GeneralInfoWrapper />
         </v-col>
         <v-col
-          cols="6"
+          cols="12"
           lg="5"
-          sm="1"
         >
           <PriceInfoWrapper />
         </v-col>

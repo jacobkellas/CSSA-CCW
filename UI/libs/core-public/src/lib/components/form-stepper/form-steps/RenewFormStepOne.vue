@@ -5,14 +5,13 @@
       v-model="valid"
     >
       <v-subheader class="subHeader font-weight-bold">
-        {{ $t('personal info') }}
+        {{ $t('Personal Info') }}
       </v-subheader>
 
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-tooltip bottom>
             <template #activator="{ on, attrs }">
@@ -43,9 +42,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('First name')"
@@ -64,9 +62,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             v-if="!completeApplication.personalInfo.noMiddleName"
@@ -77,7 +74,6 @@
         </v-col>
 
         <v-col
-          cols="6"
           md="5"
           sm="3"
         >
@@ -87,9 +83,8 @@
           />
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Suffix')"
@@ -102,7 +97,10 @@
         {{ $t(' Permit Information') }}
       </v-subheader>
       <v-row>
-        <v-col>
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-text-field
             :label="$t(' Permit Number')"
             :rules="[v => !!v || $t(' Permit number cannot be blank')]"
@@ -118,7 +116,10 @@
             </template>
           </v-text-field>
         </v-col>
-        <v-col>
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-text-field
             :label="$t('Issuing county')"
             :rules="[v => !!v || $t('Issuing county cannot be blank')]"
@@ -134,7 +135,10 @@
             </template>
           </v-text-field>
         </v-col>
-        <v-col>
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-menu
             v-model="menu"
             :close-on-content-click="true"
@@ -168,9 +172,8 @@
 
       <v-row class="ml-5">
         <v-col
-          cols="7"
-          md="5"
-          m="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Social Security Number')"
@@ -192,9 +195,8 @@
         </v-col>
 
         <v-col
-          cols="7"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Confirm SSN')"
@@ -224,13 +226,12 @@
       <v-divider class="my-3" />
 
       <v-subheader class="subHeader font-weight-bold">
-        {{ $t('marital status') }}
+        {{ $t('Marital Status') }}
       </v-subheader>
       <v-row class="ml-1">
         <v-col
-          cols="10"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-radio-group
             v-model="completeApplication.personalInfo.maritalStatus"
@@ -254,9 +255,8 @@
           </v-radio-group>
         </v-col>
         <v-col
-          cols="20"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
           v-if="completeApplication.personalInfo.maritalStatus === 'married'"
         >
           <v-subheader class="subHeader font-weight-bold">
@@ -264,9 +264,8 @@
           </v-subheader>
           <v-row class="ml-5">
             <v-col
-              cols="10"
-              md="6"
-              sm="4"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 :label="$t('Last Name')"
@@ -289,9 +288,8 @@
               />
             </v-col>
             <v-col
-              cols="10"
-              md="6"
-              sm="4"
+              cols="12"
+              lg="6"
             >
               <v-text-field
                 :label="$t('First Name')"
@@ -319,7 +317,7 @@
 
     <v-divider />
     <v-subheader class="sub-header font-weight-bold">
-      {{ $t('aliases') }}
+      {{ $t('Aliases') }}
     </v-subheader>
     <div class="alias-components-container">
       <AliasTable :aliases="completeApplication.aliases" />

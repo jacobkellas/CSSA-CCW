@@ -18,7 +18,10 @@
           class="form-container"
         >
           <v-row>
-            <v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 :label="$t('Make')"
                 :rule="[v => !!v || 'Make is required']"
@@ -34,7 +37,10 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 :label="$t('Model')"
                 :rule="[v => !!v || 'Model is required']"
@@ -50,7 +56,10 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 :label="$t('Caliber')"
                 :rule="[v => !!v || 'Caliber is required']"
@@ -66,7 +75,10 @@
                 </template>
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 :label="$t('Serial number')"
                 :rule="[v => !!v || 'Serial number is required']"
@@ -134,7 +146,7 @@ function handleSubmit() {
   margin-left: 5%;
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: auto;
   width: 90%;
   justify-content: center;
   align-items: center;
@@ -145,10 +157,10 @@ function handleSubmit() {
   display: flex;
   width: 75%;
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin: 2em 0;
 }
 .form-container {
   width: 90%;
-  margin-bottom: 1rem;
+  margin: 2em;
 }
 </style>

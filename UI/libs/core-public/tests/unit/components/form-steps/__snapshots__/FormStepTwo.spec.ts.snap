@@ -7,7 +7,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
       Id Information
     </div>
     <div class="row">
-      <div class="col-sm-3 col-md-5 col-6">
+      <div class="col-lg-6 col-12">
         <div class="v-input theme--light v-text-field">
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
@@ -22,7 +22,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
           </div>
         </div><span class="v-tooltip v-tooltip--bottom"><!----></span>
       </div>
-      <div class="col-sm-3 col-md-5 col-6">
+      <div class="col-lg-6 col-12">
         <div class="v-input theme--light v-text-field v-select v-autocomplete">
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
@@ -50,7 +50,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
       Date of birth
     </div>
     <div class="row">
-      <div class="col-sm-3 col-md-5 col-6">
+      <div class="col-lg-6 col-12">
         <div class="v-picker v-card v-picker--date theme--light" label="Date of birth">
           <div class="v-picker__title primary">
             <div class="v-date-picker-title">
@@ -122,7 +122,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
                           <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
                               <div class="v-btn__content">10</div>
                             </button></td>
-                          <td><button type="button" class="v-btn v-date-picker-table__current v-btn--rounded v-btn--outlined theme--light accent--text">
+                          <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
                               <div class="v-btn__content">11</div>
                             </button></td>
                           <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
@@ -133,7 +133,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
                           <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
                               <div class="v-btn__content">13</div>
                             </button></td>
-                          <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
+                          <td><button type="button" class="v-btn v-date-picker-table__current v-btn--rounded v-btn--outlined theme--light accent--text">
                               <div class="v-btn__content">14</div>
                             </button></td>
                           <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
@@ -208,7 +208,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div class="col-sm-3 col-md-5 col-6">
+      <div class="col-lg-6 col-12">
         <div class="v-input theme--light v-text-field">
           <div class="v-input__prepend-outer"><i aria-hidden="true" class="v-icon notranslate mdi mdi-star theme--light error--text" style="font-size: 12px;"></i></div>
           <div class="v-input__control">
@@ -269,7 +269,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
       Citizenship Information
     </div>
     <div class="row">
-      <div class="pl-5 col-sm-3 col-md-5 col-6">
+      <div class="pl-5 col-lg-6 col-12">
         <div layout="row" class="v-input v-input--is-label-active v-input--is-dirty theme--light v-input--selection-controls v-input--radio-group v-input--radio-group--column">
           <div class="v-input__control">
             <div class="v-input__slot" style="height: auto;">
@@ -293,7 +293,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div class="col-sm-3 col-md-5 col-6">
+      <div class="col-lg-6 col-12">
         <div class="v-input theme--light v-text-field v-select">
           <div class="v-input__control">
             <div role="button" aria-haspopup="listbox" aria-expanded="false" aria-owns="list-57" class="v-input__slot">
@@ -328,16 +328,18 @@ exports[`FormStepTwo should match the snapshot 1`] = `
   </form>
   <hr role="separator" aria-orientation="horizontal" class="v-divider theme--light">
   <div class="form-btn-container">
-    <div><button type="button" disabled="disabled" class="v-btn v-btn--disabled v-btn--has-bg theme--light v-size--default"><span class="v-btn__content">
-      Continue
-    </span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default secondary mx-2"><span class="v-btn__content">
-      Save and Exit
-    </span></button></div>
-    <div><button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default warning mx-2"><span class="v-btn__content">
-      Go back
-    </span></button> <button type="button" class="v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default error mr-2"><span class="v-btn__content">
-      Cancel
-    </span></button></div>
+    <div class="form-btn-inner">
+      <div><button type="button" disabled="disabled" class="mt-3 v-btn v-btn--disabled v-btn--has-bg theme--light v-size--default"><span class="v-btn__content">
+        Continue
+      </span></button> <button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default secondary mx-2"><span class="v-btn__content">
+        Save and Exit
+      </span></button></div>
+      <div><button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default warning mx-2"><span class="v-btn__content">
+        Go back
+      </span></button> <button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default error mr-2"><span class="v-btn__content">
+        Cancel
+      </span></button></div>
+    </div>
   </div>
   <div class="v-snack v-snack--bottom">
     <transition-stub name="v-snack-transition">

@@ -5,13 +5,12 @@
       v-model="state.valid"
     >
       <v-subheader class="sub-header font-weight-bold">
-        {{ $t('Contact information') }}
+        {{ $t('Contact Information') }}
       </v-subheader>
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Primary phone number')"
@@ -29,9 +28,8 @@
           </v-text-field>
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Cell phone number')"
@@ -41,9 +39,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Work phone number')"
@@ -53,9 +50,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Fax number')"
@@ -66,9 +62,8 @@
       </v-row>
       <v-row>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <CheckboxInput
             :label="'Text message updates'"

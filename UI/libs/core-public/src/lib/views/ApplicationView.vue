@@ -9,8 +9,8 @@
       <v-sheet>
         <v-row class="selections">
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-container v-if="isLoading">
               <v-skeleton-loader
@@ -27,7 +27,11 @@
                 {{ $t('In progress applications') }}
               </v-card-title>
               <v-list v-if="!isLoading">
-                <v-list-item v-if="state.applications.length === 0">
+                <v-list-item
+                  v-if="
+                    state.showApplications && state.applications.length === 0
+                  "
+                >
                   <v-list-item-content>
                     {{
                       $t(' No previous applications. Please create a new one')
@@ -44,21 +48,27 @@
                     color="primary"
                     @click="handleSelectedApplication(app)"
                   >
-                    {{ $t('Order id: ') }}{{ app.application.orderId }} -
-                    {{ $t('Status: ')
-                    }}{{
-                      app.application.isComplete
-                        ? $t('Complete')
-                        : $t('In progress')
-                    }}
+                    <div class="button-content">
+                      <span>
+                        {{ $t('Order id: ') }}{{ app.application?.orderId }}
+                      </span>
+                      <span>
+                        {{ $t('Status: ')
+                        }}{{
+                          app.application?.isComplete
+                            ? $t('Complete')
+                            : $t('In progress')
+                        }}
+                      </span>
+                    </div>
                   </v-btn>
                 </v-list-item>
               </v-list>
             </v-card>
           </v-col>
           <v-col
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-btn
               color="primary"
@@ -80,13 +90,14 @@
 
 <script setup lang="ts">
 import AcknowledgementContainer from '@core-public/components/containers/AcknowledgementContainer.vue';
+import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import { reactive } from 'vue';
+import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useBrandStore } from '@core-public/stores/brandStore';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
 import { useMutation, useQuery } from '@tanstack/vue-query';
-import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 
 const applicationTypeStore = useApplicationTypeStore();
 const store = useBrandStore();
@@ -95,7 +106,8 @@ const authStore = useAuthStore();
 
 const state = reactive({
   selected: false,
-  applications: [] as any,
+  applications: [] as Array<CompleteApplication>,
+  showApplications: false,
 });
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
@@ -104,9 +116,15 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
     false
   );
 
-  res.then(data => {
-    state.applications.push(data);
-  });
+  res
+    .then(data => {
+      state.applications.push(data);
+      state.showApplications = true;
+    })
+    .catch(err => {
+      window.console.log(err);
+      state.showApplications = true;
+    });
 });
 
 const createMutation = useMutation({
@@ -128,7 +146,7 @@ async function handleCreateApplication() {
   createMutation.mutate();
 }
 
-function handleSelectedApplication(selected) {
+function handleSelectedApplication(selected: CompleteApplication) {
   selected.application.contact.primaryPhoneNumber = unformatNumber(
     selected.application.contact.primaryPhoneNumber
   );
@@ -156,5 +174,12 @@ img {
 }
 .selections {
   width: 80vw;
+}
+
+.button-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

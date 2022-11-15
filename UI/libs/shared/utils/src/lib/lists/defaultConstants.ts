@@ -181,7 +181,7 @@ export const defaultPermitState: CompleteApplication = {
     },
     currentStep: 0,
     status: 1,
-    appointmentStatus: 1,
+    appointmentStatus: false,
     orderId: '',
     uploadedDocuments: [] as Array<UploadedDocType>,
   },

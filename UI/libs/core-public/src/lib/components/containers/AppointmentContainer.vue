@@ -181,26 +181,28 @@ const state = reactive({
 const appointmentMutation = useMutation({
   mutationFn: () => {
     const body: AppointmentType = {
-      applicantId: applicationStore.completeApplication.id,
+      applicationId: applicationStore.completeApplication.id,
       date: '',
       end: new Date(state.selectedEvent.end).toISOString(),
       isManuallyCreated: false,
       id: state.selectedEvent.id,
-      name: '',
+      name: `${applicationStore.completeApplication.application.personalInfo.firstName} ${applicationStore.completeApplication.application.personalInfo.lastName} `,
       payment: '',
-      permit: '',
+      permit: applicationStore.completeApplication.application.orderId,
       start: new Date(state.selectedEvent.start).toISOString(),
       status: '',
       time: '',
     };
 
-    return appointmentStore.sendAppointmentCheck(body);
+    return appointmentStore.sendAppointmentCheck(body).then(() => {
+      appointmentStore.currentAppointment = body;
+    });
   },
   onSuccess: () => {
     state.isLoading = false;
     state.setAppointment = true;
     state.snackbarOk = true;
-    applicationStore.completeApplication.application.appointmentStatus = 2;
+    applicationStore.completeApplication.application.appointmentStatus = true;
     props.toggleAppointment();
   },
   onError: () => {
@@ -227,11 +229,21 @@ function selectEvent(event) {
 }
 
 function handleConfirm() {
-  // TODO: Call the api to confirm that the appointment is still available
-  state.isLoading = true;
-  state.checkAppointment = true;
+  if (!props.reschedule) {
+    state.isLoading = true;
+    state.checkAppointment = true;
 
-  appointmentMutation.mutate();
+    appointmentMutation.mutate();
+  } else {
+    let appointment = appointmentStore.currentAppointment;
+
+    window.console.log(appointment.id);
+
+    appointment.applicationId = null;
+    appointmentStore.sendAppointmentCheck(appointment).then(() => {
+      appointmentMutation.mutate();
+    });
+  }
 }
 </script>
 

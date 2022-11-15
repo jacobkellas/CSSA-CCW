@@ -9,9 +9,8 @@
       </v-subheader>
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Height feet')"
@@ -30,9 +29,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Height inches')"
@@ -51,9 +49,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-text-field
             :label="$t('Weight')"
@@ -72,9 +69,8 @@
         </v-col>
 
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-select
             v-model="completeApplication.physicalAppearance.hairColor"
@@ -94,9 +90,8 @@
           </v-select>
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-select
             v-model="completeApplication.physicalAppearance.eyeColor"
@@ -122,9 +117,8 @@
       </v-subheader>
       <v-row class="ml-5">
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-radio-group
             :label="'Gender'"
@@ -150,9 +144,8 @@
           </v-alert>
         </v-col>
         <v-col
-          cols="6"
-          md="5"
-          sm="3"
+          cols="12"
+          lg="6"
         >
           <v-textarea
             v-model="completeApplication.physicalAppearance.physicalDesc"

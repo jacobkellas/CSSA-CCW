@@ -1,13 +1,19 @@
 <template>
   <v-container class="payment-container">
     <v-row>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <PaymentWrapper
           v-if="state.payment.applicationCost"
           :payment="state.payment"
         />
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <PaymentButtonContainer
           :cash-payment="handleCashPayment"
           :online-payment="handleOnlinePayment"

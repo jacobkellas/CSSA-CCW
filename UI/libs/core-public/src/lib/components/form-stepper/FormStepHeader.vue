@@ -1,5 +1,5 @@
 <template>
-  <v-stepper-header>
+  <v-stepper-header v-if="!props.smallSize">
     <div class="step-heading">
       <div
         class="step-section"
@@ -26,16 +26,26 @@ interface FormStepHeaderProps {
   startingStep: number;
   previousIndex: number;
   stepNames: Array<string>;
+  smallSize: boolean;
 }
 
 const props = withDefaults(defineProps<FormStepHeaderProps>(), {
   stepIndex: 1,
   startingStep: 1,
   stepNames: () => [],
+  smallSize: false,
 });
+
+window.console.log(props.smallSize);
 </script>
 
 <style scoped lang="scss">
+.step-container {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .step-heading {
   display: flex;
   flex-direction: row;
