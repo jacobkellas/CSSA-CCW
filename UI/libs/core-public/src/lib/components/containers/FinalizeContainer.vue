@@ -11,4 +11,8 @@
 import FinalizeWrapper from '@core-public/components/wrappers/FinalizeWrapper';
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.finalize-container {
+  min-height: 50vh;
+}
+</style>

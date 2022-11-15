@@ -68,16 +68,7 @@
           <v-text-field
             :label="$t('Middle name')"
             v-model="completeApplication.personalInfo.middleName"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-text-field>
+          />
         </v-col>
 
         <v-col
@@ -175,10 +166,12 @@
             :layout="'row'"
           >
             <v-radio
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               :label="'Married'"
               :value="'married'"
             />
             <v-radio
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               :label="'Single'"
               :value="'single'"
             />

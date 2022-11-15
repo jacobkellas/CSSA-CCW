@@ -30,7 +30,6 @@ const props = defineProps<IAcknowledgmentPartOneProps>();
   margin: 1.5rem;
 }
 .acknowledgement-text {
-  color: #111111;
   font-size: 1.3rem;
 }
 </style>

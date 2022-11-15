@@ -8,32 +8,34 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             {{ $t('QUESTION-ONE') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionOne"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionOne"
           >
             <v-textarea
@@ -47,33 +49,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-TWO') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionTwo"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionTwo"
           >
             <v-textarea
@@ -87,33 +91,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-THREE') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionThree"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionThree"
           >
             <v-textarea
@@ -127,33 +133,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-FOUR') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionFour"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionFour"
           >
             <v-textarea
@@ -166,33 +174,35 @@
         </v-row>
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-FIVE') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionFive"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionFive"
           >
             <v-textarea
@@ -206,33 +216,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-SIX') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionSix"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionSix"
           >
             <v-textarea
@@ -245,33 +257,35 @@
         </v-row>
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-SEVEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionSeven"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionSeven"
           >
             <v-textarea
@@ -285,33 +299,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-EIGHT') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionEight"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionEight"
           >
             <v-textarea
@@ -325,15 +341,15 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-NINE') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionNine"
@@ -341,17 +357,19 @@
             >
               <v-radio
                 :label="$t('true')"
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionNine"
           >
             <v-textarea
@@ -365,33 +383,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-TEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionTen"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionTen"
           >
             <v-textarea
@@ -405,33 +425,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-ELEVEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionEleven"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionEleven"
           >
             <v-textarea
@@ -447,33 +469,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-TWELVE') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionTwelve"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionTwelve"
           >
             <v-textarea
@@ -489,33 +513,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-THIRTEEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionThirteen"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionThirteen"
           >
             <v-textarea
@@ -531,33 +557,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-FOURTEEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionFourteen"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionFourteen"
           >
             <v-textarea
@@ -573,33 +601,35 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-FIFTEEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionFifteen"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionFifteen"
           >
             <v-textarea
@@ -616,32 +646,34 @@
         <v-row class="ml-5">
           <v-col
             class="text-left"
-            lg="4"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             {{ $t('QUESTION-SIXTEEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="completeApplication.qualifyingQuestions.questionSixteen"
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('true')"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionSixteen"
           >
             <v-textarea
@@ -657,15 +689,15 @@
 
         <v-row class="ml-5">
           <v-col
+            cols="12"
+            lg="6"
             class="text-left"
-            lg="4"
-            sm="1"
           >
             {{ $t('QUESTION-SEVENTEEN') }}
           </v-col>
           <v-col
-            lg="2"
-            sm="1"
+            cols="12"
+            lg="6"
           >
             <v-radio-group
               v-model="
@@ -675,17 +707,19 @@
             >
               <v-radio
                 :label="$t('true')"
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="$t('false')"
                 :value="false"
               />
             </v-radio-group>
           </v-col>
           <v-col
-            lg="5"
-            sm="1"
+            cols="12"
+            lg="6"
             v-if="completeApplication.qualifyingQuestions.questionSeventeen"
           >
             <v-textarea
@@ -703,6 +737,8 @@
         :valid="true"
         @submit="updateMutation.mutate"
         @save="saveMutation.mutate"
+        @back="router.push('/form-2')"
+        @cancel="router.push('/')"
       />
     </v-sheet>
     <v-snackbar

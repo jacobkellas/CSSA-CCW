@@ -14,15 +14,15 @@
         >
           <div class="option-section">
             <v-btn
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               outlined
-              color="primary"
               class="option-button"
               @click="handleRoute(Routes.APPLICATION_ROUTE_PATH)"
             >
               <div class="option-inner">
                 <v-icon
                   x-large
-                  color="primary"
+                  :color="$vuetify.theme.dark ? 'info' : 'primary'"
                   class="mb-3"
                 >
                   mdi-card-account-details
@@ -31,7 +31,7 @@
               </div>
             </v-btn>
             <v-btn
-              color="primary"
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               class="option-button"
               outlined
               @click="handleRoute(Routes.RENEW_APPLICATION_ROUTE_PATH)"
@@ -39,7 +39,7 @@
               <div class="option-inner">
                 <v-icon
                   x-large
-                  color="primary"
+                  :color="$vuetify.theme.dark ? 'info' : 'primary'"
                   class="mb-3"
                 >
                   mdi-card-account-details-star
@@ -48,7 +48,7 @@
               </div>
             </v-btn>
             <v-btn
-              color="primary"
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               class="option-button"
               outlined
               @click="handleRoute(Routes.APPLICATION_STATUS_PATH)"
@@ -56,7 +56,7 @@
               <div class="option-inner">
                 <v-icon
                   x-large
-                  color="primary"
+                  :color="$vuetify.theme.dark ? 'info' : 'primary'"
                   class="mb-3"
                 >
                   mdi-card-account-details-outline

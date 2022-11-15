@@ -14,24 +14,48 @@
             cols="12"
             lg="6"
           >
-            <v-card class="text-left">
+            <v-card class="ml-5 text-left">
               <v-card-title class="ml-5">
                 {{ $t('Application Status') }}
               </v-card-title>
+
               <v-card-text class="ml-5">
-                {{ $t('Status: ') }}
-                {{ state.status }}
+                <v-chip
+                  :color="state.statusColor"
+                  label
+                  large
+                  class="font-weight-bold"
+                >
+                  {{ $t('Status: ') }}
+                  {{ state.status }}
+                </v-chip>
               </v-card-text>
+
               <v-card-text class="ml-5">
-                {{ $t('Order Number: ') }}
-                {{ applicationStore.completeApplication.application.orderId }}
+                <v-chip
+                  color="accent"
+                  label
+                  large
+                  class="font-weight-bold"
+                >
+                  {{ $t('Order Number: ') }}
+                  {{ applicationStore.completeApplication.application.orderId }}
+                </v-chip>
               </v-card-text>
+
               <v-card-text class="ml-5">
-                {{ $t('Application Type: ') }}
-                {{
-                  applicationStore.completeApplication.application
-                    .applicationType
-                }}
+                <v-chip
+                  color="accent"
+                  label
+                  large
+                  class="font-weight-bold"
+                >
+                  {{ $t('Application Type: ') }}
+                  {{
+                    applicationStore.completeApplication.application
+                      .applicationType
+                  }}
+                </v-chip>
               </v-card-text>
             </v-card>
           </v-col>
@@ -39,17 +63,24 @@
             cols="12"
             lg="6"
           >
-            <v-card>
+            <v-card class="mr-5">
               <v-card-title>
                 {{ $t('Appointment Status') }}
               </v-card-title>
               <v-card-text>
-                {{ $t('Scheduled Appointment') }} -
-                {{
-                  new Date(
-                    appointmentsStore.currentAppointment.start
-                  ).toLocaleString()
-                }}
+                <v-chip
+                  color="warning"
+                  label
+                  large
+                  class="font-weight-bold"
+                >
+                  {{ $t('Scheduled Appointment') }} -
+                  {{
+                    new Date(
+                      appointmentsStore.currentAppointment.start
+                    ).toLocaleString()
+                  }}
+                </v-chip>
               </v-card-text>
               <v-card-title>
                 <v-btn
@@ -96,6 +127,7 @@ const appointmentsStore = useAppointmentsStore();
 
 const state = reactive({
   status: '',
+  statusColor: 'accent',
   showCalendar: false,
   appointments: [],
   appointmentsLoading: true,
@@ -154,24 +186,31 @@ onMounted(() => {
   switch (applicationStore.completeApplication.application.status) {
     case 0:
       state.status = 'None';
+      state.statusColor = 'warning';
       break;
     case 1:
       state.status = 'Started';
+      state.statusColor = 'accent';
       break;
     case 2:
       state.status = 'Submitted';
+      state.statusColor = 'accent';
       break;
     case 3:
       state.status = 'In progress';
+      state.statusColor = 'accent';
       break;
     case 4:
       state.status = 'Cancelled';
+      state.statusColor = 'error';
       break;
     case 5:
       state.status = 'Returned';
+      state.statusColor = 'warning';
       break;
     case 6:
       state.status = 'Complete';
+      state.statusColor = 'success';
       break;
     default:
       break;

@@ -14,7 +14,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
     </div>
   </transition-stub>
   <div class="row mb-5">
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
           Height Feet
         </span></span>
@@ -23,7 +23,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
           Height Inch
         </span></span>
@@ -32,7 +32,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
            Weight 
         </span></span>
@@ -43,7 +43,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
     </div>
   </div>
   <div class="row mb-5">
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
            Hair Color 
         </span></span>
@@ -52,7 +52,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
            Eye Color 
         </span></span>
@@ -61,7 +61,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
            Gender
         </span></span>
@@ -72,7 +72,7 @@ exports[`AppearanceInfoSection Should match the snapshot 1`] = `
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-lg-6 col-12">
       <div class="info-row"><span class="font-weight-bold v-chip v-chip--label v-chip--no-color theme--light v-size--default"><span class="v-chip__content">
            Physical Description
         </span></span>

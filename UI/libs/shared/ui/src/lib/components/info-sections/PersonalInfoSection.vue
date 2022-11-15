@@ -3,8 +3,11 @@
     <v-banner class="font-weight-bold text-xl text-left mb-5">
       {{ $t('Personal Information: ') }}
     </v-banner>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -18,7 +21,10 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -33,8 +39,11 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -48,23 +57,12 @@
           </div>
         </div>
       </v-col>
-      <v-col>
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('No middle name: ') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.personalInfo.noMiddleName }}
-          </div>
-        </div>
-      </v-col>
     </v-row>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -78,14 +76,17 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Suffix name: ') }}
+            {{ $t('Suffix: ') }}
           </v-chip>
           <div class="info-text">
             {{ props.personalInfo.suffix }}
@@ -93,22 +94,28 @@
         </div>
       </v-col>
     </v-row>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Social Security number: ') }}
+            {{ $t('SSN: ') }}
           </v-chip>
           <div class="info-text">
             {{ props.personalInfo.ssn }}
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -154,7 +161,6 @@ const props = defineProps<personalInfoSectionProps>();
   flex-direction: row;
   max-height: 2vh;
   min-height: 1vh;
-  margin-left: 0.5rem;
 }
 
 .info-text {

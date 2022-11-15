@@ -7,6 +7,7 @@
         :key="index"
       >
         <v-stepper-step
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
           :complete="stepIndex > startingStep + index"
           :step="startingStep + index"
         >
@@ -35,8 +36,6 @@ const props = withDefaults(defineProps<FormStepHeaderProps>(), {
   stepNames: () => [],
   smallSize: false,
 });
-
-window.console.log(props.smallSize);
 </script>
 
 <style scoped lang="scss">

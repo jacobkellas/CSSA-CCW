@@ -44,8 +44,7 @@
                   v-else
                 >
                   <v-btn
-                    outlined
-                    color="primary"
+                    :color="$vuetify.theme.dark ? 'info' : 'primary'"
                     @click="handleSelectedApplication(app)"
                   >
                     <div class="button-content">

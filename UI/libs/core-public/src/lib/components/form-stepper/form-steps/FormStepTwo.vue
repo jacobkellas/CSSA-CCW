@@ -81,6 +81,7 @@
             outlined
             type="error"
             v-if="!completeApplication.dob.birthDate"
+            class="mt-2"
           >
             {{ $t('Date of birth cannot be blank!') }}
           </v-alert>
@@ -155,10 +156,12 @@
             v-model="completeApplication.citizenship.citizen"
           >
             <v-radio
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               :label="'Yes'"
               :value="true"
             />
             <v-radio
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               :label="'No'"
               :value="false"
             />
@@ -228,10 +231,12 @@
               row
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="'Yes'"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="'No'"
                 :value="false"
               />
@@ -244,10 +249,12 @@
               "
             >
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="'Yes'"
                 :value="true"
               />
               <v-radio
+                :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :label="'No'"
                 :value="false"
               />

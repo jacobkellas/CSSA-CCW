@@ -7,15 +7,18 @@
       {{ $t(props.title) }}
     </v-banner>
 
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Address Line 1') }}
+            {{ $t('Address 1') }}
           </v-chip>
           <div class="info-text">
             {{ props.addressInfo.addressLine1 }}
@@ -23,14 +26,17 @@
         </div>
       </v-col>
 
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
             label
             :color="props.color"
           >
-            {{ $t('Address Line 2') }}
+            {{ $t('Address 2') }}
           </v-chip>
           <div class="info-text">
             {{ props.addressInfo.addressLine2 }}
@@ -39,8 +45,11 @@
       </v-col>
     </v-row>
 
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -54,7 +63,10 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -70,8 +82,11 @@
       </v-col>
     </v-row>
 
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -85,7 +100,10 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -101,8 +119,11 @@
       </v-col>
     </v-row>
 
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -141,7 +162,6 @@ const props = defineProps<IAddressInfoSectionProps>();
 .info-row {
   display: flex;
   flex-direction: row;
-  margin-left: 0.5rem;
 }
 
 .info-text {

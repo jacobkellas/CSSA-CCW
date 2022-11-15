@@ -7,7 +7,10 @@
       {{ $t(' Physical Appearance Information ') }}
     </v-banner>
     <v-row class="mb-5">
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -21,7 +24,10 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -36,7 +42,10 @@
         </div>
       </v-col>
 
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -53,7 +62,10 @@
     </v-row>
 
     <v-row class="mb-5">
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -68,7 +80,10 @@
         </div>
       </v-col>
 
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -83,7 +98,10 @@
         </div>
       </v-col>
 
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -99,7 +117,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"

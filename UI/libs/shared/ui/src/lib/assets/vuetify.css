@@ -26,6 +26,7 @@
 .theme--light.v-sheet .v-subheader {
   color: black;
 }
+
 .theme--light.v-sheet {
   color: black;
 }
@@ -35,6 +36,10 @@
 }
 
 .theme--light.v-input input {
+  color: #111111;
+}
+
+.theme--light.v-label {
   color: #111111;
 }
 
@@ -56,17 +61,4 @@
   width: 100%;
   padding: 0;
   margin: 0;
-}
-
-.v-input--selection-controls .v-input__slot > .v-label,
-.v-input--selection-controls .v-radio > .v-label {
-  color: #111111;
-}
-
-h3 {
-  color: #111111;
-}
-
-p {
-  color: #111111;
 }

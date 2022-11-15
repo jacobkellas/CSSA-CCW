@@ -3,8 +3,11 @@
     <v-banner class="font-weight-bold text-xl text-left mb-5">
       {{ $t('Id Information: ') }}
     </v-banner>
-    <v-row class="ml-5">
-      <v-col>
+    <v-row>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -19,7 +22,10 @@
         </div>
       </v-col>
 
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -59,7 +65,6 @@ const props = defineProps<IIdInfoSectionProps>();
 .info-row {
   display: flex;
   flex-direction: row;
-  margin-left: 0.5rem;
   min-height: 1vh;
   max-height: 2vh;
 }

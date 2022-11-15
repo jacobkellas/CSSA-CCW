@@ -133,10 +133,10 @@ exports[`FormStepTwo should match the snapshot 1`] = `
                           <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
                               <div class="v-btn__content">13</div>
                             </button></td>
-                          <td><button type="button" class="v-btn v-date-picker-table__current v-btn--rounded v-btn--outlined theme--light accent--text">
+                          <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
                               <div class="v-btn__content">14</div>
                             </button></td>
-                          <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
+                          <td><button type="button" class="v-btn v-date-picker-table__current v-btn--rounded v-btn--outlined theme--light accent--text">
                               <div class="v-btn__content">15</div>
                             </button></td>
                           <td><button type="button" class="v-btn v-btn--text v-btn--rounded theme--light">
@@ -200,7 +200,7 @@ exports[`FormStepTwo should match the snapshot 1`] = `
             </transition-stub>
           </div>
         </div>
-        <div role="alert" class="v-alert v-sheet v-sheet--outlined theme--light v-alert--dense v-alert--outlined error--text">
+        <div role="alert" class="v-alert mt-2 v-sheet v-sheet--outlined theme--light v-alert--dense v-alert--outlined error--text">
           <div class="v-alert__wrapper"><i aria-hidden="true" class="v-icon notranslate v-alert__icon mdi mdi-alert theme--light error--text"></i>
             <div class="v-alert__content">
               Date of birth cannot be blank!
