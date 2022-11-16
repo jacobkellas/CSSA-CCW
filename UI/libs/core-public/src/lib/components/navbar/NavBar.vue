@@ -10,6 +10,7 @@
         {{ getAppTitle }}
       </div>
     </router-link>
+
     <ThemeMode class="ml-4" />
     <v-spacer></v-spacer>
     <LoginButton> </LoginButton>

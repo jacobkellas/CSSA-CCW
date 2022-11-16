@@ -4,6 +4,7 @@ import FinalizeView from '@core-public/views/FinalizeView.vue';
 import FormView from '@core-public/views/FormView.vue';
 import Home from '@core-public/views/Home.vue';
 import MoreInformationView from '@core-public/views/MoreInformationView.vue';
+import PenalView from '@core-public/views/PenalView.vue';
 import QualifyingQuestionView from '@core-public/views/QualifyingQuestionsView.vue';
 import RecieptView from '@core-public/views/RecieptView.vue';
 import RenewApplicationView from '@core-public/views/RenewApplicationView.vue';
@@ -29,7 +30,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: Routes.APPLICATION_STATUS_PATH,
-    name: 'Application Status',
+    name: 'Status',
     component: ApplicationStatus,
   },
   {
@@ -44,17 +45,22 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: Routes.FORM_TWO_ROUTE_PATH,
-    name: 'form-2',
+    name: 'form2',
     component: SecondFormView,
   },
   {
     path: Routes.MORE_INFORMATION_ROUTE_PATH,
-    name: 'more-information',
+    name: 'moreinformation',
     component: MoreInformationView,
   },
   {
+    path: Routes.PENAL_CODE_PATH,
+    name: 'penalcode',
+    component: PenalView,
+  },
+  {
     path: Routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
-    name: 'qualifying-questions',
+    name: 'qualifyingquestions',
     component: QualifyingQuestionView,
   },
   {
