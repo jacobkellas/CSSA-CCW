@@ -40,8 +40,8 @@ export default class Routes {
     return `/qualifyingquestions`;
   }
 
-  static get RECIEPT_PATH() {
-    return '/reciept';
+  static get RECEIPT_PATH() {
+    return '/receipt';
   }
   static get RENEW_APPLICATION_ROUTE_PATH() {
     return `/renewapplication`;

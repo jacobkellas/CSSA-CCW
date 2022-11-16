@@ -5,6 +5,12 @@
     class="flex-grow-0 white--text"
     clipped-right
   >
+    <router-link :to="{ path: Routes.HOME_ROUTE_PATH }">
+      <div class="text-h6 white--text">
+        {{ getAppTitle }}
+      </div>
+    </router-link>
+
     <ThemeMode class="ml-4" />
     <v-spacer></v-spacer>
     <LoginButton> </LoginButton>
@@ -13,7 +19,11 @@
 
 <script setup lang="ts">
 import LoginButton from '@core-public//components/login/LoginButton.vue';
+import Routes from '@core-public/router/routes';
 import ThemeMode from '@shared-ui/components/mode/ThemeMode.vue';
+import useEnvName from '@shared-ui/composables/useEnvName';
+
+const getAppTitle = useEnvName();
 </script>
 
 <style lang="scss" scoped>

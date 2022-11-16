@@ -29,6 +29,6 @@ export default class Routes {
   }
 
   static get SETTINGS_ROUTE_PATH() {
-    return `/system-settings`;
+    return `/settings`;
   }
 }
