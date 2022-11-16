@@ -79,6 +79,7 @@
           :handle-accept="handleAccept"
           :handle-decline="handleDecline"
           :text-body="'acknowledgement-part5'"
+          :link="'/penal-code'"
         />
       </v-card-text>
     </v-card>
