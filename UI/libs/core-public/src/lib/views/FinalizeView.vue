@@ -145,7 +145,7 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication('Application Complete');
   },
   onSuccess: () => {
-    router.push(Routes.RECIEPT_PATH);
+    router.push(Routes.RECEIPT_PATH);
   },
   onError: () => {
     state.snackbar = true;

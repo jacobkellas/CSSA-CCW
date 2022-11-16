@@ -63,7 +63,7 @@ const routes: Array<RouteConfig> = [
     component: RenewApplicationView,
   },
   {
-    path: Routes.RECIEPT_PATH,
+    path: Routes.RECEIPT_PATH,
     name: 'Reciept',
     component: RecieptView,
   },

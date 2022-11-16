@@ -5,8 +5,7 @@
     class="flex-grow-0 white--text"
     clipped-right
   >
-    <ConnectionStatus class="ml-4" />
-    <ThemeMode class="ml-4" />
+    <ThemeMode />
     <PageTitle class="ml-4" />
     <v-spacer></v-spacer>
     <v-btn
@@ -25,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import ConnectionStatus from '@shared-ui/components/status/ConnectionStatus.vue';
 import PageTitle from '@shared-ui/components/page-title/PageTitle.vue';
 import ThemeMode from '@shared-ui/components/mode/ThemeMode.vue';
 import auth from '@shared-ui/api/auth/authentication';

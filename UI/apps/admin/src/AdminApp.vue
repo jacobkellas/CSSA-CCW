@@ -2,7 +2,7 @@
 <template>
   <v-app>
     <v-container
-      v-if="isLoading && isBrandLoading && !isError"
+      v-if="isLoading && !isError"
       fluid
     >
       <v-skeleton-loader
@@ -83,16 +83,11 @@ export default defineComponent({
     const themeStore = useThemeStore();
     const { getAllPermitsApi } = usePermitsStore();
     const { data, isLoading, isError } = useQuery(['config'], initialize);
-    const apiUrl = computed(() =>
-      Boolean(data.value?.Configuration?.ServicesBaseUrl)
-    );
-    const { isLoading: isBrandLoading } = useQuery(
-      ['brandSetting'],
-      brandStore.getBrandSettingApi,
-      {
-        enabled: apiUrl,
-      }
-    );
+    const apiUrl = computed(() => Boolean(data.value?.Configuration));
+
+    useQuery(['brandSetting'], brandStore.getBrandSettingApi, {
+      enabled: apiUrl,
+    });
 
     useQuery(['logo'], brandStore.getAgencyLogoDocumentsApi, {
       enabled: apiUrl,
@@ -108,7 +103,7 @@ export default defineComponent({
 
     app.proxy.$vuetify.theme.dark = themeStore.getThemeConfig.isDark;
 
-    return { isLoading, isBrandLoading, isError };
+    return { isLoading, isError };
   },
 });
 </script>
