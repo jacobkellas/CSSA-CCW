@@ -4,6 +4,7 @@ import FinalizeView from '@core-public/views/FinalizeView.vue';
 import FormView from '@core-public/views/FormView.vue';
 import Home from '@core-public/views/Home.vue';
 import MoreInformationView from '@core-public/views/MoreInformationView.vue';
+import PenalView from '@core-public/views/PenalView.vue';
 import QualifyingQuestionView from '@core-public/views/QualifyingQuestionsView.vue';
 import RecieptView from '@core-public/views/RecieptView.vue';
 import RenewApplicationView from '@core-public/views/RenewApplicationView.vue';
@@ -51,6 +52,11 @@ const routes: Array<RouteConfig> = [
     path: Routes.MORE_INFORMATION_ROUTE_PATH,
     name: 'more-information',
     component: MoreInformationView,
+  },
+  {
+    path: Routes.PENAL_CODE_PATH,
+    name: 'penal-code',
+    component: PenalView,
   },
   {
     path: Routes.QUALIFYING_QUESTIONS_ROUTE_PATH,

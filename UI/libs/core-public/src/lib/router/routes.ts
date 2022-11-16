@@ -32,6 +32,10 @@ export default class Routes {
     return `/more-information`;
   }
 
+  static get PENAL_CODE_PATH() {
+    return `/penal-code`;
+  }
+
   static get QUALIFYING_QUESTIONS_ROUTE_PATH() {
     return `/qualifying-questions`;
   }
