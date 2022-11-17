@@ -72,6 +72,22 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
           Documentation-Reserve
         </p>
       </div>
+      <div class="text-line">
+        <h3 class="text-label">
+          MOD-INFO
+        </h3>
+        <p class="text-info">
+          MODIFICATION-DOCUMENTS
+        </p>
+      </div>
+      <div class="text-line">
+        <h3 class="text-label">
+          DUP-INFO
+        </h3>
+        <p class="text-info">
+          DUPLICATE-DOCUMENTS
+        </p>
+      </div>
     </div>
   </div>
   <form novalidate="novalidate" class="v-form">
@@ -314,7 +330,7 @@ exports[`SecondFormStepTwo Should match the snapshot 1`] = `
     <div class="form-btn-inner">
       <div><button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default success "><span class="v-btn__content">
         Continue
-      </span></button> <button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default secondary mx-2"><span class="v-btn__content">
+      </span></button> <button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default accent mx-2"><span class="v-btn__content">
         Save and Exit
       </span></button></div>
       <div><button type="button" class="mt-3 v-btn v-btn--is-elevated v-btn--has-bg theme--light v-size--default warning mx-2"><span class="v-btn__content">
