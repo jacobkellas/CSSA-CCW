@@ -35,6 +35,20 @@
             :value="'modify-reserve'"
             color="warning"
           />
+          <v-radio
+            :label="'Duplicate Standard'"
+            :value="'duplicate-standard'"
+          />
+          <v-radio
+            :label="'Duplicate Judicial'"
+            :value="'duplicate-judicial'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Duplicate Reserve'"
+            :value="'duplicate-reserve'"
+            color="warning"
+          />
         </v-radio-group>
       </div>
       <v-alert

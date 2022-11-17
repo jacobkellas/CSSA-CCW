@@ -44,7 +44,10 @@ export const useCompleteApplicationStore = defineStore(
           },
         })
 
-        .catch(err => console.warn(err));
+        .catch(err => {
+          console.warn(err);
+          Promise.reject();
+        });
 
       return res?.data;
     }

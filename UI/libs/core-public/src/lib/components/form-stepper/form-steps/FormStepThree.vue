@@ -451,6 +451,7 @@
           :get-previous-address-from-dialog="getPreviousAddressFromDialog"
         />
       </div>
+      <v-divider class="my-5" />
       <FormButtonContainer
         :valid="valid"
         @submit="updateMutation.mutate"

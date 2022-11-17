@@ -27,7 +27,7 @@
                 >
                   mdi-card-account-details
                 </v-icon>
-                {{ $t('NEW/EDIT CCW License') }}
+                {{ $t('NEW/EDIT License') }}
               </div>
             </v-btn>
             <v-btn
@@ -44,7 +44,7 @@
                 >
                   mdi-card-account-details-star
                 </v-icon>
-                {{ $t('Modify/renew CCW License') }}
+                {{ $t('Modify/renew License') }}
               </div>
             </v-btn>
             <v-btn
@@ -119,14 +119,15 @@ img.dark {
   &-button {
     height: 6rem !important;
     padding: 0.5rem !important;
-    margin: 0.5rem 0 !important;
-    min-width: 16rem !important;
+    margin: 0 1rem 1rem 1rem !important;
+    min-width: 14rem !important;
   }
   &-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 0;
   }
 }
 </style>

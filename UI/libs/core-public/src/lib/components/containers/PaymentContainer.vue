@@ -73,6 +73,9 @@ onMounted(() => {
     case 'renew-reserve':
       state.payment.applicationCost = brandStore.brand.cost.renew.reserve;
       break;
+    case 'duplicate-standard' || 'duplicate-judicial' || 'duplicate-reserve':
+      state.payment.applicationCost = brandStore.brand.cost.modify;
+      break;
     default:
       return;
   }

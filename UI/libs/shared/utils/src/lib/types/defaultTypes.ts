@@ -70,6 +70,23 @@ export type ContactInfoType = {
   textMessageUpdates: boolean;
 };
 
+export type CostType = {
+  new: {
+    standard: number;
+    judicial: number;
+    reserve: number;
+  };
+  renew: {
+    standard: number;
+    judicial: number;
+    reserve: number;
+  };
+  issuance: number;
+  modify: number;
+  creditFee: number;
+  convenienceFee: number;
+};
+
 export type DOBType = {
   birthDate: string;
   birthCity: string;
