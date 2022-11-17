@@ -75,6 +75,15 @@
           {{ $t('Documentation-Reserve') }}
         </p>
       </div>
+
+      <div class="text-line">
+        <h3 class="text-label">
+          {{ $t('MOD-INFO') }}
+        </h3>
+        <p class="text-info">
+          {{ $t('MODIFICATION-DOCUMENTS') }}
+        </p>
+      </div>
     </v-card-text>
   </v-card>
 </template>

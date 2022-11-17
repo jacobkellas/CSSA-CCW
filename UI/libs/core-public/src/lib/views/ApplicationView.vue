@@ -83,13 +83,14 @@
     </v-container>
     <AcknowledgementContainer
       v-if="state.selected"
-      :next-route="'/form'"
+      :next-route="Routes.FORM_ROUTE_PATH"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import AcknowledgementContainer from '@core-public/components/containers/AcknowledgementContainer.vue';
+import Routes from '@core-public/router/routes';
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import { reactive } from 'vue';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
