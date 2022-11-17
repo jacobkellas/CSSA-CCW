@@ -27,7 +27,7 @@ interface FormStepHeaderProps {
   startingStep: number;
   previousIndex: number;
   stepNames: Array<string>;
-  smallSize: boolean;
+  smallSize?: boolean;
 }
 
 const props = withDefaults(defineProps<FormStepHeaderProps>(), {

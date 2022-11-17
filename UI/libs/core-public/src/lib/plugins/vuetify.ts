@@ -25,9 +25,10 @@ export const vuetify = new Vuetify({
       },
       dark: {
         primary: '#363636',
+        accent: '#0091EA',
         secondary: colors.green,
         error: colors.red.accent4,
-        anchor: colors.blueGrey.darken4,
+        anchor: '#1976D2',
       },
     },
   },

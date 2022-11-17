@@ -23,7 +23,7 @@
       <v-container class="finalize-submit">
         <v-btn
           :disabled="!state.appointmentComplete || !state.paymentComplete"
-          color="primary"
+          :color="$vuetify.theme.dark ? 'accent' : 'primary'"
           @click="handleSubmit"
         >
           {{ $t('Submit Application') }}

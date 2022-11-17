@@ -42,6 +42,7 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import { useQuery } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { getCurrentInstance, onMounted, reactive } from 'vue';
+import Routes from '@core-public/router/routes';
 
 const stepIndex = reactive({
   step: 1,
@@ -96,7 +97,7 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
 
 function checkForCorrectForm() {
   if (applicationStore.completeApplication.application.currentStep > 5) {
-    router.push('/renew-form-2');
+    router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
   }
 }
 

@@ -37,6 +37,7 @@
 <script setup lang="ts">
 import FormStepHeader from '../form-stepper/FormStepHeader.vue';
 import FormStepItems from '../form-stepper/FormStepItems.vue';
+import Routes from '@core-public/router/routes';
 import { formOneStepNames } from '@shared-utils/lists/defaultConstants';
 import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useAuthStore } from '@shared-ui/stores/auth';
@@ -54,6 +55,7 @@ const size =
   !app?.proxy.$vuetify.breakpoint.md &&
   !app?.proxy.$vuetify.breakpoint.lg &&
   !app?.proxy.$vuetify.breakpoint.xl;
+
 const stepIndex = reactive({
   step: 1,
   previousStep: 0,
@@ -113,7 +115,7 @@ function handleResetForm() {
 
 function checkForCorrectForm() {
   if (applicationStore.completeApplication.application.currentStep > 5) {
-    router.push('/form-2');
+    router.push(Routes.FORM_TWO_ROUTE_PATH);
   }
 }
 </script>

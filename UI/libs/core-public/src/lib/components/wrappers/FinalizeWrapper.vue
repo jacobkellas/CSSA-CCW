@@ -201,7 +201,7 @@ const completeApplication = applicationStore.getCompleteApplication.application;
   background-color: rgba(211, 241, 241, 0.3);
   border-bottom: 1px solid #666;
   border-radius: 5px;
-  font-size: 4.3em;
+  font-size: 1em;
   font-weight: bold;
 }
 

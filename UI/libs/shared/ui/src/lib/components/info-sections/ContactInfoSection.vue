@@ -114,7 +114,7 @@ const props = defineProps<IContactInfoSectionProps>();
 .info-text {
   margin-left: 0.5rem;
   text-align: start;
-  height: 6.5em;
+  height: 1.8em;
   width: 50%;
   margin-bottom: 0.5rem;
   padding-left: 0.5rem;

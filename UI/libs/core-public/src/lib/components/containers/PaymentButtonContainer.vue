@@ -4,7 +4,7 @@
       <v-col>
         <v-btn
           class="payment-button"
-          color="primary"
+          :color="$vuetify.theme.dark ? 'accent' : 'primary'"
           @click="handleCashPayment"
         >
           {{ $t('Pay with cash') }}

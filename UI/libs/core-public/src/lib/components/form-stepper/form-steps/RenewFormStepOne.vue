@@ -327,7 +327,7 @@
       :valid="valid"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
-      @back="router.push('/application')"
+      @back="router.push(Routes.APPLICATION_ROUTE_PATH)"
       @cancel="router.push('/')"
     />
     <FormErrorAlert

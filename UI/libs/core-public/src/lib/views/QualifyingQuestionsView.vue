@@ -737,7 +737,7 @@
         :valid="true"
         @submit="updateMutation.mutate"
         @save="saveMutation.mutate"
-        @back="router.push('/form-2')"
+        @back="router.push(Routes.FORM_TWO_ROUTE_PATH)"
         @cancel="router.push('/')"
       />
     </v-sheet>

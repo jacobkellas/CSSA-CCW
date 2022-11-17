@@ -243,6 +243,7 @@ import {
   employmentStatus,
   states,
 } from '@shared-utils/lists/defaultConstants';
+import Routes from '@core-public/router/routes';
 
 interface ISecondFormStepOneProps {
   handleNextSection: CallableFunction;
@@ -286,7 +287,7 @@ const saveMutation = useMutation({
 
 function handleBack() {
   completeApplication.currentStep = 5;
-  router.push('/form');
+  router.push(Routes.FORM_ROUTE_PATH);
 }
 
 function getWeaponFromDialog(weapon) {
