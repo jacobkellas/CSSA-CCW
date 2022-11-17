@@ -209,7 +209,7 @@
       <WeaponsTable :weapons="completeApplication.weapons" />
       <WeaponsDialog :save-weapon="getWeaponFromDialog" />
     </div>
-    <v-divider />
+    <v-divider clase="mt-5" />
     <FormButtonContainer
       :valid="state.valid"
       @submit="updateMutation.mutate"

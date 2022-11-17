@@ -3,6 +3,7 @@
     <v-dialog v-model="state.dialog">
       <template #activator="{ on, attrs }">
         <v-btn
+          class="mb-5"
           id="add-weapon-btn"
           :color="$vuetify.theme.dark ? 'info' : 'primary'"
           v-bind="attrs"

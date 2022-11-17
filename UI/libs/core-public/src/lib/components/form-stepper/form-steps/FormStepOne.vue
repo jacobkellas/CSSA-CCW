@@ -244,6 +244,7 @@
       <AliasTable :aliases="completeApplication.aliases" />
       <AliasDialog :save-alias="getAliasFromDialog" />
     </div>
+    <v-divider class="mx-5" />
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"

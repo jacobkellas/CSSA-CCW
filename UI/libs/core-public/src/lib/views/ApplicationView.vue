@@ -15,6 +15,7 @@
             <v-container v-if="isLoading">
               <v-skeleton-loader
                 fluid
+                class="fill-height"
                 type="list-item"
               >
               </v-skeleton-loader>

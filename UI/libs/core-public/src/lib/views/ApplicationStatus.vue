@@ -11,6 +11,16 @@
     <v-container v-if="state.id">
       <ApplicationStatusContainer />
     </v-container>
+    <v-container v-if="isError">
+      <v-card>
+        <v-card-title>
+          {{ $t(' Something went wrong ') }}
+        </v-card-title>
+        <v-card-text>
+          {{ $t(' Refresh or return to the home page and try again') }}
+        </v-card-text>
+      </v-card>
+    </v-container>
   </div>
 </template>
 
@@ -28,7 +38,7 @@ const state = reactive({
   id: '',
 });
 
-const { isLoading } = useQuery(['getCompleteApplications'], () => {
+const { isLoading, isError } = useQuery(['getCompleteApplications'], () => {
   const res = applicationStore.getCompleteApplicationFromApi(
     authStore.auth.userEmail,
     true

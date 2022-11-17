@@ -24,7 +24,7 @@
               class="ml-5"
             >
               <v-card-title>
-                {{ $t('Select Application to modify') }}
+                {{ $t('Select Application to modify or request duplicate') }}
               </v-card-title>
               <v-list>
                 <v-list-item

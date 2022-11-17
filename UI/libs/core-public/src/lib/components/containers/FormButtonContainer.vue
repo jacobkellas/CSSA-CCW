@@ -12,7 +12,7 @@
         </v-btn>
 
         <v-btn
-          color="secondary mx-2"
+          color="accent mx-2"
           @click="handleSave"
           class="mt-3"
         >

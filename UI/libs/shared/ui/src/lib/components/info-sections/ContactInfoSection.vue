@@ -7,7 +7,10 @@
       {{ $t('Contact Information: ') }}
     </v-banner>
     <v-row>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -21,7 +24,10 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -37,7 +43,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -51,7 +60,10 @@
           </div>
         </div>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -67,7 +79,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <div class="info-row">
           <v-chip
             class="font-weight-bold"
@@ -117,8 +132,8 @@ const props = defineProps<IContactInfoSectionProps>();
   height: 1.8em;
   width: 50%;
   margin-bottom: 0.5rem;
-  padding-left: 0.5rem;
-  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
   background-color: rgba(211, 241, 241, 0.3);
   border-bottom: 1px solid #666;
   border-radius: 5px;

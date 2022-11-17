@@ -84,6 +84,15 @@
           {{ $t('MODIFICATION-DOCUMENTS') }}
         </p>
       </div>
+
+      <div class="text-line">
+        <h3 class="text-label">
+          {{ $t('DUP-INFO') }}
+        </h3>
+        <p class="text-info">
+          {{ $t('DUPLICATE-DOCUMENTS') }}
+        </p>
+      </div>
     </v-card-text>
   </v-card>
 </template>
