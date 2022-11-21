@@ -51,7 +51,7 @@ public class PermitApplicationController : ControllerBase
         }
     }
 
-    [HttpGet("get")]
+    [HttpGet("getUserEmail")]
     public async Task<IActionResult> Get(string userEmail)
     {
         try
