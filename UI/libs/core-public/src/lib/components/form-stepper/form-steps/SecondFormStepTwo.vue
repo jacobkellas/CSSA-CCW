@@ -242,7 +242,6 @@ function handleFileInput(event: File, target: string) {
 }
 
 function handleMultiInput(event, target: string) {
-  window.console.log(event);
   let index = 1;
 
   event.forEach(file => {
@@ -282,6 +281,7 @@ async function handleFileUpload() {
 
     completeApplication.uploadedDocuments.push(uploadDoc);
   });
+  applicationStore.updateApplication('file-upload');
 }
 
 function handleSubmit() {

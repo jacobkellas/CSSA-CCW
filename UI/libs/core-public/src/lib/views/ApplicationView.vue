@@ -161,7 +161,7 @@ img {
   margin-top: 20px;
 }
 .selections {
-  width: 80vw;
+  width: 100%;
 }
 
 .button-content {

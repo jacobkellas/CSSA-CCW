@@ -8,36 +8,26 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Id Number') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.idInfo.idNumber }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Id number')"
+          :value="props.idInfo.idNumber"
+        />
       </v-col>
 
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Issuing State ') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.idInfo.issuingState }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Issuing State')"
+          :value="props.idInfo.issuingState"
+        />
       </v-col>
     </v-row>
   </v-container>

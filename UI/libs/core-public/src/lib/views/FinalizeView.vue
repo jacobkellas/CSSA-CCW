@@ -1,6 +1,6 @@
 <template>
   <div class="finalize-view">
-    <v-container v-if="isLoading">
+    <v-container v-if="isLoading && !state.applicationLoaded">
       <v-skeleton-loader
         fluid
         class="fill-height"
@@ -13,8 +13,11 @@
         :title="'Information Sections'"
         :handle-selection="handleSelection"
       />
-      <FinalizeContainer />
-      <PaymentContainer :toggle-payment="togglePaymentComplete" />
+      <FinalizeContainer v-if="state.applicationLoaded" />
+      <PaymentContainer
+        v-if="state.applicationLoaded"
+        :toggle-payment="togglePaymentComplete"
+      />
       <AppointmentContainer
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
@@ -56,7 +59,6 @@ import PaymentContainer from '@core-public/components/containers/PaymentContaine
 import Routes from '@core-public/router/routes';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
 import { reactive } from 'vue';
-import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
@@ -70,7 +72,8 @@ const options = [
   'Personal Information',
   'Spouse Information',
   'Alias Information',
-  'Id/Birth Information',
+  'Id Information',
+  'Birth Information',
   'Citizenship Information',
   'Current Address Information',
   'Previous Address Information',
@@ -85,6 +88,7 @@ const state = reactive({
   paymentComplete: false,
   appointmentComplete: false,
   appointments: [] as Array<AppointmentType>,
+  applicationLoaded: false,
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const appointmentsStore = useAppointmentsStore();
@@ -99,22 +103,9 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
     );
 
     res.then(data => {
-      data.application.contact.primaryPhoneNumber = unformatNumber(
-        data.application.contact.primaryPhoneNumber
-      );
-      data.application.contact.cellPhoneNumber = unformatNumber(
-        data.application.contact.cellPhoneNumber
-      );
-      data.application.contact.workPhoneNumber = unformatNumber(
-        data.application.contact.workPhoneNumber
-      );
-      data.application.contact.faxPhoneNumber = unformatNumber(
-        data.application.contact.faxPhoneNumber
-      );
-      data.application.personalInfo.ssn = unformatNumber(
-        data.application.personalInfo.ssn
-      );
       completeApplicationStore.setCompleteApplication(data);
+      state.applicationLoaded = true;
+      window.console.log(state.applicationLoaded);
     });
   }
 

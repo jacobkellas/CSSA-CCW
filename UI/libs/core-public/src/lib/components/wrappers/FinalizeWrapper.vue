@@ -8,6 +8,10 @@
       hide-delimiters
       class="carousel-body"
       v-model="currentInfoStore.state.selection"
+      :style="{
+        backgroundColor: $vuetify.theme.dark ? '#333' : 'white',
+        borderRadius: '5px',
+      }"
     >
       <v-carousel-item class="item">
         <div class="info-section">
@@ -42,12 +46,18 @@
             :color="'info'"
             :id-info="completeApplication.idInfo"
           />
+        </div>
+      </v-carousel-item>
+
+      <v-carousel-item>
+        <div class="info-section">
           <DOBinfoSection
             :color="'info'"
             :d-o-b-info="completeApplication.dob"
           />
         </div>
       </v-carousel-item>
+
       <v-carousel-item class="item">
         <div class="info-section">
           <CitizenInfoSection
@@ -70,18 +80,13 @@
                 cols="12"
                 lg="6"
               >
-                <div class="info-row text-left">
-                  <v-chip
-                    class="font-weight-bold"
-                    label
-                    color="info"
-                  >
-                    {{ $t(' Different Mailing Address') }}
-                  </v-chip>
-                  <div class="info-text">
-                    {{ completeApplication.differentMailing }}
-                  </div>
-                </div>
+                <v-text-field
+                  outlined
+                  dense
+                  class="pl-6"
+                  :label="$t('Different Mailing Address')"
+                  :value="completeApplication.differentMailing"
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -90,7 +95,7 @@
       <v-carousel-item>
         <div class="info-section">
           <PreviousAddressInfoSection
-            :previous-address="completeApplication.previousAddress"
+            :previous-address="completeApplication.previousAddresses"
             :color="'info'"
           />
         </div>
@@ -177,7 +182,6 @@ const completeApplication = applicationStore.getCompleteApplication.application;
 }
 
 .info-section {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -207,5 +211,6 @@ const completeApplication = applicationStore.getCompleteApplication.application;
 
 .item {
   height: 100%;
+  overflow-y: scroll;
 }
 </style>

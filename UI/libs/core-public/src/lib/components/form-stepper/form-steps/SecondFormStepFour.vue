@@ -11,6 +11,8 @@
             v-model="state.valid"
           >
             <v-text-field
+              outlined
+              dense
               :label="$t('Signature')"
               :rules="[v => !!v || $t(' Signature cannot be blank ')]"
               v-model="state.signature"
@@ -68,6 +70,7 @@ import { useCompleteApplicationStore } from '@core-public/stores/completeApplica
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { reactive, ref, watch } from 'vue';
+import { UploadedDocType } from '@shared-utils/types/defaultTypes';
 
 interface ISecondFormStepFourProps {
   handleNextSection: CallableFunction;
@@ -115,11 +118,23 @@ async function handleSubmit() {
 async function handleFileUpload() {
   const newFileName = `${applicationStore.completeApplication.application.orderId}_${applicationStore.completeApplication.application.personalInfo.lastName}_${applicationStore.completeApplication.application.personalInfo.firstName}_signature`;
 
+  const uploadDoc: UploadedDocType = {
+    documentType: 'signature',
+    name: newFileName,
+    uploadedBy: applicationStore.completeApplication.application.userEmail,
+    uploadedDateTimeUtc: new Date(Date.now()).toISOString(),
+  };
+
   await axios
     .post(
       `${Endpoints.POST_DOCUMENT_IMAGE_ENDPOINT}?saveAsFileName=${newFileName}`,
       state.file
     )
+    .then(() => {
+      applicationStore.completeApplication.application.uploadedDocuments.push(
+        uploadDoc
+      );
+    })
     .catch(e => {
       window.console.warn(e);
       Promise.reject();

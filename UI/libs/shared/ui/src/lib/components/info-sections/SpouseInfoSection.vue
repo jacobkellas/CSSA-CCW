@@ -8,35 +8,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Last name:') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.spouseInfo.lastName }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Last name')"
+          :value="props.spouseInfo.lastName"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('First name:') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.spouseInfo.firstName }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('First name')"
+          :value="props.spouseInfo.firstName"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -44,35 +34,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Middle name: ') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.spouseInfo.middleName }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Middle name')"
+          :value="props.spouseInfo.middleName"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Maiden name: ') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.spouseInfo.maidenName }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Maiden name')"
+          :value="props.spouseInfo.maidenName"
+        />
       </v-col>
     </v-row>
   </v-container>
