@@ -95,8 +95,9 @@ public class AzureStorage : IAzureStorage
         {
             var fileType = saveAsFileName.Substring(saveAsFileName.LastIndexOf('.') + 1);
             var contentType = _imageTypes.Contains(fileType) ? "image" : "application";
+            var encodedName = System.Web.HttpUtility.UrlEncode(saveAsFileName);
 
-            BlobClient blob = container.GetBlobClient(saveAsFileName);
+            BlobClient blob = container.GetBlobClient(encodedName);
 
             using (Stream file = fileToPersist.OpenReadStream())
             {
