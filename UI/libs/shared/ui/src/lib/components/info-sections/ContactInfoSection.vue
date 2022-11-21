@@ -11,35 +11,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Primary Phone number') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.contactInfo.primaryPhoneNumber }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :value="props.contactInfo.primaryPhoneNumber"
+          :label="$t('Primary phone number')"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Cell Phone number') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.contactInfo.cellPhoneNumber }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :value="props.contactInfo.cellPhoneNumber"
+          :label="$t('Cell phone number')"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -47,35 +37,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Fax Phone number') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.contactInfo.faxPhoneNumber }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :value="props.contactInfo.faxPhoneNumber"
+          :label="$t('Fax phone number')"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Work Phone number') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.contactInfo.workPhoneNumber }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :value="props.contactInfo.workPhoneNumber"
+          :label="$t('Work phone number')"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -83,18 +63,13 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Text Message updates') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.contactInfo.textMessageUpdates }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :value="props.contactInfo.textMessageUpdates"
+          :label="$t('Text message updates')"
+        />
       </v-col>
     </v-row>
   </v-container>

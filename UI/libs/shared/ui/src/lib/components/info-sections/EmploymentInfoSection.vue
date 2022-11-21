@@ -8,35 +8,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Employment Status:') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.employmentInfo }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Employment Status')"
+          :value="props.employmentInfo"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Employer name:') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerName }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Employer name')"
+          :value="props.workInformation.employerName"
+        />
       </v-col>
     </v-row>
 
@@ -45,35 +35,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Employer Phone') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerPhone }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Employer phone')"
+          :value="props.workInformation.employerPhone"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Address Line 1') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerAddressLine1 }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Address Line 1')"
+          :value="props.workInformation.employerAddressLine1"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -81,35 +61,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Address Line 2') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerAddressLine2 }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Address Line 2')"
+          :value="props.workInformation.employerAddressLine2"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('City') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerCity }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('City')"
+          :value="props.workInformation.employerCity"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -117,35 +87,25 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('State') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerState }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('State')"
+          :value="props.workInformation.employerState"
+        />
       </v-col>
       <v-col
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Zip') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerZip }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Zip')"
+          :value="props.workInformation.employerZip"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -153,18 +113,13 @@
         cols="12"
         lg="6"
       >
-        <div class="info-row">
-          <v-chip
-            class="font-weight-bold"
-            label
-            :color="props.color"
-          >
-            {{ $t('Country') }}
-          </v-chip>
-          <div class="info-text">
-            {{ props.workInformation.employerCountry }}
-          </div>
-        </div>
+        <v-text-field
+          outlined
+          dense
+          readonly
+          :label="$t('Country')"
+          :value="props.workInformation.employerCountry"
+        />
       </v-col>
     </v-row>
   </v-container>

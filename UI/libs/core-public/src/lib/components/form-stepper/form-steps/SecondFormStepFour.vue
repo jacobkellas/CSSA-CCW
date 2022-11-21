@@ -11,6 +11,8 @@
             v-model="state.valid"
           >
             <v-text-field
+              outlined
+              dense
               :label="$t('Signature')"
               :rules="[v => !!v || $t(' Signature cannot be blank ')]"
               v-model="state.signature"
