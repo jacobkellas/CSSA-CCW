@@ -91,7 +91,6 @@ import AcknowledgementContainer from '@core-public/components/containers/Acknowl
 import Routes from '@core-public/router/routes';
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
 import { reactive } from 'vue';
-import { unformatNumber } from '@shared-utils/formatters/defaultFormatters';
 import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useBrandStore } from '@core-public/stores/brandStore';
@@ -138,21 +137,6 @@ const createMutation = useMutation({
 });
 
 function handleSelectedApplication(selected) {
-  selected.application.contact.primaryPhoneNumber = unformatNumber(
-    selected.application.contact.primaryPhoneNumber
-  );
-  selected.application.contact.cellPhoneNumber = unformatNumber(
-    selected.application.contact.cellPhoneNumber
-  );
-  selected.application.contact.workPhoneNumber = unformatNumber(
-    selected.application.contact.workPhoneNumber
-  );
-  selected.application.contact.faxPhoneNumber = unformatNumber(
-    selected.application.contact.faxPhoneNumber
-  );
-  selected.application.personalInfo.ssn = unformatNumber(
-    selected.application.personalInfo.ssn
-  );
   applicationStore.setCompleteApplication(selected);
   applicationTypeStore.state.type = 'modify';
   state.selected = true;

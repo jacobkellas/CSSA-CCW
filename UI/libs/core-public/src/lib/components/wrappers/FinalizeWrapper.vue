@@ -95,7 +95,7 @@
       <v-carousel-item>
         <div class="info-section">
           <PreviousAddressInfoSection
-            :previous-address="completeApplication.previousAddress"
+            :previous-address="completeApplication.previousAddresses"
             :color="'info'"
           />
         </div>
