@@ -178,7 +178,7 @@ internal class CosmosDbServiceTests
         var sut = new CosmosDbService(_cosmosClientMock.Object, _databaseNameMock, _containerNameMock, _loggerMock.Object);
 
         // Act
-        var result = await sut.GetAsync(userEmailOrOrderId, isOrderId, isComplete, default);
+        var result = await sut.GetLastApplicationAsync(userEmailOrOrderId, isOrderId, isComplete, default);
 
         // Assert
         result.Id.Should().Be(application.Id);
@@ -208,7 +208,7 @@ internal class CosmosDbServiceTests
         var sut = new CosmosDbService(_cosmosClientMock.Object, _databaseNameMock, _containerNameMock, _loggerMock.Object);
 
         //  Act & Assert
-        await sut.Invoking(async x => await x.GetAsync(userEmailOrOrderId, isOrderId, isComplete, default)).Should()
+        await sut.Invoking(async x => await x.GetLastApplicationAsync(userEmailOrOrderId, isOrderId, isComplete, default)).Should()
             .ThrowAsync<Exception>().WithMessage("An error occur while trying to retrieve permit application.");
     }
 

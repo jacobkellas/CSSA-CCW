@@ -43,7 +43,7 @@ internal class PermitApplicationControllerTests
     )
     {
         // Arrange
-        _cosmosDbService.Setup(x => x.GetAsync(userEmailOrOrderId, isOrderId, isComplete, It.IsAny<CancellationToken>()))
+        _cosmosDbService.Setup(x => x.GetLastApplicationAsync(userEmailOrOrderId, isOrderId, isComplete, It.IsAny<CancellationToken>()))
             .ReturnsAsync(permitApplication);
 
         _permitApplicationResponseMapper.Setup(x => x.Map(It.IsAny<PermitApplication>()))
@@ -78,7 +78,7 @@ internal class PermitApplicationControllerTests
     )
     {
         // Arrange
-        _cosmosDbService.Setup(x => x.GetAsync(userEmailOrOrderId, isOrderId, isComplete, It.IsAny<CancellationToken>()))
+        _cosmosDbService.Setup(x => x.GetLastApplicationAsync(userEmailOrOrderId, isOrderId, isComplete, It.IsAny<CancellationToken>()))
             .Throws(new Exception("Exception"));
 
         var sut = new PermitApplicationController(

@@ -8,7 +8,8 @@ public interface ICosmosDbService
 {
     Task<IEnumerable<SummarizedPermitApplication>> GetAllApplicationsAsync(CancellationToken cancellationToken);
     Task<IEnumerable<PermitApplication>> GetMultipleAsync(CancellationToken cancellationToken);
-    Task<PermitApplication> GetAsync(string userEmail, bool isOrderId, bool isComplete, CancellationToken cancellationToken);
+    Task<PermitApplication> GetLastApplicationAsync(string userEmail, bool isOrderId, bool isComplete, CancellationToken cancellationToken);
+    Task<IEnumerable<PermitApplication>> GetAllUserApplicationsAsync(string userEmail, CancellationToken cancellationToken);
     Task<IEnumerable<PermitApplication>> ListAsync(int startIndex, int count, CancellationToken cancellationToken);
     Task<PermitApplication> AddAsync(PermitApplication application, CancellationToken cancellationToken);
     Task UpdateAsync(PermitApplication application, CancellationToken cancellationToken);

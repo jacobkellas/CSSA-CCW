@@ -40,9 +40,26 @@ public class PermitApplicationController : ControllerBase
     {
         try
         {
-            var result = await _cosmosDbService.GetAsync(userEmailOrOrderId, isOrderId, isComplete, cancellationToken: default);
+            var result = await _cosmosDbService.GetLastApplicationAsync(userEmailOrOrderId, isOrderId, isComplete, cancellationToken: default);
 
             return Ok(_permitApplicationResponseMapper.Map(result));
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning($"An error occur while trying to retrieve permit application: {e.Message}");
+            throw new Exception("An error occur while trying to retrieve permit application.");
+        }
+    }
+
+    [HttpGet("get")]
+    public async Task<IActionResult> Get(string userEmail)
+    {
+        try
+        {
+            var result = await _cosmosDbService.GetAllUserApplicationsAsync(userEmail, cancellationToken: default);
+
+            IEnumerable<PermitApplicationResponseModel> responseModels = result.Select(x => _permitApplicationResponseMapper.Map(x));
+            return Ok(responseModels);
         }
         catch (Exception e)
         {

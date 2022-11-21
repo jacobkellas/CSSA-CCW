@@ -49,7 +49,7 @@ public class CosmosDbService : ICosmosDbService
         }
     }
 
-    public async Task<PermitApplication> GetAsync(string userEmailOrOrderId, bool isOrderId, bool isComplete, CancellationToken cancellationToken)
+    public async Task<PermitApplication> GetLastApplicationAsync(string userEmailOrOrderId, bool isOrderId, bool isComplete, CancellationToken cancellationToken)
     {
         try
         {
@@ -76,6 +76,38 @@ public class CosmosDbService : ICosmosDbService
                 var application = response.Resource.FirstOrDefault();
 
                 return application;
+            }
+
+            return null!;
+        }
+        catch (CosmosException cex)
+        {
+            _logger.LogWarning($"An error occur while trying to retrieve permit application: {cex.Message}");
+            throw new Exception("An error occur while trying to retrieve permit application.");
+        }
+    }
+
+    public async Task<IEnumerable<PermitApplication>> GetAllUserApplicationsAsync(string userEmail, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var queryString = "SELECT a.Application, a.id FROM applications a " +
+                  "join a.Application ap join ap.UserEmail as e " +
+                  "where e = @userEmail and ap.IsComplete = @isComplete Order by a.OrderId DESC";
+
+            var parameterizedQuery = new QueryDefinition(query: queryString)
+                .WithParameter("@userEmail", userEmail)
+                .WithParameter("@isComplete", false);
+
+            using FeedIterator<PermitApplication> filteredFeed = _container.GetItemQueryIterator<PermitApplication>(
+                queryDefinition: parameterizedQuery
+            );
+
+            if (filteredFeed.HasMoreResults)
+            {
+                FeedResponse<PermitApplication> response = await filteredFeed.ReadNextAsync(cancellationToken);
+
+                return response.Resource;
             }
 
             return null!;
