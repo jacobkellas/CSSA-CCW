@@ -56,10 +56,10 @@ public class CosmosDbService : ICosmosDbService
             var queryString = isOrderId
                 ? "SELECT a.Application, a.id FROM applications " +
                   "a join a.Application ap join ap.OrderId as e " +
-                  "where e = @userEmailOrOrderId and ap.IsComplete = @isComplete"
+                  "where e = @userEmailOrOrderId and ap.IsComplete = @isComplete Order by a.OrderId DESC"
                 : "SELECT a.Application, a.id FROM applications a " +
                   "join a.Application ap join ap.UserEmail as e " +
-                  "where e = @userEmailOrOrderId and ap.IsComplete = @isComplete";
+                  "where e = @userEmailOrOrderId and ap.IsComplete = @isComplete Order by a.OrderId DESC";
 
             var parameterizedQuery = new QueryDefinition(query: queryString)
                 .WithParameter("@userEmailOrOrderId", userEmailOrOrderId)
