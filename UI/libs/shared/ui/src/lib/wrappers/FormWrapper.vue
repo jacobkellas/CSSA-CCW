@@ -13,10 +13,13 @@
     >
       <v-stepper
         vertical
+        :non-linear="props.admin"
         v-model="stepIndex.step"
       >
         <v-stepper-step
           :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :editable="props.admin"
+          :complete="stepIndex.step > 1"
           step="1"
         >
           {{ $t('Personal') }}
@@ -29,6 +32,7 @@
         </v-stepper-content>
 
         <v-stepper-step
+          :editable="props.admin"
           :color="$vuetify.theme.dark ? 'info' : 'primary'"
           step="2"
           :complete="stepIndex.step > 2"

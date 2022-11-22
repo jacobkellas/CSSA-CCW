@@ -202,7 +202,7 @@
 
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import { states } from '@shared-utils/lists/defaultConstants';
+import { countries, states } from '@shared-utils/lists/defaultConstants';
 import { reactive, ref } from 'vue';
 
 interface PreviousAddressDialogProps {
@@ -213,7 +213,15 @@ const props = withDefaults(defineProps<PreviousAddressDialogProps>(), {
   getPreviousAddressFromDialog: () => {},
 });
 
-const address = reactive({} as AddressInfoType);
+const address = reactive({
+  addressLine1: '',
+  addressLine2: '',
+  city: '',
+  country: '',
+  county: '',
+  state: '',
+  zip: '',
+} as AddressInfoType);
 let dialog = reactive({ state: false });
 const valid = ref(false);
 
