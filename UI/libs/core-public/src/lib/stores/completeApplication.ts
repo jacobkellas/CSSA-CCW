@@ -52,6 +52,26 @@ export const useCompleteApplicationStore = defineStore(
       return res?.data;
     }
 
+    /**
+     * Get all applications by the user
+     * @param userEmail
+     * @returns {Promise<void>}
+     */
+    async function getAllUserApplications(userEmail: string) {
+      const res = await axios
+        .get(Endpoints.GET_ALL_BY_USER_ENDPOINT, {
+          params: {
+            userEmail,
+          },
+        })
+        .catch(err => {
+          console.warn(err);
+          Promise.reject();
+        });
+
+      return res?.data;
+    }
+
     async function createApplication() {
       const date = new Date(Date.now()).toISOString();
 
@@ -103,7 +123,13 @@ export const useCompleteApplicationStore = defineStore(
       getCompleteApplication,
       setCompleteApplication,
       getCompleteApplicationFromApi,
+      getAllUserApplications,
       updateApplication,
     };
+  },
+  {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    persist: true,
   }
 );

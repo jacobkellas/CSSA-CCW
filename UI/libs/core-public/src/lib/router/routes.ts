@@ -12,6 +12,10 @@ export default class Routes {
     return `/application`;
   }
 
+  static get APPLICATION_DETAIL_ROUTE() {
+    return `/application-details`;
+  }
+
   static get APPLICATION_STATUS_PATH() {
     return '/status';
   }

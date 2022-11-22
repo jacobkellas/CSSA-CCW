@@ -15,40 +15,6 @@
           <div class="option-section">
             <v-btn
               :color="$vuetify.theme.dark ? 'info' : 'primary'"
-              outlined
-              class="option-button"
-              @click="handleRoute(Routes.APPLICATION_ROUTE_PATH)"
-            >
-              <div class="option-inner">
-                <v-icon
-                  x-large
-                  :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                  class="mb-3"
-                >
-                  mdi-card-account-details
-                </v-icon>
-                {{ $t('NEW/EDIT License') }}
-              </div>
-            </v-btn>
-            <v-btn
-              :color="$vuetify.theme.dark ? 'info' : 'primary'"
-              class="option-button"
-              outlined
-              @click="handleRoute(Routes.RENEW_APPLICATION_ROUTE_PATH)"
-            >
-              <div class="option-inner">
-                <v-icon
-                  x-large
-                  :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                  class="mb-3"
-                >
-                  mdi-card-account-details-star
-                </v-icon>
-                {{ $t('Modify/renew License') }}
-              </div>
-            </v-btn>
-            <v-btn
-              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               class="option-button"
               outlined
               @click="handleRoute(Routes.APPLICATION_STATUS_PATH)"
@@ -61,7 +27,7 @@
                 >
                   mdi-card-account-details-outline
                 </v-icon>
-                {{ $t('Application Status') }}
+                {{ $t('View Applications') }}
               </div>
             </v-btn>
           </div>
