@@ -1,4 +1,4 @@
-import FormStepOne from '@core-public/components/form-stepper/form-steps/FormStepOne.vue';
+import FormStepOne from '@core-public/../../../../../shared/ui/src/lib/components/form-stepper/form-steps/FormStepOne.vue';
 import Vuetify from 'vuetify';
 import { createLocalVue, mount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';

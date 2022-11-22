@@ -13,8 +13,8 @@
           lg="6"
         >
           <v-text-field
-            outlined
             dense
+            outlined
             :label="$t('Primary phone number')"
             :rules="phoneRuleSet"
             v-model="completeApplication.contact.primaryPhoneNumber"
@@ -34,8 +34,8 @@
           lg="6"
         >
           <v-text-field
-            outlined
             dense
+            outlined
             :label="$t('Cell phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
             v-model="completeApplication.contact.cellPhoneNumber"
@@ -47,8 +47,8 @@
           lg="6"
         >
           <v-text-field
-            outlined
             dense
+            outlined
             class="pl-6"
             :label="$t('Work phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
@@ -61,8 +61,8 @@
           lg="6"
         >
           <v-text-field
-            outlined
             dense
+            outlined
             :label="$t('Fax number')"
             :hint="$t('Only numbers no spaces or dashes')"
             v-model="completeApplication.contact.faxPhoneNumber"
@@ -75,9 +75,9 @@
           lg="6"
         >
           <CheckboxInput
+            class="pl-6"
             :label="'Text message updates'"
             :target="'textMessageUpdates'"
-            class="pl-6"
             @input="
               v => {
                 completeApplication.contact.textMessageUpdates = v;
@@ -108,13 +108,19 @@
 
 <script setup lang="ts">
 import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import Routes from '@core-public/router/routes';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useRouter } from 'vue-router/composables';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
+
+interface IProps {
+  handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
+}
+
+const props = defineProps<IProps>();
 
 const router = useRouter();
 
@@ -122,11 +128,6 @@ const state = reactive({
   valid: false,
   snackbar: false,
 });
-
-interface IProps {
-  handlePreviousSection: CallableFunction;
-}
-const props = defineProps<IProps>();
 
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
@@ -138,7 +139,7 @@ const updateMutation = useMutation({
   },
   onSuccess: () => {
     completeApplication.currentStep = 6;
-    router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
+    props.handleNextSection();
   },
   onError: () => {
     state.snackbar = true;
@@ -150,18 +151,18 @@ const saveMutation = useMutation({
     return completeApplicationStore.updateApplication('Save and quit');
   },
   onSuccess: () => {
-    router.push(Routes.HOME_ROUTE_PATH);
+    router.push('/');
   },
   onError: () => {
     state.snackbar = true;
   },
 });
 
-function handleSubmit() {
+async function handleSubmit() {
   updateMutation.mutate();
 }
 
-function handleSave() {
+async function handleSave() {
   saveMutation.mutate();
 }
 </script>

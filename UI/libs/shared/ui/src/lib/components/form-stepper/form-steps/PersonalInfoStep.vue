@@ -5,7 +5,7 @@
       v-model="valid"
     >
       <v-subheader class="subHeader font-weight-bold">
-        {{ $t('Personal Info') }}
+        {{ $t('Personal Information') }}
       </v-subheader>
 
       <v-row class="ml-5">
@@ -72,12 +72,10 @@
           <v-text-field
             outlined
             dense
-            class="pl-6"
-            v-if="!completeApplication.personalInfo.noMiddleName"
             :label="$t('Middle name')"
+            class="pl-6"
             v-model="completeApplication.personalInfo.middleName"
-          >
-          </v-text-field>
+          />
         </v-col>
 
         <v-col
@@ -92,6 +90,7 @@
             v-model="completeApplication.personalInfo.maidenName"
           />
         </v-col>
+
         <v-col
           cols="12"
           lg="6"
@@ -106,86 +105,7 @@
         </v-col>
       </v-row>
       <v-divider class="my-3" />
-      <v-subheader class="sub-header font-weight-bold">
-        {{ $t(' Permit Information') }}
-      </v-subheader>
-      <v-row>
-        <v-col
-          cols="12"
-          lg="6"
-        >
-          <v-text-field
-            outlined
-            dense
-            :label="$t(' Permit Number')"
-            :rules="[v => !!v || $t(' Permit number cannot be blank')]"
-            v-model="completeApplication.license.permitNumber"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          lg="6"
-        >
-          <v-text-field
-            outlined
-            dense
-            :label="$t('Issuing county')"
-            :rules="[v => !!v || $t('Issuing county cannot be blank')]"
-            v-model="completeApplication.license.issuingCounty"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          lg="6"
-        >
-          <v-menu
-            v-model="menu"
-            :close-on-content-click="true"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
-            <template #activator="{ on, attrs }">
-              <v-combobox
-                outlined
-                dense
-                v-model="completeApplication.license.expirationDate"
-                :label="$t('Expiration Date')"
-                prepend-icon="mdi-calendar"
-                :rules="[v => !!v || $t('Expiration date is required')]"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-combobox>
-            </template>
-            <v-date-picker
-              v-model="completeApplication.license.expirationDate"
-              no-title
-              scrollable
-            >
-            </v-date-picker>
-          </v-menu>
-        </v-col>
-      </v-row>
-      <v-divider />
+
       <v-subheader class="sub-header font-weight-bold">
         {{ $t('Social Security Information') }}
       </v-subheader>
@@ -202,8 +122,8 @@
             :rules="ssnRuleSet"
             :type="show1 ? 'text' : 'password'"
             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="show1 = !show1"
             v-model="completeApplication.personalInfo.ssn"
+            @click:append="show1 = !show1"
           >
             <template #prepend>
               <v-icon
@@ -224,14 +144,14 @@
             outlined
             dense
             :label="$t('Confirm SSN')"
+            :type="show2 ? 'text' : 'password'"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             :rules="[
               ...ssnRuleSet,
               v =>
                 v === completeApplication.personalInfo.ssn ||
-                $t('SSN\'s do not match'),
+                $t('Social Security Numbers must match'),
             ]"
-            :type="show2 ? 'text' : 'password'"
-            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="ssnConfirm"
             @click:append="show2 = !show2"
           >
@@ -248,7 +168,6 @@
       </v-row>
 
       <v-divider class="my-3" />
-
       <v-subheader class="subHeader font-weight-bold">
         {{ $t('Marital Status') }}
       </v-subheader>
@@ -260,19 +179,16 @@
           <v-radio-group
             v-model="completeApplication.personalInfo.maritalStatus"
             :label="'Marital status'"
-            :value="completeApplication.personalInfo.maritalStatus"
-            :options="[
-              { label: 'Married', value: 'married' },
-              { label: 'Single', value: 'single' },
-            ]"
             :hint="'Marital Status is required'"
             :layout="'row'"
           >
             <v-radio
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               :label="'Married'"
               :value="'married'"
             />
             <v-radio
+              :color="$vuetify.theme.dark ? 'info' : 'primary'"
               :label="'Single'"
               :value="'single'"
             />
@@ -280,7 +196,6 @@
         </v-col>
         <v-col
           cols="12"
-          lg="6"
           v-if="completeApplication.personalInfo.maritalStatus === 'married'"
         >
           <v-subheader class="subHeader font-weight-bold">
@@ -292,8 +207,8 @@
               lg="6"
             >
               <v-text-field
-                outlined
                 dense
+                outlined
                 :label="$t('Last Name')"
                 :rules="[v => !!v || $t('Last name cannot be blank')]"
                 v-model="completeApplication.spouseInformation.lastName"
@@ -309,8 +224,9 @@
               </v-text-field>
 
               <v-text-field
-                outlined
                 dense
+                outlined
+                class="pl-6"
                 :label="$t('Middle Name')"
                 v-model="completeApplication.spouseInformation.middleName"
               />
@@ -320,6 +236,8 @@
               lg="6"
             >
               <v-text-field
+                dense
+                outlined
                 :label="$t('First Name')"
                 :rules="[v => !!v || $t('First name cannot be blank')]"
                 v-model="completeApplication.spouseInformation.firstName"
@@ -334,8 +252,9 @@
                 </template>
               </v-text-field>
               <v-text-field
-                outlined
                 dense
+                outlined
+                class="pl-6"
                 :label="$t('Maiden Name')"
                 v-model="completeApplication.spouseInformation.maidenName"
               />
@@ -353,11 +272,12 @@
       <AliasTable :aliases="completeApplication.aliases" />
       <AliasDialog :save-alias="getAliasFromDialog" />
     </div>
+    <v-divider class="my-5" />
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
-      @back="router.push(Routes.APPLICATION_ROUTE_PATH)"
+      @back="router.push('/')"
       @cancel="router.push('/')"
     />
     <FormErrorAlert
@@ -377,16 +297,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
-import { useRouter } from 'vue-router/composables';
-import AliasDialog from '@core-public/components/dialogs/AliasDialog.vue';
+import AliasDialog from '@shared-ui/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import { useMutation } from '@tanstack/vue-query';
-import Routes from '@core-public/router/routes';
 import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
+import { onMounted, ref } from 'vue';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
@@ -398,7 +317,6 @@ const props = withDefaults(defineProps<FormStepOneProps>(), {
 
 const errors = ref([] as Array<string>);
 const valid = ref(false);
-const menu = ref(false);
 const show1 = ref(false);
 const show2 = ref(false);
 const snackbar = ref(false);
@@ -410,9 +328,15 @@ const completeApplication =
 
 const router = useRouter();
 
+onMounted(() => {
+  if (completeApplication.personalInfo.ssn) {
+    ssnConfirm.value = completeApplication.personalInfo.ssn;
+  }
+});
+
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Renewal Step one');
+    return completeApplicationStore.updateApplication('Step one complete');
   },
   onSuccess: () => {
     completeApplication.currentStep = 2;
@@ -428,14 +352,14 @@ const saveMutation = useMutation({
     return completeApplicationStore.updateApplication('Save and quit');
   },
   onSuccess: () => {
-    router.push(Routes.HOME_ROUTE_PATH);
+    router.push('/');
   },
   onError: () => {
     snackbar.value = true;
   },
 });
 
-function handleSubmit() {
+async function handleSubmit() {
   if (!completeApplication.personalInfo.maritalStatus) {
     errors.value.push('Marital Status');
   } else {
@@ -444,10 +368,20 @@ function handleSubmit() {
 }
 
 function getAliasFromDialog(alias) {
-  completeApplicationStore.completeApplication.application.aliases.unshift(
-    alias
-  );
+  completeApplication.aliases.unshift(alias);
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.subHeader {
+  font-size: 1.5rem;
+}
+
+.alias-components-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+</style>

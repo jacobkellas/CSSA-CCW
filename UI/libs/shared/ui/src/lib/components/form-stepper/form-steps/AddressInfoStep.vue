@@ -527,10 +527,10 @@
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
 import AddressTable from '@shared-ui/components/tables/AddressTable.vue';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import PreviousAddressDialog from '../../dialogs/PreviousAddressDialog.vue';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
+import PreviousAddressDialog from '@shared-ui/components/dialogs/PreviousAddressDialog.vue';
 import { ref } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { countries, states } from '@shared-utils/lists/defaultConstants';

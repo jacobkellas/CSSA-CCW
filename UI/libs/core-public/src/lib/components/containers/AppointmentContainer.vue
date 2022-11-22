@@ -152,7 +152,7 @@
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
 import { reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { usePaymentStore } from '@core-public/stores/paymentStore';
 

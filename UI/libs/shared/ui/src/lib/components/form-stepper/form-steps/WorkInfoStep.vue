@@ -253,12 +253,12 @@
 </template>
 
 <script setup lang="ts">
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import WeaponsDialog from '@core-public/components/dialogs/WeaponsDialog.vue';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
+import WeaponsDialog from '@shared-ui/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import {
@@ -266,9 +266,9 @@ import {
   employmentStatus,
   states,
 } from '@shared-utils/lists/defaultConstants';
-import Routes from '@core-public/router/routes';
 
 interface ISecondFormStepOneProps {
+  routes: any;
   handleNextSection: CallableFunction;
 }
 const completeApplicationStore = useCompleteApplicationStore();
@@ -310,7 +310,7 @@ const saveMutation = useMutation({
 
 function handleBack() {
   completeApplication.currentStep = 5;
-  router.push(Routes.FORM_ROUTE_PATH);
+  router.push(props.routes.FORM_ROUTE_PATH);
 }
 
 function getWeaponFromDialog(weapon) {

@@ -81,6 +81,68 @@
         <v-stepper-content step="5">
           <RenewFormStepFive
             v-if="stepIndex.step === 5"
+            :routes="routes"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+        <v-stepper-step
+          step="6"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 6"
+        >
+          {{ $t(' Employment & Weapons') }}
+        </v-stepper-step>
+        <v-stepper-content step="6">
+          <SecondFormStepOne
+            v-if="stepIndex.step === 6"
+            :routes="routes"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          step="7"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 7"
+        >
+          {{ $t('Application Type') }}
+        </v-stepper-step>
+        <v-stepper-content step="7">
+          <RenewSecondFormStepThree
+            v-if="stepIndex.step === 7"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          step="8"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 8"
+        >
+          {{ $t(' Upload Files') }}
+        </v-stepper-step>
+        <v-stepper-content step="8">
+          <SecondFormStepTwo
+            v-if="stepIndex.step === 8"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          step="9"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 9"
+        >
+          {{ $t('Signature') }}
+        </v-stepper-step>
+        <v-stepper-content step="9">
+          <SecondFormStepFour
+            v-if="stepIndex.step === 9"
+            :routes="routes"
             :handle-next-section="handleNextSection"
             :handle-previous-section="handlePreviousSection"
           />
@@ -91,17 +153,25 @@
 </template>
 
 <script setup lang="ts">
-import FormStepFour from '@core-public/components/form-stepper/form-steps/FormStepFour.vue';
-import FormStepTwo from '@core-public/components/form-stepper/form-steps/FormStepTwo.vue';
-import FormStepThree from '@core-public/components/form-stepper/form-steps/FormStepThree.vue';
-import RenewFormStepOne from '@core-public/components/form-stepper/form-steps/RenewFormStepOne.vue';
-import RenewFormStepFive from '@core-public/components/form-stepper/form-steps/RenewFormStepFive.vue';
-import Routes from '@core-public/router/routes';
+import SecondFormStepOne from '@shared-ui/components/form-stepper/form-steps/WorkInfoStep.vue';
+import SecondFormStepTwo from '@shared-ui/components/form-stepper/form-steps/FileUploadStep.vue';
+import RenewSecondFormStepThree from '@shared-ui/components/form-stepper/form-steps/RenewApplicationTypeStep.vue';
+import SecondFormStepFour from '@shared-ui/components/form-stepper/form-steps/SignatureStep.vue';
+import FormStepFour from '@shared-ui/components/form-stepper/form-steps/PhysicalAppearanceStep.vue';
+import FormStepTwo from '@shared-ui/components/form-stepper/form-steps/IdBirthInfoStep.vue';
+import FormStepThree from '@shared-ui/components/form-stepper/form-steps/AddressInfoStep.vue';
+import RenewFormStepOne from '@shared-ui/components/form-stepper/form-steps/RenewPersonalInfoStep.vue';
+import RenewFormStepFive from '@shared-ui/components/form-stepper/form-steps/RenewContactInfoStep.vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
-import { useRouter } from 'vue-router/composables';
 import { onMounted, reactive } from 'vue';
+
+interface IProps {
+  admin: boolean;
+  routes: any;
+}
+const props = defineProps<IProps>();
 
 const stepIndex = reactive({
   step: 1,
@@ -110,11 +180,9 @@ const stepIndex = reactive({
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
-const router = useRouter();
 
 onMounted(() => {
   stepIndex.step = applicationStore.completeApplication.application.currentStep;
-  checkForCorrectForm();
 });
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
@@ -127,22 +195,10 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
 
     res.then(data => {
       applicationStore.setCompleteApplication(data);
-      checkForCorrectForm();
       stepIndex.step = 1;
     });
   }
 });
-
-function checkForCorrectForm() {
-  if (
-    applicationStore.completeApplication.application.currentStep > 5 &&
-    applicationStore.completeApplication.application.currentStep <= 9
-  ) {
-    router.push(Routes.RENEW_FORM_TWO_ROUTE_PATH);
-  } else if (applicationStore.completeApplication.application.currentStep > 9) {
-    router.push(Routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
-  }
-}
 
 function handleNextSection() {
   stepIndex.previousStep = stepIndex.step;

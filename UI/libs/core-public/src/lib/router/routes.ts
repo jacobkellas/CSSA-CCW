@@ -28,10 +28,6 @@ export default class Routes {
     return `/form`;
   }
 
-  static get FORM_TWO_ROUTE_PATH() {
-    return `/form2`;
-  }
-
   static get MORE_INFORMATION_ROUTE_PATH() {
     return `/moreinformation`;
   }
@@ -53,9 +49,5 @@ export default class Routes {
 
   static get RENEW_FORM_ROUTE_PATH() {
     return `/renewform`;
-  }
-
-  static get RENEW_FORM_TWO_ROUTE_PATH() {
-    return `/renewform2`;
   }
 }

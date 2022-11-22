@@ -148,7 +148,7 @@
 <script setup lang="ts">
 import PersonalInfoSection from '@shared-ui/components/info-sections/PersonalInfoSection.vue';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import SpouseInfoSection from '@shared-ui/components/info-sections/SpouseInfoSection.vue';
 import AliasInfoSection from '@shared-ui/components/info-sections/AliasInfoSection.vue';
 import IdInfoSection from '@shared-ui/components/info-sections/IdInfoSection.vue';

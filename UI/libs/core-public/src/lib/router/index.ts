@@ -1,3 +1,4 @@
+import ApplicationDetailView from '@core-public/views/ApplicationDetailView.vue';
 import ApplicationStatus from '@core-public/views/ApplicationStatus.vue';
 import ApplicationView from '@core-public/views/ApplicationView.vue';
 import FinalizeView from '@core-public/views/FinalizeView.vue';
@@ -9,9 +10,7 @@ import QualifyingQuestionView from '@core-public/views/QualifyingQuestionsView.v
 import RecieptView from '@core-public/views/RecieptView.vue';
 import RenewApplicationView from '@core-public/views/RenewApplicationView.vue';
 import RenewFormView from '@core-public/views/RenewFormView.vue';
-import RenewSecondFormView from '@core-public/views/RenewSecondFormView.vue';
 import Routes from '@core-public/router/routes';
-import SecondFormView from '@core-public/views/SecondFormView.vue';
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
@@ -29,6 +28,11 @@ const routes: Array<RouteConfig> = [
     component: ApplicationView,
   },
   {
+    path: Routes.APPLICATION_DETAIL_ROUTE,
+    name: 'ApplicationDetails',
+    component: ApplicationDetailView,
+  },
+  {
     path: Routes.APPLICATION_STATUS_PATH,
     name: 'Status',
     component: ApplicationStatus,
@@ -42,11 +46,6 @@ const routes: Array<RouteConfig> = [
     path: Routes.FORM_ROUTE_PATH,
     name: 'form',
     component: FormView,
-  },
-  {
-    path: Routes.FORM_TWO_ROUTE_PATH,
-    name: 'form2',
-    component: SecondFormView,
   },
   {
     path: Routes.MORE_INFORMATION_ROUTE_PATH,
@@ -77,11 +76,6 @@ const routes: Array<RouteConfig> = [
     path: Routes.RENEW_FORM_ROUTE_PATH,
     name: 'RenewForm',
     component: RenewFormView,
-  },
-  {
-    path: Routes.RENEW_FORM_TWO_ROUTE_PATH,
-    name: ' RenewForm2',
-    component: RenewSecondFormView,
   },
   {
     // keep this at the very end
