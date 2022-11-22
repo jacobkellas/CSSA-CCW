@@ -1,4 +1,4 @@
-import FormStepFour from '@core-public/components/form-stepper/form-steps/FormStepFour.vue';
+import FormStepFour from '@core-public/../../../../../shared/ui/src/lib/components/form-stepper/form-steps/FormStepFour.vue';
 import Vuetify from 'vuetify';
 import { createTestingPinia } from '@pinia/testing';
 import { createLocalVue, mount } from '@vue/test-utils';

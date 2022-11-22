@@ -41,11 +41,11 @@
 </template>
 
 <script setup lang="ts">
-import FormStepOne from './form-steps/FormStepOne.vue';
-import FormStepTwo from './form-steps/FormStepTwo.vue';
-import FormStepThree from './form-steps/FormStepThree.vue';
-import FormStepFour from '@core-public/components/form-stepper/form-steps/FormStepFour.vue';
-import FormStepFive from '@core-public/components/form-stepper/form-steps/FormStepFive.vue';
+import FormStepOne from './form-steps/PersonalInfoStep.vue';
+import FormStepTwo from './form-steps/IdBirthInfoStep.vue';
+import FormStepThree from './form-steps/AddressInfoStep.vue';
+import FormStepFour from '@shared-ui/components/form-stepper/form-steps/PhysicalAppearanceStep.vue';
+import FormStepFive from '@shared-ui/components/form-stepper/form-steps/ContactStep.vue';
 
 interface FormStepItemsProps {
   stepIndex?: number;

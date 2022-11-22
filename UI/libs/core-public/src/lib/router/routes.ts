@@ -12,6 +12,10 @@ export default class Routes {
     return `/application`;
   }
 
+  static get APPLICATION_DETAIL_ROUTE() {
+    return `/application-details`;
+  }
+
   static get APPLICATION_STATUS_PATH() {
     return '/status';
   }
@@ -22,10 +26,6 @@ export default class Routes {
 
   static get FORM_ROUTE_PATH() {
     return `/form`;
-  }
-
-  static get FORM_TWO_ROUTE_PATH() {
-    return `/form2`;
   }
 
   static get MORE_INFORMATION_ROUTE_PATH() {
@@ -49,9 +49,5 @@ export default class Routes {
 
   static get RENEW_FORM_ROUTE_PATH() {
     return `/renewform`;
-  }
-
-  static get RENEW_FORM_TWO_ROUTE_PATH() {
-    return `/renewform2`;
   }
 }

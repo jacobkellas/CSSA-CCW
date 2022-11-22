@@ -8,17 +8,45 @@
       <div class="ml-5">
         <v-radio-group v-model="completeApplication.applicationType">
           <v-radio
-            :label="'Standard'"
-            :value="'standard'"
+            :label="'Renew Standard'"
+            :value="'renew-standard'"
           />
           <v-radio
-            :label="'Judicial'"
-            :value="'judicial'"
+            :label="'Renew Judicial'"
+            :value="'renew-judicial'"
             color="warning"
           />
           <v-radio
-            :label="'Reserve'"
-            :value="'reserve'"
+            :label="'Renew Reserve'"
+            :value="'renew-reserve'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Modify Standard'"
+            :value="'modify-standard'"
+          />
+          <v-radio
+            :label="'Modify Judicial'"
+            :value="'modify-judicial'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Modify Reserve'"
+            :value="'modify-reserve'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Duplicate Standard'"
+            :value="'duplicate-standard'"
+          />
+          <v-radio
+            :label="'Duplicate Judicial'"
+            :value="'duplicate-judicial'"
+            color="warning"
+          />
+          <v-radio
+            :label="'Duplicate Reserve'"
+            :value="'duplicate-reserve'"
             color="warning"
           />
         </v-radio-group>
@@ -27,7 +55,12 @@
         dense
         outlined
         type="warning"
-        v-if="completeApplication.applicationType === 'judicial'"
+        v-if="
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'renew-judicial' ||
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'modify-judicial'
+        "
       >
         <strong>
           {{ $t('Judicial-warning') }}
@@ -37,7 +70,12 @@
         dense
         outlined
         type="warning"
-        v-if="completeApplication.applicationType === 'reserve'"
+        v-if="
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'renew-reserve' ||
+          completeApplicationStore.completeApplication.application
+            .applicationType === 'modify-reserve'
+        "
       >
         <strong>
           {{ $t('Judicial-reserve') }}
@@ -65,10 +103,10 @@
 </template>
 
 <script setup lang="ts">
-import ApplicationInfoSection from '@shared-ui/components/info-sections/ApplicationInfoSection';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import ApplicationInfoSection from '@shared-ui/components/info-sections/ApplicationInfoSection.vue';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 
@@ -87,10 +125,9 @@ const state = reactive({
   valid: false,
   snackbar: false,
 });
-
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Step seven complete');
+    return completeApplicationStore.updateApplication('Step one complete');
   },
   onSuccess: () => {
     completeApplication.currentStep = 8;

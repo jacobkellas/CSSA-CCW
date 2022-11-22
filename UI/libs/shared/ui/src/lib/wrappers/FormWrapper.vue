@@ -13,10 +13,13 @@
     >
       <v-stepper
         vertical
+        :non-linear="props.admin"
         v-model="stepIndex.step"
       >
         <v-stepper-step
           :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :editable="props.admin"
+          :complete="stepIndex.step > 1"
           step="1"
         >
           {{ $t('Personal') }}
@@ -29,6 +32,7 @@
         </v-stepper-content>
 
         <v-stepper-step
+          :editable="props.admin"
           :color="$vuetify.theme.dark ? 'info' : 'primary'"
           step="2"
           :complete="stepIndex.step > 2"
@@ -87,27 +91,96 @@
             :handle-previous-section="handlePreviousSection"
           />
         </v-stepper-content>
+        <v-stepper-step
+          step="6"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 6"
+        >
+          {{ $t(' Employment & Weapons') }}
+        </v-stepper-step>
+        <v-stepper-content step="6">
+          <SecondFormStepOne
+            v-if="stepIndex.step === 6"
+            :routes="routes"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          step="7"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 7"
+        >
+          {{ $t('Application Type') }}
+        </v-stepper-step>
+        <v-stepper-content step="7">
+          <SecondFormStepThree
+            v-if="stepIndex.step === 7"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          step="8"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 8"
+        >
+          {{ $t(' Upload Files') }}
+        </v-stepper-step>
+        <v-stepper-content step="8">
+          <SecondFormStepTwo
+            v-if="stepIndex.step === 8"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+
+        <v-stepper-step
+          step="9"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 9"
+        >
+          {{ $t('Signature') }}
+        </v-stepper-step>
+        <v-stepper-content step="9">
+          <SecondFormStepFour
+            v-if="stepIndex.step === 9"
+            :routes="routes"
+            :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
       </v-stepper>
     </v-container>
   </div>
 </template>
 
 <script setup lang="ts">
-import FormStepOne from '@core-public/components/form-stepper/form-steps/FormStepOne.vue';
-import FormStepTwo from '@core-public/components/form-stepper/form-steps/FormStepTwo.vue';
-import FormStepThree from '@core-public/components/form-stepper/form-steps/FormStepThree.vue';
-import FormStepFour from '@core-public/components/form-stepper/form-steps/FormStepFour.vue';
-import FormStepFive from '@core-public/components/form-stepper/form-steps/FormStepFive.vue';
-import Routes from '@core-public/router/routes';
+import FormStepOne from '@shared-ui/components/form-stepper/form-steps/PersonalInfoStep.vue';
+import FormStepTwo from '@shared-ui/components/form-stepper/form-steps/IdBirthInfoStep.vue';
+import FormStepThree from '@shared-ui/components/form-stepper/form-steps/AddressInfoStep.vue';
+import FormStepFour from '@shared-ui/components/form-stepper/form-steps/PhysicalAppearanceStep.vue';
+import FormStepFive from '@shared-ui/components/form-stepper/form-steps/ContactStep.vue';
+import SecondFormStepOne from '@shared-ui/components/form-stepper/form-steps/WorkInfoStep.vue';
+import SecondFormStepTwo from '@shared-ui/components/form-stepper/form-steps/FileUploadStep.vue';
+import SecondFormStepThree from '@shared-ui/components/form-stepper/form-steps/ApplicationTypeStep.vue';
+import SecondFormStepFour from '@shared-ui/components/form-stepper/form-steps/SignatureStep.vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
-import { useRouter } from 'vue-router/composables';
 import { onMounted, reactive } from 'vue';
+
+interface IWrapperProps {
+  admin: boolean;
+  routes: any;
+}
+
+const props = defineProps<IWrapperProps>();
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
-const router = useRouter();
 
 const stepIndex = reactive({
   step: 1,
@@ -116,7 +189,6 @@ const stepIndex = reactive({
 
 onMounted(() => {
   stepIndex.step = applicationStore.completeApplication.application.currentStep;
-  checkForCorrectForm();
 });
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {
@@ -131,7 +203,6 @@ const { isLoading } = useQuery(['getIncompleteApplications'], () => {
       applicationStore.setCompleteApplication(data);
       stepIndex.step =
         applicationStore.completeApplication.application.currentStep;
-      checkForCorrectForm();
     });
   }
 });
@@ -146,16 +217,16 @@ function handlePreviousSection() {
   stepIndex.step -= 1;
 }
 
-function checkForCorrectForm() {
-  if (
-    applicationStore.completeApplication.application.currentStep > 5 &&
-    applicationStore.completeApplication.application.currentStep <= 9
-  ) {
-    router.push(Routes.FORM_TWO_ROUTE_PATH);
-  } else if (applicationStore.completeApplication.application.currentStep > 9) {
-    router.push(Routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
-  }
-}
+// function checkForCorrectForm() {
+//   if (
+//     applicationStore.completeApplication.application.currentStep > 5 &&
+//     applicationStore.completeApplication.application.currentStep <= 9
+//   ) {
+//     router.push(props.routes.FORM_TWO_ROUTE_PATH);
+//   } else if (applicationStore.completeApplication.application.currentStep > 9) {
+//     router.push(props.routes.);
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

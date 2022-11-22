@@ -63,16 +63,16 @@
 
 <script setup lang="ts">
 import Endpoints from '@shared-ui/api/endpoints';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
-import Routes from '@core-public/router/routes';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import axios from 'axios';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { reactive, ref, watch } from 'vue';
 import { UploadedDocType } from '@shared-utils/types/defaultTypes';
 
 interface ISecondFormStepFourProps {
+  routes: any;
   handleNextSection: CallableFunction;
   handlePreviousSection: CallableFunction;
 }
@@ -94,7 +94,7 @@ const fileMutation = useMutation({
   onSuccess: () => {
     applicationStore.completeApplication.application.currentStep = 10;
     applicationStore.updateApplication('Signature complete');
-    router.push(Routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
+    router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
   },
   onError: () => {
     state.snackbar = true;

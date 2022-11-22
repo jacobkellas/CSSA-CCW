@@ -61,7 +61,7 @@ import SideBar from '@core-public/components/navbar/SideBar.vue';
 import { reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { useRouter } from 'vue-router/composables';
 import { useMutation, useQuery } from '@tanstack/vue-query';

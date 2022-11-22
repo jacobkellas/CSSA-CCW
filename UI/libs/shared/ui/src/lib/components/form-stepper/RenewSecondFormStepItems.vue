@@ -35,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import SecondFormStepOne from '@core-public/components/form-stepper/form-steps/SecondFormStepOne.vue';
-import SecondFormStepTwo from '@core-public/components/form-stepper/form-steps/SecondFormStepTwo.vue';
-import SecondFormStepFour from '@core-public/components/form-stepper/form-steps/SecondFormStepFour.vue';
-import RenewSecondFormStepThree from '@core-public/components/form-stepper/form-steps/RenewSecondFormStepThree.vue';
+import SecondFormStepOne from '@shared-ui/components/form-stepper/form-steps/WorkInfoStep.vue';
+import SecondFormStepTwo from '@shared-ui/components/form-stepper/form-steps/FileUploadStep.vue';
+import SecondFormStepFour from '@shared-ui/components/form-stepper/form-steps/SignatureStep.vue';
+import RenewSecondFormStepThree from '@shared-ui/components/form-stepper/form-steps/RenewApplicationTypeStep.vue';
 
 interface IFormSecondStepItemsProps {
   handleNextSection: CallableFunction;

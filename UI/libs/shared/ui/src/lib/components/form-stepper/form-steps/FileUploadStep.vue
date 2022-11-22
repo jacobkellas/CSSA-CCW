@@ -189,11 +189,11 @@
 <script setup lang="ts">
 import DocumentInfoSection from '@shared-ui/components/info-sections/DocumentInfoSection.vue';
 import Endpoints from '@shared-ui/api/endpoints';
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import { UploadedDocType } from '@shared-utils/types/defaultTypes';
 import axios from 'axios';
 import { reactive } from 'vue';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 

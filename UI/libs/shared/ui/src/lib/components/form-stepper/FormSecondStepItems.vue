@@ -35,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import SecondFormStepOne from '@core-public/components/form-stepper/form-steps/SecondFormStepOne.vue';
-import SecondFormStepTwo from '@core-public/components/form-stepper/form-steps/SecondFormStepTwo.vue';
-import SecondFormStepThree from '@core-public/components/form-stepper/form-steps/SecondFormStepThree.vue';
-import SecondFormStepFour from '@core-public/components/form-stepper/form-steps/SecondFormStepFour.vue';
+import SecondFormStepOne from '@shared-ui/components/form-stepper/form-steps/WorkInfoStep.vue';
+import SecondFormStepTwo from '@shared-ui/components/form-stepper/form-steps/FileUploadStep.vue';
+import SecondFormStepThree from '@shared-ui/components/form-stepper/form-steps/ApplicationTypeStep.vue';
+import SecondFormStepFour from '@shared-ui/components/form-stepper/form-steps/SignatureStep.vue';
 
 interface IFormSecondStepItemsProps {
   stepIndex?: number;

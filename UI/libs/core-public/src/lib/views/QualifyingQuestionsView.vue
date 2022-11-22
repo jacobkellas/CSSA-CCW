@@ -754,9 +754,9 @@
 </template>
 
 <script setup lang="ts">
-import FormButtonContainer from '@core-public/components/containers/FormButtonContainer.vue';
+import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { ref } from 'vue';

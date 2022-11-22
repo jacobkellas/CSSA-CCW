@@ -94,7 +94,7 @@ import { reactive } from 'vue';
 import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStore';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useBrandStore } from '@core-public/stores/brandStore';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const applicationStore = useCompleteApplicationStore();

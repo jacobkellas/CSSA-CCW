@@ -136,7 +136,7 @@
 import AppointmentContainer from '@core-public/components/containers/AppointmentContainer.vue';
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
-import { useCompleteApplicationStore } from '@core-public/stores/completeApplication';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { onMounted, reactive } from 'vue';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 
