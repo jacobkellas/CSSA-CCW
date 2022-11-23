@@ -1,12 +1,5 @@
 <template>
   <div>
-    <v-container v-if="isLoading">
-      <v-skeleton-loader
-        fluid
-        class="fill-height"
-        type=" list-item"
-      />
-    </v-container>
     <v-container fluid>
       <v-stepper
         vertical
@@ -164,14 +157,15 @@ import RenewFormStepOne from '@shared-ui/components/form-stepper/form-steps/Rene
 import RenewFormStepFive from '@shared-ui/components/form-stepper/form-steps/RenewContactInfoStep.vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
-import { useQuery } from '@tanstack/vue-query';
 import { onMounted, reactive } from 'vue';
+import { useRouter } from 'vue-router/composables';
 
 interface IProps {
   admin: boolean;
   routes: any;
 }
 const props = defineProps<IProps>();
+const router = useRouter();
 
 const stepIndex = reactive({
   step: 1,
@@ -183,20 +177,9 @@ const authStore = useAuthStore();
 
 onMounted(() => {
   stepIndex.step = applicationStore.completeApplication.application.currentStep;
-});
 
-const { isLoading } = useQuery(['getIncompleteApplications'], () => {
-  if (!applicationStore.completeApplication.id) {
-    stepIndex.step = 0;
-    const res = applicationStore.getCompleteApplicationFromApi(
-      authStore.auth.userEmail,
-      false
-    );
-
-    res.then(data => {
-      applicationStore.setCompleteApplication(data);
-      stepIndex.step = 1;
-    });
+  if (stepIndex.step > 9) {
+    router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
   }
 });
 

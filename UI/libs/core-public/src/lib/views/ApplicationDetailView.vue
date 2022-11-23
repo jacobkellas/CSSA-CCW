@@ -1,6 +1,3 @@
-<!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-<!-- eslint-disable vue/valid-v-slot -->
-<!-- eslint-disable vue-a11y/no-autofocus -->
 <template>
   <div>
     <v-row class="mt-5">
@@ -8,47 +5,10 @@
         cols="12"
         lg="8"
       >
-        <v-data-table
+        <ApplicationTable
           :headers="state.headers"
           :items="state.application"
-          item-key="orderId"
-          item-class="rowClass"
-          :loading="!applicationStore.completeApplication"
-          :loading-text="$t('Loading applications')"
-          hide-default-footer
-        >
-          <template #item.orderId="props">
-            <span>
-              {{ props.item.application.orderId }}
-            </span>
-          </template>
-          <template #item.completed="props">
-            <div v-if="props.item.application.isComplete">
-              <v-icon
-                medium
-                color="green"
-              >
-                mdi-check-circle
-              </v-icon>
-              <span class="ml-3">{{ $t('Completed') }}</span>
-            </div>
-            <div v-else>
-              <v-icon
-                color="error"
-                medium
-              >
-                mdi-alert-octagon
-              </v-icon>
-              <span class="ml-3">{{ $t('Not Completed') }}</span>
-            </div>
-          </template>
-          <template #item.step="props">
-            {{ props.item.application.currentStep }}
-          </template>
-          <template #item.type="props">
-            {{ props.item.application.applicationType }}
-          </template>
-        </v-data-table>
+        />
         <v-container>
           <v-sheet class="rounded">
             <v-timeline dense>
@@ -86,7 +46,7 @@
                   "
                   v-bind="attrs"
                   v-on="on"
-                  @click="router.push(Routes.APPLICATION_ROUTE_PATH)"
+                  @click="handleContinueApplication"
                 >
                   {{ $t('Continue Application') }}
                 </v-btn>
@@ -107,7 +67,7 @@
                   "
                   v-bind="attrs"
                   v-on="on"
-                  @click="router.push(Routes.RENEW_APPLICATION_ROUTE_PATH)"
+                  @click="handleModifyApplication"
                 >
                   {{ $t('Modify Application') }}
                 </v-btn>
@@ -151,15 +111,14 @@
 </template>
 
 <script setup lang="ts">
+import ApplicationTable from '@core-public/components/tables/ApplicationTable.vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useRouter } from 'vue-router/composables';
 import Routes from '@core-public/router/routes';
 import { reactive } from 'vue';
-import { useApplicationTypeStore } from '@core-public/stores/applicationTypeStore';
 import { useMutation } from '@tanstack/vue-query';
 
 const applicationStore = useCompleteApplicationStore();
-const applicationTypeStore = useApplicationTypeStore();
 const router = useRouter();
 
 const state = reactive({
@@ -175,6 +134,9 @@ const state = reactive({
       text: 'COMPLETED',
       value: 'completed',
     },
+    { text: 'LAST UPDATED', value: 'updated' },
+    { text: 'CURRENT STATUS', value: 'status' },
+    { text: 'APPOINTMENT STATUS', value: 'appointmentStatus' },
     {
       text: 'CURRENT STEP',
       value: 'step',
@@ -193,10 +155,35 @@ const createMutation = useMutation({
   onError: error => {},
 });
 
+function handleContinueApplication() {
+  if (
+    applicationStore.completeApplication.application.applicationType ===
+      'standard' ||
+    applicationStore.completeApplication.application.applicationType ===
+      'judicial' ||
+    applicationStore.completeApplication.application.applicationType ===
+      'reserve'
+  ) {
+    router.push(Routes.APPLICATION_ROUTE_PATH);
+  } else {
+    router.push(Routes.RENEW_APPLICATION_ROUTE_PATH);
+  }
+}
+
+function handleModifyApplication() {
+  applicationStore.completeApplication.application.currentStep = 1;
+  applicationStore.completeApplication.application.isComplete = false;
+  applicationStore.completeApplication.application.status = 1;
+  router.push(Routes.RENEW_APPLICATION_ROUTE_PATH);
+}
+
 function handlRenewApplication() {
-  applicationTypeStore.state.type = 'renew';
   applicationStore.completeApplication.id = window.crypto.randomUUID();
   applicationStore.completeApplication.application.currentStep = 1;
+  applicationStore.completeApplication.application.isComplete = false;
+  applicationStore.completeApplication.application.status = 1;
+  applicationStore.completeApplication.application.applicationType =
+    'renew-standard';
   createMutation.mutate();
 }
 </script>
