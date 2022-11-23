@@ -1,23 +1,25 @@
 <template>
   <div class="finalize-view">
-    <v-container v-if="isLoading && !state.applicationLoaded">
+    <v-container
+      fluid
+      v-if="isLoading && !isError"
+    >
       <v-skeleton-loader
         fluid
         class="fill-height"
-        type=" list-item"
-      />
+        type="list-item, divider, list-item-three-line,
+       acations"
+      >
+      </v-skeleton-loader>
     </v-container>
-    <div v-else>
+    <div>
       <SideBar
         :options="options"
         :title="'Information Sections'"
         :handle-selection="handleSelection"
       />
-      <FinalizeContainer v-if="state.applicationLoaded" />
-      <PaymentContainer
-        v-if="state.applicationLoaded"
-        :toggle-payment="togglePaymentComplete"
-      />
+      <FinalizeContainer />
+      <PaymentContainer :toggle-payment="togglePaymentComplete" />
       <AppointmentContainer
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
@@ -60,7 +62,6 @@ import Routes from '@core-public/router/routes';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
 import { reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
-import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { useRouter } from 'vue-router/composables';
@@ -92,23 +93,9 @@ const state = reactive({
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const appointmentsStore = useAppointmentsStore();
-const authStore = useAuthStore();
 const router = useRouter();
 
-const { isLoading } = useQuery(['getIncompleteApplications'], () => {
-  if (!completeApplicationStore.completeApplication.id) {
-    const res = completeApplicationStore.getCompleteApplicationFromApi(
-      authStore.auth.userEmail,
-      false
-    );
-
-    res.then(data => {
-      completeApplicationStore.setCompleteApplication(data);
-      state.applicationLoaded = true;
-      window.console.log(state.applicationLoaded);
-    });
-  }
-
+const { isLoading, isError } = useQuery(['getIncompleteApplications'], () => {
   const appRes = appointmentsStore.getAvailableAppointments();
 
   appRes.then((data: Array<AppointmentType>) => {

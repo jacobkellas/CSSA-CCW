@@ -171,6 +171,7 @@ import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useQuery } from '@tanstack/vue-query';
 import { onMounted, reactive } from 'vue';
+import { useRouter } from 'vue-router/composables';
 
 interface IWrapperProps {
   admin: boolean;
@@ -181,6 +182,7 @@ const props = defineProps<IWrapperProps>();
 
 const applicationStore = useCompleteApplicationStore();
 const authStore = useAuthStore();
+const router = useRouter();
 
 const stepIndex = reactive({
   step: 1,
@@ -189,6 +191,10 @@ const stepIndex = reactive({
 
 onMounted(() => {
   stepIndex.step = applicationStore.completeApplication.application.currentStep;
+
+  if (stepIndex.step > 9) {
+    router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
+  }
 });
 
 const { isLoading } = useQuery(['getIncompleteApplications'], () => {

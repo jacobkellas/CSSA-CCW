@@ -2,7 +2,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <!-- eslint-disable vue-a11y/no-autofocus -->
 <template>
-  <div class="applications-table">
+  <div class="applications-table mt-5">
     <v-row>
       <v-col
         cols="12"
@@ -206,8 +206,8 @@ const createMutation = useMutation({
 });
 
 function handleSelection(application) {
-  // TODO: Route this to the detail view after create the abiltify to create a application on this page.
   setCompleteApplication(application);
+  router.push(Routes.APPLICATION_DETAIL_ROUTE);
 }
 
 async function handleCreateApplication() {
