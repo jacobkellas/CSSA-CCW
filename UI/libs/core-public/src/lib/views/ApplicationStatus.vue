@@ -13,7 +13,7 @@
           :items="state.applications"
           item-key="orderId"
           item-class="rowClass"
-          :loading="isLoading && state.dataLoaded && !isError"
+          :loading="isLoading && !state.dataLoaded && !isError"
           :loading-text="$t('Loading user applications')"
           :footer-props="{
             showFirstLastPage: true,
@@ -163,6 +163,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const {
   getAllUserApplications,
+  getCompleteApplicationFromApi,
   setCompleteApplication,
   createApplication,
   completeApplication,
@@ -206,8 +207,13 @@ const createMutation = useMutation({
 });
 
 function handleSelection(application) {
-  setCompleteApplication(application);
-  router.push(Routes.APPLICATION_DETAIL_ROUTE);
+  getCompleteApplicationFromApi(
+    application.application.orderId,
+    application.application.isComplete
+  ).then(data => {
+    setCompleteApplication(data);
+    router.push(Routes.APPLICATION_DETAIL_ROUTE);
+  });
 }
 
 async function handleCreateApplication() {

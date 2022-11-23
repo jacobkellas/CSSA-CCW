@@ -32,14 +32,14 @@ export const useCompleteApplicationStore = defineStore(
      * Get the complete application from the backend
      */
     async function getCompleteApplicationFromApi(
-      userEmail: string,
+      orderId: string,
       isComplete: boolean
     ) {
       const res = await axios
         .get(Endpoints.GET_PERMIT_ENDPOINT, {
           params: {
-            userEmailOrOrderId: userEmail,
-            isOrderId: false,
+            userEmailOrOrderId: orderId,
+            isOrderId: true,
             isComplete,
           },
         })
