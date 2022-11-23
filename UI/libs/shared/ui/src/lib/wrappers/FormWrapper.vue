@@ -1,16 +1,6 @@
 <template>
   <div class="text-left">
-    <v-container v-if="isLoading">
-      <v-skeleton-loader
-        fluid
-        class="fill-height"
-        type=" list-item"
-      />
-    </v-container>
-    <v-container
-      v-if="!isLoading"
-      fluid
-    >
+    <v-container fluid>
       <v-stepper
         vertical
         :non-linear="props.admin"
@@ -169,7 +159,6 @@ import SecondFormStepThree from '@shared-ui/components/form-stepper/form-steps/A
 import SecondFormStepFour from '@shared-ui/components/form-stepper/form-steps/SignatureStep.vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
-import { useQuery } from '@tanstack/vue-query';
 import { onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router/composables';
 
@@ -194,22 +183,6 @@ onMounted(() => {
 
   if (stepIndex.step > 9) {
     router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
-  }
-});
-
-const { isLoading } = useQuery(['getIncompleteApplications'], () => {
-  if (!applicationStore.completeApplication.id) {
-    stepIndex.step = 0;
-    const res = applicationStore.getCompleteApplicationFromApi(
-      authStore.auth.userEmail,
-      false
-    );
-
-    res.then(data => {
-      applicationStore.setCompleteApplication(data);
-      stepIndex.step =
-        applicationStore.completeApplication.application.currentStep;
-    });
   }
 });
 

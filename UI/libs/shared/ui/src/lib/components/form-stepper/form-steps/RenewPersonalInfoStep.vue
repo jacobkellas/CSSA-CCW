@@ -252,7 +252,7 @@
       <v-subheader class="subHeader font-weight-bold">
         {{ $t('Marital Status') }}
       </v-subheader>
-      <v-row class="ml-1">
+      <v-row>
         <v-col
           cols="12"
           lg="6"
@@ -286,7 +286,7 @@
           <v-subheader class="subHeader font-weight-bold">
             {{ $t('Spouse Information') }}
           </v-subheader>
-          <v-row class="ml-5">
+          <v-row>
             <v-col
               cols="12"
               lg="6"
@@ -300,26 +300,21 @@
               >
                 <template #prepend>
                   <v-icon
-                    small
+                    x-small
                     color="error"
                   >
                     mdi-star
                   </v-icon>
                 </template>
               </v-text-field>
-
-              <v-text-field
-                outlined
-                dense
-                :label="$t('Middle Name')"
-                v-model="completeApplication.spouseInformation.middleName"
-              />
             </v-col>
             <v-col
               cols="12"
               lg="6"
             >
               <v-text-field
+                outlined
+                dense
                 :label="$t('First Name')"
                 :rules="[v => !!v || $t('First name cannot be blank')]"
                 v-model="completeApplication.spouseInformation.firstName"
@@ -333,9 +328,29 @@
                   </v-icon>
                 </template>
               </v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 outlined
                 dense
+                class="pl-6"
+                :label="$t('Middle Name')"
+                v-model="completeApplication.spouseInformation.middleName"
+              />
+            </v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
+              <v-text-field
+                outlined
+                dense
+                class="pl-6"
                 :label="$t('Maiden Name')"
                 v-model="completeApplication.spouseInformation.maidenName"
               />
@@ -451,4 +466,12 @@ function getAliasFromDialog(alias) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.alias-components-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+</style>
