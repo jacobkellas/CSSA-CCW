@@ -2,7 +2,7 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <!-- eslint-disable vue-a11y/no-autofocus -->
 <template>
-  <div class="applications-table">
+  <div class="applications-table mt-5">
     <v-row>
       <v-col
         cols="12"
@@ -13,7 +13,7 @@
           :items="state.applications"
           item-key="orderId"
           item-class="rowClass"
-          :loading="isLoading && state.dataLoaded && !isError"
+          :loading="isLoading && !state.dataLoaded && !isError"
           :loading-text="$t('Loading user applications')"
           :footer-props="{
             showFirstLastPage: true,
@@ -163,6 +163,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const {
   getAllUserApplications,
+  getCompleteApplicationFromApi,
   setCompleteApplication,
   createApplication,
   completeApplication,
@@ -206,8 +207,13 @@ const createMutation = useMutation({
 });
 
 function handleSelection(application) {
-  // TODO: Route this to the detail view after create the abiltify to create a application on this page.
-  setCompleteApplication(application);
+  getCompleteApplicationFromApi(
+    application.application.orderId,
+    application.application.isComplete
+  ).then(data => {
+    setCompleteApplication(data);
+    router.push(Routes.APPLICATION_DETAIL_ROUTE);
+  });
 }
 
 async function handleCreateApplication() {
