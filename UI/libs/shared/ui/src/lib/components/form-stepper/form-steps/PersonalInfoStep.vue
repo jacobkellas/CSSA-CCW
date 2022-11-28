@@ -222,7 +222,11 @@
                   </v-icon>
                 </template>
               </v-text-field>
-
+            </v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 dense
                 outlined
@@ -231,6 +235,8 @@
                 v-model="completeApplication.spouseInformation.middleName"
               />
             </v-col>
+          </v-row>
+          <v-row>
             <v-col
               cols="12"
               lg="6"
@@ -251,6 +257,11 @@
                   </v-icon>
                 </template>
               </v-text-field>
+            </v-col>
+            <v-col
+              cols="12"
+              lg="6"
+            >
               <v-text-field
                 dense
                 outlined
