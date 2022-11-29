@@ -10,21 +10,24 @@
           :items="state.application"
           :is-loading="!!state.application"
         />
-        <v-container>
+        <v-container class="item-container">
           <v-sheet class="rounded">
-            <v-timeline dense>
+            <v-timeline
+              dense
+              class="h-full"
+            >
               <v-timeline-item
-                v-for="history in applicationStore.completeApplication.history"
-                :key="history.changeDateTimeUtc"
+                v-for="(item, index) in state.application[0].history.reverse()"
+                :key="index"
                 color="accent"
                 small
               >
                 <ul class="text-left">
-                  <li>{{ history.change }}</li>
+                  <li>{{ item.change }}</li>
                   <li>
-                    {{ new Date(history.changeDateTimeUtc).toLocaleString() }}
+                    {{ new Date(item.changeDateTimeUtc).toLocaleString() }}
                   </li>
-                  <li>{{ history.changeMadeBy }}</li>
+                  <li>{{ item.changeMadeBy }}</li>
                 </ul>
               </v-timeline-item>
             </v-timeline>
@@ -189,4 +192,9 @@ function handlRenewApplication() {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.item-container {
+  height: 50vh;
+  overflow-y: scroll;
+}
+</style>

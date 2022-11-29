@@ -497,7 +497,10 @@
         {{ $t(' Previous Address') }}
       </v-subheader>
       <div class="previous-address-container">
-        <address-table :addresses="completeApplication.previousAddresses" />
+        <address-table
+          :addresses="completeApplication.previousAddresses"
+          @delete="deleteAddress"
+        />
         <PreviousAddressDialog
           :get-previous-address-from-dialog="getPreviousAddressFromDialog"
         />
@@ -579,6 +582,10 @@ const saveMutation = useMutation({
 
 function getPreviousAddressFromDialog(address: AddressInfoType) {
   completeApplication.previousAddresses.push(address);
+}
+
+function deleteAddress(index) {
+  completeApplication.previousAddresses.splice(index, 1);
 }
 </script>
 

@@ -201,7 +201,7 @@
           <v-subheader class="subHeader font-weight-bold">
             {{ $t('Spouse Information') }}
           </v-subheader>
-          <v-row class="ml-5">
+          <v-row>
             <v-col
               cols="12"
               lg="6"
@@ -230,20 +230,6 @@
               <v-text-field
                 dense
                 outlined
-                class="pl-6"
-                :label="$t('Middle Name')"
-                v-model="completeApplication.spouseInformation.middleName"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col
-              cols="12"
-              lg="6"
-            >
-              <v-text-field
-                dense
-                outlined
                 :label="$t('First Name')"
                 :rules="[v => !!v || $t('First name cannot be blank')]"
                 v-model="completeApplication.spouseInformation.firstName"
@@ -258,6 +244,21 @@
                 </template>
               </v-text-field>
             </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+              cols="12"
+              lg="6"
+            >
+              <v-text-field
+                dense
+                outlined
+                class="pl-6"
+                :label="$t('Middle Name')"
+                v-model="completeApplication.spouseInformation.middleName"
+              />
+            </v-col>
+
             <v-col
               cols="12"
               lg="6"
@@ -280,7 +281,10 @@
       {{ $t('Aliases') }}
     </v-subheader>
     <div class="alias-components-container">
-      <AliasTable :aliases="completeApplication.aliases" />
+      <AliasTable
+        :aliases="completeApplication.aliases"
+        @delete="deleteAlias"
+      />
       <AliasDialog :save-alias="getAliasFromDialog" />
     </div>
     <v-divider class="my-5" />
@@ -380,6 +384,10 @@ async function handleSubmit() {
 
 function getAliasFromDialog(alias) {
   completeApplication.aliases.unshift(alias);
+}
+
+function deleteAlias(index) {
+  completeApplication.aliases.splice(index, 1);
 }
 </script>
 

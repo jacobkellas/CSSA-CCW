@@ -365,14 +365,17 @@
       {{ $t('Aliases') }}
     </v-subheader>
     <div class="alias-components-container">
-      <AliasTable :aliases="completeApplication.aliases" />
+      <AliasTable
+        :aliases="completeApplication.aliases"
+        @delete="deleteAlias"
+      />
       <AliasDialog :save-alias="getAliasFromDialog" />
     </div>
     <FormButtonContainer
       :valid="valid"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
-      @back="router.push(props.routes.APPLICATION_ROUTE_PATH)"
+      @back="router.push('/')"
       @cancel="router.push('/')"
     />
     <FormErrorAlert
@@ -404,12 +407,10 @@ import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface FormStepOneProps {
   handleNextSection: () => void;
-  routes: any;
 }
 
 const props = withDefaults(defineProps<FormStepOneProps>(), {
   handleNextSection: () => null,
-  routes: {},
 });
 
 const errors = ref([] as Array<string>);
@@ -463,6 +464,10 @@ function getAliasFromDialog(alias) {
   completeApplicationStore.completeApplication.application.aliases.unshift(
     alias
   );
+}
+
+function deleteAlias(index) {
+  completeApplication.aliases.splice(index, 1);
 }
 </script>
 

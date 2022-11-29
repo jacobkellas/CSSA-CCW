@@ -16,6 +16,7 @@
             <th>
               {{ $t('Serial Number') }}
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,22 @@
             <td>
               {{ weapon.serialNumber }}
             </td>
+            <td>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <v-btn
+                    text
+                    color="error"
+                    @click="handleDelete(index)"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon color="error"> mdi-close-circle </v-icon>
+                  </v-btn>
+                </template>
+                {{ $t('Delete item') }}
+              </v-tooltip>
+            </td>
           </tr>
         </tbody>
       </template>
@@ -49,5 +66,11 @@ interface IWeaponTableProps {
   weapons: Array<WeaponInfoType>;
 }
 
+const emit = defineEmits(['delete']);
+
 const props = defineProps<IWeaponTableProps>();
+
+function handleDelete(index) {
+  emit('delete', index);
+}
 </script>
