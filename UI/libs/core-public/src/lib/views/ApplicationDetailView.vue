@@ -165,9 +165,9 @@ function handleContinueApplication() {
     applicationStore.completeApplication.application.applicationType ===
       'reserve'
   ) {
-    router.push(Routes.APPLICATION_ROUTE_PATH);
+    router.push(Routes.FORM_ROUTE_PATH);
   } else {
-    router.push(Routes.RENEW_APPLICATION_ROUTE_PATH);
+    router.push(Routes.RENEW_FORM_ROUTE_PATH);
   }
 }
 
@@ -175,7 +175,7 @@ function handleModifyApplication() {
   applicationStore.completeApplication.application.currentStep = 1;
   applicationStore.completeApplication.application.isComplete = false;
   applicationStore.completeApplication.application.status = 1;
-  router.push(Routes.RENEW_APPLICATION_ROUTE_PATH);
+  router.push(Routes.RENEW_FORM_ROUTE_PATH);
 }
 
 function handlRenewApplication() {
