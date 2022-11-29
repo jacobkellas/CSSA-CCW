@@ -24,6 +24,7 @@ export const useCompleteApplicationStore = defineStore(
      */
     function setCompleteApplication(payload: CompleteApplication) {
       completeApplication.application = payload.application;
+      completeApplication.history = payload.history;
       completeApplication.id = payload.id;
     }
 

@@ -117,6 +117,7 @@ function handleSelection(application) {
     application.application.isComplete
   ).then(data => {
     setCompleteApplication(data);
+    window.console.log(data);
     router.push(Routes.APPLICATION_DETAIL_ROUTE);
   });
 }
