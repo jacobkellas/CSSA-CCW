@@ -17,7 +17,7 @@
               class="h-full"
             >
               <v-timeline-item
-                v-for="(item, index) in state.application[0].history"
+                v-for="(item, index) in state.application[0].history.reverse()"
                 :key="index"
                 color="accent"
                 small
