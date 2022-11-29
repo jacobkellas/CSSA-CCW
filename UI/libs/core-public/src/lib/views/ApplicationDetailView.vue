@@ -8,6 +8,7 @@
         <ApplicationTable
           :headers="state.headers"
           :items="state.application"
+          :is-loading="!!state.application"
         />
         <v-container>
           <v-sheet class="rounded">
