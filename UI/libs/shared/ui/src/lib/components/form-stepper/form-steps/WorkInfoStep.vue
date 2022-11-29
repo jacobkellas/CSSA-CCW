@@ -229,7 +229,10 @@
       </div>
     </v-form>
     <div class="weapon-components-container">
-      <WeaponsTable :weapons="completeApplication.weapons" />
+      <WeaponsTable
+        :weapons="completeApplication.weapons"
+        @delete="deleteWeapon"
+      />
       <WeaponsDialog :save-weapon="getWeaponFromDialog" />
     </div>
     <v-divider clase="mt-5" />
@@ -315,6 +318,10 @@ function handleBack() {
 
 function getWeaponFromDialog(weapon) {
   completeApplication.weapons.push(weapon);
+}
+
+function deleteWeapon(index) {
+  completeApplication.weapons.splice(index, 1);
 }
 </script>
 

@@ -10,6 +10,7 @@
             <th>{{ $t('City where changed') }}</th>
             <th>{{ $t('State or region where changed') }}</th>
             <th>{{ $t('Court file number') }}</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,15 @@
             <td>
               {{ alias.courtFileNumber }}
             </td>
+            <td>
+              <v-btn
+                text
+                color="error"
+                @click="handleDelete(index)"
+              >
+                <v-icon color="error"> mdi-close-circle </v-icon>
+              </v-btn>
+            </td>
           </tr>
         </tbody>
       </template>
@@ -49,7 +59,13 @@ interface AliasTableProps {
   aliases?: Array<AliasType>;
 }
 
+const emit = defineEmits(['delete']);
+
 const props = withDefaults(defineProps<AliasTableProps>(), {
   aliases: () => [],
 });
+
+function handleDelete(index) {
+  emit('delete', index);
+}
 </script>

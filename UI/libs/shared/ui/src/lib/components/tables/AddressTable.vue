@@ -11,6 +11,7 @@
             <th>{{ $t('County') }}</th>
             <th>{{ $t('Zip') }}</th>
             <th>{{ $t('Country') }}</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,15 @@
             <td>
               {{ address.country }}
             </td>
+            <td>
+              <v-btn
+                text
+                color="error"
+                @click="handleDelete(index)"
+              >
+                <v-icon color="error"> mdi-close-circle </v-icon>
+              </v-btn>
+            </td>
           </tr>
         </tbody>
       </template>
@@ -53,7 +63,13 @@ interface AddressTableProps {
   addresses?: Array<AddressInfoType>;
 }
 
+const emit = defineEmits(['delete']);
+
 const props = withDefaults(defineProps<AddressTableProps>(), {
   addresses: () => [],
 });
+
+function handleDelete(index) {
+  emit('delete', index);
+}
 </script>
