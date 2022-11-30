@@ -12,7 +12,7 @@
       >
       </v-skeleton-loader>
     </v-container>
-    <div>
+    <div v-else>
       <SideBar
         :options="options"
         :title="'Information Sections'"
@@ -20,7 +20,29 @@
       />
       <FinalizeContainer />
       <PaymentContainer :toggle-payment="togglePaymentComplete" />
+      <v-container v-if="!state.appointmentsLoaded">
+        <v-skeleton-loader
+          fluid
+          class="fill-height"
+          type="list-item, divider, list-item-three-line,
+       actions"
+        >
+        </v-skeleton-loader>
+      </v-container>
+      <v-container v-if="!isError || state.appointments.length === 0">
+        <v-card>
+          <v-alert
+            outlined
+            type="warning"
+          >
+            {{
+              $t(' No available appointments found. Please try again later.')
+            }}
+          </v-alert>
+        </v-card>
+      </v-container>
       <AppointmentContainer
+        v-else
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
         :reschedule="false"
@@ -90,6 +112,7 @@ const state = reactive({
   appointmentComplete: false,
   appointments: [] as Array<AppointmentType>,
   applicationLoaded: false,
+  appointmentsLoaded: false,
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const appointmentsStore = useAppointmentsStore();
@@ -98,24 +121,29 @@ const router = useRouter();
 const { isLoading, isError } = useQuery(['getIncompleteApplications'], () => {
   const appRes = appointmentsStore.getAvailableAppointments();
 
-  appRes.then((data: Array<AppointmentType>) => {
-    data.forEach(event => {
-      let start = new Date(event.start);
-      let end = new Date(event.end);
+  appRes
+    .then((data: Array<AppointmentType>) => {
+      data.forEach(event => {
+        let start = new Date(event.start);
+        let end = new Date(event.end);
 
-      let formatedStart = `${start.getFullYear()}-${
-        start.getMonth() + 1
-      }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
+        let formatedStart = `${start.getFullYear()}-${
+          start.getMonth() + 1
+        }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
 
-      let formatedEnd = `${end.getFullYear()}-${
-        end.getMonth() + 1
-      }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
+        let formatedEnd = `${end.getFullYear()}-${
+          end.getMonth() + 1
+        }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
 
-      event.start = formatedStart;
-      event.end = formatedEnd;
+        event.start = formatedStart;
+        event.end = formatedEnd;
+      });
+      state.appointments = data;
+      state.appointmentsLoaded = true;
+    })
+    .catch(() => {
+      state.appointmentsLoaded = true;
     });
-    state.appointments = data;
-  });
 });
 
 const updateMutation = useMutation({

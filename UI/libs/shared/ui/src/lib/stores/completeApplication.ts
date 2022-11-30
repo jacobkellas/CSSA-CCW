@@ -12,8 +12,7 @@ export const useCompleteApplicationStore = defineStore(
     const authStore = useAuthStore();
     const completeApplication =
       reactive<CompleteApplication>(defaultPermitState);
-    const allUserApplications =
-      ref<Array<CompleteApplication>>(defaultPermitState);
+    const allUserApplications = ref<Array<CompleteApplication>>();
 
     const getCompleteApplication = computed(() => completeApplication);
     const getAllUserApplications = computed(() => allUserApplications);

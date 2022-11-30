@@ -1,3 +1,5 @@
+import { VuetifyThemeItem } from 'vuetify/types/services/theme';
+
 export type AddressInfoType = {
   addressLine1: string;
   addressLine2: string;
