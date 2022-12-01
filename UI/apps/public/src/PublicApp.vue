@@ -20,7 +20,7 @@
       id="app"
     >
       <PageTemplate>
-        <router-view />
+        <router-view :key="$route.fullPath" />
       </PageTemplate>
       <div
         class="update-dialog"

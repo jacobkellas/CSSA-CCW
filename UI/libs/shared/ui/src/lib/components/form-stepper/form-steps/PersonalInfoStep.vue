@@ -180,7 +180,7 @@
             v-model="completeApplication.personalInfo.maritalStatus"
             :label="'Marital status'"
             :hint="'Marital Status is required'"
-            :layout="'row'"
+            row
           >
             <v-radio
               :color="$vuetify.theme.dark ? 'info' : 'primary'"
@@ -280,13 +280,35 @@
     <v-subheader class="sub-header font-weight-bold">
       {{ $t('Aliases') }}
     </v-subheader>
-    <div class="alias-components-container">
-      <AliasTable
-        :aliases="completeApplication.aliases"
-        @delete="deleteAlias"
+    <v-radio-group
+      class="ml-6"
+      v-model="showAlias"
+      :label="$t('In the past have you ever gone by a different name?')"
+      row
+    >
+      <v-radio
+        class="ml-6"
+        :label="$t('Yes')"
+        :value="true"
       />
-      <AliasDialog :save-alias="getAliasFromDialog" />
-    </div>
+      <v-radio
+        class="ml-6"
+        :label="$t('No')"
+        :value="false"
+      />
+    </v-radio-group>
+    <v-container
+      fluid
+      v-if="showAlias"
+    >
+      <div class="alias-components-container">
+        <AliasTable
+          :aliases="completeApplication.aliases"
+          @delete="deleteAlias"
+        />
+        <AliasDialog :save-alias="getAliasFromDialog" />
+      </div>
+    </v-container>
     <v-divider class="my-5" />
     <FormButtonContainer
       :valid="valid"
@@ -334,6 +356,7 @@ const errors = ref([] as Array<string>);
 const valid = ref(false);
 const show1 = ref(false);
 const show2 = ref(false);
+const showAlias = ref(false);
 const snackbar = ref(false);
 let ssnConfirm = ref('');
 

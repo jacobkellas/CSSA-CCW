@@ -201,6 +201,8 @@ const appointmentMutation = useMutation({
 
     return appointmentStore.sendAppointmentCheck(body).then(() => {
       appointmentStore.currentAppointment = body;
+      applicationStore.completeApplication.application.appointmentDateTime =
+        body.start;
     });
   },
   onSuccess: () => {

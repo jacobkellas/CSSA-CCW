@@ -785,7 +785,7 @@ const goBackMutation = useMutation({
     return applicationStore.updateApplication('');
   },
   onSuccess: () => {
-    router.push(Routes.FORM_TWO_ROUTE_PATH);
+    router.push(Routes.FORM_ROUTE_PATH);
   },
   onError: () => {
     snackbar.value = true;

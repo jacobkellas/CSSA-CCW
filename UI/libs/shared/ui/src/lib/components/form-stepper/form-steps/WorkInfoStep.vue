@@ -240,7 +240,7 @@
       :valid="state.valid"
       @submit="updateMutation.mutate"
       @save="saveMutation.mutate"
-      @back="handleBack"
+      @back="props.handlePreviousSection"
       @cancel="router.push('/')"
     />
     <v-snackbar
@@ -273,6 +273,7 @@ import {
 interface ISecondFormStepOneProps {
   routes: any;
   handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
 }
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
@@ -310,11 +311,6 @@ const saveMutation = useMutation({
     state.snackbar = true;
   },
 });
-
-function handleBack() {
-  completeApplication.currentStep = 5;
-  router.push(props.routes.FORM_ROUTE_PATH);
-}
 
 function getWeaponFromDialog(weapon) {
   completeApplication.weapons.push(weapon);
