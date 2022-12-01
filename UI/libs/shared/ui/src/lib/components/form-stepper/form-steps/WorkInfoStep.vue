@@ -313,7 +313,6 @@ const saveMutation = useMutation({
 
 function handleBack() {
   completeApplication.currentStep = 5;
-  router.push(props.routes.FORM_ROUTE_PATH);
 }
 
 function getWeaponFromDialog(weapon) {

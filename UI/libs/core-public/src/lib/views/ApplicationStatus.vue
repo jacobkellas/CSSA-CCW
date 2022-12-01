@@ -4,7 +4,7 @@
 <template>
   <div class="applications-table mt-5">
     <v-container
-      v-if="isLoading && !isError && state.dataLoaded"
+      v-if="isLoading && !isError && !state.dataLoaded"
       fluid
     >
       <v-skeleton-loader
@@ -103,8 +103,11 @@ const { isLoading, isError } = useQuery(
       state.applications = data;
       state.dataLoaded = true;
     },
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: 'always',
   }
 );
+
 const createMutation = useMutation({
   mutationFn: createApplication,
   onSuccess: () => {

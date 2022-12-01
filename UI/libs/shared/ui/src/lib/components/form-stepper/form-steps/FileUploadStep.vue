@@ -15,6 +15,7 @@
         >
           <v-file-input
             outlined
+            dense
             ref="driver-license"
             show-size
             small-chips
@@ -29,6 +30,7 @@
         >
           <v-file-input
             outlined
+            dense
             show-size
             small-chips
             accept=".pdf, .doc, .docx"
@@ -43,6 +45,7 @@
           <v-file-input
             outlined
             show-size
+            dense
             small-chips
             accept=".pdf, .doc, .docx"
             :label="$t('Proof of Residence 2')"
@@ -62,6 +65,7 @@
           <v-file-input
             outlined
             show-size
+            dense
             small-chips
             accept=".pdf, .doc, .docx"
             :label="$t('Military Document')"
@@ -81,6 +85,7 @@
           <v-file-input
             outlined
             show-size
+            dense
             small-chips
             accept=".pdf, .doc, .dox"
             :label="$t('Citizenship Documents')"
@@ -100,6 +105,7 @@
         >
           <v-file-input
             outlined
+            dense
             show-size
             small-chips
             multiple
@@ -121,6 +127,7 @@
           <v-file-input
             outlined
             show-size
+            dense
             small-chips
             accept=".pdf, .doc, .dox"
             :label="$t('Name change documents')"
@@ -139,6 +146,7 @@
         >
           <v-file-input
             outlined
+            dense
             show-size
             small-chips
             accept=".pdf, .doc, .dox"
@@ -153,6 +161,7 @@
           <v-file-input
             outlined
             show-size
+            dense
             small-chips
             accept=".pdf, .doc, .dox"
             :label="$t('Reserve documents')"
