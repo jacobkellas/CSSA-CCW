@@ -46,7 +46,8 @@
                   small
                   color="info"
                   :disabled="
-                    applicationStore.completeApplication.application.isComplete
+                    applicationStore.completeApplication.application.status ===
+                    2
                   "
                   v-bind="attrs"
                   v-on="on"
@@ -67,7 +68,8 @@
                   small
                   color="info"
                   :disabled="
-                    !applicationStore.completeApplication.application.isComplete
+                    applicationStore.completeApplication.application.status ===
+                    1
                   "
                   v-bind="attrs"
                   v-on="on"
@@ -91,7 +93,8 @@
                   small
                   color="info"
                   :disabled="
-                    !applicationStore.completeApplication.application.isComplete
+                    applicationStore.completeApplication.application.status ===
+                    1
                   "
                   v-bind="attrs"
                   v-on="on"
