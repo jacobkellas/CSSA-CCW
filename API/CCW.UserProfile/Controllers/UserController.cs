@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CCW.UserProfile.Controllers;
 
-[Authorize]
+
 [ApiController]
 [Route("/Api/" + Constants.AppName + "/v1/[controller]")]
 public class UserController : ControllerBase
@@ -31,8 +31,8 @@ public class UserController : ControllerBase
         _responseMapper = responseMapper;
         _logger = logger;
     }
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "Administrator")]
-   // [Authorize(Policy = "Administrator")]
+
+
     [Route("verifyEmail")]
     [HttpPost]
     public HttpResponseMessage Post(string userEmail)
@@ -53,6 +53,7 @@ public class UserController : ControllerBase
             };
         }
     }
+
 
     [Route("verifyObjectId")]
     [HttpPut]
