@@ -184,6 +184,7 @@ export const defaultPermitState: CompleteApplication = {
     appointmentStatus: false,
     orderId: '',
     uploadedDocuments: [] as Array<UploadedDocType>,
+    appointmentDateTime: '',
   },
   history: [],
   id: '',

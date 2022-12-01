@@ -278,6 +278,7 @@ export type CompleteApplication = {
     appointmentStatus: boolean;
     orderId: string;
     uploadedDocuments: Array<UploadedDocType>;
+    appointmentDateTime: string;
   };
   history: Array<HistoryType>;
   id: string;
