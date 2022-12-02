@@ -5,24 +5,32 @@
     <PermitCard1 />
     <PermitCard2 />
     <v-row class="ml-5">
-      <v-col cols="9">
+      <v-col
+        cols="12"
+        md="8"
+        sm="12"
+      >
         <v-card>
           <v-tabs
-            v-model="state.tab"
+            :v-model="stepIndex + 1"
             class="fixed-tabs-bar"
+            color="blue"
+            center-active
             grow
           >
-            <span
+            <v-tabs-slider color="blue1"></v-tabs-slider>
+            <v-tab
               v-for="(item, index) in state.items"
+              class="nav_tab"
               :key="index"
             >
-              <v-tab
-                @click="$vuetify.goTo('#sec_' + index)"
-                class="nav_tab"
+              <span
+                @click="stepIndex = index + 1"
+                @keydown="stepIndex = index + 1"
               >
                 {{ item }}
-              </v-tab>
-            </span>
+              </span>
+            </v-tab>
             <v-progress-linear
               :active="isLoading"
               :indeterminate="isLoading"
@@ -37,14 +45,15 @@
               v-for="(item, index) in state.items"
               :key="index"
             >
-              <v-container>
-                <v-row dense>
-                  <v-col cols="12">
-                    <div :id="'sec_' + index">
-                      <span
-                        :id="'span_' + index"
-                        v-intersect="handleIntersect"
-                      ></span>
+              <v-form
+                ref="form"
+                v-model="valid"
+                class="ml-4"
+                lazy-validation
+              >
+                <v-container class="permit-form">
+                  <v-row dense>
+                    <v-col cols="12">
                       <v-stepper
                         v-model="stepIndex"
                         class="elevation-0 pb-0"
@@ -53,6 +62,7 @@
                         <v-stepper-step
                           :complete="stepIndex > 1"
                           editable
+                          color="blue"
                           :step="index + 1"
                         >
                           {{ item }}
@@ -60,21 +70,34 @@
 
                         <v-stepper-content :step="index + 1">
                           <component :is="renderTabs(item)" />
-                          <v-row justify="space-between">
+                          <v-row class="mt-4 mb-4">
                             <v-col
                               cols="12"
-                              sm="6"
-                              justify="space-between"
+                              md="5"
+                              sm="12"
                             >
-                              <v-btn>
+                              <v-btn
+                                min-width="200"
+                                small
+                                class="mr-4"
+                                @click="handleBackStep"
+                              >
                                 {{ $t('BACK') }}
                               </v-btn>
                             </v-col>
                             <v-col
                               cols="12"
-                              sm="6"
+                              md="5"
+                              sm="12"
                             >
-                              <v-btn color="primary">
+                              <v-btn
+                                color="blue"
+                                class="white--text ml-4"
+                                min-width="200"
+                                @click="handleNextStep"
+                                :disabled="!valid"
+                                small
+                              >
                                 {{ $t('NEXT') }}
                               </v-btn>
                             </v-col>
@@ -82,10 +105,10 @@
                           <v-spacer></v-spacer>
                         </v-stepper-content>
                       </v-stepper>
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-container>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
             </div>
           </div>
           <v-alert
@@ -107,7 +130,13 @@
           </v-alert>
         </v-card>
       </v-col>
-      <v-col cols="3"><PermitStatus /></v-col>
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
+        <PermitStatus />
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -115,18 +144,15 @@
 import AddressInfoTab from './tabs/AddressInfoTab.vue';
 import AliasesTab from './tabs/AliasesTab.vue';
 import ApplicationInfoTab from './tabs/ApplicantInfoTab.vue';
-import AppointmentInfoTab from './tabs/AppointmentInfoTab.vue';
 import AttachedDocumentsTab from './tabs/AttachedDocumentsTab.vue';
-import BackgroundCheckTab from './tabs/BackgroundCheckTab.vue';
 import BirthInformationTab from './tabs/BirthInformationTab.vue';
 import ContactInfoTab from './tabs/ContactInfoTab.vue';
 import DemographicsTab from './tabs/DemographicsTab.vue';
-import HistoryTab from './tabs/HistoryTab.vue';
-import InterviewQuestionsTab from './tabs/InterviewQuestionsTab.vue';
 import PermitCard1 from '../permit-cards/PermitCard1.vue';
 import PermitCard2 from '../permit-cards/PermitCard2.vue';
 import PermitStatus from '../permit-status/PermitStatus.vue';
 import SurveyInfoTab from './tabs/SurveyInfoTab.vue';
+import WeaponsTab from './tabs/WeaponsTab.vue';
 import WorkInfoTab from './tabs/WorkInfoTab.vue';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
@@ -136,31 +162,47 @@ import { reactive, ref } from 'vue';
 const permitStore = usePermitsStore();
 const route = useRoute();
 
-const stepIndex = ref(1);
-
 const { isLoading, isError } = useQuery(
   ['permitDetail', route.params.orderId],
-  () => permitStore.getPermitDetailApi(route.params.orderId)
+  () => permitStore.getPermitDetailApi(route.params.orderId),
+  { refetchOnMount: 'always' }
 );
+
+const { refetch: queryPermitDetails } = useQuery(
+  ['setPermitsDetails'],
+  permitStore.updatePermitDetailApi,
+  {
+    enabled: false,
+  }
+);
+
+const stepIndex = ref(1);
+const valid = ref(false);
 
 const state = reactive({
   tab: 0,
   items: [
-    'Applicant Info',
+    'Applicant Details',
     'Aliases',
-    'Birth Information',
+    'Birth Details',
     'Demographics',
-    'Contact Info',
-    'Address Info',
-    'Work Info',
-    'Survey Info',
-    'Appointment Info',
-    'Background Check',
-    'Interview Questions',
+    'Contact Details',
+    'Address Details',
+    'Employer Details',
+    'Weapons',
+    'Survey Details',
     'Documents',
-    'History',
   ],
 });
+
+function handleNextStep() {
+  queryPermitDetails();
+  stepIndex.value++;
+}
+
+function handleBackStep() {
+  stepIndex.value--;
+}
 
 onBeforeRouteUpdate(async (to, from) => {
   if (to.params.orderId !== from.params.orderId) {
@@ -172,51 +214,31 @@ const renderTabs = item => {
   switch (item) {
     case 'Aliases':
       return AliasesTab;
-    case 'Birth Information':
+    case 'Birth Details':
       return BirthInformationTab;
     case 'Demographics':
       return DemographicsTab;
-    case 'Contact Info':
+    case 'Contact Details':
       return ContactInfoTab;
-    case 'Address Info':
+    case 'Address Details':
       return AddressInfoTab;
-    case 'Work Info':
+    case 'Employer Details':
       return WorkInfoTab;
-    case 'Survey Info':
+    case 'Weapons':
+      return WeaponsTab;
+    case 'Survey Details':
       return SurveyInfoTab;
-    case 'Appointment Info':
-      return AppointmentInfoTab;
-    case 'Background Check':
-      return BackgroundCheckTab;
-    case 'Interview Questions':
-      return InterviewQuestionsTab;
     case 'Documents':
       return AttachedDocumentsTab;
-    case 'History':
-      return HistoryTab;
     default:
       return ApplicationInfoTab;
   }
 };
-
-function handleIntersect(entries) {
-  let intersecting_element = entries[0];
-
-  if (intersecting_element.isIntersecting) {
-    let id = intersecting_element.target.id;
-    let index = Number(id.split('_')[1]);
-
-    state.tab = index;
-  }
-}
 </script>
-<style lang="scss">
-/* Helper classes */
-
-.fixed-tabs-bar.theme--light.v-tabs > .v-tabs-bar {
-  background-color: #f2f2f2 !important;
+<style lang="scss" scoped>
+.v-application--is-ltr .v-stepper--vertical .v-stepper__content {
+  border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
-
 .fixed-tabs-bar {
   position: -webkit-sticky;
   position: sticky;

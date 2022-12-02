@@ -57,6 +57,7 @@ export type AuthType = {
   isAdmin: boolean;
   verifiedUser: boolean;
   roles: Array<string>;
+  sessionStarted: string;
 };
 
 export type CitizenshipType = {
@@ -276,6 +277,7 @@ export type CompleteApplication = {
     currentStep: number;
     status: number;
     appointmentStatus: boolean;
+    appointmentDateTime: string;
     orderId: string;
     uploadedDocuments: Array<UploadedDocType>;
     appointmentDateTime: string;

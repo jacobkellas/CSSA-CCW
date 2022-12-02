@@ -1,7 +1,7 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <v-card
-    class="mt-2 ml-8 mr-8"
+    class="mt-3 ml-8 mr-8 fixed-permit-card"
     elevation="2"
   >
     <v-container
@@ -19,7 +19,11 @@
       class="ml-5"
       v-else
     >
-      <v-col cols="4">
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
         <v-card
           elevation="0"
           class="text-left"
@@ -32,8 +36,15 @@
           >
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card elevation="0">
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
+        <v-card
+          elevation="0"
+          class="mt-2"
+        >
           <v-chip
             class="ml-4"
             color="blue lighten-4"
@@ -62,10 +73,14 @@
           </v-chip>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
         <v-card
           elevation="0"
-          class="text-right mr-4"
+          class="text-right mr-4 mt-2"
         >
           <v-chip
             class="ml-4"
@@ -85,7 +100,7 @@
           </v-chip>
           <v-chip
             class="ml-4"
-            color="green lighten-4"
+            color="green lighten-3"
             text-color="green darken-4"
             label
           >
@@ -100,16 +115,19 @@
 import { ref } from 'vue';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
+import { useRoute } from 'vue-router/composables';
 
-const { isLoading } = useQuery(['permitDetail']);
-
-window.console.log(isLoading);
-
+const route = useRoute();
 const permitStore = usePermitsStore();
+
+const { isLoading } = useQuery(['permitDetail', route.params.orderId], () =>
+  permitStore.getPermitDetailApi(route.params.orderId)
+);
+
 const submittedDate = ref(
   new Date(
-    permitStore.getPermitDetail.history[0]?.changeDateTimeUtc
-  ).toLocaleDateString('en-US', {
+    permitStore.getPermitDetail?.history[0]?.changeDateTimeUtc
+  )?.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

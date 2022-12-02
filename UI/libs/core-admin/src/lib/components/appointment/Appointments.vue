@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multiline-html-element-content-newline -->
 <!-- eslint-disable vue-a11y/form-has-label -->
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <!-- eslint-disable vue/valid-v-slot -->
@@ -64,6 +65,28 @@
                   @change="onFileChanged"
                 />
               </v-col>
+              <v-col md="1">
+                <v-tooltip top>
+                  <template #activator="{ on, attrs }">
+                    <v-btn
+                      elevation="2"
+                      fab
+                      raised
+                      rounded
+                      color="primary"
+                      x-small
+                      v-bind="attrs"
+                      v-on="on"
+                      href="/documents/ccw-appointment-schedule-template.csv"
+                      target="_blank"
+                      aria-label="Download the template file here"
+                    >
+                      <v-icon> mdi-download </v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Download the template file here</span>
+                </v-tooltip>
+              </v-col>
             </v-row>
           </v-container>
         </v-toolbar>
@@ -76,7 +99,7 @@
           class="ma-0 font-weight-regular"
           small
         >
-          {{ props.item.status }}
+          {{ props.item.status === 'true' ? 'Scheduled' : 'Not Scheduled' }}
         </v-chip>
         <v-icon
           color="error"

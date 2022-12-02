@@ -168,6 +168,7 @@ export default {
       window.console.log(`access_token acquired at: ${new Date().toString()}`);
       this.token = response.idToken;
       useAuthStore().setToken(response.idToken);
+      useAuthStore().setSessionStarted(new Date().toString());
 
       return response.idToken;
     } catch (err) {

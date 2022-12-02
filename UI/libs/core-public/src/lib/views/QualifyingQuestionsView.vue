@@ -23,12 +23,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -65,12 +65,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -107,12 +107,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -149,12 +149,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -190,12 +190,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -232,12 +232,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -273,12 +273,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -315,12 +315,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -356,13 +356,13 @@
               row
             >
               <v-radio
-                :label="$t('true')"
+                :label="$t('YES')"
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -399,12 +399,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -441,12 +441,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -485,12 +485,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -529,12 +529,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -573,12 +573,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -617,12 +617,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -661,12 +661,12 @@
             >
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('true')"
+                :label="$t('YES')"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -706,13 +706,13 @@
               row
             >
               <v-radio
-                :label="$t('true')"
+                :label="$t('YES')"
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
                 :value="true"
               />
               <v-radio
                 :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                :label="$t('false')"
+                :label="$t('NO')"
                 :value="false"
               />
             </v-radio-group>
@@ -756,10 +756,10 @@
 <script setup lang="ts">
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
+import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
-import { ref } from 'vue';
 
 const snackbar = ref(false);
 const applicationStore = useCompleteApplicationStore();

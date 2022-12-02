@@ -135,8 +135,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
 import { WeaponInfoType } from '@shared-utils/types/defaultTypes';
+import { reactive } from 'vue';
 
 interface IWeaponsDialogProps {
   saveWeapon: (weapon) => void;

@@ -1,8 +1,7 @@
-<!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <div>
-    <v-card elevation="3">
-      <v-card-title class="text-h5">
+    <v-card elevation="0">
+      <v-card-title class="subtitle-2">
         {{ $t('Telephone Numbers:') }}
         <small class="text-caption grey--text text--darken-1"
           >{{ $t('&nbsp;(###-###-####)') }}
@@ -12,11 +11,11 @@
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
         >
           <v-text-field
             dense
-            filled
+            outlined
             :label="$t('Primary phone number')"
             :rules="phoneRuleSet"
             v-model="
@@ -43,25 +42,18 @@
               >
                 mdi-alert-octagon
               </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
-              </v-icon>
             </template>
           </v-text-field>
         </v-col>
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
           class="pl-8"
         >
           <v-text-field
             dense
-            filled
+            outlined
             :label="$t('Cell phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
             v-model="
@@ -76,12 +68,12 @@
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
           class="pl-8"
         >
           <v-text-field
             dense
-            filled
+            outlined
             :label="$t('Work phone number')"
             :hint="$t('Only numbers no spaces or dashes')"
             v-model="
@@ -96,12 +88,12 @@
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
           class="pl-8"
         >
           <v-text-field
             dense
-            filled
+            outlined
             :label="$t('Fax number')"
             :hint="$t('Only numbers no spaces or dashes')"
             v-model="
@@ -118,7 +110,7 @@
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
           class="pl-8"
         >
           <CheckboxInput
@@ -135,19 +127,19 @@
       </v-row>
     </v-card>
     <v-divider class="mt-5 mb-5"></v-divider>
-    <v-card elevation="3">
-      <v-card-title class="text-h5">
+    <v-card elevation="0">
+      <v-card-title class="subtitle-2">
         {{ $t('Email:') }}
       </v-card-title>
       <v-row class="ml-5">
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
         >
           <v-text-field
             dense
-            filled
+            outlined
             :label="$t('Email address')"
             :hint="$t('user email address (Read Only)')"
             persistent-hint
@@ -171,21 +163,14 @@
               >
                 mdi-alert-octagon
               </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
-              </v-icon>
             </template>
           </v-text-field>
         </v-col>
       </v-row>
     </v-card>
     <v-divider class="mt-5 mb-5"></v-divider>
-    <v-card elevation="3">
-      <v-card-title class="text-h5">
+    <v-card elevation="0">
+      <v-card-title class="subtitle-2">
         {{ $t("Driver's License:") }}
         <small class="text-caption grey--text text--darken-1"
           >{{ $t('&nbsp;(Or other State Issued ID)') }}
@@ -195,11 +180,11 @@
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
         >
           <v-text-field
             dense
-            filled
+            outlined
             v-model="permitStore.getPermitDetail.application.idInfo.idNumber"
             :label="$t('Id number')"
             :rules="[v => !!v || $t('Id  number is required')]"
@@ -220,24 +205,17 @@
               >
                 mdi-alert-octagon
               </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
-              </v-icon>
             </template>
           </v-text-field>
         </v-col>
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
         >
           <v-text-field
             dense
-            filled
+            outlined
             :label="$t('Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"
             v-model="
@@ -261,13 +239,6 @@
                 "
               >
                 mdi-alert-octagon
-              </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
               </v-icon>
             </template>
           </v-text-field>

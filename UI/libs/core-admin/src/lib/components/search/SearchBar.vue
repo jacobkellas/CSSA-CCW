@@ -11,7 +11,6 @@
       hide-selected
       item-text="Name"
       item-value="orderID"
-      label="Search"
       placeholder="Start typing to search"
       prepend-icon="mdi-magnify"
       append-icon=""
@@ -24,7 +23,7 @@
             params: { orderId: item.orderID },
           }"
           tag="a"
-          target="_blank"
+          target="_self"
           style="text-decoration: none; color: inherit"
           replace
         >
@@ -35,6 +34,7 @@
                 medium
                 label
                 color="primary lighten-2"
+                class="ml-4"
               >
                 {{ item.orderID }}
               </v-chip>
@@ -105,13 +105,5 @@ watch(search, () => {
     text-overflow: ellipsis;
     font-size: 0.76rem;
   }
-}
-
-.search.v-text-field > .v-input__control > .v-input__slot:before {
-  border-style: none;
-}
-
-.search.v-text-field > .v-input__control > .v-input__slot:after {
-  border-style: none;
 }
 </style>

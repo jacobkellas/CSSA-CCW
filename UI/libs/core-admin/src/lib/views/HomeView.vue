@@ -1,8 +1,21 @@
 <template>
   <div class="home">
+    <v-container
+      v-if="!store.getDocuments.agencyLandingPageImage"
+      fill-height
+      fluid
+      class="option-section"
+    >
+      <v-skeleton-loader
+        width="494"
+        height="196"
+        type="image"
+      >
+      </v-skeleton-loader>
+    </v-container>
     <img
+      v-else
       :class="{ dark: $vuetify.theme.dark }"
-      v-if="store.getDocuments.agencyLandingPageImage"
       alt="Agency landing page image"
       :src="store.getDocuments.agencyLandingPageImage"
       width="494"
@@ -31,7 +44,7 @@
       </div>
       <v-card
         class="search-bar"
-        :width="$vuetify.breakpoint.mdAndDown ? '200' : '400'"
+        :width="$vuetify.breakpoint.mdAndDown ? '200' : '450'"
         v-else
       >
         <SearchBar />

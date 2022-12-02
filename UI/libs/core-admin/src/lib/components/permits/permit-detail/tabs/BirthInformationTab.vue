@@ -1,14 +1,14 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
-  <v-card elevation="3">
-    <v-card-title class="text-h5">
+  <v-card elevation="0">
+    <v-card-title class="subtitle-2">
       {{ $t('Information Related to Your Birth:') }}
     </v-card-title>
     <v-row class="ml-5">
       <v-col
         cols="12"
         md="5"
-        sm="3"
+        sm="12"
       >
         <v-menu
           v-model="menu"
@@ -20,7 +20,7 @@
           <template #activator="{ on, attrs }">
             <v-text-field
               dense
-              filled
+              outlined
               v-model="permitStore.getPermitDetail.application.dob.birthDate"
               :label="$t('Date of birth')"
               hint="YYYY-MM-DD format"
@@ -46,13 +46,6 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </template>
@@ -68,11 +61,11 @@
       <v-col
         cols="12"
         md="5"
-        sm="3"
+        sm="12"
       >
         <v-text-field
           dense
-          filled
+          outlined
           :label="$t('Birth city')"
           :rules="[v => !!v || $t('Birth city cannot be blank')]"
           v-model="permitStore.getPermitDetail.application.dob.birthCity"
@@ -93,18 +86,11 @@
             >
               mdi-alert-octagon
             </v-icon>
-            <v-icon
-              v-else
-              medium
-              color="primary"
-            >
-              mdi-checkbox-marked-circle
-            </v-icon>
           </template>
         </v-text-field>
         <v-autocomplete
           dense
-          filled
+          outlined
           :items="states"
           :label="$t('Birth state')"
           :rules="[v => !!v || $t('Birth state cannot be blank')]"
@@ -127,19 +113,12 @@
             >
               mdi-alert-octagon
             </v-icon>
-            <v-icon
-              v-else
-              medium
-              color="primary"
-            >
-              mdi-checkbox-marked-circle
-            </v-icon>
           </template>
         </v-autocomplete>
 
         <v-autocomplete
           dense
-          filled
+          outlined
           :items="countries"
           :label="$t('Birth country')"
           :rules="[v => !!v || $t('Birth country cannot be blank')]"
@@ -161,13 +140,6 @@
               v-if="!permitStore.getPermitDetail.application.dob.birthCountry"
             >
               mdi-alert-octagon
-            </v-icon>
-            <v-icon
-              v-else
-              medium
-              color="primary"
-            >
-              mdi-checkbox-marked-circle
             </v-icon>
           </template>
         </v-autocomplete>
