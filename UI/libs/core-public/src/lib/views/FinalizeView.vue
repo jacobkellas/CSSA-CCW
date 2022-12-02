@@ -32,7 +32,7 @@
       <v-container
         v-if="
           (!isLoading && !isError) ||
-          (!isLoading && state.appointments.length === 0)
+          (state.appointmentsLoaded && state.appointments.length === 0)
         "
       >
         <v-card>

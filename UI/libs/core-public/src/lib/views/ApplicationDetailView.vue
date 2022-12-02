@@ -188,6 +188,7 @@ function handlRenewApplication() {
   applicationStore.completeApplication.id = window.crypto.randomUUID();
   applicationStore.completeApplication.application.currentStep = 1;
   applicationStore.completeApplication.application.isComplete = false;
+  applicationStore.completeApplication.application.appointmentStatus = false;
   applicationStore.completeApplication.application.status = 1;
   applicationStore.completeApplication.application.applicationType =
     'renew-standard';
