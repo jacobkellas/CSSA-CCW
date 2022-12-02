@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import ApplicationTable from '@core-public/components/tables/ApplicationTable.vue';
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
+import { defaultPermitState } from '@shared-utils/lists/defaultConstants';
 import Routes from '@core-public/router/routes';
 import { reactive } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
@@ -127,9 +128,15 @@ function handleSelection(application) {
 }
 
 async function handleCreateApplication() {
+  setCompleteApplication(defaultPermitState);
+  completeApplication.application.appointmentDateTime = new Date(
+    2001,
+    1,
+    1
+  ).toISOString();
   completeApplication.application.userEmail = authStore.auth.userEmail;
   completeApplication.id = window.crypto.randomUUID();
-  completeApplication.application.currentStep = 1;
+  completeApplication.application.currentStep = 0;
   completeApplication.application.applicationType = 'standard';
   createMutation.mutate();
 }
