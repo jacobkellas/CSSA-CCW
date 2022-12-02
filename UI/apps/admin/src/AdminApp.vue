@@ -4,17 +4,18 @@
 <template>
   <v-app>
     <v-container
-      v-if="
-        isLoading ||
-        isBrandLoading ||
-        isLogoLoading ||
-        isLandingImgLoading ||
-        isPermitsLoading ||
-        isError
-      "
+      v-if="isLoading && !isError"
       fluid
     >
-      <Loader />
+      <v-skeleton-loader
+        fluid
+        class="fill-height"
+        type="list-item, 
+              divider, list-item-three-line, 
+              card-heading, image, image, image,
+              image, actions"
+      >
+      </v-skeleton-loader>
     </v-container>
     <div v-else>
       <PageTemplate>
@@ -49,7 +50,6 @@
 </template>
 
 <script lang="ts">
-import Loader from './Loader.vue';
 import PageTemplate from '@core-admin/components/templates/PageTemplate.vue';
 import initialize from '@core-admin/api/config';
 import { useBrandStore } from '@shared-ui/stores/brandStore';
@@ -60,7 +60,7 @@ import { computed, defineComponent, getCurrentInstance } from 'vue';
 
 export default defineComponent({
   name: 'App',
-  components: { PageTemplate, Loader },
+  components: { PageTemplate },
   methods: {
     async update() {
       this.prompt = false;
