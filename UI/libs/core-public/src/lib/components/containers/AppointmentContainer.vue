@@ -244,8 +244,6 @@ function handleConfirm() {
   } else {
     let appointment = appointmentStore.currentAppointment;
 
-    window.console.log(appointment.id);
-
     appointment.applicationId = null;
     //TODO: also change this once backend is changed
     appointment.status = false.toString();

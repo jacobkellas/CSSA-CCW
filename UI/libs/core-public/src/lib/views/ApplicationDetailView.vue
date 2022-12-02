@@ -162,7 +162,9 @@ const createMutation = useMutation({
 });
 
 function handleContinueApplication() {
-  if (
+  if (applicationStore.completeApplication.application.currentStep === 0) {
+    router.push(Routes.APPLICATION_ROUTE_PATH);
+  } else if (
     applicationStore.completeApplication.application.applicationType ===
       'standard' ||
     applicationStore.completeApplication.application.applicationType ===

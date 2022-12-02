@@ -120,12 +120,14 @@ import AcknowledgementPart from '@shared-ui/components/acknowledgement-section/A
 import Routes from '@core-public/router/routes';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router/composables';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 
 interface AcknowledgementProps {
   nextRoute: string;
 }
 
 const router = useRouter();
+const applicationStore = useCompleteApplicationStore();
 const step = reactive({
   index: 0,
 });
@@ -140,6 +142,7 @@ function handleDecline() {
 }
 
 function handleFinalAccept() {
+  applicationStore.completeApplication.application.currentStep = 1;
   router.push(props.nextRoute);
 }
 </script>
