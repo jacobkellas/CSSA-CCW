@@ -1,12 +1,17 @@
+<!-- eslint-disable vue/multiline-html-element-content-newline -->
 <!-- eslint-disable vue/singleline-html-element-content-newline -->
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <v-card
-    class="mt-8 mb-2"
+    class="mt-6 mb-2"
     elevation="0"
   >
     <v-row class="ml-5">
-      <v-col cols="4">
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
         <v-container
           v-if="isLoading"
           fluid
@@ -26,9 +31,13 @@
         >
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="text-overline mb-4">
+              <div class="text-overline mb-4 d-flex">
                 <span>
-                  {{ permitStore.getPermitDetail.application.dob.birthDate }}
+                  {{
+                    formatDate(
+                      permitStore.getPermitDetail.application.dob.birthDate
+                    )
+                  }}
                 </span>
                 <span>
                   {{ permitStore.getPermitDetail.application.idInfo.idNumber }}
@@ -48,6 +57,7 @@
                 <v-list-item-avatar
                   tile
                   color="grey lighten-2"
+                  class="ml-8"
                   size="40"
                 >
                   <v-icon> mdi-camera-outline </v-icon>
@@ -64,7 +74,11 @@
           </v-list-item>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
         <v-container
           v-if="isLoading"
           fluid
@@ -84,17 +98,40 @@
         >
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="text-overline mb-4">
-                <v-icon color="error lighten-2"> mdi-alert </v-icon>1 Missing
-                Requirement
+              <div
+                class="text-overline mb-4"
+                v-if="!permitStore.getPermitDetail.application.isComplete"
+              >
+                <v-icon
+                  color="error lighten-2"
+                  class="mr-1"
+                >
+                  mdi-alert
+                </v-icon>
+                Missing Requirement
               </div>
+              <div
+                class="text-overline mb-4"
+                v-else
+              >
+                <v-icon
+                  color="success lighten-2"
+                  class="mr-1"
+                >
+                  mdi-shield-check
+                </v-icon>
+                Requirement Fulfilled
+              </div>
+              <v-list-item-title class="mt-8 font-weight-bold">
+              </v-list-item-title>
               <v-list-item-subtitle>
                 No Requests Sent
                 <v-chip
                   color="grey lighten-2"
+                  class="ml-8"
                   label
                 >
-                  <v-icon> mdi-email-outline </v-icon>
+                  <v-icon class="mr-1"> mdi-email-outline </v-icon>
                   Send Request
                 </v-chip>
               </v-list-item-subtitle>
@@ -102,7 +139,11 @@
           </v-list-item>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col
+        cols="12"
+        md="4"
+        sm="12"
+      >
         <v-container
           v-if="isLoading"
           fluid
@@ -122,24 +163,48 @@
         >
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="text-overline mb-4">
-                <v-icon color="error lighten-2"> mdi-alert </v-icon>11:00 AM on
-                March 13, 2024
+              <div
+                v-if="
+                  permitStore.getPermitDetail.application.appointmentDateTime
+                "
+                class="text-overline mb-4"
+              >
+                <v-icon
+                  color="success lighten-2"
+                  class="mr-1"
+                >
+                  mdi-shield-check </v-icon
+                >{{ appointmentTime }} ON {{ appointmentDate }}
               </div>
+              <div
+                v-else
+                class="text-overline mb-4"
+              >
+                <v-icon
+                  color="error lighten-2"
+                  class="mr-1"
+                >
+                  mdi-alert </v-icon
+                >Not Scheduled
+              </div>
+              <v-list-item-title class="mt-8 font-weight-bold">
+              </v-list-item-title>
               <v-list-item-subtitle>
                 No Show
                 <v-chip
                   color="grey lighten-2"
+                  class="ml-4"
                   label
                 >
-                  <v-icon> mdi-email-outline </v-icon>
+                  <v-icon class="mr-1"> mdi-calendar-edit </v-icon>
                   Reschedule
                 </v-chip>
                 <v-chip
                   color="grey lighten-2"
+                  class="ml-4"
                   label
                 >
-                  <v-icon> mdi-email-outline </v-icon>
+                  <v-icon class="mr-1"> mdi-clock-outline </v-icon>
                   Check-in
                 </v-chip>
               </v-list-item-subtitle>
@@ -151,10 +216,34 @@
   </v-card>
 </template>
 <script setup lang="ts">
+import { formatDate } from '@shared-utils/formatters/defaultFormatters';
+import { ref } from 'vue';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
+import { useRoute } from 'vue-router/composables';
 
-const { isLoading } = useQuery(['permitDetail']);
-
+const route = useRoute();
 const permitStore = usePermitsStore();
+
+const { isLoading } = useQuery(['permitDetail', route.params.orderId], () =>
+  permitStore.getPermitDetailApi(route.params.orderId)
+);
+
+const appointmentDate = ref(
+  new Date(
+    permitStore.getPermitDetail?.application.appointmentDateTime
+  )?.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }) || ''
+);
+
+const appointmentTime = ref(
+  new Date(
+    permitStore.getPermitDetail?.application.appointmentDateTime
+  )?.toLocaleTimeString('en-US', {
+    timeStyle: 'short',
+  }) || ''
+);
 </script>

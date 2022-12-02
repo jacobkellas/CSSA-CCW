@@ -5,19 +5,18 @@
     <v-tabs
       v-model="state.tab"
       class="fixed-side-tabs-bar"
+      center-active
+      color="blue1"
       grow
     >
-      <span
-        v-for="(item, index) in state.items"
-        :key="index"
+      <v-tabs-slider color="blue1"></v-tabs-slider>
+      <v-tab
+        v-for="item in state.items"
+        class="nav_tab"
+        :key="item.tabName"
       >
-        <v-tab
-          @click="$vuetify.goTo('#side_sec_' + index)"
-          class="nav_tab"
-        >
-          {{ item }}
-        </v-tab>
-      </span>
+        {{ item.tabName }}
+      </v-tab>
       <v-progress-linear
         :active="isLoading"
         :indeterminate="isLoading"
@@ -28,23 +27,20 @@
       </v-progress-linear>
     </v-tabs>
     <div v-if="!isLoading && !isError">
-      <div
-        v-for="(item, index) in state.items"
-        :key="index"
-      >
-        <v-container>
-          <v-row dense>
-            <v-col cols="12">
-              <div :id="'side_sec_' + index">
-                <span :id="'side_span_' + index"></span>
-                {{ item }}
-
-                <component :is="renderTabs(item)" />
-              </div>
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
+      <v-tabs-items v-model="state.tab">
+        <v-tab-item
+          v-for="item in state.items"
+          :key="item.tabName"
+        >
+          <v-container>
+            <v-row dense>
+              <v-col cols="12">
+                <component :is="renderTabs(item.component)" />
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
+      </v-tabs-items>
     </div>
     <v-alert
       v-if="!isLoading && isError"
@@ -71,13 +67,25 @@ import BackgroundCheckTab from '../permit-detail/tabs/BackgroundCheckTab.vue';
 import CommentsTab from '../permit-detail/tabs/CommentsTab.vue';
 import HistoryTab from '../permit-detail/tabs/HistoryTab.vue';
 import { reactive } from 'vue';
+import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
+import { useRoute } from 'vue-router/composables';
 
-const { isLoading, isError } = useQuery(['permitDetail']);
+const route = useRoute();
+const permitStore = usePermitsStore();
+
+const { isLoading, isError } = useQuery(
+  ['permitDetail', route.params.orderId],
+  () => permitStore.getPermitDetailApi(route.params.orderId)
+);
 
 const state = reactive({
-  tab: 0,
-  items: ['Checklist', 'Comments', 'History'],
+  tab: null,
+  items: [
+    { tabName: 'Checklist', component: 'BackgroundCheckTab' },
+    { tabName: 'Comments', component: 'Comments' },
+    { tabName: 'History', component: 'History' },
+  ],
 });
 
 const renderTabs = item => {
@@ -86,25 +94,17 @@ const renderTabs = item => {
       return HistoryTab;
     case 'Comments':
       return CommentsTab;
-    default:
+    case 'BackgroundCheckTab':
       return BackgroundCheckTab;
   }
 };
 </script>
 
 <style lang="scss">
-.fixed-side-tabs-bar.theme--light.v-tabs > .v-tabs-bar {
-  background-color: #f2f2f2 !important;
-}
-
 .fixed-side-tabs-bar {
   position: -webkit-sticky;
   position: sticky;
   top: 4rem;
   z-index: 999;
-
-  .v-tabs-bar__content {
-    padding-top: 15px;
-  }
 }
 </style>

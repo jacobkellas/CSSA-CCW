@@ -1,19 +1,19 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
   <div>
-    <v-card elevation="3">
-      <v-card-title class="text-h5">
+    <v-card elevation="0">
+      <v-card-title class="subtitle-2">
         {{ $t('Employment:') }}
       </v-card-title>
       <v-row class="ml-5">
         <v-col
           cols="12"
           md="5"
-          sm="3"
+          sm="12"
         >
           <v-select
             dense
-            filled
+            outlined
             v-model="permitStore.getPermitDetail.application.employment"
             :value="permitStore.getPermitDetail.application.employment"
             id="select"
@@ -29,13 +29,6 @@
               >
                 mdi-alert-octagon
               </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
-              </v-icon>
             </template>
           </v-select>
         </v-col>
@@ -44,18 +37,18 @@
       <div
         v-if="permitStore.getPermitDetail.application.employment === 'Employed'"
       >
-        <v-card-title class="text-h5">
+        <v-card-title class="subtitle-2">
           {{ $t('Work Information:') }}
         </v-card-title>
         <v-row class="ml-5">
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               :label="$t('Employer Name')"
               :rules="[v => !!v || $t('You must enter a employer name')]"
               v-model="
@@ -82,24 +75,17 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </v-col>
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               :label="$t('Occupation')"
               :rules="[v => !!v || $t('You must enter a occupation')]"
               v-model="
@@ -126,13 +112,6 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </v-col>
@@ -141,11 +120,11 @@
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               :label="$t('Employer Address Line 1')"
               :rules="[v => !!v || $t('You must enter a address')]"
               v-model="
@@ -172,24 +151,17 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </v-col>
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               class="pl-6"
               :label="$t('Employer Address Line 2')"
               v-model="
@@ -204,11 +176,11 @@
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               :label="$t('Employer City')"
               :rules="[v => !!v || $t('You must enter a city')]"
               v-model="
@@ -235,24 +207,17 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </v-col>
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-autocomplete
               dense
-              filled
+              outlined
               autocomplete="none"
               :items="states"
               :label="$t('Employer State')"
@@ -281,13 +246,6 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-autocomplete>
           </v-col>
@@ -296,11 +254,11 @@
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               :label="$t('Employer Zip Code')"
               :rules="[v => !!v || $t('You must enter a Zip Code')]"
               v-model="
@@ -327,24 +285,17 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </v-col>
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-text-field
               dense
-              filled
+              outlined
               :label="$t('Employer Phone number')"
               :rules="phoneRuleSet"
               v-model="
@@ -371,13 +322,6 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-text-field>
           </v-col>
@@ -386,11 +330,11 @@
           <v-col
             cols="12"
             md="5"
-            sm="3"
+            sm="12"
           >
             <v-autocomplete
               dense
-              filled
+              outlined
               autocomplete="none"
               :items="countries"
               :label="$t('Employer Country')"
@@ -419,38 +363,15 @@
                 >
                   mdi-alert-octagon
                 </v-icon>
-                <v-icon
-                  v-else
-                  medium
-                  color="primary"
-                >
-                  mdi-checkbox-marked-circle
-                </v-icon>
               </template>
             </v-autocomplete>
           </v-col>
         </v-row>
       </div>
     </v-card>
-    <v-divider class="mt-3 mb-3"></v-divider>
-    <v-card elevation="3">
-      <v-card-title class="text-h5">
-        {{ $t('Weapons:') }}
-      </v-card-title>
-      <div class="weapon-components-container">
-        <WeaponsTable
-          :weapons="permitStore.getPermitDetail.application.weapons"
-        />
-        <div class="offset-md-8">
-          <WeaponsDialog :save-weapon="getWeaponFromDialog" />
-        </div>
-      </div>
-    </v-card>
   </div>
 </template>
 <script setup lang="ts">
-import WeaponsDialog from '@shared-ui/components/dialogs/WeaponsDialog.vue';
-import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
 import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import {
@@ -460,8 +381,4 @@ import {
 } from '@shared-utils/lists/defaultConstants';
 
 const permitStore = usePermitsStore();
-
-function getWeaponFromDialog(weapon) {
-  permitStore.getPermitDetail.application.weapons.push(weapon);
-}
 </script>

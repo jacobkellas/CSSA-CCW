@@ -1,6 +1,6 @@
 <template>
-  <v-card elevation="3">
-    <v-card-title class="text-h5">
+  <v-card elevation="0">
+    <v-card-title class="subtitle-2">
       {{ $t('Attached Documents:') }}
     </v-card-title>
     <v-row class="ml-5">
@@ -25,8 +25,8 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in state.documents"
-                :key="item.name"
+                v-for="(item, index) in state.documents"
+                :key="index"
               >
                 <td>
                   <a :href="formatName(item.name)">

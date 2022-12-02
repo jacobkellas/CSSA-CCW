@@ -20,8 +20,8 @@ export default class Routes {
     return `/applications`;
   }
 
-  static get WORK_ROUTE_PATH() {
-    return `/work`;
+  static get RECEIPT_ROUTE_PATH() {
+    return `/receipt`;
   }
 
   static get NUMBERS_ROUTE_PATH() {

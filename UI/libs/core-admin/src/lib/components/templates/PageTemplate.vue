@@ -13,9 +13,9 @@
             fill-height
           >
             <v-card
-              :elevation="1"
+              :elevation="4"
               style="width: 100%"
-              min-height="90vh"
+              min-height="92vh"
               class="page-template-card-color"
             >
               <slot> </slot>

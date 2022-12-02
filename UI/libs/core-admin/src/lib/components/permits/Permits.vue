@@ -52,8 +52,6 @@
             name: 'PermitDetail',
             params: { orderId: props.item.orderID },
           }"
-          tag="a"
-          target="_self"
           style="text-decoration: none; color: inherit"
         >
           {{ props.item.orderID }}

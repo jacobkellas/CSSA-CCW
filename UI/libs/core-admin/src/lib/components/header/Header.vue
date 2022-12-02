@@ -9,25 +9,36 @@
       v-if="authStore.getAuthState.isAuthenticated"
       class="white--text"
     >
-      {{ authStore.getAuthState.userName }}
-      <span class="font-weight-light"> {{ $t('| Admin') }} </span>
+      {{
+        $vuetify.breakpoint.mdAndDown
+          ? authStore.getAuthState.userName.split(',')[0]
+          : authStore.getAuthState.userName
+      }}
+      <span
+        v-if="$vuetify.breakpoint.mdAndUp"
+        class="font-weight-light"
+      >
+        {{ $t('| Admin') }}
+      </span>
     </h3>
     <v-spacer></v-spacer>
     <div class="mr-4 ml-1">
       <ThemeMode />
     </div>
     <div
-      v-if="authStore.getAuthState.isAuthenticated"
+      v-if="
+        authStore.getAuthState.isAuthenticated && $vuetify.breakpoint.mdAndUp
+      "
       class="caption font-weight-bold mr-4 ml-1"
     >
-      {{ $t('Session started at 10:01AM') }}
+      {{ $t('Session started at') }} {{ sessionTime }}
     </div>
     <v-btn
       v-if="authStore.getAuthState.isAuthenticated"
       aria-label="Sign out of application"
       @click="signOut"
       class="mr-4 ml-1"
-      color="primary lighten-2"
+      :color="$vuetify.breakpoint.mdAndDown ? 'primary' : 'primary lighten-2'"
       small
     >
       <!--eslint-disable-next-line vue/singleline-html-element-content-newline -->
@@ -38,7 +49,7 @@
         mdi-logout-variant
       </v-icon>
       <span
-        v-if="$vuetify.breakpoint.mdAndUp"
+        v-else
         class="white--text"
         >{{ $t('Sign out') }}</span
       >
@@ -49,9 +60,14 @@
 <script setup lang="ts">
 import ThemeMode from '@shared-ui/components/mode/ThemeMode.vue';
 import auth from '@shared-ui/api/auth/authentication';
+import { formatTime } from '@shared-utils/formatters/defaultFormatters';
+import { ref } from 'vue';
 import { useAuthStore } from '@shared-ui/stores/auth';
-
 const authStore = useAuthStore();
+
+const sessionTime = ref(
+  formatTime(authStore.getAuthState.sessionStarted) || ''
+);
 
 async function signOut() {
   await auth.signOut();

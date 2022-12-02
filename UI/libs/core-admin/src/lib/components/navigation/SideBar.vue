@@ -114,13 +114,13 @@
         </v-card>
         <v-card class="mt-2 mb-2 elevation-0">
           <v-list-item
-            to="/work"
+            :to="Routes.RECEIPT_ROUTE_PATH"
             link
           >
             <v-list-item-icon>
-              <v-icon>mdi-clock-outline</v-icon>
+              <v-icon>mdi-note-outline</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>{{ $t('My Work') }}</v-list-item-title>
+            <v-list-item-title>{{ $t('Receipts') }}</v-list-item-title>
           </v-list-item>
         </v-card>
         <v-card class="mt-2 mb-2 elevation-0">
@@ -144,7 +144,7 @@
         <v-card class="mt-2 mb-2 elevation-0">
           <v-list-item
             link
-            @click.stop="mini = !mini"
+            @click="mini = !mini"
           >
             <v-list-item-icon>
               <v-icon>
@@ -162,16 +162,15 @@
 <script setup lang="ts">
 import Routes from '@core-admin/router/routes';
 import SearchBar from '@core-admin/components/search/SearchBar.vue';
+import { ref } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useBrandStore } from '@shared-ui/stores/brandStore';
 import useEnvName from '@shared-ui/composables/useEnvName';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
-import { getCurrentInstance, ref } from 'vue';
 
-const app = getCurrentInstance();
+const mini = ref(false);
 const drawer = ref(true);
-const mini = ref(app?.proxy?.$vuetify.breakpoint.mdAndDown || false);
 const aptStore = useAppointmentsStore();
 const permitStore = usePermitsStore();
 const brandStore = useBrandStore();
@@ -179,8 +178,6 @@ const brandStore = useBrandStore();
 const { isLoading } = useQuery(['logo']);
 
 const getAppTitle = useEnvName();
-
-window.console.log(useEnvName());
 </script>
 
 <style lang="scss" scoped>

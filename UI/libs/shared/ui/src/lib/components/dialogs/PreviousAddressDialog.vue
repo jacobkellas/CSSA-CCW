@@ -210,7 +210,7 @@ interface PreviousAddressDialogProps {
 }
 
 const props = withDefaults(defineProps<PreviousAddressDialogProps>(), {
-  getPreviousAddressFromDialog: () => {},
+  getPreviousAddressFromDialog: () => null,
 });
 
 const address = reactive({
@@ -234,19 +234,21 @@ function handleSubmit() {
 <style lang="scss" scoped>
 .address-container {
   display: flex;
-  flex-direction: column;
-  height: auto;
   width: 90%;
-  justify-content: center;
+  height: auto;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   border-radius: 12px;
 }
+
 .btn-container {
   display: flex;
   width: 75%;
   justify-content: flex-end;
   margin-bottom: 2em;
 }
+
 .form-container {
   width: 90%;
   margin: 2em;
