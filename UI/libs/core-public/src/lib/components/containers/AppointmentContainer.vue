@@ -69,7 +69,6 @@
           </v-menu>
         </v-toolbar>
       </v-sheet>
-      <!-- Put the calendar here. -->
       <v-sheet height="675">
         <v-calendar
           ref="calendar"

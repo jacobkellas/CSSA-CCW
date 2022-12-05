@@ -97,14 +97,6 @@ export type DOBType = {
   birthCountry: string;
 };
 
-export type EventType = {
-  name: string;
-  start: Date;
-  end: Date;
-  color: string;
-  timed: boolean;
-};
-
 export type HistoryType = {
   change: string;
   changeDateTimeUtc: string;
@@ -182,12 +174,6 @@ export type PersonalInfoType = {
   suffix: string;
   ssn: string;
   maritalStatus: string;
-};
-
-export type RadioOptionsType = {
-  label: string;
-  value: string | boolean;
-  color?: string;
 };
 
 export type SpouseInfoType = {
@@ -280,7 +266,6 @@ export type CompleteApplication = {
     appointmentDateTime: string;
     orderId: string;
     uploadedDocuments: Array<UploadedDocType>;
-    appointmentDateTime: string;
   };
   history: Array<HistoryType>;
   id: string;

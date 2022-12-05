@@ -96,7 +96,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
     </div>
     <div class="row">
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -121,7 +121,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
         </div>
       </div>
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -146,7 +146,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
         </div>
       </div>
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -177,7 +177,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
     </div>
     <div class="row">
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -208,7 +208,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
     </div>
     <div class="row">
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -239,7 +239,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
     </div>
     <div class="row">
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -270,7 +270,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
     </div>
     <div class="row">
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -301,7 +301,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
     </div>
     <div class="row">
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
@@ -326,7 +326,7 @@ exports[`FileUploadStep Should match the snapshot 1`] = `
         </div>
       </div>
       <div class="col-lg-6 col-12">
-        <div class="v-input theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
+        <div class="v-input v-input--dense theme--light v-text-field v-text-field--enclosed v-text-field--outlined v-file-input">
           <div class="v-input__prepend-outer">
             <div class="v-input__icon v-input__icon--prepend"><button type="button" aria-label="prepend icon" class="v-icon notranslate v-icon--link mdi mdi-paperclip theme--light"></button></div>
           </div>
