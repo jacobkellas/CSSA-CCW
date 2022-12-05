@@ -11,7 +11,7 @@ using System.Security.Policy;
 
 namespace CCW.Schedule.Controllers;
 
-[Route("/Api/" + Constants.AppName + "/v1/[controller]")]
+[Route(Constants.AppName + "/v1/[controller]")]
 [ApiController]
 public class AppointmentController : ControllerBase
 {

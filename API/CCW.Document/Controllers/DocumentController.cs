@@ -4,7 +4,7 @@ using CCW.Document.Services;
 
 namespace CCW.Document.Controllers;
 
-[Route("/Api/" + Constants.AppName + "/v1/[controller]")]
+[Route(Constants.AppName + "/v1/[controller]")]
 [ApiController]
 public class DocumentController : ControllerBase
 {

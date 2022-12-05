@@ -12,7 +12,7 @@ namespace CCW.UserProfile.Controllers;
 
 
 [ApiController]
-[Route("/Api/" + Constants.AppName + "/v1/[controller]")]
+[Route(Constants.AppName + "/v1/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly ICosmosDbService _cosmosDbService;

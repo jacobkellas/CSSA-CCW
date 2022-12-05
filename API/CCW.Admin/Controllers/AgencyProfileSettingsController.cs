@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CCW.Admin.Controllers;
 
 
-[Route("/Api/" + Constants.AppName + "/v1/[controller]")]
+[Route(Constants.AppName + "/v1/[controller]")]
 [ApiController]
 public class SystemSettingsController : ControllerBase
 {
