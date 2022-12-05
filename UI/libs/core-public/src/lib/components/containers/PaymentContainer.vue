@@ -99,7 +99,6 @@ function handleCashPayment() {
   props.togglePayment();
 }
 
-// TODO: update with a confirmation somehow and update a payment field in the application object.
 function handleOnlinePayment() {
   window.open(brandStore.brand.paymentURL, '_blank');
   paymentStore.setPaymentType('card');

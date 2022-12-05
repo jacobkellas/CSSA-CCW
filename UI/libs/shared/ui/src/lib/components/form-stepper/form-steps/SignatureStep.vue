@@ -42,8 +42,17 @@
       </v-row>
       <v-divider class="mb-5" />
       <FormButtonContainer
+        v-if="!state.previousSignature"
         :valid="state.valid"
         @submit="handleSubmit"
+        @save="router.push('/')"
+        @cancel="router.push('/')"
+        @back="handlePreviousSection"
+      />
+      <FormButtonContainer
+        v-if="state.previousSignature"
+        :valid="true"
+        @submit="handleSkipSubmit"
         @save="router.push('/')"
         @cancel="router.push('/')"
         @back="handlePreviousSection"
@@ -68,7 +77,7 @@ import axios from 'axios';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
-import { reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { UploadedDocType } from '@shared-utils/types/defaultTypes';
 
 interface ISecondFormStepFourProps {
@@ -86,7 +95,18 @@ const state = reactive({
   valid: false,
   file: {},
   signature: '',
+  previousSignature: false,
   snackbar: false,
+});
+
+onMounted(() => {
+  for (let item of applicationStore.completeApplication.application
+    .uploadedDocuments) {
+    if (item.documentType === 'signature') {
+      window.console.log('found');
+      state.previousSignature = true;
+    }
+  }
 });
 
 const fileMutation = useMutation({
@@ -166,6 +186,10 @@ function handleCanvasUpdate() {
     ctx.clearRect(0, 0, 300, 100);
     ctx.fillText(state.signature, 10, 50);
   }
+}
+
+function handleSkipSubmit() {
+  router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
 }
 </script>
 
