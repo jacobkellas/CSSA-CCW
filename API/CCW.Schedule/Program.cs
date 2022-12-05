@@ -48,6 +48,8 @@ app.UseCors("corsapp");
 app.UseAuthorization();
 app.MapControllers();
 
+app.UseHealthChecks("/health");
+
 app.Run();
 
 static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(
