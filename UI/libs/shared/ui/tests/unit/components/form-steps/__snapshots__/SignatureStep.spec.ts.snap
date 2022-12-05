@@ -44,6 +44,7 @@ exports[`SignatureStep Should match the snapshot 1`] = `
       </span></button></div>
       </div>
     </div>
+    <!---->
   </div>
   <div class="v-snack v-snack--bottom">
     <transition-stub name="v-snack-transition">
