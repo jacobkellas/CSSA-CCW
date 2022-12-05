@@ -21,6 +21,7 @@
                 :key="index"
                 color="accent"
                 small
+                :tabindex="0"
               >
                 <ul class="text-left">
                   <li>{{ item.change }}</li>
