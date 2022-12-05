@@ -47,7 +47,10 @@
         </v-card>
       </v-container>
       <AppointmentContainer
-        v-else
+        v-if="
+          (!isLoading && !isError) ||
+          (state.appointmentsLoaded && state.appointments.length > 0)
+        "
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
         :reschedule="false"
