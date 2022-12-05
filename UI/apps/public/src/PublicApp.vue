@@ -17,7 +17,7 @@
     </v-container>
     <div
       v-else
-      id="app"
+      id="client-app"
     >
       <PageTemplate>
         <router-view :key="$route.fullPath" />
