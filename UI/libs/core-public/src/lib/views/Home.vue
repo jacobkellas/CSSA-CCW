@@ -77,6 +77,7 @@ img.dark {
 }
 .option {
   &-inner {
+    background: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -1,7 +1,9 @@
 <template>
   <v-card color="#1565C015">
     <v-card-title>
-      {{ $t('General Information') }}
+      <h1 class="text-md-h4">
+        {{ $t('General Information') }}
+      </h1>
     </v-card-title>
     <v-card-text class="text-left gen-info-text">
       {{ $t('GENERAL-INFORMATION') }}

@@ -2,8 +2,11 @@
 <template>
   <v-container fluid>
     <v-subheader class="sub-header font-weight-bold mt-5">
-      {{ $t('Concealed Carry Weapon License Requirements:') }}
+      <h1 class="text-md-h5">
+        {{ $t('Concealed Carry Weapon License Requirements:') }}
+      </h1>
     </v-subheader>
+
     <v-carousel
       class="text-carousel mt-3"
       hide-delimiters
@@ -36,7 +39,9 @@
           </v-card-text>
           <v-card-text>
             {{ $t('COMPLETE-ENDING') }}
-            <strong class="red--text"> {{ $t('COMPLETE-WARNING') }}</strong>
+            <strong class="red--text text--darken-2">
+              {{ $t('COMPLETE-WARNING') }}</strong
+            >
           </v-card-text>
         </v-card>
       </v-carousel-item>
@@ -233,7 +238,10 @@
               {{ $t('NOTICE-TO-ALL') }}
             </strong>
             {{ $t('CHANGE-OF-ADDRESS') }}
-            <strong class="red--text">{{ $t('FAILURE-COA') }} </strong>
+
+            <strong class="red--text text--darken-2">
+              {{ $t('FAILURE-COA') }}
+            </strong>
           </v-card-text>
 
           <v-card-text>
@@ -258,7 +266,7 @@
             <strong>{{ $t('PLEASE NOTE:') }}</strong>
             {{ $t('RENEWAL-APPLICANTS') }}
             <br />
-            <strong class="red--text mt-2">
+            <strong class="red--text text--darken-2 mt-2">
               {{ $t('RENEWAL-WARNING') }}
             </strong>
           </v-card-text>

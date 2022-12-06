@@ -32,11 +32,16 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider />
-      <v-list-item-group v-model="state.infoGroup">
+      <v-list-item-group
+        aria-label="Information sections group"
+        role="list"
+        v-model="state.infoGroup"
+      >
         <v-list-item
           v-for="(name, index) in props.options"
           :key="index"
           link
+          role="listitem"
           @click="handleSelection(index)"
         >
           <v-list-item-title>
