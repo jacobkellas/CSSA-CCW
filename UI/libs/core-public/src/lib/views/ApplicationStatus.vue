@@ -63,9 +63,9 @@ import { useMutation, useQuery } from '@tanstack/vue-query';
 const {
   getAllUserApplicationsApi,
   getCompleteApplicationFromApi,
-  setCompleteApplication,
   createApplication,
   completeApplication,
+  setCompleteApplication,
 } = useCompleteApplicationStore();
 const authStore = useAuthStore();
 
@@ -127,7 +127,8 @@ function handleSelection(application) {
   });
 }
 
-async function handleCreateApplication() {
+function handleCreateApplication() {
+  //make sure the application is blank
   setCompleteApplication(defaultPermitState);
   completeApplication.application.appointmentDateTime = new Date(
     2001,
