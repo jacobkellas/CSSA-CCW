@@ -103,7 +103,6 @@ onMounted(() => {
   for (let item of applicationStore.completeApplication.application
     .uploadedDocuments) {
     if (item.documentType === 'signature') {
-      window.console.log('found');
       state.previousSignature = true;
     }
   }
@@ -189,6 +188,8 @@ function handleCanvasUpdate() {
 }
 
 function handleSkipSubmit() {
+  applicationStore.completeApplication.application.currentStep = 10;
+  applicationStore.updateApplication('Signature complete');
   router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
 }
 </script>

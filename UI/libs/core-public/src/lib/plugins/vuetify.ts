@@ -29,6 +29,7 @@ export const vuetify = new Vuetify({
         secondary: colors.green,
         error: colors.red.accent4,
         anchor: '#1976D2',
+        text: '#FFF',
       },
     },
   },
