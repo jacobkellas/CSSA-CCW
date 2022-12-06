@@ -9,9 +9,9 @@ import { computed, reactive, ref } from 'vue';
 export const useCompleteApplicationStore = defineStore(
   'permitStore',
   () => {
+    const blankApplication = JSON.parse(JSON.stringify(defaultPermitState));
     const authStore = useAuthStore();
-    const completeApplication =
-      reactive<CompleteApplication>(defaultPermitState);
+    const completeApplication = reactive<CompleteApplication>(blankApplication);
     const allUserApplications = ref<Array<CompleteApplication>>();
 
     const getCompleteApplication = computed(() => completeApplication);
@@ -133,6 +133,8 @@ export const useCompleteApplicationStore = defineStore(
   {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    persist: true,
+    persist: {
+      storage: sessionStorage,
+    },
   }
 );
