@@ -282,6 +282,10 @@ export type StatusType = {
 export type BrandType = {
   id?: string;
   agencyName: string;
+  agencyAddress: string;
+  agencyTelephone: string;
+  agencyFax: string;
+  agencyEmail: string;
   agencySheriffName: string;
   chiefOfPoliceName: string;
   primaryThemeColor: string | VuetifyThemeItem;

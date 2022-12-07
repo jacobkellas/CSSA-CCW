@@ -321,23 +321,23 @@
         </v-subheader>
         <v-card class="contact-card text-left">
           <v-card-title>
-            {{ $t('DEPARTMENT-NAME') }}
+            {{ brand.agencyName }}
           </v-card-title>
           <v-card-text>
-            <strong>{{ $t(' Address: ') }}</strong
-            >{{ $t('DEPARTMENT-ADDRESS') }}
+            <strong>{{ $t(' Address: ') }}</strong>
+            {{ brand.agencyAddress }}
           </v-card-text>
           <v-card-text>
-            <strong>{{ $t(' Telephone: ') }}</strong
-            >{{ $t('DEPARTMENT-TELEPHONE') }}
+            <strong>{{ $t(' Telephone: ') }}</strong>
+            {{ brand.agencyTelephone }}
           </v-card-text>
           <v-card-text>
-            <strong>{{ $t(' Fax: ') }}</strong
-            >{{ $t('DEPARTMENT-FAX') }}
+            <strong>{{ $t(' Fax: ') }}</strong>
+            {{ brand.agencyFax }}
           </v-card-text>
           <v-card-text>
-            <strong>{{ $t(' Email: ') }}</strong
-            >{{ $t('DEPARTMENT-EMAIL') }}
+            <strong>{{ $t(' Email: ') }}</strong>
+            {{ brand.agencyEmail }}
           </v-card-text>
         </v-card>
       </v-sheet>
@@ -347,8 +347,10 @@
 
 <script setup lang="ts">
 import { useAppInfoStep } from '@core-public/stores/appInfoStepStore';
+import { useBrandStore } from '@shared-ui/stores/brandStore';
 
 const useAppInfoStepStore = useAppInfoStep();
+const { brand } = useBrandStore();
 </script>
 
 <style lang="scss" scoped>
