@@ -15,6 +15,10 @@ export const useBrandStore = defineStore('BrandStore', () => {
 
   const brand = ref<BrandType>({
     agencyName: '',
+    agencyAddress: '',
+    agencyTelephone: '',
+    agencyFax: '',
+    agencyEmail: '',
     agencySheriffName: '',
     chiefOfPoliceName: '',
     primaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.primary,
