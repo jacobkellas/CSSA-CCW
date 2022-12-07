@@ -21,7 +21,7 @@ public class CosmosDbService : ICosmosDbService
     {
         try
         {
-            var query = "SELECT * FROM agencies";
+            var query = "SELECT * FROM agency";
             using var feedIterator = CreateFeedIterator<AgencyProfileSettings>(_container, query);
 
             if (feedIterator.HasMoreResults)
