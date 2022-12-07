@@ -106,8 +106,8 @@
               </template>
               <span>
                 {{
-                  $t(` With modify make sure to change anything that need to be changed. Then make sure to
-                    check the correct application type in step 7 `)
+                  $t(` With a Renewal Application make sure to change anything that needs to be changed. Then
+                  make sure to check the correct application type in step 7 `)
                 }}
               </span>
             </v-tooltip>
