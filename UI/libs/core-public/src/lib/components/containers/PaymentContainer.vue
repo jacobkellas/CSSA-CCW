@@ -61,7 +61,13 @@ onMounted(() => {
     case 'reserve':
       state.payment.applicationCost = brandStore.brand.cost.new.reserve;
       break;
-    case 'modify-standard' || 'modify-judicial' || 'modify-reserve':
+    case 'modify-standard':
+      state.payment.applicationCost = brandStore.brand.cost.modify;
+      break;
+    case 'modify-judicial':
+      state.payment.applicationCost = brandStore.brand.cost.modify;
+      break;
+    case 'modify-reserve':
       state.payment.applicationCost = brandStore.brand.cost.modify;
       break;
     case 'renew-standard':
@@ -73,7 +79,13 @@ onMounted(() => {
     case 'renew-reserve':
       state.payment.applicationCost = brandStore.brand.cost.renew.reserve;
       break;
-    case 'duplicate-standard' || 'duplicate-judicial' || 'duplicate-reserve':
+    case 'duplicate-standard':
+      state.payment.applicationCost = brandStore.brand.cost.modify;
+      break;
+    case 'duplicate-judicial':
+      state.payment.applicationCost = brandStore.brand.cost.modify;
+      break;
+    case 'duplicate-reserve':
       state.payment.applicationCost = brandStore.brand.cost.modify;
       break;
     default:
