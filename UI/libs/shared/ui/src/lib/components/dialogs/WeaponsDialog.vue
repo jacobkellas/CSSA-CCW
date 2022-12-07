@@ -152,6 +152,7 @@ const state = reactive({
 
 function handleSubmit() {
   props.saveWeapon(state.weapon);
+  state.weapon = {} as WeaponInfoType;
   state.dialog = false;
 }
 </script>
