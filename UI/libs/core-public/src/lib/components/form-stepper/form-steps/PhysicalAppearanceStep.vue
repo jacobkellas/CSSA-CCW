@@ -234,7 +234,7 @@ const router = useRouter();
 
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Step four complete');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     completeApplication.currentStep = 5;
@@ -247,7 +247,7 @@ const updateMutation = useMutation({
 
 const saveMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Save and quit');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     router.push('/');

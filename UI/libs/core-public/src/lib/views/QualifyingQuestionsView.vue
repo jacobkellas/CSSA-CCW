@@ -47,6 +47,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionOneExp"
               :rules="[
@@ -97,6 +99,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionTwoExp"
               :rules="[
@@ -147,6 +151,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionThreeExp"
               :rules="[
@@ -197,6 +203,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionFourExp"
               :rules="[
@@ -246,6 +254,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionFiveExp"
               :rules="[
@@ -296,6 +306,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionSixExp"
               :rules="[
@@ -345,6 +357,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionSevenExp"
               :rules="[
@@ -395,6 +409,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionEightExp"
               :rules="[
@@ -445,6 +461,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionNineExp"
               :rules="[
@@ -495,6 +513,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="completeApplication.qualifyingQuestions.questionTenExp"
               :rules="[
@@ -545,6 +565,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionElevenExp
@@ -597,6 +619,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionTwelveExp
@@ -650,6 +674,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionThirteenExp
@@ -703,6 +729,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionFourteenExp
@@ -756,6 +784,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionFifteenExp
@@ -809,6 +839,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionSixteenExp
@@ -864,6 +896,8 @@
           >
             <v-textarea
               outlined
+              counter
+              maxlength="1000"
               :label="$t('Please explain')"
               v-model="
                 completeApplication.qualifyingQuestions.questionSeventeenExp
@@ -914,7 +948,7 @@ const router = useRouter();
 
 const updateMutation = useMutation({
   mutationFn: () => {
-    return applicationStore.updateApplication('Qualifying question complete.');
+    return applicationStore.updateApplication();
   },
   onSuccess: () => {
     router.push(Routes.FINALIZE_ROUTE_PATH);

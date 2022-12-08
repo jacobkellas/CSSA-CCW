@@ -289,7 +289,7 @@ const state = reactive({
 
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Step six complete');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     completeApplication.currentStep = 7;
@@ -302,7 +302,7 @@ const updateMutation = useMutation({
 
 const saveMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Save and quit');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     router.push('/');

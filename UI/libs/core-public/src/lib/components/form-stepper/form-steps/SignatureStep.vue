@@ -113,7 +113,7 @@ const fileMutation = useMutation({
   mutationFn: handleFileUpload,
   onSuccess: () => {
     applicationStore.completeApplication.application.currentStep = 10;
-    applicationStore.updateApplication('Signature complete');
+    applicationStore.updateApplication();
     router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
   },
   onError: () => {
@@ -190,7 +190,7 @@ function handleCanvasUpdate() {
 
 function handleSkipSubmit() {
   applicationStore.completeApplication.application.currentStep = 10;
-  applicationStore.updateApplication('Signature complete');
+  applicationStore.updateApplication();
   router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
 }
 </script>

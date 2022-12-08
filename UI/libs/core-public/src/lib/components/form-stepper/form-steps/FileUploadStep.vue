@@ -290,7 +290,7 @@ async function handleFileUpload() {
 
     completeApplication.uploadedDocuments.push(uploadDoc);
   });
-  applicationStore.updateApplication('file-upload');
+  applicationStore.updateApplication();
 }
 
 function handleSubmit() {
