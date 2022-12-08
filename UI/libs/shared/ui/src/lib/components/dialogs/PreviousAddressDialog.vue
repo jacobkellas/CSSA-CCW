@@ -213,7 +213,7 @@ const props = withDefaults(defineProps<PreviousAddressDialogProps>(), {
   getPreviousAddressFromDialog: () => null,
 });
 
-const address = reactive({
+let address = reactive({
   addressLine1: '',
   addressLine2: '',
   city: '',
@@ -227,6 +227,7 @@ const valid = ref(false);
 
 function handleSubmit() {
   props.getPreviousAddressFromDialog(address);
+  address = reactive({} as AddressInfoType);
   dialog.state = false;
 }
 </script>

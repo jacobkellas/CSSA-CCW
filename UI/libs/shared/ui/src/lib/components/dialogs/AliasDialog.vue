@@ -168,7 +168,7 @@ const props = withDefaults(defineProps<AliasDialogProps>(), {
   saveAlias: () => {},
 });
 
-const alias = reactive({
+let alias = reactive({
   prevLastName: '',
   prevFirstName: '',
   prevMiddleName: '',
@@ -182,6 +182,7 @@ const valid = ref(false);
 
 function handleSubmit() {
   props.saveAlias(alias);
+  alias = reactive({} as AliasType);
   dialog.state = false;
 }
 </script>
