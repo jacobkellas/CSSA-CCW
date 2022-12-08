@@ -102,6 +102,8 @@ public class DocumentController : ControllerBase
     }
 
 
+    [Authorize(Policy = "RequireAdminOnly")]
+    [Authorize(Policy = "RequireSystemAdminOnly")]
     [HttpGet("downloadAgencyLogo", Name = "downloadAgencyLogo")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
