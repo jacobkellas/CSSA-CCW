@@ -5,7 +5,7 @@
       v-model="valid"
     >
       <v-subheader class="subHeader font-weight-bold">
-        s {{ $t('Personal Information') }}
+        {{ $t('Personal Information') }}
       </v-subheader>
 
       <v-row class="ml-5">
