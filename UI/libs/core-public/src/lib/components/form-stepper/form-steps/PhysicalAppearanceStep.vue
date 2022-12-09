@@ -163,6 +163,8 @@
           <v-textarea
             dense
             outlined
+            counter
+            maxlength="1000"
             v-model="completeApplication.physicalAppearance.physicalDesc"
             :label="$t('Physical Description')"
             :rules="[
