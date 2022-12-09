@@ -31,7 +31,7 @@
     <div v-else>
       <Button
         color="primary lighten-2"
-        text="Login"
+        text="Login/Sign-up"
         @click="handleLogIn"
       >
       </Button>

@@ -375,7 +375,7 @@ const completeApplication =
 
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Step two complete');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     completeApplication.currentStep = 3;

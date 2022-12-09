@@ -35,13 +35,26 @@
       >
         <v-card>
           <v-card-text>
-            <v-btn
-              small
-              color="accent"
-              @click="handleCreateApplication"
-            >
-              {{ $t('Create Application') }}
-            </v-btn>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  small
+                  color="accent"
+                  @click="handleCreateApplication"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ $t('Create New Application') }}
+                </v-btn>
+              </template>
+              <span
+                >{{
+                  $t(
+                    ' Create a new blank application. Do not use for modifications or renewals'
+                  )
+                }}
+              </span>
+            </v-tooltip>
           </v-card-text>
         </v-card>
       </v-col>

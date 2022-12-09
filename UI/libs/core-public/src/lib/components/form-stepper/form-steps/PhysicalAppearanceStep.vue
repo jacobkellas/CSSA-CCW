@@ -163,6 +163,8 @@
           <v-textarea
             dense
             outlined
+            counter
+            maxlength="1000"
             v-model="completeApplication.physicalAppearance.physicalDesc"
             :label="$t('Physical Description')"
             :rules="[
@@ -234,7 +236,7 @@ const router = useRouter();
 
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Step four complete');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     completeApplication.currentStep = 5;
@@ -247,7 +249,7 @@ const updateMutation = useMutation({
 
 const saveMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Save and quit');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     router.push('/');

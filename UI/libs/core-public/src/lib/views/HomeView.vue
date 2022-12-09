@@ -58,7 +58,7 @@
                 >
                   mdi-login
                 </v-icon>
-                {{ $t('Login to View Applications') }}
+                {{ $t('Login or Sign-up to View Applications') }}
               </div>
             </v-btn>
           </div>
