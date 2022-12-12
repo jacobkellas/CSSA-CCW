@@ -313,6 +313,7 @@ export type BrandType = {
   agencyEmail: string;
   agencySheriffName: string;
   chiefOfPoliceName: string;
+  liveScanURL: string;
   primaryThemeColor: string | VuetifyThemeItem;
   secondaryThemeColor: string | VuetifyThemeItem;
   standardCost: number;

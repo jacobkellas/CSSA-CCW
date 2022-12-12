@@ -10,30 +10,6 @@
           :items="state.application"
           :is-loading="!!state.application"
         />
-        <v-container class="item-container">
-          <v-sheet class="rounded">
-            <v-timeline
-              dense
-              class="h-full"
-            >
-              <v-timeline-item
-                v-for="(item, index) in state.application[0].history"
-                :key="index"
-                color="accent"
-                small
-                :tabindex="0"
-              >
-                <ul class="text-left">
-                  <li>{{ item.change }}</li>
-                  <li>
-                    {{ new Date(item.changeDateTimeUtc).toLocaleString() }}
-                  </li>
-                  <li>{{ item.changeMadeBy }}</li>
-                </ul>
-              </v-timeline-item>
-            </v-timeline>
-          </v-sheet>
-        </v-container>
       </v-col>
       <v-col
         cols="12"
@@ -112,6 +88,33 @@
               </span>
             </v-tooltip>
           </v-card-text>
+          <v-card-text>
+            <v-tooltip bottom>
+              <template #activator="{ on, attrs }">
+                <v-btn
+                  small
+                  color="info"
+                  :disabled="
+                    applicationStore.completeApplication.application.status !==
+                      1 &&
+                    applicationStore.completeApplication.application.status > 2
+                  "
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="handleDownload"
+                >
+                  {{ $t('Download Livescan form') }}
+                </v-btn>
+              </template>
+              <span>
+                {{
+                  $t(
+                    'Download the livescan form that you will take with you to the appointment.'
+                  )
+                }}
+              </span>
+            </v-tooltip>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -121,12 +124,14 @@
 <script setup lang="ts">
 import ApplicationTable from '@core-public/components/tables/ApplicationTable.vue';
 import Routes from '@core-public/router/routes';
+import { useBrandStore } from '@shared-ui/stores/brandStore';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { onMounted, reactive } from 'vue';
 
 const applicationStore = useCompleteApplicationStore();
+const brandStore = useBrandStore();
 const router = useRouter();
 
 const state = reactive({
@@ -177,6 +182,10 @@ function handleContinueApplication() {
   } else {
     router.push(Routes.RENEW_FORM_ROUTE_PATH);
   }
+}
+
+function handleDownload() {
+  router.push(brandStore.brand.liveScanURL);
 }
 
 function handleModifyApplication() {
