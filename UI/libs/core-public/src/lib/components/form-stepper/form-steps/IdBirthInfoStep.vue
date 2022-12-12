@@ -349,12 +349,13 @@
 
 <script setup lang="ts">
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
+import { TranslateResult } from 'vue-i18n';
 import { i18n } from '@core-public/plugins';
+import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { countries, states } from '@shared-utils/lists/defaultConstants';
-import { ref } from 'vue';
 
 interface FormStepTwoProps {
   handleNextSection: () => void;
@@ -410,7 +411,7 @@ function handleSubmit() {
   }
 }
 
-function checkFor21(input: string): boolean | string {
+function checkFor21(input: string): boolean | TranslateResult {
   const userDate = input;
   const targetDate = new Date(Date.now());
   const formatedDate = `${targetDate.getFullYear() - 21}-${
