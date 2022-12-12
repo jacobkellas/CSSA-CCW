@@ -50,16 +50,31 @@
               @click="handleLogIn"
               v-else
             >
-              <div class="option-inner">
-                <v-icon
-                  x-large
-                  :color="$vuetify.theme.dark ? 'info' : 'primary'"
-                  class="mb-3"
-                >
-                  mdi-login
-                </v-icon>
-                {{ $t('Login or Sign-up to View Applications') }}
-              </div>
+              <v-tooltip bottom>
+                <template #activator="{ on, attrs }">
+                  <div class="option-inner">
+                    <v-icon
+                      x-large
+                      :color="$vuetify.theme.dark ? 'info' : 'primary'"
+                      class="mb-3"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      mdi-login
+                    </v-icon>
+                    <span class="break-words">
+                      {{ $t('Login or Sign-up') }}
+                    </span>
+                  </div>
+                </template>
+                <span>
+                  {{
+                    $t(
+                      'You must login or sign up in order to view or create applications.'
+                    )
+                  }}
+                </span>
+              </v-tooltip>
             </v-btn>
           </div>
         </v-col>
