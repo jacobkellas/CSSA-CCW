@@ -191,10 +191,6 @@ function handleContinueApplication() {
   }
 }
 
-function handleDownload() {
-  router.push(`${brand.liveScanURL}`);
-}
-
 function handleModifyApplication() {
   applicationStore.completeApplication.application.currentStep = 1;
   applicationStore.completeApplication.application.status = 1;
