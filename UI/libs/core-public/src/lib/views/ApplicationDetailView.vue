@@ -95,8 +95,8 @@
                   small
                   color="info"
                   :disabled="
-                    applicationStore.completeApplication.application.status !==
-                      1 &&
+                    applicationStore.completeApplication.application.status ===
+                      1 ||
                     applicationStore.completeApplication.application.status > 2
                   "
                   v-bind="attrs"
