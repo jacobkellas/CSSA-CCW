@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "agency_abbreviation": {
+            "value": "sdsd"
+        },
+        "agency_ori": {
+            "value": "ca0370000"
+        },
+        "application": {
+            "value": "ccw"
+        },
+        "dept_abbreviation": {
+            "value": "it"
+        },
+        "environment_type": {
+            "value": "DEV"
+        },
+        "instance_number": {
+            "value": "03a"
+        },
+        "user_tags": {
+            "value": {}
+        },
+        "glocation": {
+            "value": "Global"
+        },
+        "storage_ep_suff": {
+            "value": "core.usgovcloudapi.net"
+        },
+        "use32BitWorkerProcess": {
+            "value": false
+        },
+        "linuxFxVersion": {
+            "value": "DOTNETCORE|6.0"
+        },
+        "actionGroups_Application_Insights_Smart_Detection_name": {
+            "value": "Application Insights Smart Detection"
+        },
+        "vnet_addressprefixes": {
+            "value": [
+                "192.168.0.0/24"
+            ]
+        },
+        "kv_subnet_addressprefix": {
+            "value": "192.168.0.0/28"
+        },
+        "ct_subnet_addressprefix": {
+            "value": "192.168.0.32/28"
+        },
+        "cdb_subnet_addressprefix": {
+            "value": "192.168.0.16/28"
+        },
+        "nsgfl_subnet_addressprefix": {
+            "value": "192.168.0.48/28"
+        },
+        "func_subnet_addressprefix": {
+            "value": "192.168.0.64/28"
+        },
+        "web_subnet_addressprefix": {
+            "value": "192.168.0.96/27"
+        },
+        "vni_subnet_addressprefix": {
+            "value": "192.168.0.128/27"
+        },
+        "cdb_private_ipaddress1": {
+            "value": "172.16.1.4"
+        },
+        "cdb_private_ipaddress2": {
+            "value": "172.16.1.5"
+        }
+    }
+}

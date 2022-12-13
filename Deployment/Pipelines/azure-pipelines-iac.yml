@@ -1,0 +1,77 @@
+# CCW IaC pipeline.
+# Uses stages to validate, then deploy to multiple environemnts.
+# Templates are used to reduce replicated code and improve readability.
+
+trigger:
+  branches:
+   include:
+      - main
+  paths:
+    include:
+      - Deployment/IaC/*
+      - Deployment/Pipelines/azure-pipeline-ui.yml
+
+pool:
+  vmImage: windows-latest
+
+variables:
+- name: templatePath
+  value: 'Deployment\IaC\Infrastructure\sandboxTemplate.json'
+- name: parameterPath
+  value: 'Deployment\IaC\Infrastructure\sandboxTemplate.parameters.json'
+
+stages:
+  - stage: Build
+    displayName: "Validate CCW IaC"
+    
+    jobs:
+      - job: IaC_Validate
+        displayName: 'Validating CCW IaC'
+
+        variables:
+        - template: templates/dev-003-vars.yml
+
+        steps:
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: 'ARM Template Validate'
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: ${{ variables.arm_connection_name }}
+            subscriptionId: ${{ variables.arm_subscription_id }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: ${{ variables.arm_resource_group_name }}
+            location: ${{ variables.location }}
+            templateLocation: 'Linked artifact'
+            csmFile: $(templatePath)
+            csmParametersFile: $(parameterPath)
+            deploymentMode: 'Validation'
+
+        - template: templates/logging_tasks.yml
+
+  - stage: Dev_Deploy
+    displayName: "Dev Deploy CCW IaC"
+    dependsOn: Build
+    
+    jobs:
+      - job: Dev_IaC_Deploy
+        displayName: 'Dev Deploy CCW IaC'
+
+        variables:
+        - template: templates/dev-003-vars.yml
+
+        steps:
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: 'ARM Template Deploy'
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: ${{ variables.arm_connection_name }}
+            subscriptionId: ${{ variables.arm_subscription_id }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: ${{ variables.arm_resource_group_name }}
+            location: ${{ variables.location }}
+            templateLocation: 'Linked artifact'
+            csmFile: $(templatePath)
+            csmParametersFile: $(parameterPath)
+            deploymentMode: 'Incremental'
+
+        - template: templates/logging_tasks.yml
