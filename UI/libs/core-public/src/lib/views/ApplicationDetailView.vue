@@ -91,20 +91,25 @@
           <v-card-text>
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
-                <v-btn
-                  small
-                  color="info"
-                  :disabled="
-                    applicationStore.completeApplication.application.status !==
-                      1 &&
-                    applicationStore.completeApplication.application.status > 2
-                  "
-                  v-bind="attrs"
-                  v-on="on"
-                  @click="handleDownload"
+                <a
+                  :href="brand.liveScanURL"
+                  target="_blank"
                 >
-                  {{ $t('Download Livescan form') }}
-                </v-btn>
+                  <v-btn
+                    small
+                    color="info"
+                    :disabled="
+                      applicationStore.completeApplication.application
+                        .status === 1 ||
+                      applicationStore.completeApplication.application.status >
+                        2
+                    "
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    {{ $t('Download Livescan form') }}
+                  </v-btn>
+                </a>
               </template>
               <span>
                 {{
@@ -133,6 +138,8 @@ import { onMounted, reactive } from 'vue';
 const applicationStore = useCompleteApplicationStore();
 const brandStore = useBrandStore();
 const router = useRouter();
+
+const brand = brandStore.getBrand;
 
 const state = reactive({
   application: [applicationStore.completeApplication],
@@ -182,10 +189,6 @@ function handleContinueApplication() {
   } else {
     router.push(Routes.RENEW_FORM_ROUTE_PATH);
   }
-}
-
-function handleDownload() {
-  router.push(brandStore.brand.liveScanURL);
 }
 
 function handleModifyApplication() {

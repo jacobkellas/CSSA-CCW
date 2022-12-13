@@ -90,7 +90,10 @@
                 dense
                 v-model="completeApplication.dob.birthDate"
                 :label="$t('Date of Birth')"
-                :rules="[v => !!v || $t('Date of birth is required')]"
+                :rules="[
+                  checkFor21,
+                  v => !!v || $t('Date of birth is required'),
+                ]"
                 prepend-icon="mdi-calendar"
                 v-bind="attrs"
                 v-on="on"
@@ -346,6 +349,8 @@
 
 <script setup lang="ts">
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
+import { TranslateResult } from 'vue-i18n';
+import { i18n } from '@core-public/plugins';
 import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -404,5 +409,17 @@ function handleSubmit() {
   } else {
     updateMutation.mutate();
   }
+}
+
+function checkFor21(input: string): boolean | TranslateResult {
+  const userDate = input;
+  const targetDate = new Date(Date.now());
+  const formatedDate = `${targetDate.getFullYear() - 21}-${
+    targetDate.getMonth() + 1
+  }-${targetDate.getDate()}`;
+
+  return userDate <= formatedDate
+    ? true
+    : i18n.t('You must be 21 or older to apply for a CCW permit');
 }
 </script>
