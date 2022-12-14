@@ -501,39 +501,35 @@
             </v-text-field>
           </v-col>
 
-              <v-col
-                cols="12"
-                lg="6"
-              >
-                <v-autocomplete
-                  dense
-                  outlined
-                  :items="countries"
-                  :label="$t('Spouse\'s Country')"
-                  :rules="[v => !!v || $t('Spouse\'s Country cannot be blank')]"
-                  v-model="completeApplication.spouseAddressInformation.country"
+          <v-col
+            cols="12"
+            lg="6"
+          >
+            <v-autocomplete
+              dense
+              outlined
+              :items="countries"
+              :label="$t('Country')"
+              :rules="[v => !!v || $t('Country cannot be blank')]"
+              v-model="completeApplication.mailingAddress.country"
+            >
+              <template #prepend>
+                <v-icon
+                  x-small
+                  color="error"
                 >
-                  <template #prepend>
-                    <v-icon
-                      x-small
-                      color="error"
-                    >
-                      mdi-star
-                    </v-icon>
-                  </template>
-                </v-autocomplete>
-              </v-col>
-            </v-row>
-            <v-divider class="my-3" />
-          </div>
-        </v-col>
-      </v-row>
-
+                  mdi-star
+                </v-icon>
+              </template>
+            </v-autocomplete>
+          </v-col>
+        </v-row>
+      </div>
       <v-divider />
       <v-subheader class="sub-header font-weight-bold">
         {{ $t(' Previous Address') }}
       </v-subheader>
-      <p>{{ $t('Please provide residences for the past 5 years') }}</p>
+      <p>{{ $t('Please provide residenses for the past 5 years') }}</p>
       <div class="previous-address-container">
         <address-table
           :addresses="completeApplication.previousAddresses"
