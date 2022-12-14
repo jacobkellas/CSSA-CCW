@@ -10,6 +10,7 @@ trigger:
     include:
       - Deployment/IaC/*
       - Deployment/Pipelines/azure-pipeline-ui.yml
+
 pr: none
 
 pool:
