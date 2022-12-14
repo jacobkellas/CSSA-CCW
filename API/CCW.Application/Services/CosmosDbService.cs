@@ -161,16 +161,17 @@ public class CosmosDbService : ICosmosDbService
                 "a.Application.OrderId as OrderId, " +
                 "a.id " +
                 "FROM a " +
-                              "WHERE " +
-                              "CONTAINS(@searchValue, a.Application.Contact.CellPhoneNumber) or " +
-                              "CONTAINS(@searchValue, a.Application.IdInfo.IdNumber) or " +
-                              "CONTAINS(@searchValue, a.Application.MailingAddress.AddressLine1) or " +
-                              "CONTAINS(@searchValue, a.Application.CurrentAddress.AddressLine1) or " +
-                              "CONTAINS(@searchValue, a.Application.PersonalInfo.LastName) or " +
-                              "CONTAINS(@searchValue, a.Application.PersonalInfo.FirstName) or " +
-                              "CONTAINS(@searchValue, a.Application.PersonalInfo.Ssn) or " +
-                              "CONTAINS(@searchValue, a.Application.DOB.BirthDate) or " +
-                              "CONTAINS(@searchValue, a.Application.UserEmail)";
+                "WHERE " +
+                "CONTAINS(a.Application.Contact.PrimaryPhoneNumber, @searchValue) or " +
+                "CONTAINS(a.Application.Contact.CellPhoneNumber, @searchValue) or " +
+                "CONTAINS(a.Application.IdInfo.IdNumber, @searchValue) or " +
+                "CONTAINS(a.Application.MailingAddress.AddressLine1, @searchValue) or " +
+                "CONTAINS(a.Application.CurrentAddress.AddressLine1, @searchValue) or " +
+                "CONTAINS(a.Application.PersonalInfo.LastName, @searchValue) or " +
+                "CONTAINS(a.Application.PersonalInfo.FirstName, @searchValue) or " +
+                "CONTAINS(a.Application.PersonalInfo.Ssn, @searchValue) or " +
+                "CONTAINS(a.Application.DOB.BirthDate, @searchValue) or " +
+                "CONTAINS(a.Application.UserEmail, @searchValue)";
 
         var parameterizedQuery = new QueryDefinition(query: queryString)
             .WithParameter("@searchValue", searchValue);
