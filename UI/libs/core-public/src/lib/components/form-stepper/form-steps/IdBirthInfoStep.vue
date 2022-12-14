@@ -46,11 +46,10 @@
           cols="12"
           lg="6"
         >
-          <v-autocomplete
+          <v-text-field
             outlined
             dense
             autocomplete="none"
-            :items="states"
             :label="$t(' Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"
             v-model="completeApplication.idInfo.issuingState"
@@ -63,7 +62,7 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-autocomplete>
+          </v-text-field>
         </v-col>
       </v-row>
 
