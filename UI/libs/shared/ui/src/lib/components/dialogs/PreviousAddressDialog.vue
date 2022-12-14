@@ -87,10 +87,9 @@
               cols="12"
               lg="6"
             >
-              <v-autocomplete
+              <v-text-field
                 outlined
                 dense
-                :items="states"
                 id="state"
                 v-model="state.address.state"
                 label="State"
@@ -104,7 +103,7 @@
                     mdi-star
                   </v-icon>
                 </template>
-              </v-autocomplete>
+              </v-text-field>
             </v-col>
             <v-col
               cols="12"
@@ -202,7 +201,7 @@
 
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import { countries, states } from '@shared-utils/lists/defaultConstants';
+import { countries } from '@shared-utils/lists/defaultConstants';
 import { reactive, ref } from 'vue';
 
 interface PreviousAddressDialogProps {
