@@ -1,6 +1,7 @@
 ﻿using CCW.Application.Entities;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 using Container = Microsoft.Azure.Cosmos.Container;
 
 
@@ -145,6 +146,16 @@ public class CosmosDbService : ICosmosDbService
         return results;
     }
 
+    public static bool IsDOBValue(string s)
+    {
+        foreach (char c in s)
+        {
+            if (c == '-' || c == '/')
+                return true;
+        }
+        return false;
+    }
+
     public async Task<IEnumerable<SummarizedPermitApplication>> SearchApplicationsAsync(string searchValue, CancellationToken cancellationToken)
     {
         var queryString =
@@ -172,6 +183,7 @@ public class CosmosDbService : ICosmosDbService
                 "CONTAINS(a.Application.PersonalInfo.Ssn, @searchValue) or " +
                 "CONTAINS(a.Application.DOB.BirthDate, @searchValue) or " +
                 "CONTAINS(a.Application.UserEmail, @searchValue)";
+
 
         var parameterizedQuery = new QueryDefinition(query: queryString)
             .WithParameter("@searchValue", searchValue);
@@ -229,5 +241,15 @@ public class CosmosDbService : ICosmosDbService
             null,
             cancellationToken
         );
+    }
+
+    public async Task DeleteUserApplicationAsync(string applicationId, CancellationToken cancellationToken)
+    {
+        await _container.DeleteItemAsync<PermitApplication>(applicationId, new PartitionKey(applicationId), cancellationToken: cancellationToken);
+    }
+
+    public async Task DeleteApplicationAsync(string applicationId, CancellationToken cancellationToken)
+    {
+        await _container.DeleteItemAsync<PermitApplication>(applicationId, new PartitionKey(applicationId), cancellationToken:cancellationToken);
     }
 }
