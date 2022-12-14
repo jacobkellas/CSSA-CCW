@@ -28,6 +28,8 @@
             >
               <v-text-field
                 outlined
+                maxlength="150"
+                counter
                 dense
                 id="address-line-1"
                 v-model="state.address.addressLine1"
@@ -51,6 +53,8 @@
             >
               <v-text-field
                 outlined
+                maxlength="150"
+                counter
                 dense
                 class="pl-6"
                 v-model="state.address.addressLine2"
@@ -66,6 +70,8 @@
             >
               <v-text-field
                 outlined
+                maxlength="100"
+                counter
                 dense
                 id="city"
                 v-model="state.address.city"
@@ -90,6 +96,8 @@
               <v-text-field
                 outlined
                 dense
+                maxlength="100"
+                counter
                 id="state"
                 v-model="state.address.state"
                 label="State"
@@ -111,6 +119,8 @@
             >
               <v-text-field
                 outlined
+                maxlength="100"
+                counter
                 dense
                 id="county"
                 v-model="state.address.county"
@@ -133,6 +143,8 @@
             >
               <v-text-field
                 outlined
+                maxlength="10"
+                counter
                 dense
                 id="zip"
                 v-model="state.address.zip"

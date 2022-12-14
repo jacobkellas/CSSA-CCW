@@ -114,6 +114,8 @@
           <v-text-field
             outlined
             dense
+            maxlength="150"
+            counter
             :label="$t('Birth city')"
             :rules="[v => !!v || $t('Birth city cannot be blank')]"
             v-model="completeApplication.dob.birthCity"
@@ -130,6 +132,8 @@
           <v-text-field
             outlined
             dense
+            maxlength="150"
+            counter
             autocomplete="none"
             :label="$t('Birth state')"
             :rules="[v => !!v || $t('Birth state cannot be blank')]"
