@@ -1,0 +1,1 @@
+﻿az network application-gateway stop -g rg-sdsd-it-network-dev-001 -n ag-sdsd-it-dev-shd-001
