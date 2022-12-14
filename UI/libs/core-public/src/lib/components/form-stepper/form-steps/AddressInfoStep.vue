@@ -386,6 +386,7 @@
               >
                 <v-text-field
                   dense
+
                   maxlength="150"
                   counter
                   outlined
@@ -455,7 +456,6 @@
                   dense
                   maxlength="100"
                   counter
-                  outlined
                   :label="$t('Spouse\'s County')"
                   :rules="[v => !!v || $t('Spouse\'s County cannot be blank')]"
                   v-model="completeApplication.spouseAddressInformation.county"
@@ -526,7 +526,7 @@
       <v-subheader class="sub-header font-weight-bold">
         {{ $t(' Previous Address') }}
       </v-subheader>
-      <p>{{ $t('Please provide residenses for the past 5 years') }}</p>
+      <p>{{ $t('Please provide residences for the past 5 years') }}</p>
       <div class="previous-address-container">
         <address-table
           :addresses="completeApplication.previousAddresses"
