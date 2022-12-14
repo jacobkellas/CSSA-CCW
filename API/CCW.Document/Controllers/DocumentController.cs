@@ -2,6 +2,7 @@
 using CCW.Document.Services;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace CCW.Document.Controllers;
 
 [Route(Constants.AppName + "/v1/[controller]")]
@@ -117,7 +118,7 @@ public class DocumentController : ControllerBase
     [HttpGet("downloadApplicantFile", Name = "downloadApplicantFile")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> DownloadApplicantFile(
+    public async Task<IActionResult> DownloadApplicantFile(
         string applicantFileName,
         CancellationToken cancellationToken)
     {
@@ -134,7 +135,7 @@ public class DocumentController : ControllerBase
                 Response.Headers.Append("Content-Disposition", "inline");
                 Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-                return File(blobStream, file.Properties.ContentType);
+                return new FileStreamResult(blobStream, file.Properties.ContentType);
             }
 
             return Content("Image does not exist");
@@ -152,7 +153,7 @@ public class DocumentController : ControllerBase
     [HttpGet("downloadAgencyFile", Name = "downloadAgencyFile")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> DownloadAgencyFile(
+    public async Task<IActionResult> DownloadAgencyFile(
         string agencyFileName,
         CancellationToken cancellationToken)
     {
@@ -169,7 +170,7 @@ public class DocumentController : ControllerBase
                 Response.Headers.Append("Content-Disposition", "inline");
                 Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-                return File(blobStream, file.Properties.ContentType);
+                return new FileStreamResult(blobStream, file.Properties.ContentType);
             }
 
             return Content("Image does not exist");
