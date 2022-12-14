@@ -115,6 +115,8 @@
           <v-text-field
             outlined
             dense
+            maxlength="150"
+            counter
             :label="$t('Birth city')"
             :rules="[v => !!v || $t('Birth city cannot be blank')]"
             v-model="completeApplication.dob.birthCity"
@@ -131,6 +133,8 @@
           <v-text-field
             outlined
             dense
+            maxlength="150"
+            counter
             autocomplete="none"
             :label="$t('Birth state')"
             :rules="[v => !!v || $t('Birth state cannot be blank')]"
@@ -354,7 +358,7 @@ import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
-import { countries, states } from '@shared-utils/lists/defaultConstants';
+import { countrieses } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepTwoProps {
   handleNextSection: () => void;

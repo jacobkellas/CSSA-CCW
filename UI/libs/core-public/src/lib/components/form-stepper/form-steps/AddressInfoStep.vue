@@ -14,6 +14,8 @@
         >
           <v-text-field
             dense
+            maxlength="150"
+            counter
             outlined
             :label="$t('Address line 1')"
             :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
@@ -36,6 +38,8 @@
           <v-text-field
             dense
             outlined
+            maxlength="150"
+            counter
             class="pl-6"
             :label="$t('Address line 2')"
             v-model="completeApplication.currentAddress.addressLine2"
@@ -52,6 +56,8 @@
           <v-text-field
             dense
             outlined
+            maxlength="100"
+            counter
             :label="$t('City')"
             :rules="[v => !!v || $t('City cannot be blank')]"
             v-model="completeApplication.currentAddress.city"
@@ -73,6 +79,8 @@
         >
           <v-text-field
             dense
+            maxlength="100"
+            counter
             outlined
             :label="$t('State')"
             :rules="[v => !!v || $t('State cannot be blank')]"
@@ -94,6 +102,8 @@
         >
           <v-text-field
             dense
+            maxlength="100"
+            counter
             outlined
             :label="$t('County')"
             :rules="[v => !!v || $t('County cannot be blank')]"
@@ -115,6 +125,8 @@
         >
           <v-text-field
             dense
+            maxlength="10"
+            counter
             outlined
             :label="$t('Zip')"
             :rules="[v => !!v || $t('Zip cannot be blank')]"
@@ -188,6 +200,8 @@
           >
             <v-text-field
               dense
+              maxlength="150"
+              counter
               outlined
               :label="$t('Spouse address line 1')"
               :rules="[v => !!v || $t('Spouse address line 1 cannot be blank')]"
@@ -212,6 +226,8 @@
           >
             <v-text-field
               dense
+              maxlength="150"
+              counter
               outlined
               class="pl-6"
               :label="$t('Spouse address line 2')"
@@ -230,6 +246,8 @@
           >
             <v-text-field
               dense
+              maxlength="100"
+              counter
               outlined
               :label="$t('Spouse\'s City')"
               :rules="[v => !!v || $t('Spouse\'s City cannot be blank')]"
@@ -252,6 +270,8 @@
           >
             <v-text-field
               dense
+              maxlength="100"
+              counter
               outlined
               :label="$t('Spouse\'s State')"
               :rules="[v => !!v || $t('Spouse\'s State cannot be blank')]"
@@ -273,6 +293,8 @@
           >
             <v-text-field
               dense
+              maxlength="100"
+              counter
               outlined
               :label="$t('Spouse\'s County')"
               :rules="[v => !!v || $t('Spouse\'s County cannot be blank')]"
@@ -294,6 +316,8 @@
           >
             <v-text-field
               dense
+              maxlength="10"
+              counter
               outlined
               :label="$t('Spouse\'s Zip')"
               :rules="[v => !!v || $t('Spouse\'s Zip cannot be blank')]"
@@ -347,6 +371,8 @@
           >
             <v-text-field
               dense
+              maxlength="150"
+              counter
               outlined
               :label="$t('Address line 1')"
               :rules="[v => !!v || $t('Address line 1 cannot be blank')]"
@@ -369,6 +395,8 @@
           >
             <v-text-field
               dense
+              maxlength="150"
+              counter
               outlined
               class="pl-6"
               :label="$t('Address line 2')"
@@ -385,6 +413,8 @@
           >
             <v-text-field
               dense
+              maxlength="100"
+              counter
               outlined
               :label="$t('City')"
               :rules="[v => !!v || $t(' City cannot be blank')]"
@@ -407,6 +437,8 @@
           >
             <v-text-field
               dense
+              maxlength="100"
+              counter
               outlined
               :label="$t('State')"
               :rules="[v => !!v || $t('State cannot be blank')]"
@@ -428,6 +460,8 @@
           >
             <v-text-field
               dense
+              maxlength="100"
+              counter
               outlined
               :label="$t('County')"
               :rules="[v => !!v || $t('County cannot be blank')]"
@@ -450,6 +484,8 @@
             <v-text-field
               :label="$t('Zip')"
               dense
+              maxlength="10"
+              counter
               outlined
               :rules="[v => !!v || $t('Zip cannot be blank')]"
               v-model="completeApplication.mailingAddress.zip"
