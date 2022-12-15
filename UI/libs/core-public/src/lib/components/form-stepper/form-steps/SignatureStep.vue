@@ -129,7 +129,13 @@ const fileMutation = useMutation({
   onSuccess: () => {
     applicationStore.completeApplication.application.currentStep = 10;
     applicationStore.updateApplication();
-    router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
+    router.push({
+      path: props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
+      query: {
+        orderId: applicationStore.completeApplication.application.orderId,
+        isComplete: applicationStore.completeApplication.application.isComplete,
+      },
+    });
   },
   onError: () => {
     state.snackbar = true;
@@ -206,7 +212,13 @@ function handleCanvasUpdate() {
 function handleSkipSubmit() {
   applicationStore.completeApplication.application.currentStep = 10;
   applicationStore.updateApplication();
-  router.push(props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH);
+  router.push({
+    path: props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
+    query: {
+      orderId: applicationStore.completeApplication.application.orderId,
+      isComplete: applicationStore.completeApplication.application.isComplete,
+    },
+  });
 }
 </script>
 

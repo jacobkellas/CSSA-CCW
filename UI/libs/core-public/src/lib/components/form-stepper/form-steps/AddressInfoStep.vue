@@ -77,13 +77,14 @@
           cols="12"
           lg="6"
         >
-          <v-text-field
+          <v-combobox
             dense
             maxlength="100"
             counter
             outlined
-            :label="$t('State')"
-            :rules="[v => !!v || $t('State cannot be blank')]"
+            :items="states"
+            :label="$t('State or Region')"
+            :rules="[v => !!v || $t('State/Region cannot be blank')]"
             v-model="completeApplication.currentAddress.state"
           >
             <template #prepend>
@@ -94,7 +95,7 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-text-field>
+          </v-combobox>
         </v-col>
         <v-col
           cols="12"
@@ -147,7 +148,7 @@
           cols="12"
           lg="6"
         >
-          <v-autocomplete
+          <v-combobox
             dense
             outlined
             :items="countries"
@@ -163,7 +164,7 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-autocomplete>
+          </v-combobox>
         </v-col>
       </v-row>
       <v-divider />
@@ -252,13 +253,14 @@
                 cols="12"
                 lg="6"
               >
-                <v-text-field
+                <v-combobox
                   dense
                   maxlength="100"
                   counter
                   outlined
-                  :label="$t('State')"
-                  :rules="[v => !!v || $t('State cannot be blank')]"
+                  :label="$t('State or Region')"
+                  :items="states"
+                  :rules="[v => !!v || $t('State/Region cannot be blank')]"
                   v-model="completeApplication.mailingAddress.state"
                 >
                   <template #prepend>
@@ -269,7 +271,7 @@
                       mdi-star
                     </v-icon>
                   </template>
-                </v-text-field>
+                </v-combobox>
               </v-col>
               <v-col
                 cols="12"
@@ -322,7 +324,7 @@
                 cols="12"
                 lg="6"
               >
-                <v-autocomplete
+                <v-combobox
                   dense
                   outlined
                   :items="countries"
@@ -338,7 +340,7 @@
                       mdi-star
                     </v-icon>
                   </template>
-                </v-autocomplete>
+                </v-combobox>
               </v-col>
             </v-row>
           </div>
@@ -428,13 +430,16 @@
                 cols="12"
                 lg="6"
               >
-                <v-text-field
+                <v-combobox
                   dense
                   maxlength="100"
                   counter
                   outlined
-                  :label="$t('Spouse\'s State')"
-                  :rules="[v => !!v || $t('Spouse\'s State cannot be blank')]"
+                  :items="states"
+                  :label="$t('Spouse\'s State or Region')"
+                  :rules="[
+                    v => !!v || $t('Spouse\'s State/Region cannot be blank'),
+                  ]"
                   v-model="completeApplication.spouseAddressInformation.state"
                 >
                   <template #prepend>
@@ -445,7 +450,7 @@
                       mdi-star
                     </v-icon>
                   </template>
-                </v-text-field>
+                </v-combobox>
               </v-col>
               <v-col
                 cols="12"
@@ -497,7 +502,7 @@
                 cols="12"
                 lg="6"
               >
-                <v-autocomplete
+                <v-combobox
                   dense
                   outlined
                   :items="countries"
@@ -513,7 +518,7 @@
                       mdi-star
                     </v-icon>
                   </template>
-                </v-autocomplete>
+                </v-combobox>
               </v-col>
             </v-row>
             <v-divider class="my-3" />
@@ -566,7 +571,7 @@ import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
-import { countries } from '@shared-utils/lists/defaultConstants';
+import { countries, states } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;

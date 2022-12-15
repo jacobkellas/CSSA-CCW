@@ -46,10 +46,11 @@
           cols="12"
           lg="6"
         >
-          <v-text-field
+          <v-combobox
             outlined
             dense
-            autocomplete="none"
+            combobox="none"
+            :items="states"
             :label="$t(' Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"
             v-model="completeApplication.idInfo.issuingState"
@@ -62,7 +63,7 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-text-field>
+          </v-combobox>
         </v-col>
       </v-row>
 
@@ -129,14 +130,15 @@
               </v-icon>
             </template>
           </v-text-field>
-          <v-text-field
+          <v-combobox
             outlined
             dense
             maxlength="150"
             counter
-            autocomplete="none"
-            :label="$t('Birth state')"
-            :rules="[v => !!v || $t('Birth state cannot be blank')]"
+            combobox="none"
+            :items="states"
+            :label="$t('Birth state or region')"
+            :rules="[v => !!v || $t('Birth state/region cannot be blank')]"
             v-model="completeApplication.dob.birthState"
           >
             <template #prepend>
@@ -147,12 +149,12 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-text-field>
+          </v-combobox>
 
-          <v-autocomplete
+          <v-combobox
             outlined
             dense
-            autocomplete="none"
+            combobox="none"
             :items="countries"
             :label="$t('Birth country')"
             :rules="[v => !!v || $t('Birth country cannot be blank')]"
@@ -166,7 +168,7 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-autocomplete>
+          </v-combobox>
         </v-col>
       </v-row>
 
@@ -241,8 +243,8 @@
         </v-subheader>
         <v-row class="ml-5">
           <v-col>
-            <v-autocomplete
-              autocomplete="none"
+            <v-combobox
+              combobox="none"
               outlined
               dense
               :items="countries"
@@ -260,7 +262,7 @@
                   mdi-star
                 </v-icon>
               </template>
-            </v-autocomplete>
+            </v-combobox>
             <v-radio-group
               :label="'Immigrant Alien'"
               v-model="completeApplication.immigrantInformation.immigrantAlien"
@@ -300,10 +302,10 @@
             cols="12"
             lg="6"
           >
-            <v-autocomplete
+            <v-combobox
               outlined
               dense
-              autocomplete="none"
+              combobox="none"
               :items="countries"
               :label="$t('Country of Birth')"
               :rules="[v => !!v || $t('You must enter a country')]"
@@ -317,7 +319,7 @@
                   mdi-star
                 </v-icon>
               </template>
-            </v-autocomplete>
+            </v-combobox>
           </v-col>
         </v-row>
       </v-container>
@@ -357,7 +359,7 @@ import { ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
-import { countries } from '@shared-utils/lists/defaultConstants';
+import { countries, states } from '@shared-utils/lists/defaultConstants';
 
 interface FormStepTwoProps {
   handleNextSection: () => void;

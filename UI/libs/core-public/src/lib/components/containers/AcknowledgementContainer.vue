@@ -143,7 +143,13 @@ function handleDecline() {
 
 function handleFinalAccept() {
   applicationStore.completeApplication.application.currentStep = 1;
-  router.push(props.nextRoute);
+  router.push({
+    path: props.nextRoute,
+    query: {
+      orderId: applicationStore.completeApplication.application.orderId,
+      isComplete: applicationStore.completeApplication.application.isComplete,
+    },
+  });
 }
 </script>
 
