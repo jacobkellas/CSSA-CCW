@@ -2,7 +2,7 @@
   <div class="finalize-view">
     <v-container
       fluid
-      v-if="isLoading && !isError"
+      v-if="isLoading && !isError && !state.isLoading && !state.isError"
     >
       <v-skeleton-loader
         fluid
@@ -19,7 +19,10 @@
         :handle-selection="handleSelection"
       />
       <FinalizeContainer />
-      <PaymentContainer :toggle-payment="togglePaymentComplete" />
+      <PaymentContainer
+        v-if="!state.isLoading"
+        :toggle-payment="togglePaymentComplete"
+      />
       <v-container v-if="!state.appointmentsLoaded">
         <v-skeleton-loader
           fluid
@@ -90,11 +93,11 @@ import FinalizeContainer from '@core-public/components/containers/FinalizeContai
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
 import Routes from '@core-public/router/routes';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
-import { useRouter } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router/composables';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 
 const currentInfoSectionStore = useCurrentInfoSection();
@@ -121,9 +124,12 @@ const state = reactive({
   appointments: [] as Array<AppointmentType>,
   applicationLoaded: false,
   appointmentsLoaded: false,
+  isLoading: true,
+  isError: false,
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const appointmentsStore = useAppointmentsStore();
+const route = useRoute();
 const router = useRouter();
 
 const { isLoading, isError } = useQuery(['getIncompleteApplications'], () => {
@@ -153,6 +159,24 @@ const { isLoading, isError } = useQuery(['getIncompleteApplications'], () => {
     .catch(() => {
       state.appointmentsLoaded = true;
     });
+});
+
+onMounted(() => {
+  if (!completeApplicationStore.completeApplication.application.orderId) {
+    state.isLoading = true;
+    completeApplicationStore
+      .getCompleteApplicationFromApi(
+        route.query.orderId,
+        route.query.isComplete
+      )
+      .then(res => {
+        completeApplicationStore.setCompleteApplication(res);
+        state.isLoading = false;
+      })
+      .catch(() => {
+        state.isError = true;
+      });
+  }
 });
 
 const updateMutation = useMutation({

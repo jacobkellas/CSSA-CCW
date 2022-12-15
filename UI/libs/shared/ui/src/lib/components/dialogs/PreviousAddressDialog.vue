@@ -93,15 +93,16 @@
               cols="12"
               lg="6"
             >
-              <v-text-field
+              <v-combobox
                 outlined
                 dense
                 maxlength="100"
                 counter
                 id="state"
+                :items="states"
                 v-model="state.address.state"
-                label="State"
-                :rules="[v => !!v || 'State cannot be blank']"
+                label="State or Region"
+                :rules="[v => !!v || 'State/Region cannot be blank']"
               >
                 <template #prepend>
                   <v-icon
@@ -111,7 +112,7 @@
                     mdi-star
                   </v-icon>
                 </template>
-              </v-text-field>
+              </v-combobox>
             </v-col>
             <v-col
               cols="12"
@@ -166,7 +167,7 @@
               cols="12"
               lg="6"
             >
-              <v-autocomplete
+              <v-combobox
                 outlined
                 dense
                 :items="countries"
@@ -183,7 +184,7 @@
                     mdi-star
                   </v-icon>
                 </template>
-              </v-autocomplete>
+              </v-combobox>
             </v-col>
           </v-row>
         </v-form>
@@ -213,7 +214,7 @@
 
 <script setup lang="ts">
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
-import { countries } from '@shared-utils/lists/defaultConstants';
+import { countries, states } from '@shared-utils/lists/defaultConstants';
 import { reactive, ref } from 'vue';
 
 interface PreviousAddressDialogProps {

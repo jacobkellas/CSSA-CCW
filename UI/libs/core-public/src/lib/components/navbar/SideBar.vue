@@ -2,8 +2,9 @@
   <v-navigation-drawer
     app
     v-model="state.drawer"
-    :mini-variant="$vuetify.breakpoint.mdAndDown"
+    :mini-variant.sync="mini"
     class="sidebar"
+    floating
     permanent
   >
     <v-list nav>
@@ -42,16 +43,36 @@
           </v-list-item-title>
         </v-list-item>
       </v-list-item-group>
+      <v-list
+        class="bottom-list"
+        nav
+        dense
+      >
+        <v-card class="mt-2 mb-2 elevation-0">
+          <v-list-item
+            link
+            @click="mini = !mini"
+          >
+            <v-list-item-icon>
+              <v-icon>
+                {{ mini ? 'mdi-menu-right-outline' : 'mdi-menu-left-outline' }}
+              </v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{ $t('Collapse Menu') }}</v-list-item-title>
+          </v-list-item>
+        </v-card>
+      </v-list>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
 import Routes from '@core-public/router/routes';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useBrandStore } from '@shared-ui/stores/brandStore';
 
 const brandStore = useBrandStore();
+const mini = ref(true);
 
 interface ISideNavProps {
   handleSelection: CallableFunction;

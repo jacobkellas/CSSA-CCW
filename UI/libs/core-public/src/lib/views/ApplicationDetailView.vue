@@ -75,7 +75,7 @@
                   "
                   v-bind="attrs"
                   v-on="on"
-                  @click="handlRenewApplication"
+                  @click="handleRenewApplication"
                 >
                   {{ $t('Renew Application') }}
                 </v-btn>
@@ -150,12 +150,13 @@ import Routes from '@core-public/router/routes';
 import { useBrandStore } from '@shared-ui/stores/brandStore';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
-import { useRouter } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router/composables';
 import { onMounted, reactive } from 'vue';
 
 const applicationStore = useCompleteApplicationStore();
 const brandStore = useBrandStore();
 const router = useRouter();
+const route = useRoute();
 
 const brand = brandStore.getBrand;
 
@@ -184,17 +185,43 @@ const state = reactive({
     },
   ],
 });
+
+onMounted(() => {
+  if (!applicationStore.completeApplication.application.orderId) {
+    applicationStore
+      .getCompleteApplicationFromApi(
+        route.query.orderId,
+        route.query.isComplete
+      )
+      .then(res => {
+        applicationStore.setCompleteApplication(res);
+      });
+  }
+});
+
 const createMutation = useMutation({
   mutationFn: applicationStore.createApplication,
   onSuccess: () => {
-    router.push(Routes.RENEW_APPLICATION_ROUTE_PATH);
+    router.push({
+      path: Routes.RENEW_FORM_ROUTE_PATH,
+      query: {
+        orderId: state.application[0].application.orderId,
+        isComplete: state.application[0].application.isComplete,
+      },
+    });
   },
   onError: () => null,
 });
 
 function handleContinueApplication() {
   if (applicationStore.completeApplication.application.currentStep === 0) {
-    router.push(Routes.APPLICATION_ROUTE_PATH);
+    router.push({
+      path: Routes.APPLICATION_ROUTE_PATH,
+      query: {
+        orderId: state.application[0].application.orderId,
+        isComplete: state.application[0].application.isComplete,
+      },
+    });
   } else if (
     applicationStore.completeApplication.application.applicationType ===
       'standard' ||
@@ -203,19 +230,38 @@ function handleContinueApplication() {
     applicationStore.completeApplication.application.applicationType ===
       'reserve'
   ) {
-    router.push(Routes.FORM_ROUTE_PATH);
+    router.push({
+      path: Routes.FORM_ROUTE_PATH,
+      query: {
+        orderId: state.application[0].application.orderId,
+        isComplete: state.application[0].application.isComplete,
+      },
+    });
   } else {
-    router.push(Routes.RENEW_FORM_ROUTE_PATH);
+    router.push({
+      path: Routes.RENEW_FORM_ROUTE_PATH,
+      query: {
+        orderId: state.application[0].application.orderId,
+        isComplete: state.application[0].application.isComplete,
+      },
+    });
   }
 }
 
+//TODO: figure out the new modify;
 function handleModifyApplication() {
   applicationStore.completeApplication.application.currentStep = 1;
   applicationStore.completeApplication.application.status = 1;
-  router.push(Routes.RENEW_FORM_ROUTE_PATH);
+  router.push({
+    path: Routes.RENEW_FORM_ROUTE_PATH,
+    query: {
+      orderId: state.application[0].application.orderId,
+      isComplete: state.application[0].application.isComplete,
+    },
+  });
 }
 
-function handlRenewApplication() {
+function handleRenewApplication() {
   applicationStore.completeApplication.id = window.crypto.randomUUID();
   applicationStore.completeApplication.application.currentStep = 1;
   applicationStore.completeApplication.application.isComplete = false;
@@ -225,10 +271,6 @@ function handlRenewApplication() {
     'renew-standard';
   createMutation.mutate();
 }
-
-onMounted(() => {
-  state.application[0].history.reverse();
-});
 </script>
 
 <style scoped lang="scss">

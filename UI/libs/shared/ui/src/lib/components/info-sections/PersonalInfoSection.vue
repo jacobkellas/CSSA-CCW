@@ -79,7 +79,10 @@
           outlined
           dense
           readonly
+          :type="show1 ? 'text' : 'password'"
+          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           :label="$t('SSN')"
+          @click:append="show1 = !show1"
           :value="props.personalInfo.ssn"
         />
       </v-col>
@@ -107,12 +110,14 @@
  * Also the bg color can be changed in the props.
  */
 import { PersonalInfoType } from '@shared-utils/types/defaultTypes';
+import { ref } from 'vue';
 
 interface personalInfoSectionProps {
   personalInfo: PersonalInfoType;
   color: string;
 }
 const props = defineProps<personalInfoSectionProps>();
+const show1 = ref(false);
 </script>
 
 <style lang="scss" scoped>

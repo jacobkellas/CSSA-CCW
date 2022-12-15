@@ -1,6 +1,20 @@
 <template>
   <v-container class="mb-10">
     <v-sheet class="rounded p-4">
+      <v-container
+        v-if="state.isLoading && !state.isError"
+        fluid
+      >
+        <v-skeleton-loader
+          fluid
+          class="fill-height"
+          type="list-item,
+        divider, list-item-three-line,
+        card-heading, image, image, image,
+        image, actions"
+        >
+        </v-skeleton-loader>
+      </v-container>
       <v-subheader class="sub-header font-weight-bold mb-2">
         {{ $t('Qualifying Questions') }}
       </v-subheader>
@@ -935,23 +949,52 @@
 <script setup lang="ts">
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import Routes from '@core-public/router/routes';
-import { ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
-import { useRouter } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router/composables';
 
 const snackbar = ref(false);
 const valid = ref(false);
 const applicationStore = useCompleteApplicationStore();
 const completeApplication = applicationStore.completeApplication.application;
 const router = useRouter();
+const route = useRoute();
+const state = reactive({
+  isLoading: false,
+  isError: false,
+});
+
+onMounted(() => {
+  if (!applicationStore.completeApplication.application.orderId) {
+    state.isLoading = true;
+    applicationStore
+      .getCompleteApplicationFromApi(
+        route.query.orderId,
+        route.query.isComplete
+      )
+      .then(res => {
+        applicationStore.setCompleteApplication(res);
+        state.isLoading = false;
+      })
+      .catch(() => {
+        state.isError = true;
+      });
+  }
+});
 
 const updateMutation = useMutation({
   mutationFn: () => {
     return applicationStore.updateApplication();
   },
   onSuccess: () => {
-    router.push(Routes.FINALIZE_ROUTE_PATH);
+    router.push({
+      path: Routes.FINALIZE_ROUTE_PATH,
+      query: {
+        orderId: applicationStore.completeApplication.application.orderId,
+        isComplete: applicationStore.completeApplication.application.isComplete,
+      },
+    });
   },
   onError: () => {
     snackbar.value = true;

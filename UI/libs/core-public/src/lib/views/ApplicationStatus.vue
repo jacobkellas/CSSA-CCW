@@ -38,6 +38,7 @@
             <v-tooltip bottom>
               <template #activator="{ on, attrs }">
                 <v-btn
+                  :disabled="state.hasIncomplete"
                   small
                   color="accent"
                   @click="handleCreateApplication"
@@ -47,7 +48,14 @@
                   {{ $t('Create New Application') }}
                 </v-btn>
               </template>
-              <span
+              <span v-if="state.hasIncomplete">
+                {{
+                  $t(
+                    'Cannot create a new application with a incomplete application'
+                  )
+                }}
+              </span>
+              <span v-else
                 >{{
                   $t(
                     ' Create a new blank application. Do not use for modifications or renewals'
@@ -87,6 +95,7 @@ const router = useRouter();
 const state = reactive({
   applications: [] as Array<CompleteApplication>,
   dataLoaded: false,
+  hasIncomplete: false,
   search: '',
   headers: [
     {
@@ -115,6 +124,11 @@ const { isLoading, isError } = useQuery(
   {
     onSuccess: data => {
       state.applications = data;
+      data.forEach((item: CompleteApplication) => {
+        if (item.application.status === 1) {
+          state.hasIncomplete = true;
+        }
+      });
       state.dataLoaded = true;
     },
     refetchOnMount: 'always',
@@ -125,7 +139,13 @@ const { isLoading, isError } = useQuery(
 const createMutation = useMutation({
   mutationFn: createApplication,
   onSuccess: () => {
-    router.push(Routes.APPLICATION_ROUTE_PATH);
+    router.push({
+      path: Routes.APPLICATION_ROUTE_PATH,
+      query: {
+        orderId: completeApplication.application.orderId,
+        isComplete: completeApplication.application.isComplete,
+      },
+    });
   },
   onError: () => null,
 });
@@ -136,7 +156,13 @@ function handleSelection(application) {
     application.application.isComplete
   ).then(data => {
     setCompleteApplication(data);
-    router.push(Routes.APPLICATION_DETAIL_ROUTE);
+    router.push({
+      path: Routes.APPLICATION_DETAIL_ROUTE,
+      query: {
+        orderId: completeApplication.application.orderId,
+        isComplete: completeApplication.application.isComplete,
+      },
+    });
   });
 }
 

@@ -102,14 +102,9 @@
           lg="6"
         >
           <CheckboxInput
+            v-if="!hidden"
             class="pl-6"
             :label="'Text message updates'"
-            :rules="[
-              v =>
-                v.length === 10 ||
-                v === '' ||
-                $t('Phone number must be ten digits long'),
-            ]"
             :target="'textMessageUpdates'"
             @input="
               v => {
@@ -161,6 +156,9 @@ const state = reactive({
   valid: false,
   snackbar: false,
 });
+
+// Remove this to implement the text updateds checkbox
+const hidden = true;
 
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
