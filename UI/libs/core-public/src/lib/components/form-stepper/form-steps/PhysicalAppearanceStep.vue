@@ -47,7 +47,9 @@
             :label="$t('Height inches')"
             :rules="[
               v => !!v || $t('Height inches is required'),
-              v => v < 12 || $t('Height inches must be less than 11'),
+              v =>
+                (v >= 0 && v < 12) ||
+                $t('Height in inches must be 0 or greater and less than 11'),
             ]"
             v-model="completeApplication.physicalAppearance.heightInch"
           >
@@ -76,8 +78,8 @@
             :rules="[
               v => !!v || $t('Weight is required'),
               v =>
-                (v > 0 && v < 2000) ||
-                $t('Weight must greater than 0 and less than 2000'),
+                (v > 0 && v < 1500) ||
+                $t('Weight must greater than 0 and less than 1500'),
             ]"
             v-model="completeApplication.physicalAppearance.weight"
           >

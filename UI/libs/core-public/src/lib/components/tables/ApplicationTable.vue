@@ -4,7 +4,7 @@
 <template>
   <v-data-table
     :headers="comProps.headers"
-    :items="state.items"
+    :items="comProps.items"
     :item-key="'orderId'"
     :loading="!comProps.isLoading"
     :loading-text="$t('Loading applications')"
@@ -90,7 +90,7 @@
         small
         color="warning"
       >
-        {{ $t('Cancelled') }}
+        {{ $t('Returned') }}
       </v-chip>
       <v-chip
         v-if="props.item.application.status === 6"
@@ -106,12 +106,21 @@
     <template #item.type="props">
       {{ props.item.application.applicationType }}
     </template>
+    <template #item.delete="props">
+      <v-btn
+        text
+        color="error"
+        v-if="props.item.application.status === 1"
+        @click="emit('delete', props.item.application.orderId)"
+      >
+        <v-icon color="error"> mdi-delete </v-icon>
+      </v-btn>
+    </template>
   </v-data-table>
 </template>
 
 <script setup lang="ts">
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
-import { onUpdated, reactive } from 'vue';
 
 interface IProps {
   headers: Array<unknown>;
@@ -119,15 +128,7 @@ interface IProps {
   isLoading: boolean;
 }
 
-const emit = defineEmits(['selected']);
+const emit = defineEmits(['selected', 'delete']);
 
 const comProps = defineProps<IProps>();
-
-const state = reactive({
-  items: comProps.items,
-});
-
-onUpdated(() => {
-  state.items = comProps.items;
-});
 </script>

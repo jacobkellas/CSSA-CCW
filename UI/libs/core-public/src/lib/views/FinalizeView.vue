@@ -19,10 +19,7 @@
         :handle-selection="handleSelection"
       />
       <FinalizeContainer />
-      <PaymentContainer
-        v-if="!state.isLoading"
-        :toggle-payment="togglePaymentComplete"
-      />
+      <PaymentContainer :toggle-payment="togglePaymentComplete" />
       <v-container v-if="!state.appointmentsLoaded">
         <v-skeleton-loader
           fluid
@@ -176,12 +173,14 @@ onMounted(() => {
       .catch(() => {
         state.isError = true;
       });
+  } else {
+    state.isLoading = false;
   }
 });
 
 const updateMutation = useMutation({
   mutationFn: () => {
-    return completeApplicationStore.updateApplication('Application Complete');
+    return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
     router.push(Routes.RECEIPT_PATH);

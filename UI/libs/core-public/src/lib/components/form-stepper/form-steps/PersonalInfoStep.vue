@@ -406,7 +406,7 @@ async function handleSubmit() {
 }
 
 function getAliasFromDialog(alias) {
-  completeApplication.aliases.unshift(alias);
+  completeApplication.aliases.push(alias);
 }
 
 function deleteAlias(index) {
