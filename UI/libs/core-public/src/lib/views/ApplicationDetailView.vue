@@ -23,8 +23,8 @@
                   small
                   color="info"
                   :disabled="
-                    applicationStore.completeApplication.application.status ===
-                    2
+                    applicationStore.completeApplication.application.status !==
+                    1
                   "
                   v-bind="attrs"
                   v-on="on"
