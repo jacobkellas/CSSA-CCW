@@ -280,6 +280,7 @@ function handleSubmit() {
   if (!completeApplication.physicalAppearance.gender) {
     state.formError = true;
   } else {
+    state.valid = false;
     updateMutation.mutate();
   }
 }

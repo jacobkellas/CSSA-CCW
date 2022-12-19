@@ -479,6 +479,7 @@ function handleSubmit() {
   if (!completeApplication.personalInfo.maritalStatus) {
     errors.value.push('Marital Status');
   } else {
+    valid.value = false;
     updateMutation.mutate();
   }
 }

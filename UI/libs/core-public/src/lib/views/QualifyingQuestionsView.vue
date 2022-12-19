@@ -1138,7 +1138,7 @@ const goBackMutation = useMutation({
 
 const saveMutation = useMutation({
   mutationFn: () => {
-    return applicationStore.updateApplication('Save and quit');
+    return applicationStore.updateApplication();
   },
   onSuccess: () => {
     router.push('/');

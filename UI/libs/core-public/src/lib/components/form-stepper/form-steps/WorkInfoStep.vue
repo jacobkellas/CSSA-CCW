@@ -317,6 +317,7 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
+    state.valid = false;
     completeApplication.currentStep = 7;
     props.handleNextSection();
   },

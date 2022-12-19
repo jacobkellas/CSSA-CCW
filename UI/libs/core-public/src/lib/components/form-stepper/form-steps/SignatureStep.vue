@@ -136,6 +136,7 @@ onMounted(() => {
 const fileMutation = useMutation({
   mutationFn: handleFileUpload,
   onSuccess: () => {
+    state.valid = false;
     applicationStore.completeApplication.application.currentStep = 10;
     applicationStore.updateApplication();
     router.push({
@@ -219,6 +220,7 @@ function handleCanvasUpdate() {
 }
 
 function handleSkipSubmit() {
+  state.valid = false;
   applicationStore.completeApplication.application.currentStep = 10;
   applicationStore.updateApplication();
   router.push({

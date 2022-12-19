@@ -436,6 +436,7 @@ function handleSubmit() {
   if (!completeApplication.citizenship.militaryStatus) {
     formError.value = true;
   } else {
+    valid.value = false;
     updateMutation.mutate();
   }
 }

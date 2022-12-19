@@ -402,6 +402,7 @@ async function handleSubmit() {
     errors.value.push('Marital Status');
   } else {
     updateMutation.mutate();
+    valid.value = false;
   }
 }
 
