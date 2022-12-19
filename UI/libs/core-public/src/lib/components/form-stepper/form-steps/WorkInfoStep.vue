@@ -116,6 +116,80 @@
             cols="12"
             lg="6"
           >
+            <v-combobox
+              dense
+              outlined
+              autocomplete="none"
+              :items="countries"
+              :label="$t('Employer Country')"
+              :rules="[v => !!v || $t('You must enter a country')]"
+              v-model="completeApplication.workInformation.employerCountry"
+            >
+              <template #prepend>
+                <v-icon
+                  x-small
+                  color="error"
+                >
+                  mdi-star
+                </v-icon>
+              </template>
+            </v-combobox>
+          </v-col>
+
+          <v-col
+            cols="12"
+            lg="6"
+          >
+            <v-text-field
+              v-if="
+                completeApplication.workInformation.employerCountry !==
+                'United States'
+              "
+              outlined
+              dense
+              :label="$t('Employer Region')"
+              :rules="[v => !!v || $t('You must enter a region')]"
+              v-model="completeApplication.workInformation.employerState"
+            >
+              <template #prepend>
+                <v-icon
+                  x-small
+                  color="error"
+                >
+                  mdi-star
+                </v-icon>
+              </template>
+            </v-text-field>
+            <v-autocomplete
+              v-if="
+                completeApplication.workInformation.employerCountry ===
+                'United States'
+              "
+              dense
+              outlined
+              autocomplete="none"
+              :items="states"
+              :label="$t('Employer State')"
+              :rules="[v => !!v || $t('You must enter a state')]"
+              v-model="completeApplication.workInformation.employerState"
+            >
+              <template #prepend>
+                <v-icon
+                  x-small
+                  color="error"
+                >
+                  mdi-star
+                </v-icon>
+              </template>
+            </v-autocomplete>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col
+            cols="12"
+            lg="6"
+          >
             <v-text-field
               dense
               outlined
@@ -133,31 +207,7 @@
               </template>
             </v-text-field>
           </v-col>
-          <v-col
-            cols="12"
-            lg="6"
-          >
-            <v-combobox
-              dense
-              outlined
-              autocomplete="none"
-              :items="states"
-              :label="$t('Employer State')"
-              :rules="[v => !!v || $t('You must enter a state')]"
-              v-model="completeApplication.workInformation.employerState"
-            >
-              <template #prepend>
-                <v-icon
-                  x-small
-                  color="error"
-                >
-                  mdi-star
-                </v-icon>
-              </template>
-            </v-combobox>
-          </v-col>
-        </v-row>
-        <v-row>
+
           <v-col
             cols="12"
             lg="6"
@@ -199,31 +249,6 @@
                 </v-icon>
               </template>
             </v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            cols="12"
-            lg="6"
-          >
-            <v-combobox
-              dense
-              outlined
-              autocomplete="none"
-              :items="countries"
-              :label="$t('Employer Country')"
-              :rules="[v => !!v || $t('You must enter a country')]"
-              v-model="completeApplication.workInformation.employerCountry"
-            >
-              <template #prepend>
-                <v-icon
-                  x-small
-                  color="error"
-                >
-                  mdi-star
-                </v-icon>
-              </template>
-            </v-combobox>
           </v-col>
         </v-row>
       </div>

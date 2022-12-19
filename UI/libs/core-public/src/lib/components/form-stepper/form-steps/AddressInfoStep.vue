@@ -53,6 +53,80 @@
           cols="12"
           lg="6"
         >
+          <v-combobox
+            dense
+            outlined
+            :items="countries"
+            :label="$t('Country')"
+            :rules="[v => !!v || 'Country cannot be blank']"
+            v-model="completeApplication.currentAddress.country"
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+          </v-combobox>
+        </v-col>
+
+        <v-col
+          cols="12"
+          lg="6"
+        >
+          <v-autocomplete
+            v-if="
+              completeApplication.currentAddress.country === 'United States'
+            "
+            autocomplete="none"
+            dense
+            maxlength="100"
+            counter
+            outlined
+            :items="states"
+            :label="$t('State')"
+            :rules="[v => !!v || $t('State cannot be blank')]"
+            v-model="completeApplication.currentAddress.state"
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+          </v-autocomplete>
+
+          <v-text-field
+            v-if="
+              completeApplication.currentAddress.country !== 'United States'
+            "
+            dense
+            maxlength="100"
+            counter
+            outlined
+            :label="$t('Region')"
+            :rules="[v => !!v || $t('Region cannot be blank')]"
+            v-model="completeApplication.currentAddress.state"
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          lg="6"
+        >
           <v-text-field
             dense
             outlined
@@ -71,31 +145,6 @@
               </v-icon>
             </template>
           </v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          lg="6"
-        >
-          <v-combobox
-            dense
-            maxlength="100"
-            counter
-            outlined
-            :items="states"
-            :label="$t('State or Region')"
-            :rules="[v => !!v || $t('State/Region cannot be blank')]"
-            v-model="completeApplication.currentAddress.state"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-combobox>
         </v-col>
         <v-col
           cols="12"
@@ -142,29 +191,6 @@
               </v-icon>
             </template>
           </v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          lg="6"
-        >
-          <v-combobox
-            dense
-            outlined
-            :items="countries"
-            :label="$t('Country')"
-            :rules="[v => !!v || 'Country cannot be blank']"
-            v-model="completeApplication.currentAddress.country"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-combobox>
         </v-col>
       </v-row>
       <v-divider />
@@ -229,14 +255,67 @@
                 cols="12"
                 lg="6"
               >
-                <v-text-field
+                <v-autocomplete
+                  autocomplete="none"
+                  dense
+                  outlined
+                  :items="countries"
+                  :label="$t('Country')"
+                  :rules="[v => !!v || $t('Country cannot be blank')]"
+                  v-model="completeApplication.mailingAddress.country"
+                >
+                  <template #prepend>
+                    <v-icon
+                      x-small
+                      color="error"
+                    >
+                      mdi-star
+                    </v-icon>
+                  </template>
+                </v-autocomplete>
+              </v-col>
+
+              <v-col
+                cols="12"
+                lg="6"
+              >
+                <v-autocomplete
+                  v-if="
+                    completeApplication.mailingAddress.country ===
+                    'United States'
+                  "
+                  autocomplete="none"
                   dense
                   maxlength="100"
                   counter
                   outlined
-                  :label="$t('City')"
-                  :rules="[v => !!v || $t(' City cannot be blank')]"
-                  v-model="completeApplication.mailingAddress.city"
+                  :items="states"
+                  :label="$t('State')"
+                  :rules="[v => !!v || $t('State cannot be blank')]"
+                  v-model="completeApplication.mailingAddress.state"
+                >
+                  <template #prepend>
+                    <v-icon
+                      x-small
+                      color="error"
+                    >
+                      mdi-star
+                    </v-icon>
+                  </template>
+                </v-autocomplete>
+
+                <v-text-field
+                  v-if="
+                    completeApplication.mailingAddress.country !==
+                    'United States'
+                  "
+                  dense
+                  maxlength="100"
+                  counter
+                  outlined
+                  :label="$t('Region')"
+                  :rules="[v => !!v || $t('Region cannot be blank')]"
+                  v-model="completeApplication.mailingAddress.state"
                 >
                   <template #prepend>
                     <v-icon
@@ -253,15 +332,14 @@
                 cols="12"
                 lg="6"
               >
-                <v-combobox
+                <v-text-field
                   dense
                   maxlength="100"
                   counter
                   outlined
-                  :label="$t('State or Region')"
-                  :items="states"
-                  :rules="[v => !!v || $t('State/Region cannot be blank')]"
-                  v-model="completeApplication.mailingAddress.state"
+                  :label="$t('City')"
+                  :rules="[v => !!v || $t('City cannot be blank')]"
+                  v-model="completeApplication.mailingAddress.city"
                 >
                   <template #prepend>
                     <v-icon
@@ -271,8 +349,9 @@
                       mdi-star
                     </v-icon>
                   </template>
-                </v-combobox>
+                </v-text-field>
               </v-col>
+
               <v-col
                 cols="12"
                 lg="6"
@@ -318,29 +397,6 @@
                     </v-icon>
                   </template>
                 </v-text-field>
-              </v-col>
-
-              <v-col
-                cols="12"
-                lg="6"
-              >
-                <v-combobox
-                  dense
-                  outlined
-                  :items="countries"
-                  :label="$t('Country')"
-                  :rules="[v => !!v || $t('Country cannot be blank')]"
-                  v-model="completeApplication.mailingAddress.country"
-                >
-                  <template #prepend>
-                    <v-icon
-                      x-small
-                      color="error"
-                    >
-                      mdi-star
-                    </v-icon>
-                  </template>
-                </v-combobox>
               </v-col>
             </v-row>
           </div>
@@ -406,6 +462,82 @@
                 cols="12"
                 lg="6"
               >
+                <v-combobox
+                  dense
+                  outlined
+                  :items="countries"
+                  :label="$t('Spouse\'s Country')"
+                  :rules="[v => !!v || $t('Spouse\'s Country cannot be blank')]"
+                  v-model="completeApplication.spouseAddressInformation.country"
+                >
+                  <template #prepend>
+                    <v-icon
+                      x-small
+                      color="error"
+                    >
+                      mdi-star
+                    </v-icon>
+                  </template>
+                </v-combobox>
+              </v-col>
+
+              <v-col
+                cols="12"
+                lg="6"
+              >
+                <v-autocomplete
+                  v-if="
+                    completeApplication.spouseAddressInformation.country ===
+                    'United States'
+                  "
+                  autocomplete="none"
+                  dense
+                  maxlength="100"
+                  counter
+                  outlined
+                  :items="states"
+                  :label="$t('State')"
+                  :rules="[v => !!v || $t('State cannot be blank')]"
+                  v-model="completeApplication.spouseAddressInformation.state"
+                >
+                  <template #prepend>
+                    <v-icon
+                      x-small
+                      color="error"
+                    >
+                      mdi-star
+                    </v-icon>
+                  </template>
+                </v-autocomplete>
+
+                <v-text-field
+                  v-if="
+                    completeApplication.spouseAddressInformation.country !==
+                    'United States'
+                  "
+                  dense
+                  maxlength="100"
+                  counter
+                  outlined
+                  :label="$t('Region')"
+                  :rules="[v => !!v || $t('Region cannot be blank')]"
+                  v-model="completeApplication.spouseAddressInformation.state"
+                >
+                  <template #prepend>
+                    <v-icon
+                      x-small
+                      color="error"
+                    >
+                      mdi-star
+                    </v-icon>
+                  </template>
+                </v-text-field>
+              </v-col>
+
+              <v-col
+                cols="12"
+                lg="6"
+              >
                 <v-text-field
                   dense
                   maxlength="100"
@@ -430,36 +562,11 @@
                 cols="12"
                 lg="6"
               >
-                <v-combobox
-                  dense
-                  maxlength="100"
-                  counter
-                  outlined
-                  :items="states"
-                  :label="$t('Spouse\'s State or Region')"
-                  :rules="[
-                    v => !!v || $t('Spouse\'s State/Region cannot be blank'),
-                  ]"
-                  v-model="completeApplication.spouseAddressInformation.state"
-                >
-                  <template #prepend>
-                    <v-icon
-                      x-small
-                      color="error"
-                    >
-                      mdi-star
-                    </v-icon>
-                  </template>
-                </v-combobox>
-              </v-col>
-              <v-col
-                cols="12"
-                lg="6"
-              >
                 <v-text-field
                   dense
                   maxlength="100"
                   counter
+                  outlined
                   :label="$t('Spouse\'s County')"
                   :rules="[v => !!v || $t('Spouse\'s County cannot be blank')]"
                   v-model="completeApplication.spouseAddressInformation.county"
@@ -496,29 +603,6 @@
                     </v-icon>
                   </template>
                 </v-text-field>
-              </v-col>
-
-              <v-col
-                cols="12"
-                lg="6"
-              >
-                <v-combobox
-                  dense
-                  outlined
-                  :items="countries"
-                  :label="$t('Spouse\'s Country')"
-                  :rules="[v => !!v || $t('Spouse\'s Country cannot be blank')]"
-                  v-model="completeApplication.spouseAddressInformation.country"
-                >
-                  <template #prepend>
-                    <v-icon
-                      x-small
-                      color="error"
-                    >
-                      mdi-star
-                    </v-icon>
-                  </template>
-                </v-combobox>
               </v-col>
             </v-row>
             <v-divider class="my-3" />

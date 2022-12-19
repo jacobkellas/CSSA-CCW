@@ -46,7 +46,7 @@
           cols="12"
           lg="6"
         >
-          <v-combobox
+          <v-autocomplete
             outlined
             dense
             combobox="none"
@@ -63,7 +63,7 @@
                 mdi-star
               </v-icon>
             </template>
-          </v-combobox>
+          </v-autocomplete>
         </v-col>
       </v-row>
 
@@ -130,26 +130,6 @@
               </v-icon>
             </template>
           </v-text-field>
-          <v-combobox
-            outlined
-            dense
-            maxlength="150"
-            counter
-            combobox="none"
-            :items="states"
-            :label="$t('Birth state or region')"
-            :rules="[v => !!v || $t('Birth state/region cannot be blank')]"
-            v-model="completeApplication.dob.birthState"
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-          </v-combobox>
 
           <v-combobox
             outlined
@@ -169,6 +149,48 @@
               </v-icon>
             </template>
           </v-combobox>
+
+          <v-autocomplete
+            v-if="completeApplication.dob.birthCountry === 'United States'"
+            outlined
+            dense
+            maxlength="150"
+            counter
+            autocomplete="none"
+            :items="states"
+            :label="$t('Birth state')"
+            :rules="[v => !!v || $t('Birth state cannot be blank')]"
+            v-model="completeApplication.dob.birthState"
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+          </v-autocomplete>
+
+          <v-text-field
+            v-if="completeApplication.dob.birthCountry !== 'United States'"
+            outlined
+            dense
+            maxlength="150"
+            counter
+            :label="$t('Birth region')"
+            :rules="[v => !!v || $t('Birth region cannot be blank')]"
+            v-model="completeApplication.dob.birthState"
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+          </v-text-field>
         </v-col>
       </v-row>
 
@@ -243,8 +265,8 @@
         </v-subheader>
         <v-row class="ml-5">
           <v-col>
-            <v-combobox
-              combobox="none"
+            <v-autocomplete
+              autocomplete="none"
               outlined
               dense
               :items="countries"
@@ -262,7 +284,7 @@
                   mdi-star
                 </v-icon>
               </template>
-            </v-combobox>
+            </v-autocomplete>
             <v-radio-group
               :label="'Immigrant Alien'"
               v-model="completeApplication.immigrantInformation.immigrantAlien"

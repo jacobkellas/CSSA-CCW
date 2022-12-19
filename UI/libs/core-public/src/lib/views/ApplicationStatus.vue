@@ -17,6 +17,7 @@
       >
       </v-skeleton-loader>
     </v-container>
+
     <v-row v-else>
       <v-col
         cols="12"
@@ -135,6 +136,9 @@ const { isLoading, isError } = useQuery(
           state.hasIncomplete = true;
         }
       });
+      state.dataLoaded = true;
+    },
+    onError: () => {
       state.dataLoaded = true;
     },
     refetchOnMount: 'always',
