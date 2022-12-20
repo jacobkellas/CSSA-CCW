@@ -49,7 +49,7 @@
               v => !!v || $t('Height inches is required'),
               v =>
                 (v >= 0 && v < 12) ||
-                $t('Height in inches must be 0 or greater and less than 11'),
+                $t('Height in inches must be 0 or greater and less than 12'),
             ]"
             v-model="completeApplication.physicalAppearance.heightInch"
           >
