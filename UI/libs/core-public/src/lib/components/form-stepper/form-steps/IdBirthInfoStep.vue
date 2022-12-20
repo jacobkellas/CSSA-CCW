@@ -18,8 +18,12 @@
               <v-text-field
                 dense
                 outlined
+                maxlength="9"
+                counter
+                persistent-hint
                 v-model="completeApplication.idInfo.idNumber"
                 :label="$t('Id number')"
+                :hint="$t('PERMIT-HINT')"
                 :rules="[v => !!v || $t('Id  number is required')]"
                 v-bind="attrs"
                 v-on="on"
@@ -49,7 +53,7 @@
           <v-autocomplete
             outlined
             dense
-            combobox="none"
+            autocomplete="none"
             :items="states"
             :label="$t(' Issuing State')"
             :rules="[v => !!v || $t('Issuing state is required')]"

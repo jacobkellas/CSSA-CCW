@@ -155,6 +155,8 @@
             maxlength="100"
             counter
             outlined
+            persistent-hint
+            :hint="$t('If not applicable enter N/A ')"
             :label="$t('County')"
             :rules="[v => !!v || $t('County cannot be blank')]"
             v-model="completeApplication.currentAddress.county"
@@ -179,7 +181,9 @@
             counter
             outlined
             :label="$t('Zip')"
-            :rules="[v => !!v || $t('Zip cannot be blank')]"
+            :rules="zipRuleSet"
+            persistent-hint
+            :hint="$t('If not applicable enter N/A ')"
             v-model="completeApplication.currentAddress.zip"
           >
             <template #prepend>
@@ -361,6 +365,8 @@
                   maxlength="100"
                   counter
                   outlined
+                  persistent-hint
+                  :hint="$t('If not applicable enter N/A ')"
                   :label="$t('County')"
                   :rules="[v => !!v || $t('County cannot be blank')]"
                   v-model="completeApplication.mailingAddress.county"
@@ -385,7 +391,9 @@
                   maxlength="10"
                   counter
                   outlined
-                  :rules="[v => !!v || $t('Zip cannot be blank')]"
+                  persistent-hint
+                  :hint="$t('If not applicable enter N/A')"
+                  :rules="zipRuleSet"
                   v-model="completeApplication.mailingAddress.zip"
                 >
                   <template #prepend>
@@ -567,6 +575,8 @@
                   maxlength="100"
                   counter
                   outlined
+                  persistent-hint
+                  :hint="$t('If not applicable enter N/A')"
                   :label="$t('Spouse\'s County')"
                   :rules="[v => !!v || $t('Spouse\'s County cannot be blank')]"
                   v-model="completeApplication.spouseAddressInformation.county"
@@ -590,8 +600,10 @@
                   maxlength="10"
                   counter
                   outlined
+                  persistent-hint
+                  :hint="$t('If not applicable enter N/A')"
                   :label="$t('Spouse\'s Zip')"
-                  :rules="[v => !!v || $t('Spouse\'s Zip cannot be blank')]"
+                  :rules="zipRuleSet"
                   v-model="completeApplication.spouseAddressInformation.zip"
                 >
                   <template #prepend>
@@ -656,6 +668,7 @@ import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplicati
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import { countries, states } from '@shared-utils/lists/defaultConstants';
+import { zipRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface FormStepThreeProps {
   handleNextSection: () => void;

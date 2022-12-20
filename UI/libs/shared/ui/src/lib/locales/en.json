@@ -111,6 +111,7 @@
   "RENEWAL-WARNING": "Please bring in your old CCW permit and turn it in.  Your Renewal permit will not be issued if you do not turn in the old permit.  New issuance dates and dates of expiration many times will overlap so you cannot process two CCW permits.",
   "STANDARD": "STANDARD:",
   "SUPPORTING": "SUPPORTING DOCUMENTS: ",
+  "PERMIT-HINT": " Must match the CII number on your permit.",
   "PRIOR-RENEWAL": "Prior to completing a RENEWAL Application, please be prepared to upload the following:",
   "PRIOR-RENEWAL-ONE": "A copy of your valid California driver’s license, or California ID, plus Military ID if applicable.",
   "PRIOR-RENEWAL-TWO": "Two (2) items for proof of residency (refer to above section regarding acceptable Proofs of Residency; P.O. Boxes are NOT allowed!).",
