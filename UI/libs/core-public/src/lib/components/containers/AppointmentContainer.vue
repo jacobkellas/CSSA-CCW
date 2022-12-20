@@ -248,6 +248,8 @@ function handleConfirm() {
     appointment.status = false.toString();
     appointmentStore.sendAppointmentCheck(appointment).then(() => {
       appointmentMutation.mutate();
+      applicationStore.completeApplication.application.appointmentDateTime =
+        appointment.start;
     });
   }
 }

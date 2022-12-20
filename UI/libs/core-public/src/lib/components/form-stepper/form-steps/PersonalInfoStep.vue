@@ -18,9 +18,11 @@
               <v-text-field
                 outlined
                 dense
+                maxlength="50"
+                counter
                 id="last-name-field"
                 :label="$t('Last name')"
-                :rules="[v => !!v || $t('Last name is required')]"
+                :rules="requireNameRuleSet"
                 v-model="completeApplication.personalInfo.lastName"
                 v-bind="attrs"
                 v-on="on"
@@ -50,8 +52,10 @@
           <v-text-field
             outlined
             dense
+            maxlength="50"
+            counter
             :label="$t('First name')"
-            :rules="[v => !!v || $t('First name is required')]"
+            :rules="requireNameRuleSet"
             v-model="completeApplication.personalInfo.firstName"
           >
             <template #prepend>
@@ -72,8 +76,11 @@
           <v-text-field
             outlined
             dense
+            maxlength="50"
+            counter
             :label="$t('Middle name')"
             class="pl-6"
+            :rules="notRequiredNameRuleSet"
             v-model="completeApplication.personalInfo.middleName"
           />
         </v-col>
@@ -86,7 +93,10 @@
             outlined
             dense
             class="pl-6"
+            maxlength="50"
+            counter
             :label="$t('Maiden name')"
+            :rules="notRequiredNameRuleSet"
             v-model="completeApplication.personalInfo.maidenName"
           />
         </v-col>
@@ -98,6 +108,8 @@
           <v-text-field
             outlined
             dense
+            maxlength="10"
+            counter
             class="pl-6"
             :label="$t('Suffix')"
             v-model="completeApplication.personalInfo.suffix"
@@ -209,8 +221,10 @@
               <v-text-field
                 dense
                 outlined
+                maxlength="50"
+                counter
                 :label="$t('Last Name')"
-                :rules="[v => !!v || $t('Last name cannot be blank')]"
+                :rules="requireNameRuleSet"
                 v-model="completeApplication.spouseInformation.lastName"
               >
                 <template #prepend>
@@ -230,8 +244,10 @@
               <v-text-field
                 dense
                 outlined
+                maxlength="50"
+                counter
                 :label="$t('First Name')"
-                :rules="[v => !!v || $t('First name cannot be blank')]"
+                :rules="requireNameRuleSet"
                 v-model="completeApplication.spouseInformation.firstName"
               >
                 <template #prepend>
@@ -254,7 +270,10 @@
                 dense
                 outlined
                 class="pl-6"
+                maxlength="50"
+                counter
                 :label="$t('Middle Name')"
+                :rules="notRequiredNameRuleSet"
                 v-model="completeApplication.spouseInformation.middleName"
               />
             </v-col>
@@ -266,8 +285,11 @@
               <v-text-field
                 dense
                 outlined
+                maxlength="50"
+                counter
                 class="pl-6"
                 :label="$t('Maiden Name')"
+                :rules="notRequiredNameRuleSet"
                 v-model="completeApplication.spouseInformation.maidenName"
               />
             </v-col>
@@ -338,7 +360,11 @@ import AliasDialog from '@shared-ui/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
-import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
+import {
+  notRequiredNameRuleSet,
+  requireNameRuleSet,
+  ssnRuleSet,
+} from '@shared-ui/rule-sets/ruleSets';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
@@ -402,6 +428,7 @@ async function handleSubmit() {
     errors.value.push('Marital Status');
   } else {
     updateMutation.mutate();
+    valid.value = false;
   }
 }
 

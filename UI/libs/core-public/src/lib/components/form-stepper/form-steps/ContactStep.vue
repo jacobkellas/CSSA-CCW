@@ -190,6 +190,7 @@ const saveMutation = useMutation({
 });
 
 async function handleSubmit() {
+  state.valid = false;
   updateMutation.mutate();
 }
 

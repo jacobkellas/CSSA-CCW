@@ -130,6 +130,7 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
+    state.valid = false;
     completeApplication.currentStep = 8;
     props.handleNextSection();
   },

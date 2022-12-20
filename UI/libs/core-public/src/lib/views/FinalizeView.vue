@@ -19,7 +19,13 @@
         :handle-selection="handleSelection"
       />
       <FinalizeContainer />
-      <PaymentContainer :toggle-payment="togglePaymentComplete" />
+      <PaymentContainer
+        v-if="
+          completeApplicationStore.completeApplication.application
+            .applicationType
+        "
+        :toggle-payment="togglePaymentComplete"
+      />
       <v-container v-if="!state.appointmentsLoaded">
         <v-skeleton-loader
           fluid
@@ -46,15 +52,35 @@
           </v-alert>
         </v-card>
       </v-container>
+
       <AppointmentContainer
         v-if="
           (!isLoading && !isError) ||
-          (state.appointmentsLoaded && state.appointments.length > 0)
+          (state.appointmentsLoaded &&
+            state.appointments.length > 0 &&
+            !state.appointmentComplete)
         "
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
         :reschedule="false"
       />
+
+      <v-container v-else>
+        <v-card>
+          <v-alert
+            outlined
+            type="info"
+            class="font-weight-bold"
+          >
+            {{ $t('Appointment has been set for ') }}
+            {{
+              new Date(
+                completeApplicationStore.completeApplication.application.appointmentDateTime
+              ).toLocaleString()
+            }}
+          </v-alert>
+        </v-card>
+      </v-container>
       <v-container class="finalize-submit">
         <v-btn
           :disabled="!state.appointmentComplete || !state.paymentComplete"
@@ -169,6 +195,13 @@ onMounted(() => {
       .then(res => {
         completeApplicationStore.setCompleteApplication(res);
         state.isLoading = false;
+
+        if (
+          completeApplicationStore.completeApplication.application
+            .appointmentStatus
+        ) {
+          state.appointmentComplete = true;
+        }
       })
       .catch(() => {
         state.isError = true;
@@ -206,6 +239,9 @@ function togglePaymentComplete() {
 
 function toggleAppointmentComplete() {
   state.appointmentComplete = !state.appointmentComplete;
+  completeApplicationStore.updateApplication().then(() => {
+    state.appointmentsLoaded = false;
+  });
 }
 </script>
 

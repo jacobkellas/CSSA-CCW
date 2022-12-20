@@ -100,6 +100,16 @@
         {{ $t('Complete') }}
       </v-chip>
     </template>
+    <template #item.appointmentDate="props">
+      {{
+        new Date(props.item.application.appointmentDateTime) <
+        new Date(Date.now()).toISOString()
+          ? new Date(
+              props.item.application.appointmentDateTime
+            ).toLocaleString()
+          : $t('Not Scheduled')
+      }}
+    </template>
     <template #item.step="props">
       {{ props.item.application.currentStep }}
     </template>
@@ -107,20 +117,17 @@
       {{ props.item.application.applicationType }}
     </template>
     <template #item.delete="props">
-      <v-btn
-        text
-        color="error"
+      <DeleteDialog
         v-if="props.item.application.status === 1"
-        @click="emit('delete', props.item.application.orderId)"
-      >
-        <v-icon color="error"> mdi-delete </v-icon>
-      </v-btn>
+        :delete-function="() => handleDelete(props.item)"
+      />
     </template>
   </v-data-table>
 </template>
 
 <script setup lang="ts">
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
+import DeleteDialog from '@shared-ui/components/dialogs/DeleteDialog.vue';
 
 interface IProps {
   headers: Array<unknown>;
@@ -129,6 +136,10 @@ interface IProps {
 }
 
 const emit = defineEmits(['selected', 'delete']);
+
+function handleDelete(item: CompleteApplication) {
+  emit('delete', item.application.orderId);
+}
 
 const comProps = defineProps<IProps>();
 </script>

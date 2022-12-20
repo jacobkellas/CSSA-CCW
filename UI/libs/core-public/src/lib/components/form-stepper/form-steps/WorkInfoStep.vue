@@ -39,6 +39,8 @@
             <v-text-field
               dense
               outlined
+              maxlength="50"
+              counter
               :label="$t('Employer Name')"
               :rules="[v => !!v || $t('You must enter a employer name')]"
               v-model="completeApplication.workInformation.employerName"
@@ -60,6 +62,8 @@
             <v-text-field
               dense
               outlined
+              maxlength="50"
+              counter
               :label="$t('Occupation')"
               :rules="[v => !!v || $t('You must enter a occupation')]"
               v-model="completeApplication.workInformation.occupation"
@@ -83,6 +87,8 @@
             <v-text-field
               dense
               outlined
+              maxlength="50"
+              counter
               :label="$t('Employer Address Line 1')"
               :rules="[v => !!v || $t('You must enter a address')]"
               v-model="completeApplication.workInformation.employerAddressLine1"
@@ -104,6 +110,8 @@
             <v-text-field
               dense
               outlined
+              maxlength="50"
+              counter
               class="pl-6"
               :label="$t('Employer Address Line 2')"
               v-model="completeApplication.workInformation.employerAddressLine2"
@@ -119,6 +127,8 @@
             <v-combobox
               dense
               outlined
+              maxlength="50"
+              counter
               autocomplete="none"
               :items="countries"
               :label="$t('Employer Country')"
@@ -147,6 +157,8 @@
               "
               outlined
               dense
+              maxlength="50"
+              counter
               :label="$t('Employer Region')"
               :rules="[v => !!v || $t('You must enter a region')]"
               v-model="completeApplication.workInformation.employerState"
@@ -193,6 +205,8 @@
             <v-text-field
               dense
               outlined
+              maxlength="50"
+              counter
               :label="$t('Employer City')"
               :rules="[v => !!v || $t('You must enter a city')]"
               v-model="completeApplication.workInformation.employerCity"
@@ -215,8 +229,10 @@
             <v-text-field
               dense
               outlined
+              maxlength="10"
+              counter
               :label="$t('Employer Zip Code')"
-              :rules="[v => !!v || $t('You must enter a Zip Code')]"
+              :rules="zipRuleSet"
               v-model="completeApplication.workInformation.employerZip"
             >
               <template #prepend>
@@ -284,7 +300,6 @@
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@shared-ui/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
-import { phoneRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
@@ -294,6 +309,7 @@ import {
   employmentStatus,
   states,
 } from '@shared-utils/lists/defaultConstants';
+import { phoneRuleSet, zipRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface ISecondFormStepOneProps {
   routes: unknown;
@@ -317,6 +333,7 @@ const updateMutation = useMutation({
     return completeApplicationStore.updateApplication();
   },
   onSuccess: () => {
+    state.valid = false;
     completeApplication.currentStep = 7;
     props.handleNextSection();
   },
