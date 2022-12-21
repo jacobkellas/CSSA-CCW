@@ -294,6 +294,31 @@
               />
             </v-col>
           </v-row>
+          <v-row>
+            <v-col
+              cols="12"
+              lg="6"
+            >
+              <v-text-field
+                dense
+                outlined
+                maxlength="10"
+                counter
+                :label="$t('Phone number')"
+                :rules="phoneRuleSet"
+                v-model="completeApplication.spouseInformation.phoneNumber"
+              >
+                <template #prepend>
+                  <v-icon
+                    x-small
+                    color="error"
+                  >
+                    mdi-star
+                  </v-icon>
+                </template>
+              </v-text-field>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-form>
@@ -362,6 +387,7 @@ import FormButtonContainer from '@shared-ui/components/containers/FormButtonCont
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
 import {
   notRequiredNameRuleSet,
+  phoneRuleSet,
   requireNameRuleSet,
   ssnRuleSet,
 } from '@shared-ui/rule-sets/ruleSets';
