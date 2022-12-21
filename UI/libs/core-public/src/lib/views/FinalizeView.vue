@@ -22,10 +22,23 @@
       <PaymentContainer
         v-if="
           completeApplicationStore.completeApplication.application
-            .applicationType
+            .applicationType &&
+          completeApplicationStore.completeApplication.application
+            .paymentStatus === 0
         "
         :toggle-payment="togglePaymentComplete"
       />
+      <v-container v-else>
+        <v-card>
+          <v-alert
+            outlined
+            type="info"
+            class="font-weight-bold"
+          >
+            {{ $t('Payment has already been submitted ') }}
+          </v-alert>
+        </v-card>
+      </v-container>
       <v-container v-if="!state.appointmentsLoaded">
         <v-skeleton-loader
           fluid
@@ -116,12 +129,12 @@ import FinalizeContainer from '@core-public/components/containers/FinalizeContai
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
 import Routes from '@core-public/router/routes';
 import SideBar from '@core-public/components/navbar/SideBar.vue';
-import { onMounted, reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
-import { useRoute, useRouter } from 'vue-router/composables';
+import { onMounted, reactive } from 'vue';
 import { useMutation, useQuery } from '@tanstack/vue-query';
+import { useRoute, useRouter } from 'vue-router/composables';
 
 const currentInfoSectionStore = useCurrentInfoSection();
 
@@ -202,6 +215,13 @@ onMounted(() => {
         ) {
           state.appointmentComplete = true;
         }
+
+        if (
+          completeApplicationStore.completeApplication.application
+            .paymentStatus > 0
+        ) {
+          state.paymentComplete = true;
+        }
       })
       .catch(() => {
         state.isError = true;
@@ -234,7 +254,9 @@ async function handleSubmit() {
 }
 
 function togglePaymentComplete() {
-  state.paymentComplete = !state.paymentComplete;
+  completeApplicationStore.updateApplication().then(() => {
+    state.paymentComplete = !state.paymentComplete;
+  });
 }
 
 function toggleAppointmentComplete() {
