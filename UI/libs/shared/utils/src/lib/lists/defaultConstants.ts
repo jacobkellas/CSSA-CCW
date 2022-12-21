@@ -157,6 +157,7 @@ export const defaultPermitState: CompleteApplication = {
       firstName: '',
       middleName: '',
       maidenName: '',
+      phoneNumber: '',
     },
     spouseAddressInformation: {
       addressLine1: '',
@@ -182,6 +183,7 @@ export const defaultPermitState: CompleteApplication = {
     },
     currentStep: 1,
     status: 1,
+    paymentStatus: 0,
     appointmentStatus: false,
     orderId: '',
     uploadedDocuments: [] as Array<UploadedDocType>,
