@@ -69,7 +69,11 @@
               outlined
               counter
               maxlength="1000"
-              :label="$t('Please explain')"
+              :label="
+                $t(
+                  'Provide issuing agency name, issue date and CCW license number.'
+                )
+              "
               v-model="
                 state.application.application.qualifyingQuestions.questionOneExp
               "
@@ -126,7 +130,11 @@
               outlined
               counter
               maxlength="1000"
-              :label="$t('Please explain')"
+              :label="
+                $t(
+                  'Provide issuing agency name, issue date and CCW license number.'
+                )
+              "
               v-model="
                 state.application.application.qualifyingQuestions.questionTwoExp
               "
@@ -480,7 +488,9 @@
               outlined
               counter
               maxlength="1000"
-              :label="$t('Please explain')"
+              :label="
+                $t('Provide date, violation/accident, Agency, Citation No. ')
+              "
               v-model="
                 state.application.application.qualifyingQuestions
                   .questionEightExp
@@ -540,7 +550,11 @@
               outlined
               counter
               maxlength="1000"
-              :label="$t('Please explain')"
+              :label="
+                $t(
+                  'Please explain including the date, agency, charges and disposition.'
+                )
+              "
               v-model="
                 state.application.application.qualifyingQuestions
                   .questionNineExp
