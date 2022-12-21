@@ -382,6 +382,24 @@
               />
             </v-col>
           </v-row>
+          <v-row>
+            <v-col
+              cols="12"
+              lg="6"
+            >
+              <v-text-field
+                dense
+                outlined
+                class="pl-6"
+                maxlength="10"
+                counter
+                :label="$t('Phone number')"
+                :rules="phoneRuleSet"
+                v-model="completeApplication.spouseInformation.phoneNumber"
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-form>
@@ -454,6 +472,7 @@ import { useRouter } from 'vue-router/composables';
 import {
   notRequiredNameRuleSet,
   permitRuleSet,
+  phoneRuleSet,
   requireNameRuleSet,
   ssnRuleSet,
 } from '@shared-ui/rule-sets/ruleSets';
