@@ -351,6 +351,7 @@
       <div class="alias-components-container">
         <AliasTable
           :aliases="completeApplication.aliases"
+          :enable-delete="true"
           @delete="deleteAlias"
         />
         <AliasDialog :save-alias="getAliasFromDialog" />
@@ -385,16 +386,16 @@ import AliasDialog from '@shared-ui/components/dialogs/AliasDialog.vue';
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue';
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import FormErrorAlert from '@shared-ui/components/alerts/FormErrorAlert.vue';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
+import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router/composables';
+import { onMounted, ref } from 'vue';
 import {
   notRequiredNameRuleSet,
   phoneRuleSet,
   requireNameRuleSet,
   ssnRuleSet,
 } from '@shared-ui/rule-sets/ruleSets';
-import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
-import { useMutation } from '@tanstack/vue-query';
-import { useRouter } from 'vue-router/composables';
-import { onMounted, ref } from 'vue';
 
 interface FormStepOneProps {
   handleNextSection: () => void;

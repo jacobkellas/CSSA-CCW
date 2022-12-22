@@ -16,6 +16,13 @@ export const phoneRuleSet = [
   v => v.length === 10 || i18n.t('Must be 10 numbers in length'),
 ];
 
+export const notRequiredPhoneRuleSet = [
+  v => v.length === 10 || v === '' || i18n.t('Must be 10 numbers in length'),
+  v =>
+    v === '' ||
+    Boolean(v.match(/^\d+$/)) ||
+    i18n.t('Must only contain numbers'),
+];
 export const requireNameRuleSet = [
   v => Boolean(v) || i18n.t('Field is required'),
   v =>

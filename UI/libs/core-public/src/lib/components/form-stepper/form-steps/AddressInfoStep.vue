@@ -630,6 +630,7 @@
       <div class="previous-address-container">
         <address-table
           :addresses="completeApplication.previousAddresses"
+          :enable-delete="true"
           @delete="deleteAddress"
         />
         <PreviousAddressDialog

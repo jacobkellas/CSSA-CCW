@@ -102,7 +102,7 @@
     </template>
     <template #item.appointmentDate="props">
       {{
-        new Date(props.item.application.appointmentDateTime) <
+        new Date(props.item.application.appointmentDateTime).toISOString() >
         new Date(Date.now()).toISOString()
           ? new Date(
               props.item.application.appointmentDateTime
