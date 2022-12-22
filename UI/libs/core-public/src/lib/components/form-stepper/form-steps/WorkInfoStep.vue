@@ -272,6 +272,7 @@
     <div class="weapon-components-container">
       <WeaponsTable
         :weapons="completeApplication.weapons"
+        :delete-enabled="true"
         @delete="deleteWeapon"
       />
       <WeaponsDialog :save-weapon="getWeaponFromDialog" />

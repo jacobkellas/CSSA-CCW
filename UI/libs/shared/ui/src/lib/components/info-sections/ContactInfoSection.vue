@@ -3,7 +3,7 @@
     fluid
     class="info-section-container rounded"
   >
-    <v-banner class="font-weight-bold text-xl text-left mb-5">
+    <v-banner class="font-weight-bold text-xl text-left mb-5 pl-0">
       {{ $t('Contact Information: ') }}
     </v-banner>
     <v-row>
@@ -14,6 +14,7 @@
         <v-text-field
           outlined
           dense
+          class="pl-6"
           readonly
           :value="props.contactInfo.primaryPhoneNumber"
           :label="$t('Primary phone number')"
@@ -26,6 +27,7 @@
         <v-text-field
           outlined
           dense
+          class="pl-6"
           readonly
           :value="props.contactInfo.cellPhoneNumber"
           :label="$t('Cell phone number')"
@@ -40,6 +42,7 @@
         <v-text-field
           outlined
           dense
+          class="pl-6"
           readonly
           :value="props.contactInfo.faxPhoneNumber"
           :label="$t('Fax phone number')"
@@ -52,6 +55,7 @@
         <v-text-field
           outlined
           dense
+          class="pl-6"
           readonly
           :value="props.contactInfo.workPhoneNumber"
           :label="$t('Work phone number')"
@@ -66,6 +70,7 @@
         <v-text-field
           outlined
           dense
+          class="pl-6"
           readonly
           :value="props.contactInfo.textMessageUpdates"
           :label="$t('Text message updates')"

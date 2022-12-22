@@ -13,11 +13,6 @@
       </v-skeleton-loader>
     </v-container>
     <div v-else>
-      <SideBar
-        :options="options"
-        :title="'Information Sections'"
-        :handle-selection="handleSelection"
-      />
       <FinalizeContainer />
       <PaymentContainer
         v-if="
@@ -128,7 +123,6 @@ import { AppointmentType } from '@shared-utils/types/defaultTypes';
 import FinalizeContainer from '@core-public/components/containers/FinalizeContainer.vue';
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
 import Routes from '@core-public/router/routes';
-import SideBar from '@core-public/components/navbar/SideBar.vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
