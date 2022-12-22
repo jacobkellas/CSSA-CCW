@@ -188,27 +188,23 @@
           cols="12"
           lg="6"
         >
-          <v-radio-group
+          <v-select
+            dense
+            outlined
             v-model="completeApplication.personalInfo.maritalStatus"
             :label="'Marital status'"
             :hint="'Marital Status is required'"
-            row
+            :rules="[v => !!v || $t('Marital status is required')]"
+            :items="['Married', 'Single']"
           >
-            <v-radio
-              :color="$vuetify.theme.dark ? 'info' : 'primary'"
-              :label="'Married'"
-              :value="'married'"
-            />
-            <v-radio
-              :color="$vuetify.theme.dark ? 'info' : 'primary'"
-              :label="'Single'"
-              :value="'single'"
-            />
-          </v-radio-group>
+          </v-select>
         </v-col>
         <v-col
           cols="12"
-          v-if="completeApplication.personalInfo.maritalStatus === 'married'"
+          v-if="
+            completeApplication.personalInfo.maritalStatus.toLowerCase() ===
+            'married'
+          "
         >
           <v-subheader class="subHeader font-weight-bold">
             {{ $t('Spouse Information') }}
@@ -451,12 +447,8 @@ const saveMutation = useMutation({
 });
 
 async function handleSubmit() {
-  if (!completeApplication.personalInfo.maritalStatus) {
-    errors.value.push('Marital Status');
-  } else {
-    updateMutation.mutate();
-    valid.value = false;
-  }
+  updateMutation.mutate();
+  valid.value = false;
 }
 
 function getAliasFromDialog(alias) {

@@ -34,7 +34,9 @@
           </v-alert>
         </v-card>
       </v-container>
-      <v-container v-if="!state.appointmentsLoaded">
+      <v-container
+        v-if="!state.appointmentsLoaded && !state.appointmentComplete"
+      >
         <v-skeleton-loader
           fluid
           class="fill-height"
