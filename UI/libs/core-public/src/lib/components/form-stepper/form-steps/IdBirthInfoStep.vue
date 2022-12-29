@@ -237,16 +237,9 @@
             v-model="completeApplication.citizenship.militaryStatus"
             :items="items"
             :label="$t('Military Status')"
+            :rules="[v => !!v || $t('Military Status is required')]"
           />
 
-          <v-alert
-            dense
-            outlined
-            type="error"
-            v-if="!completeApplication.citizenship.militaryStatus"
-          >
-            {{ $t('Must select a status') }}
-          </v-alert>
           <v-alert
             dense
             outlined
@@ -259,6 +252,7 @@
           </v-alert>
         </v-col>
       </v-row>
+
       <v-container
         fluid
         v-if="!completeApplication.citizenship.citizen"
@@ -437,12 +431,36 @@ const saveMutation = useMutation({
 });
 
 function handleSubmit() {
-  if (!completeApplication.citizenship.militaryStatus) {
-    formError.value = true;
-  } else {
-    valid.value = false;
-    updateMutation.mutate();
+  // TODO: see about abstracting the if statements.
+  // Here need to validate the information was not entered in fields incorrectly
+  if (!completeApplication.differentMailing) {
+    completeApplication.mailingAddress.zip = '';
+    completeApplication.mailingAddress.city = '';
+    completeApplication.mailingAddress.state = '';
+    completeApplication.mailingAddress.county = '';
+    completeApplication.mailingAddress.country = '';
+    completeApplication.mailingAddress.addressLine1 = '';
+    completeApplication.mailingAddress.addressLine2 = '';
   }
+
+  if (!completeApplication.differentSpouseAddress) {
+    completeApplication.spouseAddressInformation.addressLine1 = '';
+    completeApplication.spouseAddressInformation.addressLine2 = '';
+    completeApplication.spouseAddressInformation.zip = '';
+    completeApplication.spouseAddressInformation.country = '';
+    completeApplication.spouseAddressInformation.county = '';
+    completeApplication.spouseAddressInformation.city = '';
+    completeApplication.spouseAddressInformation.state = '';
+  }
+
+  if (completeApplication.citizenship.citizen) {
+    completeApplication.immigrantInformation.countryOfCitizenship = '';
+    completeApplication.immigrantInformation.immigrantAlien = false;
+    completeApplication.immigrantInformation.nonImmigrantAlien = false;
+  }
+
+  valid.value = false;
+  updateMutation.mutate();
 }
 
 function checkFor21(input: string): boolean | TranslateResult {

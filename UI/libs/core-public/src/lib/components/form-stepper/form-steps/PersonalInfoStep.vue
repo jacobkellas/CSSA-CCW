@@ -447,6 +447,17 @@ const saveMutation = useMutation({
 });
 
 async function handleSubmit() {
+  // Clear out the hidden fields if information was entered incorrectly.
+  if (
+    completeApplication.personalInfo.maritalStatus.toLowerCase() === 'single'
+  ) {
+    completeApplication.spouseInformation.lastName = '';
+    completeApplication.spouseInformation.firstName = '';
+    completeApplication.spouseInformation.maidenName = '';
+    completeApplication.spouseInformation.middleName = '';
+    completeApplication.spouseInformation.phoneNumber = '';
+  }
+
   updateMutation.mutate();
   valid.value = false;
 }

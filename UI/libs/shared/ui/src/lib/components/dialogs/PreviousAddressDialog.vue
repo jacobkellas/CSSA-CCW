@@ -148,13 +148,14 @@
                 outlined
                 maxlength="10"
                 counter
+                required
                 dense
                 id="zip"
                 v-model="state.address.zip"
                 :label="$t('Zip')"
                 persistent-hint
                 :hint="$t('If not applicable enter N/A ')"
-                :rules="zipRuleSet"
+                :rules="[v => !!v || $t('Field is required'), zipRuleSet]"
               >
                 <template #prepend>
                   <v-icon

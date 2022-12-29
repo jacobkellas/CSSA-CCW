@@ -68,7 +68,9 @@
           (!isLoading && !isError) ||
           (state.appointmentsLoaded &&
             state.appointments.length > 0 &&
-            !state.appointmentComplete)
+            !state.appointmentComplete &&
+            !completeApplicationStore.completeApplication.application
+              .appointmentStatus)
         "
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
@@ -224,6 +226,16 @@ onMounted(() => {
       });
   } else {
     state.isLoading = false;
+  }
+
+  if (completeApplicationStore.completeApplication.application.paymentStatus) {
+    state.paymentComplete = true;
+  }
+
+  if (
+    completeApplicationStore.completeApplication.application.appointmentStatus
+  ) {
+    state.appointmentComplete = true;
   }
 });
 

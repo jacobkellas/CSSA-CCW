@@ -43,7 +43,6 @@ export const permitRuleSet = [
 ];
 
 export const zipRuleSet = [
-  v => Boolean(v) || i18n.t('Field is required'),
   v =>
     Boolean(v.match(/^\d+$/)) ||
     v === 'N/A' ||
