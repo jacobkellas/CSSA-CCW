@@ -89,9 +89,10 @@
             min-width="auto"
           >
             <template #activator="{ on, attrs }">
-              <v-combobox
+              <v-text-field
                 outlined
                 dense
+                readonly
                 v-model="completeApplication.dob.birthDate"
                 :label="$t('Date of Birth')"
                 :rules="[
@@ -101,7 +102,7 @@
                 prepend-icon="mdi-calendar"
                 v-bind="attrs"
                 v-on="on"
-              ></v-combobox>
+              ></v-text-field>
             </template>
             <v-date-picker
               v-model="completeApplication.dob.birthDate"

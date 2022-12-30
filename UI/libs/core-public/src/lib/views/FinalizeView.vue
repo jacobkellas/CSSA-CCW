@@ -136,21 +136,6 @@ import { useRoute, useRouter } from 'vue-router/composables';
 
 const currentInfoSectionStore = useCurrentInfoSection();
 
-const options = [
-  'Personal Information',
-  'Spouse Information',
-  'Alias Information',
-  'Id Information',
-  'Birth Information',
-  'Citizenship Information',
-  'Current Address Information',
-  'Previous Address Information',
-  'Mailing Address Information',
-  'Physical Appearance',
-  'Contact Information',
-  'Employment Information',
-  'Weapons Information',
-];
 const state = reactive({
   snackbar: false,
   paymentComplete: false,
