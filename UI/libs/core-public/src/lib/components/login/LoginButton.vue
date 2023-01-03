@@ -10,7 +10,7 @@
           aria-label="Sign out of application"
           @click="signOut"
           class="mr-4 ml-1"
-          color="primary lighten-2"
+          color="secondary lighten-1"
           small
         >
           <!--eslint-disable-next-line vue/singleline-html-element-content-newline -->
@@ -30,7 +30,7 @@
     </template>
     <div v-else>
       <Button
-        color="primary lighten-2"
+        color="secondary lighten-1"
         text="Login/Sign-up"
         @click="handleLogIn"
       >

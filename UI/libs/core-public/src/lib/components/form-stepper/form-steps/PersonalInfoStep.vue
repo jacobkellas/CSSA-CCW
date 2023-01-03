@@ -21,6 +21,7 @@
                 maxlength="50"
                 counter
                 id="last-name-field"
+                :color="$vuetify.theme.dark ? 'text' : 'text'"
                 :label="$t('Last name')"
                 :rules="requireNameRuleSet"
                 v-model="completeApplication.personalInfo.lastName"
@@ -188,27 +189,23 @@
           cols="12"
           lg="6"
         >
-          <v-radio-group
+          <v-select
+            dense
+            outlined
             v-model="completeApplication.personalInfo.maritalStatus"
             :label="'Marital status'"
             :hint="'Marital Status is required'"
-            row
+            :rules="[v => !!v || $t('Marital status is required')]"
+            :items="['Married', 'Single']"
           >
-            <v-radio
-              :color="$vuetify.theme.dark ? 'info' : 'primary'"
-              :label="'Married'"
-              :value="'married'"
-            />
-            <v-radio
-              :color="$vuetify.theme.dark ? 'info' : 'primary'"
-              :label="'Single'"
-              :value="'single'"
-            />
-          </v-radio-group>
+          </v-select>
         </v-col>
         <v-col
           cols="12"
-          v-if="completeApplication.personalInfo.maritalStatus === 'married'"
+          v-if="
+            completeApplication.personalInfo.maritalStatus.toLowerCase() ===
+            'married'
+          "
         >
           <v-subheader class="subHeader font-weight-bold">
             {{ $t('Spouse Information') }}
@@ -334,11 +331,13 @@
       row
     >
       <v-radio
+        :color="$vuetify.theme.dark ? 'info' : 'primary'"
         class="ml-6"
         :label="$t('Yes')"
         :value="true"
       />
       <v-radio
+        :color="$vuetify.theme.dark ? 'info' : 'primary'"
         class="ml-6"
         :label="$t('No')"
         :value="false"
@@ -451,12 +450,19 @@ const saveMutation = useMutation({
 });
 
 async function handleSubmit() {
-  if (!completeApplication.personalInfo.maritalStatus) {
-    errors.value.push('Marital Status');
-  } else {
-    updateMutation.mutate();
-    valid.value = false;
+  // Clear out the hidden fields if information was entered incorrectly.
+  if (
+    completeApplication.personalInfo.maritalStatus.toLowerCase() === 'single'
+  ) {
+    completeApplication.spouseInformation.lastName = '';
+    completeApplication.spouseInformation.firstName = '';
+    completeApplication.spouseInformation.maidenName = '';
+    completeApplication.spouseInformation.middleName = '';
+    completeApplication.spouseInformation.phoneNumber = '';
   }
+
+  updateMutation.mutate();
+  valid.value = false;
 }
 
 function getAliasFromDialog(alias) {

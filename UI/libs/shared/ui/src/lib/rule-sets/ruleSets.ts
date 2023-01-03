@@ -4,7 +4,7 @@ export const ssnRuleSet = [
   v => Boolean(v) || i18n.t('Social Security Number cannot be blank'),
   v => Boolean(v.match(/^\d+$/)) || i18n.t('Must only contain numbers'),
   v =>
-    Boolean(v.match(/^(\d)(?!\1+$)\d{8}$/)) ||
+    Boolean(!v.match(/^(\d)\1{8,}/)) ||
     i18n.t('Cannot contain repeating numbers'),
   v => v.length >= 9 || i18n.t('SSN to short must be 9 characters'),
   v => v.length <= 9 || i18n.t('SSN to long must be 9 characters'),

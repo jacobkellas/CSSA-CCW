@@ -52,6 +52,16 @@
           </div>
 
           <div class="info-section">
+            <SpouseAddressInfoSection
+              :title="$t('Different Spouse Address').toString()"
+              :color="'info'"
+              :spouse-address="
+                state.completeApplication.spouseAddressInformation
+              "
+            />
+          </div>
+
+          <div class="info-section">
             <AliasInfoSection
               :color="'transparent'"
               :alias-info="state.completeApplication.aliases"
@@ -160,6 +170,7 @@ import EmploymentInfoSection from '@shared-ui/components/info-sections/Employmen
 import IdInfoSection from '@shared-ui/components/info-sections/IdInfoSection.vue';
 import PersonalInfoSection from '@shared-ui/components/info-sections/PersonalInfoSection.vue';
 import PreviousAddressInfoSection from '@shared-ui/components/info-sections/PreviousAddressInfoSection.vue';
+import SpouseAddressInfoSection from '@shared-ui/components/info-sections/SpouseAddressInfoSection.vue';
 import SpouseInfoSection from '@shared-ui/components/info-sections/SpouseInfoSection.vue';
 import WeaponInfoSection from '@shared-ui/components/info-sections/WeaponsInfoSection.vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';

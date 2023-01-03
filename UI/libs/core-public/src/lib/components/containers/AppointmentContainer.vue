@@ -5,7 +5,7 @@
         <v-sheet height="64">
           <v-toolbar
             flat
-            color="primary"
+            color="info"
           >
             <v-btn
               outlined

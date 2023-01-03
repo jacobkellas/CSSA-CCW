@@ -259,7 +259,7 @@
                 cols="12"
                 lg="6"
               >
-                <v-autocomplete
+                <v-combobox
                   autocomplete="none"
                   dense
                   outlined
@@ -276,7 +276,7 @@
                       mdi-star
                     </v-icon>
                   </template>
-                </v-autocomplete>
+                </v-combobox>
               </v-col>
 
               <v-col

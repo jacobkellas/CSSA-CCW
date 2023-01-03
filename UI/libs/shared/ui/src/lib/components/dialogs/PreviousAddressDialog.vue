@@ -148,6 +148,7 @@
                 outlined
                 maxlength="10"
                 counter
+                required
                 dense
                 id="zip"
                 v-model="state.address.zip"

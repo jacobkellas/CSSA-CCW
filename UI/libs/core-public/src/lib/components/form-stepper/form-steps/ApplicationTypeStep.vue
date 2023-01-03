@@ -8,6 +8,7 @@
       <div class="ml-5">
         <v-radio-group v-model="completeApplication.applicationType">
           <v-radio
+            :color="$vuetify.theme.dark ? 'info' : 'primary'"
             :label="'Standard'"
             :value="'standard'"
           />

@@ -34,7 +34,9 @@
           </v-alert>
         </v-card>
       </v-container>
-      <v-container v-if="!state.appointmentsLoaded">
+      <v-container
+        v-if="!state.appointmentsLoaded && !state.appointmentComplete"
+      >
         <v-skeleton-loader
           fluid
           class="fill-height"
@@ -66,7 +68,9 @@
           (!isLoading && !isError) ||
           (state.appointmentsLoaded &&
             state.appointments.length > 0 &&
-            !state.appointmentComplete)
+            !state.appointmentComplete &&
+            !completeApplicationStore.completeApplication.application
+              .appointmentStatus)
         "
         :events="state.appointments"
         :toggle-appointment="toggleAppointmentComplete"
@@ -132,21 +136,6 @@ import { useRoute, useRouter } from 'vue-router/composables';
 
 const currentInfoSectionStore = useCurrentInfoSection();
 
-const options = [
-  'Personal Information',
-  'Spouse Information',
-  'Alias Information',
-  'Id Information',
-  'Birth Information',
-  'Citizenship Information',
-  'Current Address Information',
-  'Previous Address Information',
-  'Mailing Address Information',
-  'Physical Appearance',
-  'Contact Information',
-  'Employment Information',
-  'Weapons Information',
-];
 const state = reactive({
   snackbar: false,
   paymentComplete: false,
@@ -222,6 +211,16 @@ onMounted(() => {
       });
   } else {
     state.isLoading = false;
+  }
+
+  if (completeApplicationStore.completeApplication.application.paymentStatus) {
+    state.paymentComplete = true;
+  }
+
+  if (
+    completeApplicationStore.completeApplication.application.appointmentStatus
+  ) {
+    state.appointmentComplete = true;
   }
 });
 
