@@ -21,6 +21,7 @@
                 maxlength="50"
                 counter
                 id="last-name-field"
+                :color="$vuetify.theme.dark ? 'text' : 'text'"
                 :label="$t('Last name')"
                 :rules="requireNameRuleSet"
                 v-model="completeApplication.personalInfo.lastName"
@@ -330,11 +331,13 @@
       row
     >
       <v-radio
+        :color="$vuetify.theme.dark ? 'info' : 'primary'"
         class="ml-6"
         :label="$t('Yes')"
         :value="true"
       />
       <v-radio
+        :color="$vuetify.theme.dark ? 'info' : 'primary'"
         class="ml-6"
         :label="$t('No')"
         :value="false"

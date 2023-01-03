@@ -155,7 +155,7 @@
                 :label="$t('Zip')"
                 persistent-hint
                 :hint="$t('If not applicable enter N/A ')"
-                :rules="[v => !!v || $t('Field is required'), zipRuleSet]"
+                :rules="zipRuleSet"
               >
                 <template #prepend>
                   <v-icon
