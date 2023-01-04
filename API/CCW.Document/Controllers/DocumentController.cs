@@ -7,6 +7,7 @@ using System.Reflection.PortableExecutable;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.codec;
 using iTextSharp.text;
+using System.Text.RegularExpressions;
 
 namespace CCW.Document.Controllers;
 
@@ -41,6 +42,8 @@ public class DocumentController : ControllerBase
     {
         try
         {
+            ValidateUser(saveAsFileName);
+
             if (string.IsNullOrEmpty(fileToUpload.ContentType) || !_allowedFileTypes.Contains(fileToUpload.ContentType))
             {
                 return ValidationProblem("Content type missing or invalid.");
@@ -58,6 +61,7 @@ public class DocumentController : ControllerBase
         }
     }
 
+ 
 
     [Authorize(Policy = "AADUsers")]
     [HttpPost("uploadAgencyFile", Name = "uploadAgencyFile")]
@@ -129,6 +133,8 @@ public class DocumentController : ControllerBase
     {
         try
         {
+            ValidateUser(applicantFileName);
+
             MemoryStream ms = new MemoryStream();
 
             var file = await _azureStorage.DownloadApplicantFileAsync(applicantFileName, cancellationToken: default);
@@ -272,12 +278,16 @@ public class DocumentController : ControllerBase
         string fileName,
         CancellationToken cancellationToken)
     {
+        ValidateUser(fileName);
+
         iTextSharp.text.Document document = new iTextSharp.text.Document();
 
         MemoryStream stream = new MemoryStream();
 
         try
         {
+            GetUserId(out var userId);
+
             PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
             pdfWriter.CloseStream = false;
 
@@ -392,5 +402,41 @@ public class DocumentController : ControllerBase
         //    throw new Exception("An error occur while trying to download agency file.");
         //}
     }
+
+    private void GetUserId(out string? userId)
+    {
+        userId = this.HttpContext.User.Claims
+            .Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")
+            .Select(c => c.Value).FirstOrDefault();
+
+        if (userId == null)
+        {
+            throw new ArgumentNullException("userId", "Invalid token.");
+        }
+    }
+
+    private static string GetGUID(string inputValue)
+    {
+
+        var match = Regex.Match(inputValue, @"[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?");
+        if (match.Success)
+        {
+            return match.Value;
+        }
+
+        return null!;
+    }
+
+    private void ValidateUser(string saveAsFileName)
+    {
+        GetUserId(out var userId);
+        var docUser = GetGUID(saveAsFileName);
+
+        if (userId != docUser)
+        {
+            throw new ArgumentNullException("userId", "Invalid token for user id.");
+        }
+    }
+
 
 }
