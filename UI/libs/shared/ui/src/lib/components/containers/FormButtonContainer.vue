@@ -18,6 +18,7 @@
           color="accent mx-2"
           @click="handleSave"
           :disabled="!valid"
+          :loading="submitting"
           class="mt-3"
         >
           {{ $t('Save and Exit') }}
@@ -26,6 +27,7 @@
       <div>
         <v-btn
           small
+          :loading="submitting"
           color="warning mx-2"
           @click="handleBack"
           class="mt-3"
@@ -35,6 +37,7 @@
 
         <v-btn
           small
+          :loading="submitting"
           color="error mr-2"
           @click="handleCancel"
           class="mt-3"

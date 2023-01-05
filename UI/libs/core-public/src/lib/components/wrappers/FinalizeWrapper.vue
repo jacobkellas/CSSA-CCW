@@ -200,7 +200,6 @@ onMounted(() => {
       .then(res => {
         state.completeApplication = res.application;
         state.isLoading = false;
-        window.console.log(state.completeApplication);
       })
       .catch(() => {
         state.isError = true;

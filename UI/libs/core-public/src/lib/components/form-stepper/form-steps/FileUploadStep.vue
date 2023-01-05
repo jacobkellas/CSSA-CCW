@@ -388,6 +388,8 @@ const fileMutation = useMutation({
     props.handleNextSection();
   },
   onError: () => {
+    state.submited = false;
+    state.valid = true;
     state.snackbar = true;
   },
 });
@@ -396,7 +398,6 @@ function handleFileInput(event: File, target: string) {
   const form = new FormData();
 
   form.append('fileToUpload', event);
-  window.console.log(form);
   const fileObject = {
     form,
     target,
@@ -424,7 +425,7 @@ function handleMultiInput(event, target: string) {
 
 async function handleFileUpload() {
   state.files.forEach(file => {
-    const newFileName = `${applicationStore.completeApplication.application.orderId}_${completeApplication.personalInfo.lastName}_${completeApplication.personalInfo.firstName}_${file.target}`;
+    const newFileName = `${completeApplication.personalInfo.lastName}_${completeApplication.personalInfo.firstName}_${file.target}`;
 
     axios
       .post(
@@ -451,6 +452,7 @@ async function handleFileUpload() {
 function handleSubmit() {
   state.submited = false;
   state.uploadSuccessful = false;
+  fileMutation.mutate();
 }
 
 onMounted(() => {

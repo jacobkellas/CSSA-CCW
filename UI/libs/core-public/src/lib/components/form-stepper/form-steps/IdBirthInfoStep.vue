@@ -417,6 +417,8 @@ const updateMutation = useMutation({
     props.handleNextSection();
   },
   onError: () => {
+    submited.value = false;
+    valid.value = true;
     snackbar.value = true;
   },
 });
@@ -429,6 +431,8 @@ const saveMutation = useMutation({
     router.push('/');
   },
   onError: () => {
+    submited.value = false;
+    valid.value = true;
     snackbar.value = true;
   },
 });

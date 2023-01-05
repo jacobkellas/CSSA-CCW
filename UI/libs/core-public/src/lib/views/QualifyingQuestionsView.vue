@@ -1054,7 +1054,8 @@
       </v-form>
       <FormButtonContainer
         :valid="valid"
-        @submit="updateMutation.mutate"
+        :submitting="state.submited"
+        @submit="handleSubmit"
         @save="saveMutation.mutate"
         @back="goBackMutation.mutate"
         @cancel="router.push('/')"
@@ -1090,6 +1091,7 @@ const state = reactive({
   application: applicationStore.getCompleteApplication as CompleteApplication,
   isLoading: true,
   isError: false,
+  submited: false,
 });
 
 onMounted(() => {
@@ -1126,6 +1128,7 @@ const updateMutation = useMutation({
     });
   },
   onError: () => {
+    state.submited = false;
     snackbar.value = true;
   },
 });
@@ -1161,4 +1164,9 @@ const saveMutation = useMutation({
     snackbar.value = true;
   },
 });
+
+function handleSubmit() {
+  state.submited = true;
+  updateMutation.mutate();
+}
 </script>

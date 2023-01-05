@@ -168,6 +168,7 @@ const { isLoading, isError } = useQuery(['getIncompleteApplications'], () => {
           end.getMonth() + 1
         }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
 
+        event.name = 'open';
         event.start = formatedStart;
         event.end = formatedEnd;
       });

@@ -699,6 +699,8 @@ const updateMutation = useMutation({
     props.handleNextSection();
   },
   onError: () => {
+    valid.value = true;
+    submited.value = false;
     snackbar.value = true;
   },
 });

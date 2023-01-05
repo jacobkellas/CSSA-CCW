@@ -302,16 +302,16 @@
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
 import WeaponsDialog from '@shared-ui/components/dialogs/WeaponsDialog.vue';
 import WeaponsTable from '@shared-ui/components/tables/WeaponsTable.vue';
-import { defaultPermitState } from '@shared-utils/lists/defaultConstants';
+import {
+  countries,
+  defaultPermitState,
+  employmentStatus,
+  states,
+} from '@shared-utils/lists/defaultConstants';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
-import {
-  countries,
-  employmentStatus,
-  states,
-} from '@shared-utils/lists/defaultConstants';
 import { phoneRuleSet, zipRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface ISecondFormStepOneProps {
@@ -342,6 +342,8 @@ const updateMutation = useMutation({
     props.handleNextSection();
   },
   onError: () => {
+    state.submited = false;
+    state.valid = true;
     state.snackbar = true;
   },
 });
@@ -369,6 +371,7 @@ function handleSubmit() {
       defaultPermitState.application.workInformation;
   }
 
+  state.valid = false;
   state.submited = true;
   updateMutation.mutate();
 }
