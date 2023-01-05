@@ -102,6 +102,7 @@
     </v-form>
     <FormButtonContainer
       :valid="state.valid"
+      :submitting="state.submited"
       @submit="handleSubmit"
       @save="handleSave"
       @back="handlePreviousSection"
@@ -122,14 +123,14 @@
 <script setup lang="ts">
 import CheckboxInput from '@shared-ui/components/inputs/CheckboxInput.vue';
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
-import {
-  notRequiredPhoneRuleSet,
-  phoneRuleSet,
-} from '@shared-ui/rule-sets/ruleSets';
 import { reactive } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
+import {
+  notRequiredPhoneRuleSet,
+  phoneRuleSet,
+} from '@shared-ui/rule-sets/ruleSets';
 
 interface IProps {
   handleNextSection: CallableFunction;
@@ -143,6 +144,7 @@ const router = useRouter();
 const state = reactive({
   valid: false,
   snackbar: false,
+  submited: false,
 });
 
 // Remove this to implement the text updateds checkbox
@@ -179,6 +181,7 @@ const saveMutation = useMutation({
 
 async function handleSubmit() {
   state.valid = false;
+  state.submited = true;
   updateMutation.mutate();
 }
 

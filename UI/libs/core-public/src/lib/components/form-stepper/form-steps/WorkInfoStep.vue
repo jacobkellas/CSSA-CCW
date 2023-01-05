@@ -280,6 +280,7 @@
     <v-divider clase="mt-5" />
     <FormButtonContainer
       :valid="state.valid"
+      :submitting="state.submited"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
       @back="props.handlePreviousSection"
@@ -328,6 +329,7 @@ const router = useRouter();
 const state = reactive({
   valid: false,
   snackbar: false,
+  submited: false,
 });
 
 const updateMutation = useMutation({
@@ -367,6 +369,7 @@ function handleSubmit() {
       defaultPermitState.application.workInformation;
   }
 
+  state.submited = true;
   updateMutation.mutate();
 }
 

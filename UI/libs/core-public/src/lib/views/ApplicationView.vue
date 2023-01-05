@@ -19,8 +19,6 @@ import { useRoute } from 'vue-router/composables';
 
 const store = useBrandStore();
 const route = useRoute();
-
-window.console.log(route.params);
 </script>
 
 <style lang="scss" scoped>

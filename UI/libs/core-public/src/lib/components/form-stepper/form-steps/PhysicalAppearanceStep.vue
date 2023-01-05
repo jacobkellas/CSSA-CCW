@@ -200,6 +200,7 @@
     <v-divider />
     <FormButtonContainer
       :valid="state.valid"
+      :submitting="state.submited"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
       @back="handlePreviousSection"
@@ -247,6 +248,7 @@ const state = reactive({
   valid: false,
   snackbar: false,
   formError: false,
+  submited: false,
 });
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
@@ -283,6 +285,7 @@ function handleSubmit() {
     state.formError = true;
   } else {
     state.valid = false;
+    state.submited = true;
     updateMutation.mutate();
   }
 }
