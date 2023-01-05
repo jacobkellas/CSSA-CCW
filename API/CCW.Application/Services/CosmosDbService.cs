@@ -213,7 +213,7 @@ public class CosmosDbService : ICosmosDbService
 
         await _container.PatchItemAsync<PermitApplication>(
             application.Id.ToString(),
-            new PartitionKey(application.UserId.ToString()),
+            new PartitionKey(application.UserId),
             new[]
             {
                     PatchOperation.Set("/Application", application.Application),
@@ -228,7 +228,7 @@ public class CosmosDbService : ICosmosDbService
     {
         await _container.PatchItemAsync<PermitApplication>(
             application.Id.ToString(),
-            new PartitionKey(application.UserId.ToString()),
+            new PartitionKey(application.UserId),
             new[]
             {
                 PatchOperation.Set("/Application", application.Application)

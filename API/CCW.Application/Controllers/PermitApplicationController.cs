@@ -250,6 +250,7 @@ public class PermitApplicationController : ControllerBase
     public async Task<IActionResult> UpdateApplication([FromBody] UserPermitApplicationRequestModel application)
     {
         GetUserId(out var userId);
+        application.UserId = userId;
 
         try
         {
