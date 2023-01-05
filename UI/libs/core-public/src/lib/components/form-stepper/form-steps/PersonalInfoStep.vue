@@ -359,6 +359,7 @@
     <v-divider class="my-5" />
     <FormButtonContainer
       :valid="valid"
+      :submitting="submited"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
       @back="router.push('/')"
@@ -410,6 +411,7 @@ const show1 = ref(false);
 const show2 = ref(false);
 const showAlias = ref(false);
 const snackbar = ref(false);
+const submited = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -463,6 +465,7 @@ async function handleSubmit() {
 
   updateMutation.mutate();
   valid.value = false;
+  submited.value = true;
 }
 
 function getAliasFromDialog(alias) {

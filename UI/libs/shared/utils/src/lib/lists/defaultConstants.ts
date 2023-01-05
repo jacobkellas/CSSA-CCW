@@ -213,6 +213,7 @@ export const defaultPermitState: CompleteApplication = {
   },
   history: [],
   id: '',
+  userId: '',
 };
 
 export const defaultAllPermitsState = {

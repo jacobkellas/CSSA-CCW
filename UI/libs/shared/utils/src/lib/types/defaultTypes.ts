@@ -296,6 +296,7 @@ export type CompleteApplication = {
     backgroudCheck: BackgroundCheckType;
   };
   history: Array<HistoryType>;
+  userId: string;
   id: string;
 };
 

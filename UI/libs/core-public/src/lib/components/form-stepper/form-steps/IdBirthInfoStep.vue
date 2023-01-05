@@ -348,6 +348,7 @@
     <v-divider />
     <FormButtonContainer
       :valid="valid"
+      :submitting="submited"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
       @back="handlePreviousSection"
@@ -397,6 +398,7 @@ const items = ref(['Active', 'Reserve', 'Discharged', 'Retired', 'N/A']);
 const snackbar = ref(false);
 const valid = ref(false);
 const menu = ref(false);
+const submited = ref(false);
 const formError = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -433,7 +435,6 @@ const saveMutation = useMutation({
 
 function handleSubmit() {
   // TODO: see about abstracting the if statements.
-  // Here need to validate the information was not entered in fields incorrectly
   if (!completeApplication.differentMailing) {
     completeApplication.mailingAddress.zip = '';
     completeApplication.mailingAddress.city = '';
@@ -461,6 +462,7 @@ function handleSubmit() {
   }
 
   valid.value = false;
+  submited.value = false;
   updateMutation.mutate();
 }
 

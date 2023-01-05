@@ -7,6 +7,7 @@
           color="success "
           @click="handleSubmit"
           :disabled="!valid"
+          :loading="submitting"
           class="mt-3"
         >
           {{ $t('Continue') }}
@@ -48,6 +49,7 @@
 <script setup lang="ts">
 interface FormButtonContainerProps {
   valid?: boolean;
+  submitting?: boolean;
 }
 
 const props = withDefaults(defineProps<FormButtonContainerProps>(), {

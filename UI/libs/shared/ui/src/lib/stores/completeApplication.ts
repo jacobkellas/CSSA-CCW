@@ -71,16 +71,6 @@ export const useCompleteApplicationStore = defineStore('permitStore', () => {
   }
 
   async function createApplication() {
-    const date = new Date(Date.now()).toISOString();
-
-    completeApplication.history = [
-      {
-        change: 'Created application',
-        changeDateTimeUtc: date,
-        changeMadeBy: authStore.auth.userEmail,
-      },
-    ];
-
     await axios
       .put(Endpoints.PUT_CREATE_PERMIT_ENDPOINT, completeApplication)
       .then(res => {

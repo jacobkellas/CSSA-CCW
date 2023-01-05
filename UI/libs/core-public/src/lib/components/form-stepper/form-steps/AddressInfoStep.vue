@@ -640,7 +640,8 @@
       <v-divider class="my-5" />
       <FormButtonContainer
         :valid="valid"
-        @submit="updateMutation.mutate"
+        :submitting="submited"
+        @submit="handleSubmit"
         @save="saveMutation.mutate"
         @back="handlePreviousSection"
         @cancel="router.push('/')"
@@ -682,6 +683,7 @@ const props = withDefaults(defineProps<FormStepThreeProps>(), {
 
 const valid = ref(false);
 const snackbar = ref(false);
+const submited = ref(false);
 
 const completeApplicationStore = useCompleteApplicationStore();
 const completeApplication =
@@ -719,6 +721,11 @@ function getPreviousAddressFromDialog(address: AddressInfoType) {
 
 function deleteAddress(index) {
   completeApplication.previousAddresses.splice(index, 1);
+}
+
+function handleSubmit() {
+  submited.value = true;
+  updateMutation.mutate();
 }
 </script>
 
