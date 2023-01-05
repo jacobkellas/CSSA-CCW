@@ -439,6 +439,7 @@
     </v-container>
     <FormButtonContainer
       :valid="valid"
+      :submitting="submited"
       @submit="handleSubmit"
       @save="saveMutation.mutate"
       @back="router.push('/')"
@@ -471,7 +472,6 @@ import { useMutation } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router/composables';
 import {
   notRequiredNameRuleSet,
-  permitRuleSet,
   phoneRuleSet,
   requireNameRuleSet,
   ssnRuleSet,
@@ -492,6 +492,7 @@ const show1 = ref(false);
 const show2 = ref(false);
 const showAlias = ref(false);
 const snackbar = ref(false);
+const submited = ref(false);
 let ssnConfirm = ref('');
 
 const completeApplicationStore = useCompleteApplicationStore();
@@ -509,6 +510,8 @@ const updateMutation = useMutation({
     props.handleNextSection();
   },
   onError: () => {
+    submited.value = false;
+    valid.value = true;
     snackbar.value = true;
   },
 });
@@ -529,6 +532,7 @@ function handleSubmit() {
   if (!completeApplication.personalInfo.maritalStatus) {
     errors.value.push('Marital Status');
   } else {
+    submited.value = true;
     valid.value = false;
     updateMutation.mutate();
   }

@@ -88,7 +88,7 @@
     <v-divider />
     <FormButtonContainer
       :valid="state.valid"
-      @submit="updateMutation.mutate"
+      @submit="handleSubmit"
       @save="saveMutation.mutate"
       @back="handlePreviousSection"
       @cancel="router.push('/')"
@@ -127,6 +127,7 @@ const router = useRouter();
 const state = reactive({
   valid: false,
   snackbar: false,
+  submited: false,
 });
 const updateMutation = useMutation({
   mutationFn: () => {
@@ -138,6 +139,8 @@ const updateMutation = useMutation({
     props.handleNextSection();
   },
   onError: () => {
+    state.submited = false;
+    state.valid = true;
     state.snackbar = true;
   },
 });
@@ -153,4 +156,9 @@ const saveMutation = useMutation({
     state.snackbar = true;
   },
 });
+
+function handleSubmit() {
+  state.submited = true;
+  updateMutation.mutate();
+}
 </script>

@@ -150,12 +150,19 @@
                 counter
                 required
                 dense
+                persistent-hint
                 id="zip"
                 v-model="state.address.zip"
                 :label="$t('Zip')"
-                persistent-hint
                 :hint="$t('If not applicable enter N/A ')"
-                :rules="zipRuleSet"
+                :rules="[
+                  v => !!v || $t('Field is required'),
+                  v =>
+                    !!v.match(/^\d+$/) ||
+                    v === 'N/A' ||
+                    v === 'n/a' ||
+                    $t('Must contain only numbers'),
+                ]"
               >
                 <template #prepend>
                   <v-icon
@@ -221,7 +228,6 @@
 import { AddressInfoType } from '@shared-utils/types/defaultTypes';
 import { countries, states } from '@shared-utils/lists/defaultConstants';
 import { reactive, ref } from 'vue';
-import { zipRuleSet } from '@shared-ui/rule-sets/ruleSets';
 
 interface PreviousAddressDialogProps {
   getPreviousAddressFromDialog?: (address: AddressInfoType) => void;
@@ -231,9 +237,17 @@ const props = withDefaults(defineProps<PreviousAddressDialogProps>(), {
   getPreviousAddressFromDialog: () => null,
 });
 
-const state = {
-  address: {} as AddressInfoType,
-};
+const state = reactive({
+  address: {
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    country: '',
+    county: '',
+    state: '',
+    zip: '',
+  } as AddressInfoType,
+});
 let dialog = reactive({ state: false });
 const valid = ref(false);
 

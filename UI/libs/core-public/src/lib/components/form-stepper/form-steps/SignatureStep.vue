@@ -46,6 +46,7 @@
       <FormButtonContainer
         v-if="!state.previousSignature"
         :valid="state.valid"
+        :submitting="state.submited"
         @submit="handleSubmit"
         @save="router.push('/')"
         @cancel="router.push('/')"
@@ -76,6 +77,7 @@
           :style="{ width: '100%' }"
           v-if="state.previousSignature"
           :valid="true"
+          :submitting="state.submited"
           @submit="handleSkipSubmit"
           @save="router.push('/')"
           @cancel="router.push('/')"
@@ -122,6 +124,7 @@ const state = reactive({
   signature: '',
   previousSignature: false,
   snackbar: false,
+  submited: false,
 });
 
 onMounted(() => {
@@ -148,11 +151,14 @@ const fileMutation = useMutation({
     });
   },
   onError: () => {
+    state.submited = false;
+    state.valid = true;
     state.snackbar = true;
   },
 });
 
 async function handleSubmit() {
+  state.submited = true;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const image = signatureCanvas.value.toDataURL('image/jpeg', 0.5);
@@ -167,7 +173,7 @@ async function handleSubmit() {
 }
 
 async function handleFileUpload() {
-  const newFileName = `${applicationStore.completeApplication.application.orderId}_${applicationStore.completeApplication.application.personalInfo.lastName}_${applicationStore.completeApplication.application.personalInfo.firstName}_signature`;
+  const newFileName = `${applicationStore.completeApplication.application.personalInfo.lastName}_${applicationStore.completeApplication.application.personalInfo.firstName}_signature`;
 
   const uploadDoc: UploadedDocType = {
     documentType: 'signature',
