@@ -294,9 +294,9 @@ export type CompleteApplication = {
     orderId: string;
     uploadedDocuments: Array<UploadedDocType>;
     backgroudCheck: BackgroundCheckType;
-    userId: string;
   };
   history: Array<HistoryType>;
+  userId: string;
   id: string;
 };
 

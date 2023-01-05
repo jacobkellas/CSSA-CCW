@@ -323,6 +323,7 @@
     <FormButtonContainer
       v-else
       :valid="state.valid"
+      :submitting="state.submited"
       @submit="handleSubmit"
       @back="handlePreviousSection"
       @cancel="router.push('/')"
@@ -365,6 +366,7 @@ const state = reactive({
   driver: {} as File,
   files: [] as Array<{ form; target }>,
   valid: false,
+  submited: false,
   driverLicense: '',
   proofResidence: '',
   proofResidence2: '',
@@ -447,9 +449,8 @@ async function handleFileUpload() {
 }
 
 function handleSubmit() {
+  state.submited = false;
   state.uploadSuccessful = false;
-  state.valid = false;
-  fileMutation.mutate();
 }
 
 onMounted(() => {

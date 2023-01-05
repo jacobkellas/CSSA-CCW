@@ -210,10 +210,10 @@ export const defaultPermitState: CompleteApplication = {
       safetyCertificate: false,
       restrictions: false,
     },
-    userId: '',
   },
   history: [],
   id: '',
+  userId: '',
 };
 
 export const defaultAllPermitsState = {
