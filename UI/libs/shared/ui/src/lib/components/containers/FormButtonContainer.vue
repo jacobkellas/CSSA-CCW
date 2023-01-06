@@ -19,6 +19,7 @@
           @click="handleSave"
           :disabled="!valid"
           :loading="submitting"
+          :class="!valid ? 'ml-3' : ''"
           class="mt-3"
         >
           {{ $t('Save and Exit') }}
