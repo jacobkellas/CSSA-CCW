@@ -14,14 +14,6 @@
                 flat
                 :color="$vuetify.theme.dark ? 'accent' : 'primary'"
               >
-                <v-btn
-                  outlined
-                  class="mr-4"
-                  color="white"
-                  @click="setToday"
-                >
-                  {{ $t('Today') }}
-                </v-btn>
 
                 <v-btn
                   fab
@@ -42,7 +34,7 @@
                   <v-icon> mdi-chevron-right </v-icon>
                 </v-btn>
                 <v-toolbar-title
-                  v-if="$refs.calendar"
+                  v-if="state.calendarLoading"
                   :style="{
                     color: 'white',
                   }"
@@ -161,11 +153,11 @@
 
 <script setup lang="ts">
 import { AppointmentType } from '@shared-utils/types/defaultTypes';
-import { reactive } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { usePaymentStore } from '@core-public/stores/paymentStore';
+import { onMounted, reactive, ref } from 'vue';
 
 interface IProps {
   toggleAppointment: CallableFunction;
@@ -179,6 +171,8 @@ const appointmentStore = useAppointmentsStore();
 const paymentStore = usePaymentStore();
 const paymentType = paymentStore.getPaymentType;
 
+const calendar = ref<any>(null);
+
 const state = reactive({
   focus: '',
   type: 'month',
@@ -191,7 +185,9 @@ const state = reactive({
   setAppointment: false,
   snackbar: false,
   snackbarOk: false,
+  calendarLoading: false,
 });
+
 
 const appointmentMutation = useMutation({
   mutationFn: () => {
@@ -235,11 +231,6 @@ function viewDay({ date }) {
   state.type = 'day';
 }
 
-function setToday() {
-  state.focus = 'date';
-  state.type = 'day';
-}
-
 function selectEvent(event) {
   state.selectedEvent = event.event;
   state.selectedElement = event.nativeEvent.target;
@@ -265,12 +256,15 @@ function handleConfirm() {
     });
   }
 }
+
+onMounted(() => {
+  state.calendarLoading = true;
+});
 </script>
 
 <style lang="scss" scoped>
 .calendar-container {
   height: 800px;
-  overflow: scroll;
   margin: 2em 0;
 }
 .button-card {
