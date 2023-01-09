@@ -227,8 +227,8 @@ public class CosmosDbService : ICosmosDbService
             "a.Application.IsComplete as IsComplete, " +
             "a.Application.DOB as DOB, " +
             "a.Application.OrderId as OrderId, " +
-            "a.id " +
             "a.userId as UserId, " +
+            "a.id " +
             "FROM a" +
             "WHERE a.Application.IsComplete = false"
         );
