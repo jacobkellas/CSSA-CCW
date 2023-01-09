@@ -229,7 +229,7 @@ public class CosmosDbService : ICosmosDbService
             "a.Application.OrderId as OrderId, " +
             "a.userId as UserId, " +
             "a.id " +
-            "FROM a" +
+            "FROM a " +
             "WHERE a.Application.IsComplete = false"
         );
 
