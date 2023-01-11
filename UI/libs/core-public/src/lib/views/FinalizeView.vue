@@ -173,8 +173,10 @@ const { isLoading, isError } = useQuery(['getIncompleteApplications'], () => {
         event.end = formatedEnd;
       });
       state.appointments = data;
-      isError.value = false;
+      // isError.value = false;
       state.appointmentsLoaded = true;
+
+      return data;
     })
     .catch(() => {
       state.appointmentsLoaded = true;
@@ -186,7 +188,7 @@ onMounted(() => {
     state.isLoading = true;
     completeApplicationStore
       .getCompleteApplicationFromApi(
-        route.query.orderId,
+        route.query.applicationId,
         route.query.isComplete
       )
       .then(res => {

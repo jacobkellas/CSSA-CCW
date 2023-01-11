@@ -1075,12 +1075,18 @@
 
 <script setup lang="ts">
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue';
-import Routes from '@core-public/router/routes';
 import { onMounted, reactive, ref } from 'vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useMutation } from '@tanstack/vue-query';
 import { useRoute, useRouter } from 'vue-router/composables';
 import { CompleteApplication } from '@shared-utils/types/defaultTypes';
+
+interface IProps {
+  handleNextSection: CallableFunction;
+  handlePreviousSection: CallableFunction;
+}
+
+const props = defineProps<IProps>();
 
 const snackbar = ref(false);
 const valid = ref(false);
@@ -1098,7 +1104,7 @@ onMounted(() => {
   if (!applicationStore.completeApplication.application.orderId) {
     applicationStore
       .getCompleteApplicationFromApi(
-        route.query.orderId,
+        route.query.applicationId,
         route.query.isComplete
       )
       .then(res => {
@@ -1119,13 +1125,7 @@ const updateMutation = useMutation({
     return applicationStore.updateApplication();
   },
   onSuccess: () => {
-    router.push({
-      path: Routes.FINALIZE_ROUTE_PATH,
-      query: {
-        orderId: applicationStore.completeApplication.application.orderId,
-        isComplete: applicationStore.completeApplication.application.isComplete,
-      },
-    });
+    props.handleNextSection();
   },
   onError: () => {
     state.submited = false;
@@ -1140,13 +1140,7 @@ const goBackMutation = useMutation({
     return applicationStore.updateApplication();
   },
   onSuccess: () => {
-    router.push({
-      path: Routes.FORM_ROUTE_PATH,
-      query: {
-        orderId: applicationStore.completeApplication.application.orderId,
-        isComplete: applicationStore.completeApplication.application.isComplete,
-      },
-    });
+    props.handlePreviousSection();
   },
   onError: () => {
     snackbar.value = true;

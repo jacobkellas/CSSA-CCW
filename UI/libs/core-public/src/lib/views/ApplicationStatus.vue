@@ -152,7 +152,7 @@ const createMutation = useMutation({
     router.push({
       path: Routes.APPLICATION_ROUTE_PATH,
       query: {
-        orderId: completeApplication.application.orderId,
+        applicationId: completeApplication.id,
         isComplete: completeApplication.application.isComplete,
       },
     });
@@ -160,13 +160,13 @@ const createMutation = useMutation({
   onError: () => null,
 });
 
-function handleDelete(orderId) {
-  deleteApplication(orderId);
-  const filterd = state.applications.filter(item => {
-    return item.application.orderId !== orderId;
+function handleDelete(applicationId) {
+  deleteApplication(applicationId);
+  const filtered = state.applications.filter(item => {
+    return item.id !== applicationId;
   });
 
-  state.applications = filterd;
+  state.applications = filtered;
   state.hasIncomplete = false;
   state.applications.forEach(item => {
     if (item.application.status === 1) {
@@ -177,14 +177,14 @@ function handleDelete(orderId) {
 
 function handleSelection(application) {
   getCompleteApplicationFromApi(
-    application.application.orderId,
+    application.id,
     application.application.isComplete
   ).then(data => {
     setCompleteApplication(data);
     router.push({
       path: Routes.APPLICATION_DETAIL_ROUTE,
       query: {
-        orderId: completeApplication.application.orderId,
+        applicationId: completeApplication.id,
         isComplete: completeApplication.application.isComplete,
       },
     });

@@ -217,11 +217,17 @@
             outlined
             dense
             :label="$t('Social Security Number')"
-            :rules="ssnRuleSet"
-            :type="show1 ? 'text' : 'password'"
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="show1 = !show1"
-            v-model="completeApplication.personalInfo.ssn"
+            :error-messages="errors"
+            :value="hidden1"
+            :rules="[
+              v => !!v || $t('SSN cannot be blank'),
+              v => v.length === 9 || $t('SSN must be 9 characters in length'),
+            ]"
+            @input="
+              event => {
+                handleInput(event);
+              }
+            "
           >
             <template #prepend>
               <v-icon
@@ -243,15 +249,15 @@
             dense
             :label="$t('Confirm SSN')"
             :rules="[
-              ...ssnRuleSet,
-              v =>
-                v === completeApplication.personalInfo.ssn ||
-                $t('SSN\'s do not match'),
+              v => !!v || $t('SSN cannot be blank'),
+              v => v.length === 9 || $t('SSN must be 9 characters in length'),
             ]"
-            :type="show2 ? 'text' : 'password'"
-            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-            v-model="ssnConfirm"
-            @click:append="show2 = !show2"
+            :value="hidden2"
+            @input="
+              event => {
+                handleConfirmInput(event);
+              }
+            "
           >
             <template #prepend>
               <v-icon
@@ -474,7 +480,6 @@ import {
   notRequiredNameRuleSet,
   phoneRuleSet,
   requireNameRuleSet,
-  ssnRuleSet,
 } from '@shared-ui/rule-sets/ruleSets';
 
 interface FormStepOneProps {
@@ -488,8 +493,8 @@ const props = withDefaults(defineProps<FormStepOneProps>(), {
 const errors = ref([] as Array<string>);
 const valid = ref(false);
 const menu = ref(false);
-const show1 = ref(false);
-const show2 = ref(false);
+const hidden1 = ref('');
+const hidden2 = ref('');
 const showAlias = ref(false);
 const snackbar = ref(false);
 const submited = ref(false);
@@ -535,6 +540,65 @@ function handleSubmit() {
     submited.value = true;
     valid.value = false;
     updateMutation.mutate();
+  }
+}
+
+function handleInput(event: string) {
+  if (event.match(/[0-9]/)) {
+    if (event.length === 1) {
+      completeApplication.personalInfo.ssn = event;
+      hidden1.value += '*';
+    } else {
+      completeApplication.personalInfo.ssn += event.slice(-1);
+      hidden1.value += '*';
+    }
+  } else if (event.match(/[A-Za-z]/)) {
+    errors.value.push('SSN must only contain numbers');
+  } else {
+    if (!completeApplication.personalInfo.ssn.match(/[a-zA-Z\s]+$/)) {
+      errors.value = [];
+    }
+
+    completeApplication.personalInfo.ssn =
+      completeApplication.personalInfo.ssn.slice(0, -1);
+    hidden1.value = hidden1.value.slice(0, -1);
+  }
+
+  if (
+    completeApplication.personalInfo.ssn.length === 9 &&
+    completeApplication.personalInfo.ssn.match(/^(\d)\1{8,}/)
+  ) {
+    errors.value.push('Cannot contain repeating numbers');
+  }
+}
+
+function handleConfirmInput(event: string) {
+  if (event.match(/[0-9]/)) {
+    if (event.length === 1) {
+      ssnConfirm.value = event;
+      hidden2.value += '*';
+    } else {
+      ssnConfirm.value += event.slice(-1);
+      hidden2.value += '*';
+    }
+  } else if (event.match(/[A-Za-z]/)) {
+    errors.value.push('SSN must only contain numbers');
+  } else {
+    if (!ssnConfirm.value.match(/[a-zA-Z\s]+$/)) {
+      errors.value = [];
+    }
+
+    ssnConfirm.value = ssnConfirm.value.slice(0, -1);
+    hidden2.value = hidden2.value.slice(0, -1);
+  }
+
+  if (ssnConfirm.value.length === 9 && ssnConfirm.value.match(/^(\d)\1{8,}/)) {
+    errors.value.push('Cannot contain repeating numbers');
+  } else if (
+    ssnConfirm.value.length === 9 &&
+    ssnConfirm.value !== completeApplication.personalInfo.ssn
+  ) {
+    errors.value.push('SSN must match');
   }
 }
 

@@ -109,7 +109,6 @@ import { onMounted, reactive, ref, watch } from 'vue';
 
 interface ISecondFormStepFourProps {
   routes: unknown;
-  handleNextSection: CallableFunction;
   handlePreviousSection: CallableFunction;
 }
 
@@ -143,9 +142,9 @@ const fileMutation = useMutation({
     applicationStore.completeApplication.application.currentStep = 10;
     applicationStore.updateApplication();
     router.push({
-      path: props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
+      path: props.routes.FINALIZE_ROUTE_PATH,
       query: {
-        orderId: applicationStore.completeApplication.application.orderId,
+        applicationId: applicationStore.completeApplication.id,
         isComplete: applicationStore.completeApplication.application.isComplete,
       },
     });
@@ -230,9 +229,9 @@ function handleSkipSubmit() {
   applicationStore.completeApplication.application.currentStep = 10;
   applicationStore.updateApplication();
   router.push({
-    path: props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
+    path: props.routes.FINALIZE_ROUTE_PATH,
     query: {
-      orderId: applicationStore.completeApplication.application.orderId,
+      applicationId: applicationStore.completeApplication.id,
       isComplete: applicationStore.completeApplication.application.isComplete,
     },
   });

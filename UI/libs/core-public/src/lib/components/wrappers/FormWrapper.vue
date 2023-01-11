@@ -149,13 +149,26 @@
           :color="$vuetify.theme.dark ? 'info' : 'primary'"
           :complete="stepIndex.step > 9"
         >
-          {{ $t('Signature') }}
+          {{ $t('Qualifying Questions') }}
         </v-stepper-step>
         <v-stepper-content step="9">
-          <SignatureStep
+          <QualifyingQuestionsStep
             v-if="stepIndex.step === 9"
-            :routes="routes"
             :handle-next-section="handleNextSection"
+            :handle-previous-section="handlePreviousSection"
+          />
+        </v-stepper-content>
+        <v-stepper-step
+          step="10"
+          :color="$vuetify.theme.dark ? 'info' : 'primary'"
+          :complete="stepIndex.step > 10"
+        >
+          {{ $t('Signature') }}
+        </v-stepper-step>
+        <v-stepper-content step="10">
+          <SignatureStep
+            v-if="stepIndex.step === 10"
+            :routes="routes"
             :handle-previous-section="handlePreviousSection"
           />
         </v-stepper-content>
@@ -177,6 +190,7 @@ import WorkInfoStep from '@core-public/components/form-stepper/form-steps/WorkIn
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useRoute, useRouter } from 'vue-router/composables';
 import { onMounted, reactive } from 'vue';
+import QualifyingQuestionsStep from '@core-public/components/form-stepper/form-steps/QualifyingQuestionsStep.vue';
 
 interface IWrapperProps {
   admin: boolean;
@@ -204,7 +218,7 @@ onMounted(() => {
     state.isLoading = true;
     applicationStore
       .getCompleteApplicationFromApi(
-        route.query.orderId,
+        route.query.applicationId,
         route.query.isComplete
       )
       .then(res => {
@@ -219,16 +233,6 @@ onMounted(() => {
   }
 
   stepIndex.step = applicationStore.completeApplication.application.currentStep;
-
-  if (stepIndex.step > 9) {
-    router.push({
-      path: props.routes.QUALIFYING_QUESTIONS_ROUTE_PATH,
-      query: {
-        orderId: applicationStore.completeApplication.application.orderId,
-        isComplete: applicationStore.completeApplication.application.isComplete,
-      },
-    });
-  }
 });
 
 function handleNextSection() {

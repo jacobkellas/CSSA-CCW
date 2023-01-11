@@ -194,7 +194,7 @@ onMounted(() => {
   if (!applicationStore.completeApplication.application.orderId) {
     applicationStore
       .getCompleteApplicationFromApi(
-        route.query.orderId,
+        route.query.applicationId,
         route.query.isComplete
       )
       .then(res => {

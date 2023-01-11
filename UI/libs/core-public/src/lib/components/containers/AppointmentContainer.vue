@@ -14,7 +14,6 @@
                 flat
                 :color="$vuetify.theme.dark ? 'accent' : 'primary'"
               >
-
                 <v-btn
                   fab
                   text
@@ -187,7 +186,6 @@ const state = reactive({
   snackbarOk: false,
   calendarLoading: false,
 });
-
 
 const appointmentMutation = useMutation({
   mutationFn: () => {
