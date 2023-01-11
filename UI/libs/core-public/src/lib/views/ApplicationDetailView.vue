@@ -200,7 +200,7 @@ onMounted(() => {
   if (!applicationStore.completeApplication.application.orderId) {
     applicationStore
       .getCompleteApplicationFromApi(
-        route.query.orderId,
+        route.query.applicationId,
         route.query.isComplete
       )
       .then(res => {
@@ -215,7 +215,7 @@ const createMutation = useMutation({
     router.push({
       path: Routes.RENEW_FORM_ROUTE_PATH,
       query: {
-        orderId: state.application[0].application.orderId,
+        applicationId: state.application[0].id,
         isComplete: state.application[0].application.isComplete,
       },
     });
@@ -229,7 +229,7 @@ const renewMutation = useMutation({
     router.push({
       path: Routes.RENEW_FORM_ROUTE_PATH,
       query: {
-        orderId: state.application[0].application.orderId,
+        applicationId: state.application[0].id,
         isComplete: state.application[0].application.isComplete,
       },
     });
@@ -242,7 +242,7 @@ function handleContinueApplication() {
     router.push({
       path: Routes.APPLICATION_ROUTE_PATH,
       query: {
-        orderId: state.application[0].application.orderId,
+        applicationId: state.application[0].id,
         isComplete: state.application[0].application.isComplete,
       },
     });
@@ -257,7 +257,7 @@ function handleContinueApplication() {
     router.push({
       path: Routes.FORM_ROUTE_PATH,
       query: {
-        orderId: state.application[0].application.orderId,
+        applicationId: state.application[0].id,
         isComplete: state.application[0].application.isComplete,
       },
     });
@@ -265,7 +265,7 @@ function handleContinueApplication() {
     router.push({
       path: Routes.RENEW_FORM_ROUTE_PATH,
       query: {
-        orderId: state.application[0].application.orderId,
+        applicationId: state.application[0].id,
         isComplete: state.application[0].application.isComplete,
       },
     });
