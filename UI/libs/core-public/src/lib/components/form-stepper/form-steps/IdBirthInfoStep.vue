@@ -205,7 +205,7 @@
         {{ $t('Citizenship Information') }}
       </v-subheader>
 
-      <v-row>
+      <v-row class="ml-3">
         <v-col
           cols="12"
           lg="6"
