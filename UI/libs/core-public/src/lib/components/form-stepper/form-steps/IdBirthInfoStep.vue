@@ -93,13 +93,14 @@
                 outlined
                 dense
                 readonly
+                class="pl-6"
                 v-model="completeApplication.dob.birthDate"
                 :label="$t('Date of Birth')"
                 :rules="[
                   checkFor21,
                   v => !!v || $t('Date of birth is required'),
                 ]"
-                prepend-icon="mdi-calendar"
+                prepend-inner-icon="mdi-calendar"
                 v-bind="attrs"
                 v-on="on"
               ></v-text-field>
@@ -246,7 +247,8 @@
             outlined
             type="warning"
             v-if="
-              completeApplication.citizenship.militaryStatus === 'Discharged'
+              completeApplication.citizenship.militaryStatus === 'Discharged' ||
+              completeApplication.citizenship.militaryStatus === 'Retired'
             "
           >
             {{ $t('discharged-disclaimer') }}
