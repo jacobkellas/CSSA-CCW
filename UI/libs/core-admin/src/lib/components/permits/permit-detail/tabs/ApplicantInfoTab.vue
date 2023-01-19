@@ -324,8 +324,4 @@ import { usePermitsStore } from '@core-admin/stores/permitsStore';
 const show1 = ref(false);
 const permitStore = usePermitsStore();
 </script>
-<style lang="scss" scoped>
-.subHeader {
-  font-size: 1.5rem;
-}
-</style>
+<style lang="scss" scoped></style>
