@@ -226,26 +226,106 @@ export type UploadedDocType = {
 };
 
 export type BackgroundCheckType = {
-  proofOfID: boolean | null;
-  proofOfResidency: boolean | null;
-  NCICWantsWarrants: boolean | null;
-  locals: boolean | null;
-  probations: boolean | null;
-  DMVRecord: boolean | null;
-  AKSsChecked: boolean | null;
-  coplink: boolean | null;
-  trafficCourtPortal: boolean | null;
-  propertyAssesor: boolean | null;
-  voterRegistration: boolean | null;
-  DOJApprovalLetter: boolean | null;
-  CIINumber: boolean | null;
-  DOJ: boolean | null;
-  FBI: boolean | null;
-  SR14: boolean | null;
-  firearmsReg: boolean | null;
-  allDearChiefLTRsRCRD: boolean | null;
-  safetyCertificate: boolean | null;
-  restrictions: boolean | null;
+  proofOfID: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  proofOfResidency: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  ncicWantsWarrants: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  locals: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  probations: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  dmvRecord: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  akSsChecked: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  coplink: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  trafficCourtPortal: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  propertyAssesor: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  voterRegistration: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  dojApprovalLetter: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  ciiNumber: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  doj: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  fbi: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  sR14: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  firearmsReg: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  allDearChiefLTRsRCRD: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  safetyCertificate: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
+  restrictions: {
+    changeDateTimeUtc: null;
+    changeMadeBy: null;
+    value: boolean | null;
+  };
 };
 
 export type CompleteApplication = {
