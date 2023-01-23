@@ -119,6 +119,8 @@
         lg="6"
       >
         <v-banner
+          rounded
+          shaped
           class="text-left"
           single-line
         >
@@ -134,6 +136,9 @@
           {{ props.personalInfo.suffix }}
         </v-banner>
       </v-col>
+    </v-row>
+
+    <v-row>
       <v-col
         cols="12"
         lg="6"
@@ -162,6 +167,8 @@
         lg="6"
       >
         <v-banner
+          rounded
+          shaped
           single-line
           class="text-left"
         >
