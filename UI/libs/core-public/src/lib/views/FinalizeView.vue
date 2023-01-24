@@ -17,20 +17,24 @@
       <PaymentContainer
         v-if="
           completeApplicationStore.completeApplication.application
-            .applicationType &&
-          completeApplicationStore.completeApplication.application
-            .paymentStatus === 0
+            .applicationType
         "
         :toggle-payment="togglePaymentComplete"
       />
-      <v-container v-else>
+      <v-container
+        v-if="
+          completeApplicationStore.completeApplication.application
+            .paymentStatus !== 0
+        "
+      >
         <v-card>
           <v-alert
             outlined
             type="info"
             class="font-weight-bold"
           >
-            {{ $t('Payment has already been submitted ') }}
+            <!-- TODO: update with different options once online is implemented -->
+            {{ $t('Payment method selected: Pay in person ') }}
           </v-alert>
         </v-card>
       </v-container>
