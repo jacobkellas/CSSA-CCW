@@ -14,43 +14,60 @@
         >
           <v-list-item>
             <template #default="{ active }">
-              <v-list-item-action>
+              <v-list-item-action class="mr-4">
                 <v-row
                   align="center"
                   justify="center"
                 >
-                  <v-col>
-                    <v-btn
-                      color="blue"
-                      class="white--text"
-                      width="60"
-                      :input-value="active"
-                      @click="
-                        permitStore.getPermitDetail.application.backgroudCheck[
-                          item.value
-                        ].value = true;
-                        updatePermitDetails();
-                      "
-                    >
-                      Pass
-                    </v-btn>
+                  <v-col class="px-0 py-0">
+                    <v-tooltip bottom>
+                      <template #activator="{ on, attrs }">
+                        <v-btn
+                          icon
+                          small
+                          color="blue"
+                          class="white--text"
+                          :input-value="active"
+                          @click="
+                            permitStore.getPermitDetail.application.backgroudCheck[
+                              item.value
+                            ].value = true;
+                            updatePermitDetails();
+                          "
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon> mdi-check-circle-outline </v-icon>
+                        </v-btn>
+                      </template>
+                      {{ $t('pass') }}
+                    </v-tooltip>
                   </v-col>
-                  <v-col>
-                    <v-btn
-                      color="error"
-                      width="60"
-                      :input-value="active"
-                      @click="
-                        permitStore.getPermitDetail.application.backgroudCheck[
-                          item.value
-                        ].value = false;
-                        updatePermitDetails();
-                      "
-                    >
-                      Fail
-                    </v-btn>
+                  <v-col class="px-0 py-0">
+                    <v-tooltip bottom>
+                      <template #activator="{ on, attrs }">
+                        <v-btn
+                          icon
+                          small
+                          color="error"
+                          :input-value="active"
+                          @click="
+                            permitStore.getPermitDetail.application.backgroudCheck[
+                              item.value
+                            ].value = false;
+                            updatePermitDetails();
+                          "
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon> mdi-close-circle-outline </v-icon>
+                        </v-btn>
+                      </template>
+                      {{ $t(' Fail') }}
+                    </v-tooltip>
                   </v-col>
                   <v-col
+                    class="px-1"
                     :style="{
                       visibility:
                         permitStore.getPermitDetail.application.backgroudCheck[
@@ -60,7 +77,8 @@
                           : 'visible',
                     }"
                   >
-                    <v-icon
+                    <v-chip
+                      small
                       :color="
                         permitStore.getPermitDetail.application.backgroudCheck[
                           item.value
@@ -68,15 +86,16 @@
                           ? 'blue'
                           : 'error'
                       "
+                      text-color="white"
                     >
                       {{
                         permitStore.getPermitDetail.application.backgroudCheck[
                           item.value
                         ].value
-                          ? 'mdi-check'
-                          : 'mdi-close'
+                          ? 'passed'
+                          : 'failed'
                       }}
-                    </v-icon>
+                    </v-chip>
                   </v-col>
                 </v-row>
               </v-list-item-action>
@@ -107,8 +126,8 @@
                       <template #activator="{ on, attrs }">
                         <v-list-item-avatar
                           color="blue"
-                          height="40"
-                          width="40"
+                          height="35"
+                          width="10"
                           v-bind="attrs"
                           v-on="on"
                         >
