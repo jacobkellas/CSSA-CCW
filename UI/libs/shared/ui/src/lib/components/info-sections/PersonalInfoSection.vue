@@ -64,7 +64,7 @@
           <strong>
             {{ $t('First Name: ') }}
           </strong>
-          {{ props.personalInfo.lastName }}
+          {{ props.personalInfo.firstName}}
         </v-banner>
       </v-col>
     </v-row>
