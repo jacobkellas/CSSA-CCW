@@ -132,7 +132,7 @@
         <v-text-field
           :label="$t('Social Security Number')"
           :rules="ssnRuleSet"
-          :type="show1 ? 'text' : 'password'"
+          type="text"
           v-model="permitStore.getPermitDetail.application.personalInfo.ssn"
           dense
           outlined
@@ -147,12 +147,6 @@
             </v-icon>
           </template>
           <template #append>
-            <v-icon
-              @click="show1 = !show1"
-              medium
-            >
-              {{ show1 ? 'mdi-eye' : 'mdi-eye-off' }}
-            </v-icon>
             <v-icon
               color="error"
               medium
@@ -204,6 +198,17 @@
           </template>
         </v-select>
       </v-col>
+      <v-col
+        cols="12"
+        md="5"
+        sm="12"
+      >
+        <v-btn
+          color="info"
+        >
+          Request Social 
+        </v-btn>
+      </v-col>
     </v-row>
     <v-divider
       v-if="
@@ -247,7 +252,7 @@
               color="error"
             >
               mdi-star
-            </v-icon>
+            </v-icon> 
           </template>
         </v-text-field>
       </v-col>
@@ -309,11 +314,10 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
 import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 
-const show1 = ref(false);
 const permitStore = usePermitsStore();
+// TODO: Create the mutation to make the new call for the social. 
 </script>
 <style lang="scss" scoped></style>
