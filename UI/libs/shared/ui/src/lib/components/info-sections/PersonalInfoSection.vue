@@ -203,7 +203,13 @@ const completeApplicationStore = useCompleteApplicationStore();
 
 function handleEditRequest() {
   completeApplicationStore.completeApplication.application.currentStep = 1;
-  router.push('/form');
+  router.push({
+  path: '/form',
+  query: {
+    applicationId: completeApplicationStore.completeApplication.id,
+    isComplete: completeApplicationStore.completeApplication.application.isComplete
+  }
+  });
 }
 </script>
 
