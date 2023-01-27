@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     app
-    color="primary"
+    color="accent"
     class="flex-grow-0 white--text"
     clipped-right
   >
@@ -32,7 +32,7 @@
       aria-label="Sign out of application"
       @click="signOut"
       class="mr-4 ml-1"
-      :color="$vuetify.breakpoint.mdAndDown ? 'primary' : 'primary lighten-2'"
+      :color="$vuetify.breakpoint.mdAndDown ? 'accent' : 'accent lighten-2'"
       small
     >
       <!--eslint-disable-next-line vue/singleline-html-element-content-newline -->

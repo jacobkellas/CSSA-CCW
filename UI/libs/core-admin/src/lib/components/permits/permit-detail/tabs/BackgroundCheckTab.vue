@@ -171,7 +171,7 @@
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn
-                            color="primary"
+                            color="accent"
                             text
                             @click="dialog = false"
                           >

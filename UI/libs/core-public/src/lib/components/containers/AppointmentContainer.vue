@@ -15,6 +15,13 @@
                 :color="$vuetify.theme.dark ? 'accent' : 'primary'"
               >
                 <v-btn
+                  outlined
+                    color="white"
+                    @click="selectNextAvailbe"
+                 >
+                  {{ $t('Next available') }}
+                </v-btn>
+                <v-btn
                   fab
                   text
                   small
@@ -253,6 +260,10 @@ function handleConfirm() {
         appointment.start;
     });
   }
+}
+
+function selectNextAvailbe() {
+    state.focus = new Date(props.events[0].start).toLocaleDateString()
 }
 
 onMounted(() => {

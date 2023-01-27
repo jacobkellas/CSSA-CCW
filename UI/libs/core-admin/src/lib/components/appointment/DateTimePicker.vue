@@ -18,7 +18,7 @@
         <template #progress>
           <slot name="progress">
             <v-progress-linear
-              color="primary"
+              color="accent"
               indeterminate
               absolute
               height="2"

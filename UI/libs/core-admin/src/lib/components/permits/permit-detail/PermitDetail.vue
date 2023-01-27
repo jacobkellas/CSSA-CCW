@@ -35,7 +35,7 @@
               :indeterminate="isLoading"
               absolute
               bottom
-              color="primary"
+              color="accent"
               title="Permit details loading"
             >
             </v-progress-linear>

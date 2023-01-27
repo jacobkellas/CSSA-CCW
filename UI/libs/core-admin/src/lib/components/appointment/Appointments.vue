@@ -53,7 +53,7 @@
               >
                 <!-- 1. Create the button that will be clicked to select a file -->
                 <v-btn
-                  color="primary"
+                  color="accent"
                   :loading="state.isSelecting"
                   :rounded="$vuetify.breakpoint.mdAndDown"
                   @click="handleFileImport"
@@ -88,7 +88,7 @@
                       fab
                       raised
                       rounded
-                      color="primary"
+                      color="accent"
                       x-small
                       v-bind="attrs"
                       v-on="on"

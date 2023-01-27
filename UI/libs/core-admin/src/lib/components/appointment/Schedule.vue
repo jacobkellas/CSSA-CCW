@@ -16,7 +16,7 @@
       <v-sheet height="64">
         <v-toolbar
           flat
-          color="primary"
+          color="accent"
         >
           <v-btn
             outlined
@@ -85,14 +85,14 @@
         <v-calendar
           ref="calendar"
           v-model="state.focus"
-          :color="$vuetify.theme.dark ? 'accent' : 'primary'"
+          color="accent"
           first-time="8"
           first-interval="8"
           interval-width="80"
           interval-count="16"
           :type="state.type"
           :events="state.appointments"
-          :event-color="$vuetify.theme.dark ? 'accent' : 'primary'"
+          event-color="accent"
           @click:date="viewDay($event)"
           @click:event="selectEvent($event)"
         >
@@ -117,7 +117,7 @@
             </v-card-title>
             <v-card-text class="button-card">
               <v-btn
-                color="primary"
+                color="accent"
                 @click="handleConfirm"
                 class="m-3"
               >
