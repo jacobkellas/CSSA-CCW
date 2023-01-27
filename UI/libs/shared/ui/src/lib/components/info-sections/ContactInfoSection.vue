@@ -132,7 +132,13 @@ const applicationStore = useCompleteApplicationStore();
 
 function handleEditRequest() {
   applicationStore.completeApplication.application.currentStep = 5;
-  router.push('/form');
+  router.push({
+  path: '/form',
+  query: {
+    applicationId: applicationStore.completeApplication.id,
+    isComplete: applicationStore.completeApplication.application.isComplete
+  }
+  });
 }
 </script>
 
