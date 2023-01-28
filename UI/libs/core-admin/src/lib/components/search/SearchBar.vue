@@ -45,7 +45,7 @@
               <v-chip
                 medium
                 label
-                color="primary lighten-2"
+                color="accent lighten-2"
                 class="ml-4"
               >
                 {{ item.orderID }}

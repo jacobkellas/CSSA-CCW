@@ -22,7 +22,7 @@
         :indeterminate="isLoading"
         absolute
         bottom
-        color="primary"
+        color="accent"
       >
       </v-progress-linear>
     </v-tabs>

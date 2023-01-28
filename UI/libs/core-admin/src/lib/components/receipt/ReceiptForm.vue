@@ -268,7 +268,7 @@
           ></v-textarea>
         </div>
         <v-btn
-          color="primary"
+          color="accent"
           @click="printInvoice"
           @keydown="printInvoice"
         >
