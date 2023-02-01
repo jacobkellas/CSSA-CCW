@@ -106,7 +106,12 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       `${Endpoints.GET_PERMIT_HISTORY_ENDPOINT}?applicationIdOrOrderId=${orderId}&isOrderId=true`
     );
 
-    setHistory(res?.data);
+    const array: HistoryType[] = res?.data
+    const reorder = array.reverse();
+
+    window.console.log(reorder)
+
+    setHistory(reorder);
 
     return res?.data || {};
   }
