@@ -45,6 +45,7 @@
           elevation="0"
           class="mt-2 pt-3"
         >
+          <!--
           <v-chip
             class="ml-4"
             :color="$vuetify.theme.dark ? '' : 'blue lighten-4'"
@@ -62,16 +63,37 @@
                 : 'New'
             }}
           </v-chip>
-          <v-chip
-            class="ml-4"
-            :text-color="$vuetify.theme.dark ? '' : 'grey darken-2'"
-          >
-            {{
-              capitalize(
-                permitStore.getPermitDetail.application.applicationType
-              )
-            }}
-          </v-chip>
+        -->
+          <v-menu offest-y>
+            <template #activator="{ on, attrs }">
+              <v-chip
+                class="ml-4"
+                :text-color="$vuetify.theme.dark ? '' : 'grey darken-2'"
+                v-bind="attrs"
+                v-on="on"
+              >
+                {{
+                  capitalize(
+                    permitStore.getPermitDetail.application.applicationType
+                  )
+                }}
+              </v-chip>
+            </template>
+            <v-list>
+              <v-list-item
+                v-for="(item, index) in items"
+                :key="index"
+                @click="
+                  permitStore.getPermitDetail.application.applicationType = item;
+                  updateApplicationStatus();
+                "
+              >
+                <v-list-item-title>
+                  {{ item }}
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
           <v-chip
             class="ml-4"
             :color="$vuetify.theme.dark ? '' : 'green lighten-3'"
@@ -119,6 +141,21 @@ import { useRoute } from 'vue-router/composables';
 
 const route = useRoute();
 const permitStore = usePermitsStore();
+
+const items = [
+  'standard',
+  'reserve',
+  'judicial',
+  'renew-standard',
+  'renew-reserve',
+  'renew-judicial',
+  'modify-standard',
+  'modify-reserve',
+  'modify-judicial',
+  'duplicate-standard',
+  'duplicate-reserve',
+  'duplicate-judicial',
+];
 
 const appStatus = [
   {

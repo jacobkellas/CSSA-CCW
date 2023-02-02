@@ -16,9 +16,9 @@
               >
                 <v-btn
                   outlined
-                    color="white"
-                    @click="selectNextAvailbe"
-                 >
+                  color="white"
+                  @click="selectNextAvailbe"
+                >
                   {{ $t('Next available') }}
                 </v-btn>
                 <v-btn
@@ -263,7 +263,7 @@ function handleConfirm() {
 }
 
 function selectNextAvailbe() {
-    state.focus = new Date(props.events[0].start).toLocaleDateString()
+  state.focus = new Date(props.events[0].start).toLocaleDateString();
 }
 
 onMounted(() => {
