@@ -9,7 +9,10 @@
     <v-row>
       <v-col cols="12">
         <v-card-text>
-          <v-timeline dense>
+          <v-timeline
+            dense
+            class="history-container"
+          >
             <v-slide-x-reverse-transition
               group
               origin
@@ -19,35 +22,33 @@
                 v-for="(item, index) in state.history"
                 :key="index"
                 color="info"
-                class="mb-4"
-                medium
-                fill-dot
+                class="mb-3 pr-4"
+                small
+                dot
               >
-                <template #icon>
-                  <v-tooltip left>
-                    <template #activator="{ on, attrs }">
-                      <span
-                        class="white--text"
-                        v-bind="attrs"
-                        v-on="on"
-                        >{{ state.initials }}</span
-                      >
-                    </template>
-                    <span>{{ item.changeMadeBy }}</span>
-                  </v-tooltip>
-                </template>
-                <v-row justify="space-between">
-                  <v-col cols="4">
-                    {{ item.change }}
+                <v-row justify="center">
+                  <v-col 
+                    class="text-left small-text"
+                    cols="8"
+                  > 
+                    {{ item.changeMadeBy }}
                   </v-col>
                   <v-col
-                    class="text-right"
+                    class="text-right small-text"
                     cols="4"
                   >
                     {{ formatDate(item.changeDateTimeUtc) }}
                   </v-col>
+                </v-row>
+                <v-row>
                   <v-col
-                    class="text-right"
+                    class="text-left small-text"
+                    cols="8"
+                  >
+                    {{ item.change }}
+                  </v-col>
+                  <v-col
+                    class="text-right small-text"
                     cols="4"
                   >
                     {{ formatTime(item.changeDateTimeUtc) }}
@@ -75,7 +76,7 @@ const permitStore = usePermitsStore();
 
 const state = reactive({
   interval: null,
-  history: permitStore.getPermitDetail.history,
+  history: permitStore.getPermitDetail.history.reverse(),
   nonce: 2,
   initials: formatInitials(
     permitStore.getPermitDetail.application.personalInfo.firstName,
@@ -98,3 +99,15 @@ function update() {
   refetch();
 }
 </script>
+
+<style lang="scss" scoped>
+.history-container {
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.small-text {
+  font-size: 0.7rem !important;
+  padding: 2px;
+}
+</style>
