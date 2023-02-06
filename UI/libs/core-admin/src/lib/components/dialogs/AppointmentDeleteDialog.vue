@@ -41,7 +41,6 @@
           <v-btn
             :disabled="state.enteredName !== props.appointment.name.trim()"
             color="info"
-            :loading="state.loading"
             text
             @click="handleSubmit"
           >
@@ -50,7 +49,6 @@
           <v-btn
             color="error"
             text
-            :loading="state.loading"
             @click="state.dialog = false"
           >
             Cancel
@@ -58,22 +56,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-snackbar
-      color="error"
-      v-model="state.error"
-      :timeout="5000"
-      class="font-weight-bold"
-    >
-      {{ $t('Error deleting applicant from appointment') }}
-    </v-snackbar>
-    <v-snackbar
-      color="success"
-      v-model="state.success"
-      :timeout="5000"
-      class="font-weight-bold"
-    >
-      {{ $t('Applicatant deleted from this appointment slot') }}
-    </v-snackbar>
   </div>
 </template>
 
@@ -94,24 +76,12 @@ const appointmentStore = useAppointmentsStore();
 const state = reactive({
   dialog: false,
   enteredName: '',
-  loading: false,
-  success: false,
-  error: false,
 });
 
 function handleSubmit() {
-  state.loading = true;
-  appointmentStore
-    .deleteUserFromAppointment(props.appointment.id)
-    .then(() => {
-      state.loading = false;
-      state.success = true;
-      props.refetch();
-      state.dialog = false;
-    })
-    .catch(err => {
-      state.loading = false;
-      state.error = true;
-    });
+  appointmentStore.deleteUserFromAppointment(props.appointment.id).then(() => {
+    props.refetch();
+    state.dialog = false;
+  });
 }
 </script>
