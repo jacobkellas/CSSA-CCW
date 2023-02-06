@@ -17,7 +17,7 @@ public class ApplicationServiceClient: IApplicationServiceClient
 
     public async Task<HttpResponseMessage> RemoveApplicationAppointmentAsync(string applicationId, CancellationToken cancellationToken)
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, removeAppointmentUrl + applicationId);
+        var request = new HttpRequestMessage(HttpMethod.Put, removeAppointmentUrl + applicationId);
 
         var result = await _httpClient.SendAsync(request, cancellationToken);
         result.EnsureSuccessStatusCode();
@@ -28,7 +28,7 @@ public class ApplicationServiceClient: IApplicationServiceClient
 
     public async Task<HttpResponseMessage> UpdateApplicationAppointmentAsync(string applicationId, DateTime appointmentDate, CancellationToken cancellationToken)
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, updateAppointmentUrl +
+        var request = new HttpRequestMessage(HttpMethod.Put, updateAppointmentUrl +
                                                              "applicationId=" + applicationId +
                                                              "&appointmentDate=" + appointmentDate);
 
