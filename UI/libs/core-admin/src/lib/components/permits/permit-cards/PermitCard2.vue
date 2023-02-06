@@ -65,89 +65,115 @@
           <div class="card-1-text p-2">
             <div class="button-container">
               No previous applications
-              <div>
-                <v-btn
-                  small
-                  :color="$vuetify.theme.dark ? '' : 'grey lighten-2'"
-                  @click="handleFileImport('picture')"
-                  class="mr-1"
-                >
-                  <v-icon> mdi-camera-outline </v-icon>
-                  <input
-                    ref="picUploader"
-                    label="Upload Personal Picture"
-                    class="d-none"
-                    type="file"
-                    @change="onFileChanged($event, 'personalPicture')"
-                    @click="onInputClick"
-                    @keydown="onInputClick"
-                    accept=".png, .jpeg, .jpg"
-                  />
-                </v-btn>
-                <v-btn
-                  small
-                  :color="$vuetify.theme.dark ? '' : 'grey lighten-2'"
-                  @click="handleFileImport('signature')"
-                  class="mr-1"
-                >
-                  <input
-                    ref="signatureUploader"
-                    label="Upload Signature"
-                    class="d-none"
-                    type="file"
-                    @change="onFileChanged($event, 'new_signature')"
-                    @click="onInputClick"
-                    @keydown="onInputClick"
-                    accept=".png, .jpeg, .jpg"
-                  />
-                  <v-icon> mdi-account-edit-outline</v-icon>
-                </v-btn>
-                <v-btn
-                  small
-                  :color="$vuetify.theme.dark ? '' : 'grey lighten-2'"
-                  style="cursor: pointer"
-                  class="mr-1"
-                >
-                  <v-menu bottom>
-                    <template #activator="{ on, attrs }">
+              <div class="button-inner">
+                <v-row>
+                  <v-col
+                    cols="12"
+                    xl="3"
+                    lg="6"
+                    md="12"
+                    class="pa-0"
+                  >
+                    <FileUploadDialog
+                      :icon="'mdi-camera'"
+                      :default-selection="'portrait'"
+                      :get-file-from-dialog="onFileChanged"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    xl="3"
+                    lg="6"
+                    md="12"
+                    class="pa-0"
+                  >
+                    <FileUploadDialog
+                      :icon="'mdi-fingerprint'"
+                      :default-selection="'thumbprint'"
+                      :get-file-from-dialog="onFileChanged"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    xl="3"
+                    lg="6"
+                    md="12"
+                    class="pa-0"
+                  >
+                    <FileUploadDialog
+                      :icon="'mdi-file-upload'"
+                      :get-file-from-dialog="onFileChanged"
+                    />
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    xl="3"
+                    lg="6"
+                    md="12"
+                    class="pa-0"
+                  >
+                    <div class="file-button-container">
                       <v-btn
-                        v-bind="attrs"
-                        v-on="on"
-                        icon
+                        small
+                        :color="$vuetify.theme.dark ? '' : 'grey lighten-2'"
+                        style="cursor: pointer"
+                        class="mr-1"
                       >
-                        <v-icon>mdi-printer</v-icon>
+                        <v-menu bottom>
+                          <template #activator="{ on, attrs }">
+                            <v-btn
+                              v-bind="attrs"
+                              v-on="on"
+                              icon
+                              small
+                            >
+                              <v-icon>mdi-printer</v-icon>
+                            </v-btn>
+                          </template>
+                          <v-list
+                            align="left"
+                            justify="left"
+                          >
+                            <v-list-item
+                              @click="printPdf('printApplicationApi')"
+                            >
+                              <v-list-item-title
+                                >Print Application</v-list-item-title
+                              >
+                            </v-list-item>
+                            <v-list-item
+                              @click="printPdf('printOfficialLicenseApi')"
+                            >
+                              <v-list-item-title
+                                >Print Official License</v-list-item-title
+                              >
+                            </v-list-item>
+                            <v-list-item
+                              @click="printPdf('printUnofficialLicenseApi')"
+                            >
+                              <v-list-item-title
+                                >Print Unofficial License</v-list-item-title
+                              >
+                            </v-list-item>
+                          </v-list>
+                        </v-menu>
                       </v-btn>
-                    </template>
-                    <v-list
-                      align="left"
-                      justify="left"
-                    >
-                      <v-list-item @click="printPdf('printApplicationApi')">
-                        <v-list-item-title>Print Application</v-list-item-title>
-                      </v-list-item>
-                      <v-list-item @click="printPdf('printOfficialLicenseApi')">
-                        <v-list-item-title
-                          >Print Official License</v-list-item-title
-                        >
-                      </v-list-item>
-                      <v-list-item
-                        @click="printPdf('printUnofficialLicenseApi')"
-                      >
-                        <v-list-item-title
-                          >Print Unofficial License</v-list-item-title
-                        >
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-btn>
+                    </div>
+                  </v-col>
+                </v-row>
               </div>
             </div>
-            <div>
+            <div class="ml-7">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
+                id="user-photo"
+                :src="
+                  state.userPhoto
+                    ? state.userPhoto
+                    : 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+                "
                 alt="unk"
                 height="100"
-                width="200"
+                width="100"
               />
             </div>
           </div>
@@ -376,6 +402,7 @@
 </template>
 <script setup lang="ts">
 import DateTimePicker from '@core-admin/components/appointment/DateTimePicker.vue';
+import FileUploadDialog from '@core-admin/components/dialogs/FileUploadDialog.vue';
 import Receipt from '@core-admin/components/receipt/Receipt.vue';
 import Schedule from '@core-admin/components/appointment/Schedule.vue';
 import VueHtml2pdf from 'vue-html2pdf';
@@ -384,7 +411,7 @@ import { useDocumentsStore } from '@core-admin/stores/documentsStore';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { useQuery } from '@tanstack/vue-query';
 import { useRoute } from 'vue-router/composables';
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 
 const state = reactive({
   isSelecting: false,
@@ -394,6 +421,7 @@ const state = reactive({
   multiLine: false,
   snackbar: false,
   text: `Invalid file type provided.`,
+  userPhoto: '',
 });
 
 const dialog = ref(false);
@@ -403,44 +431,42 @@ const route = useRoute();
 const permitStore = usePermitsStore();
 const documentsStore = useDocumentsStore();
 
-const picUploader = ref(null);
-const signatureUploader = ref(null);
-
 const allowedExtension = ['.png', '.jpeg', 'jpg'];
 
 const { isLoading } = useQuery(['permitDetail', route.params.orderId], () =>
   permitStore.getPermitDetailApi(route.params.orderId)
 );
 
+onMounted(() => {
+  permitStore.getPermitDetailApi(route.params.orderId).then(() => {
+    documentsStore.getApplicationDocumentApi('portrait').then(res => {
+      state.userPhoto = res;
+    });
+  });
+});
+
 function generateReceipt() {
   html2Pdf.value.generatePdf();
 }
 
-function handleFileImport(uploader) {
-  state.isSelecting = true;
-  window.addEventListener('focus', () => {
-    state.isSelecting = false;
-  });
+function onFileChanged(e: File, target: string) {
+  if (allowedExtension.some(ext => e.name.toLowerCase().endsWith(ext))) {
+    if (target === 'protrait') {
+      const reader = new FileReader();
 
-  if (uploader === 'signature') {
-    signatureUploader.value.click();
-  } else {
-    picUploader.value.click();
-  }
-}
+      reader.onload = event => {
+        let img = document.getElementById('user-photo');
 
-function onInputClick(e) {
-  e.target.value = '';
-}
+        img.setAttribute('src', event.target.result.toString());
+        img?.setAttribute('width', '100');
+        img?.setAttribute('height', '100');
+      };
 
-function onFileChanged(e, target) {
-  if (
-    allowedExtension.some(ext =>
-      e.target.files[0].name.toLowerCase().endsWith(ext)
-    )
-  ) {
+      reader.readAsDataURL(e);
+    }
+
     documentsStore
-      .setUserApplicationFile(e.target.files[0], target)
+      .setUserApplicationFile(e, target)
       .then(() => {
         state.text = 'Successfully uploaded file.';
         state.snackbar = true;
@@ -510,12 +536,25 @@ const appointmentTime = computed(
   flex-direction: column;
   justify-content: space-around;
   height: 100px;
-  width: 50%;
+  width: 60%;
   padding: 3px;
+}
+
+.button-inner {
+  display: flex;
+  justify-content: space-around;
+  margin-right: 1.5em;
 }
 
 .card-1-text {
   display: flex;
   width: 100%;
+}
+
+.file-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px 0;
 }
 </style>
