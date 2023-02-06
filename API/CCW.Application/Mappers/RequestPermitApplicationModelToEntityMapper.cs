@@ -1,4 +1,4 @@
-﻿using CCW.Application.Entities;
+using CCW.Application.Entities;
 using CCW.Application.Models;
 
 namespace CCW.Application.Mappers;
@@ -40,7 +40,7 @@ public class RequestPermitApplicationModelToEntityMapper : IMapper<bool, PermitA
     private string GetGeneratedTime()
     {
         var result = DateTime.Now.ToString("yy") + DateTime.Now.ToString("MM") + DateTime.Now.ToString("dd")
-                     + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm");
+                     + DateTime.Now.ToString("HH") + DateTime.Now.ToString("mm") + DateTime.Now.ToString("ss");
 
         return result;
     }
