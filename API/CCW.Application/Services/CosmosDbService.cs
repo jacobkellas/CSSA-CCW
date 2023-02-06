@@ -373,7 +373,7 @@ public class CosmosDbService : ICosmosDbService
         await _container.PatchItemAsync<PermitApplication>(
             application.Id.ToString(),
             new PartitionKey(application.UserId),
-            patches.ToArray(),
+            patches,
             null,
             cancellationToken
         );
