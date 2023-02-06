@@ -1,4 +1,4 @@
-﻿using CCW.Application.Entities;
+using CCW.Application.Entities;
 using Microsoft.Azure.Cosmos;
 using Newtonsoft.Json;
 using System;
@@ -343,6 +343,9 @@ public class CosmosDbService : ICosmosDbService
 
     public async Task UpdateUserApplicationAsync(PermitApplication application, CancellationToken cancellationToken)
     {
+        List<PatchOperation> patches = new List<PatchOperation>(3);
+        patches.Add(PatchOperation.Set("/Application", application.Application));
+
         var modelS = JsonConvert.SerializeObject(application.History[0]);
         var model = JsonConvert.DeserializeObject<History>(modelS);
         var history = new History
@@ -351,26 +354,26 @@ public class CosmosDbService : ICosmosDbService
             Change = model.Change,
             ChangeDateTimeUtc = model.ChangeDateTimeUtc,
         };
+        patches.Add(PatchOperation.Add("/History/-", history));
 
-        var modelSPayment = JsonConvert.SerializeObject(application.PaymentHistory[0]);
-        var modelPayment = JsonConvert.DeserializeObject<PaymentHistory>(modelSPayment);
-        var paymentHistory = new PaymentHistory
+        if (null != application.PaymentHistory && application.PaymentHistory.Length > 0)
         {
-            Amount = modelPayment.Amount,
-            RecordedBy = modelPayment.RecordedBy,
-            PaymentDateTimeUtc = modelPayment.PaymentDateTimeUtc,
-            Comments = modelPayment.Comments,
-        };
+            var modelSPayment = JsonConvert.SerializeObject(application.PaymentHistory[0]);
+            var modelPayment = JsonConvert.DeserializeObject<PaymentHistory>(modelSPayment);
+            var paymentHistory = new PaymentHistory
+            {
+                Amount = modelPayment.Amount,
+                RecordedBy = modelPayment.RecordedBy,
+                PaymentDateTimeUtc = modelPayment.PaymentDateTimeUtc,
+                Comments = modelPayment.Comments,
+            };
+            patches.Add(PatchOperation.Add("/PaymentHistory/-", paymentHistory));
+        }
 
         await _container.PatchItemAsync<PermitApplication>(
             application.Id.ToString(),
             new PartitionKey(application.UserId),
-            new[]
-            {
-                    PatchOperation.Set("/Application", application.Application),
-                    PatchOperation.Add("/PaymentHistory/-", paymentHistory),
-                    PatchOperation.Add("/History/-", history)
-            },
+            patches.ToArray(),
             null,
             cancellationToken
         );

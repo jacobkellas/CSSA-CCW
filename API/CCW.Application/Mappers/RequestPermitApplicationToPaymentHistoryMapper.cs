@@ -1,4 +1,4 @@
-﻿using CCW.Application.Entities;
+using CCW.Application.Entities;
 using CCW.Application.Models;
 
 namespace CCW.Application.Mappers;
@@ -9,7 +9,7 @@ public class RequestPermitApplicationToPaymentHistoryMapper : IMapper<PermitAppl
     {
         if (source.PaymentHistory != null)
         {
-            int count = source.History.Length;
+            int count = source.PaymentHistory.Length;
             var newItem = new PaymentHistory[count];
             for (int i = 0; i < count; i++)
             {
