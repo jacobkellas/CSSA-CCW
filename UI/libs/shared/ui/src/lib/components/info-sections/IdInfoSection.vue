@@ -71,8 +71,8 @@
 </template>
 
 <script setup lang="ts">
-import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { IdType } from '@shared-utils/types/defaultTypes';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
 import { useRouter } from 'vue-router/composables';
 
 interface IIdInfoSectionProps {
@@ -87,11 +87,11 @@ const applicationStore = useCompleteApplicationStore();
 function handleEditRequest() {
   applicationStore.completeApplication.application.currentStep = 2;
   router.push({
-  path: '/form',
-  query: {
-    applicationId: applicationStore.completeApplication.id,
-    isComplete: applicationStore.completeApplication.application.isComplete
-  }
+    path: '/form',
+    query: {
+      applicationId: applicationStore.completeApplication.id,
+      isComplete: applicationStore.completeApplication.application.isComplete,
+    },
   });
 }
 </script>
