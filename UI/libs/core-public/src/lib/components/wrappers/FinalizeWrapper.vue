@@ -160,6 +160,22 @@
           <div class="info-section">
             <WeaponInfoSection :weapons="state.completeApplication.weapons" />
           </div>
+
+          <div class="info-section">
+            <ApplicationTypeInfoSection />
+          </div>
+
+          <div class="info-section">
+            <FileUploadInfoSection />
+          </div>
+
+          <div class="info-section">
+          <!-- Qualifying Quest type -->
+          </div>
+
+          <div class="info-section">
+          <!-- Signature type -->
+          </div>
         </v-card-text>
       </v-card>
     </v-container>
@@ -181,11 +197,11 @@ import SpouseAddressInfoSection from '@shared-ui/components/info-sections/Spouse
 import SpouseInfoSection from '@shared-ui/components/info-sections/SpouseInfoSection.vue';
 import WeaponInfoSection from '@shared-ui/components/info-sections/WeaponsInfoSection.vue';
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
-import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
 import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router/composables';
+import ApplicationTypeInfoSection from "@shared-ui/components/info-sections/ApplicationTypeInfoSection.vue";
+import FileUploadInfoSection from "@shared-ui/components/info-sections/FileUploadInfoSection.vue";
 
-const currentInfoStore = useCurrentInfoSection();
 const applicationStore = useCompleteApplicationStore();
 
 const route = useRoute();

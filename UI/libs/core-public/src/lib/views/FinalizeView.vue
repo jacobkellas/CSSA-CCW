@@ -243,10 +243,6 @@ const updateMutation = useMutation({
   },
 });
 
-function handleSelection(target: number) {
-  currentInfoSectionStore.setCurrentInfoSection(target);
-}
-
 async function handleSubmit() {
   completeApplicationStore.completeApplication.application.isComplete = true;
   completeApplicationStore.completeApplication.application.status = 2;
@@ -265,6 +261,7 @@ function toggleAppointmentComplete() {
     state.appointmentsLoaded = false;
   });
 }
+
 </script>
 
 <style lang="scss" scoped>

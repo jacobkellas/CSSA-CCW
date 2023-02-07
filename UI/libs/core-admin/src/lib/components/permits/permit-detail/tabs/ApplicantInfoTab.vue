@@ -349,11 +349,18 @@
           outlined
         />
       </v-col>
-    </v-row>
+   <v-snackbar
+    :value="state.error"
+    :timeout="3000"
+    bottom
+    color="error"
+    outlined
+  >
+    {{ $t('Failed to retrive SSN')}}
+  </v-snackbar>   </v-row>
   </v-card>
 </template>
 <script setup lang="ts">
-import { ssnRuleSet } from '@shared-ui/rule-sets/ruleSets';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
 import { reactive } from 'vue';
 import { useMutation } from '@tanstack/vue-query';
@@ -361,17 +368,18 @@ import { useMutation } from '@tanstack/vue-query';
 const permitStore = usePermitsStore();
 const state = reactive({
   ssn: '',
+  error: false,
 });
 
 const ssnMutation = useMutation({
+  //@ts-ignore
   mutationFn: () => {
     permitStore.getPermitSsn(permitStore.getPermitDetail.userId).then(res => {
-      window.console.log(res);
       state.ssn = res;
     });
   },
   onError: () => {
-    //TODO: create snackbar
+    state.error = true;
   },
 });
 
