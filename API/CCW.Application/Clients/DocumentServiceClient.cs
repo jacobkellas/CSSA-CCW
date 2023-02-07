@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Policy;
+using System.Text.Json;
 
 namespace CCW.Application.Clients;
 
@@ -90,12 +91,25 @@ public class DocumentServiceClient : IDocumentServiceClient
 
     public async Task<HttpResponseMessage> SaveOfficialLicensePdfAsync(IFormFile fileToUpload, string saveAsFileName, CancellationToken cancellationToken)
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, uploadApplicantUri + saveAsFileName);
+          var request = new HttpRequestMessage(HttpMethod.Post, uploadApplicantUri + saveAsFileName);
 
-        var result = await _httpClient.SendAsync(request, cancellationToken);
-        result.EnsureSuccessStatusCode();
+        var multiContent = new MultipartFormDataContent();
 
-        return result;
+        var streamContent = new StreamContent(fileToUpload.OpenReadStream());
+        streamContent.Headers.Add("Content-Type", "application/octet-stream");
+        streamContent.Headers.Add("Content-Disposition", $"form-data; name=\"file1\"; filename=\"{saveAsFileName}\"");
+
+        var fileContent = new ByteArrayContent(await streamContent.ReadAsByteArrayAsync());
+        fileContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/pdf");
+
+        multiContent.Add(streamContent, "file", saveAsFileName);
+
+        HttpResponseMessage response = await _httpClient.PostAsync(uploadApplicantUri + saveAsFileName, multiContent);
+        response.EnsureSuccessStatusCode();
+
+        var content2 = await response.Content.ReadAsStringAsync();
+
+        return response;
     }
 
     public async Task<HttpResponseMessage> SaveUnofficialLicensePdfAsync(IFormFile fileToUpload, string saveAsFileName, CancellationToken cancellationToken)
