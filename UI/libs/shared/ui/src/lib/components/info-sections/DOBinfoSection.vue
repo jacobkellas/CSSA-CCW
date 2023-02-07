@@ -5,6 +5,16 @@
       class="sub-header font-weight-bold text-left mb-5"
     >
       {{ $t('Birth Information: ') }}
+      <template #actions>
+        <v-btn
+          icon
+          @click="handleEditRequest"
+        >
+          <v-icon :color="$vuetify.theme.dark ? 'info' : 'info'">
+            mdi-square-edit-outline
+          </v-icon>
+        </v-btn>
+      </template>
     </v-banner>
 
     <v-row>
@@ -101,6 +111,8 @@
 
 <script setup lang="ts">
 import { DOBType } from '@shared-utils/types/defaultTypes';
+import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
+import { useRouter } from 'vue-router/composables';
 
 interface IDOBInfoSectionProps {
   // eslint-disable-next-line vue/prop-name-casing
@@ -109,6 +121,20 @@ interface IDOBInfoSectionProps {
 }
 
 const props = defineProps<IDOBInfoSectionProps>();
+
+const applicationStore = useCompleteApplicationStore();
+const router = useRouter();
+
+function handleEditRequest() {
+  applicationStore.completeApplication.application.currentStep = 2;
+  router.push({
+    path: '/form',
+    query: {
+      applicationId: applicationStore.completeApplication.id,
+      isComplete: applicationStore.completeApplication.application.isComplete,
+    },
+  });
+}
 </script>
 
 <style lang="scss" scoped>

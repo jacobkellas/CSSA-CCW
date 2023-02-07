@@ -85,12 +85,12 @@
                 :key="index"
                 @click="
                   permitStore.getPermitDetail.application.applicationType =
-                    item;
+                    item.value;
                   updateApplicationStatus();
                 "
               >
                 <v-list-item-title>
-                  {{ item }}
+                  {{ item.name }}
                 </v-list-item-title>
               </v-list-item>
             </v-list>

@@ -166,7 +166,7 @@
           </div>
 
           <div class="info-section">
-          <!-- File upload type -->
+            <FileUploadInfoSection />
           </div>
 
           <div class="info-section">
@@ -200,6 +200,7 @@ import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplicati
 import { onMounted, reactive } from 'vue';
 import { useRoute } from 'vue-router/composables';
 import ApplicationTypeInfoSection from "@shared-ui/components/info-sections/ApplicationTypeInfoSection.vue";
+import FileUploadInfoSection from "@shared-ui/components/info-sections/FileUploadInfoSection.vue";
 
 const applicationStore = useCompleteApplicationStore();
 
