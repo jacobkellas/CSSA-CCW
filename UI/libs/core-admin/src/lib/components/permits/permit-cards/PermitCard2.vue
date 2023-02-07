@@ -457,7 +457,7 @@ function onFileChanged(e: File, target: string) {
       reader.onload = event => {
         let img = document.getElementById('user-photo');
 
-        img.setAttribute('src', event.target.result.toString());
+        img?.setAttribute('src', event.target.result);
         img?.setAttribute('width', '100');
         img?.setAttribute('height', '100');
       };

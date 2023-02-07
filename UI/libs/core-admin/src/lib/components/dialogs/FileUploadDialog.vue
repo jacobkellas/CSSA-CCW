@@ -66,19 +66,15 @@
     </v-dialog>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { adminFileTypes } from '@shared-utils/lists/defaultConstants';
 import { reactive } from 'vue';
-
 interface FileUploadDialogProps {
   icon: string;
   defaultSelection?: string;
   getFileFromDialog: (file, target) => void;
 }
-
 const props = defineProps<FileUploadDialogProps>();
-
 const state = reactive({
   dialog: false,
   fileType: props.defaultSelection ? `${props.defaultSelection}` : '',
