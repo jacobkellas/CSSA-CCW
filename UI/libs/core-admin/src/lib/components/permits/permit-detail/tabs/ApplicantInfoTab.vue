@@ -349,15 +349,16 @@
           outlined
         />
       </v-col>
-   <v-snackbar
-    :value="state.error"
-    :timeout="3000"
-    bottom
-    color="error"
-    outlined
-  >
-    {{ $t('Failed to retrive SSN')}}
-  </v-snackbar>   </v-row>
+      <v-snackbar
+        :value="state.error"
+        :timeout="3000"
+        bottom
+        color="error"
+        outlined
+      >
+        {{ $t('Failed to retrive SSN') }}
+      </v-snackbar>
+    </v-row>
   </v-card>
 </template>
 <script setup lang="ts">
@@ -372,7 +373,6 @@ const state = reactive({
 });
 
 const ssnMutation = useMutation({
-  //@ts-ignore
   mutationFn: () => {
     permitStore.getPermitSsn(permitStore.getPermitDetail.userId).then(res => {
       state.ssn = res;
