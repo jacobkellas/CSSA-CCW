@@ -349,9 +349,7 @@
           outlined
         />
       </v-col>
-    </v-row>
-  </v-card>
-  <v-snackbar
+   <v-snackbar
     :value="state.error"
     :timeout="3000"
     bottom
@@ -359,7 +357,8 @@
     outlined
   >
     {{ $t('Failed to retrive SSN')}}
-  </v-snackbar>
+  </v-snackbar>   </v-row>
+  </v-card>
 </template>
 <script setup lang="ts">
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
