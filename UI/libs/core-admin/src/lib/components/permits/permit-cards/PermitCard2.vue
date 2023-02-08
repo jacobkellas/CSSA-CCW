@@ -484,7 +484,9 @@ function onFileChanged(e: File, target: string) {
 function printPdf(type) {
   permitStore[type]().then(res => {
     if (res.headers['content-type'] === 'application/pdf') {
-      let file = new Blob([res.data], { type: 'application/pdf' });
+      let file = new Blob([res.data], {
+        type: 'application/pdf',
+      });
       // eslint-disable-next-line node/no-unsupported-features/node-builtins
       let fileURL = URL.createObjectURL(file);
 

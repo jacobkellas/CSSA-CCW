@@ -93,9 +93,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { usePermitsStore } from '@core-admin/stores/permitsStore';
-import { format, parse } from 'date-fns';
+import { defineComponent } from "vue";
+import { usePermitsStore } from "@core-admin/stores/permitsStore";
+import { format, parse } from "date-fns";
+
 const DEFAULT_DATE = '';
 const DEFAULT_TIME = '00:00:00';
 const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd';
@@ -229,7 +230,7 @@ export default defineComponent({
       this.$emit('input', this.selectedDatetime);
       this.permitStore.getPermitDetail.application.appointmentDateTime =
         new Date(this.selectedDatetime).toISOString();
-      this.permitStore.updatePermitDetailApi();
+      this.permitStore.updatePermitDetailApi('Rescheduled Appointment');
     },
     clearHandler() {
       this.resetPicker();

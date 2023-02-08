@@ -1,4 +1,4 @@
-import { VuetifyThemeItem } from 'vuetify/types/services/theme';
+import { VuetifyThemeItem } from "vuetify/types/services/theme";
 
 export type QuestionsConfig = {
   one: number;
@@ -141,6 +141,8 @@ export type LicenseType = {
   permitNumber: string;
   issuingCounty: string;
   expirationDate: string;
+  issueDate: string;
+
 };
 
 export type QualifyingQuestions = {

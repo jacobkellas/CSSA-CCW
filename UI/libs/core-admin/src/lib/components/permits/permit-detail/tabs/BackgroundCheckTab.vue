@@ -32,6 +32,7 @@
                             permitStore.getPermitDetail.application.backgroudCheck[
                               item.value
                             ].value = true;
+                            changed = item.label;
                             updatePermitDetails();
                           "
                           v-bind="attrs"
@@ -192,15 +193,13 @@
   </v-list>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
-import { usePermitsStore } from '@core-admin/stores/permitsStore';
-import { useQuery } from '@tanstack/vue-query';
-import {
-  formatDate,
-  formatTime,
-} from '@shared-utils/formatters/defaultFormatters';
+import { ref } from "vue";
+import { usePermitsStore } from "@core-admin/stores/permitsStore";
+import { useQuery } from "@tanstack/vue-query";
+import { formatDate, formatTime } from "@shared-utils/formatters/defaultFormatters";
 
 const permitStore = usePermitsStore();
+const changed = ref('');
 
 const checklistItems = [
   {
@@ -287,7 +286,7 @@ const checklistItems = [
 
 const { refetch: updatePermitDetails } = useQuery(
   ['setPermitsDetails'],
-  permitStore.updatePermitDetailApi,
+  () => permitStore.updatePermitDetailApi(`Updated ${changed.value}`),
   {
     enabled: false,
   }
