@@ -428,6 +428,9 @@ export type BrandType = {
   convenienceFee: number;
   paymentURL: string;
   refreshTokenTime: number;
+  ori: string;
+  courthouse: string;
+  localAgencyNumber: string;
   cost: CostType;
 };
 
