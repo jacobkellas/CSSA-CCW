@@ -14,35 +14,38 @@ export const useBrandStore = defineStore('BrandStore', () => {
   const app = getCurrentInstance();
 
   const brand = ref<BrandType>({
-    agencyName: '',
-    agencyAddress: '',
-    agencyTelephone: '',
-    agencyFax: '',
-    agencyEmail: '',
-    agencySheriffName: '',
-    chiefOfPoliceName: '',
+    agencyName: 'XXXXXXXXXXX',
+    agencyAddress: 'XXXXXXXXXXX',
+    agencyTelephone: 'XXXXXXXXXXX',
+    agencyFax: 'XXXXXXXXXXX',
+    agencyEmail: 'XXXXXXXXXXX',
+    agencySheriffName: 'XXXXXXXXXXX',
+    chiefOfPoliceName: 'XXXXXXXXXXX',
     primaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.primary,
     secondaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.secondary,
     liveScanURL:
       'https://www.ocsheriff.gov/sites/ocsd/files/2022-08/Livescan_Form_Fillable.pdf',
     cost: {
       new: {
-        standard: '',
-        judicial: '',
-        reserve: '',
+        standard: 20,
+        judicial: 20,
+        reserve: 20,
       },
       renew: {
-        standard: '',
-        judicial: '',
-        reserve: '',
+        standard: 77,
+        judicial: 99,
+        reserve: 121,
       },
-      issuance: '',
-      modify: '',
-      creditFee: '',
-      convenienceFee: '',
+      issuance: 1,
+      modify: 10,
+      creditFee: 3,
+      convenienceFee: 5,
     },
-    paymentURL: 'https://buy.stripe.com/test_fZe00ugG5guI0YU4gg',
+    paymentURL: 'https://www.google.com',
     refreshTokenTime: 30,
+    ori: 'XXXXXXXXXXX',
+    courthouse: 'XXXXXXXXXXX',
+    localAgencyNumber: 'XXXXXXXXXXX',
   });
 
   const documents = ref<AgencyDocumentsType>({
