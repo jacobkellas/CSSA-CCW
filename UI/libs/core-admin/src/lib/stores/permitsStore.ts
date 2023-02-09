@@ -1,23 +1,17 @@
-import Endpoints from '@shared-ui/api/endpoints';
-import { PermitsType } from '@core-admin/types';
-import axios from 'axios';
-import { defineStore } from 'pinia';
-import {
-  CompleteApplication,
-  HistoryType,
-} from '@shared-utils/types/defaultTypes';
-import { computed, ref } from 'vue';
-import {
-  defaultAllPermitsState,
-  defaultPermitState,
-} from '@shared-utils/lists/defaultConstants';
+import Endpoints from "@shared-ui/api/endpoints";
+import { PermitsType } from "@core-admin/types";
+import axios from "axios";
+import { defineStore } from "pinia";
+import { CompleteApplication, HistoryType } from "@shared-utils/types/defaultTypes";
+import { computed, ref } from "vue";
+import { defaultAllPermitsState, defaultPermitState } from "@shared-utils/lists/defaultConstants";
 import {
   formatAddress,
   formatDate,
   formatInitials,
   formatName,
   formatTime,
-} from '@shared-utils/formatters/defaultFormatters';
+} from "@shared-utils/formatters/defaultFormatters";
 
 export const usePermitsStore = defineStore('PermitsStore', () => {
   const permits = ref<Array<PermitsType>>([defaultAllPermitsState]);
@@ -121,7 +115,7 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       `${Endpoints.GET_PRINT_APPLICATION_ENDPOINT}?applicationId=${applicationId}`
     );
 
-    return res?.data || {};
+    return res || {};
   }
 
   async function printOfficialLicenseApi() {
@@ -131,7 +125,7 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       `${Endpoints.GET_PRINT_OFFICIAL_LICENSE_ENDPOINT}?applicationId=${applicationId}`
     );
 
-    return res?.data || {};
+    return res || {};
   }
 
   async function printUnofficialLicenseApi() {
@@ -141,13 +135,18 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       `${Endpoints.GET_PRINT_UNOFFICIAL_LICENSE_ENDPOINT}?applicationId=${applicationId}`
     );
 
-    return res?.data || {};
+    return res || {};
   }
 
-  async function updatePermitDetailApi() {
+  async function updatePermitDetailApi(item: string) {
     const res = await axios.put(
       Endpoints.PUT_UPDATE_AGENCY_PERMIT_ENDPOINT,
-      permitDetail.value
+      permitDetail.value,
+      {
+        params: {
+          updatedSection: item,
+        },
+      }
     );
 
     if (res?.data) setPermitDetail(res.data);

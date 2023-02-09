@@ -1,7 +1,4 @@
-import {
-  CompleteApplication,
-  UploadedDocType,
-} from '@shared-utils/types/defaultTypes';
+import { CompleteApplication, UploadedDocType } from "@shared-utils/types/defaultTypes";
 
 export const adminFileTypes = [
   {name: 'Portrait', value: 'portrait'},
@@ -101,6 +98,7 @@ export const defaultPermitState: CompleteApplication = {
       permitNumber: '',
       issuingCounty: '',
       expirationDate: '',
+      issueDate: '',
     },
     mailingAddress: {
       addressLine1: '',

@@ -1,9 +1,9 @@
-import Endpoints from '@shared-ui/api/endpoints';
-import { UploadedDocType } from '@shared-utils/types/defaultTypes';
-import axios from 'axios';
-import { defineStore } from 'pinia';
-import { usePermitsStore } from './permitsStore';
-import { computed, ref } from 'vue';
+import Endpoints from "@shared-ui/api/endpoints";
+import { UploadedDocType } from "@shared-utils/types/defaultTypes";
+import axios from "axios";
+import { defineStore } from "pinia";
+import { usePermitsStore } from "./permitsStore";
+import { computed, ref } from "vue";
 
 export const useDocumentsStore = defineStore('DocumentsStore', () => {
   const documents = ref([]);
@@ -35,7 +35,9 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
   async function setUserApplicationFile(data, target) {
     const formData = new FormData();
 
-    const newFileName = `${permitStore.permitDetail.userId}_${target}`;
+    const userName = `${permitStore.permitDetail.application.personalInfo.lastName}_${permitStore.permitDetail.application.personalInfo.firstName}`;
+
+    const newFileName = `${permitStore.permitDetail.userId}_${userName}_${target}`;
 
     formData.append('fileToUpload', data);
     const res = await axios.post(
@@ -46,14 +48,28 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
     if (res) {
       const uploadDoc: UploadedDocType = {
         documentType: target,
-        name: `${newFileName}`,
+        name: `${userName}_${target}`,
         uploadedBy: permitStore.permitDetail.application.userEmail,
         uploadedDateTimeUtc: new Date(Date.now()).toISOString(),
       };
 
       permitStore.permitDetail.application.uploadedDocuments.push(uploadDoc);
-      permitStore.updatePermitDetailApi();
+      permitStore.updatePermitDetailApi(
+        `Uploaded new ${uploadDoc.documentType}`
+      );
     }
+  }
+
+  async function getUserDocument(name) {
+    const res = await axios
+      .get(
+        `${Endpoints.GET_DOCUMENT_AGENCY_FILE_ENDPOINT}?applicantFileName=${permitStore.permitDetail.userId}_${name}`
+      )
+      .catch(err => {
+        window.console.warn(err);
+      });
+
+    return res;
   }
 
   return {
@@ -63,5 +79,6 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
     getApplicationDocumentApi,
     formatName,
     setUserApplicationFile,
+    getUserDocument,
   };
 });

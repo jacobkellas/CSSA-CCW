@@ -86,7 +86,7 @@
                 @click="
                   permitStore.getPermitDetail.application.applicationType =
                     item.value;
-                  updateApplicationStatus();
+                  updateApplicationStatus(`Type to ${item.value}`);
                 "
               >
                 <v-list-item-title>
@@ -119,12 +119,13 @@
           class="text-right mr-4 mt-2 pl-12 pt-3"
         >
           <v-select
+            ref="select"
             :items="appStatus"
             label="Application Status"
             item-text="value"
             item-value="id"
             v-model="permitStore.getPermitDetail.application.status"
-            @change="updateApplicationStatus()"
+            @change="$event => updateApplicationStatus($event)"
             dense
             outlined
           ></v-select>
@@ -134,11 +135,11 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import { capitalize } from '@shared-utils/formatters/defaultFormatters';
-import { computed } from 'vue';
-import { usePermitsStore } from '@core-admin/stores/permitsStore';
-import { useQuery } from '@tanstack/vue-query';
-import { useRoute } from 'vue-router/composables';
+import { capitalize } from "@shared-utils/formatters/defaultFormatters";
+import { computed, reactive } from "vue";
+import { usePermitsStore } from "@core-admin/stores/permitsStore";
+import { useQuery } from "@tanstack/vue-query";
+import { useRoute } from "vue-router/composables";
 
 const route = useRoute();
 const permitStore = usePermitsStore();
@@ -157,6 +158,10 @@ const items = [
   { name: 'Duplicate Reserve', value: 'duplicate-reserve' },
   { name: 'Duplicate Judicial', value: 'duplicate-judicial' },
 ];
+
+const state = reactive({
+  update: '',
+});
 
 const appStatus = [
   {
@@ -227,7 +232,7 @@ const { isLoading } = useQuery(['permitDetail', route.params.orderId], () =>
 
 const { refetch: updatePermitDetails } = useQuery(
   ['setPermitsDetails'],
-  permitStore.updatePermitDetailApi,
+  () => permitStore.updatePermitDetailApi(state.update),
   {
     enabled: false,
   }
@@ -244,7 +249,55 @@ const submittedDate = computed(
     }) || ''
 );
 
-function updateApplicationStatus() {
+function updateApplicationStatus(update: number) {
+  switch (update) {
+    case 0:
+      state.update = 'Changed status to None';
+      break;
+    case 1:
+      state.update = 'Changed status to Started';
+      break;
+    case 2:
+      state.update = 'Changed status to Submitted';
+      break;
+    case 3:
+      state.update = 'Changed status to In Progress';
+      break;
+    case 4:
+      state.update = 'Changed status to Cancelled';
+      break;
+    case 5:
+      state.update = 'Changed status to Returned';
+      break;
+    case 6:
+      state.update = 'Changed status to Complete';
+      break;
+    case 7:
+      state.update = 'Changed status to Refund';
+      break;
+    case 8:
+      state.update = 'Changed status to Suspend';
+      break;
+    case 9:
+      state.update = 'Changed status to Revoke';
+      break;
+    case 10:
+      state.update = 'Changed status to Pending Final Payment';
+      break;
+    case 11:
+      state.update = 'Changed status to Approved';
+      break;
+    case 12:
+      state.update = 'Changed status to Permit Sent';
+      break;
+    case 13:
+      state.update = 'Changed status to Withdraw';
+      break;
+    default:
+      state.update = `Changed ${update}`;
+      break;
+  }
+
   updatePermitDetails();
 }
 </script>
