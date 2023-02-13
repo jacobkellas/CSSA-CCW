@@ -29,8 +29,8 @@
             <canvas
               id="signatureCanvas"
               ref="signatureCanvas"
-              height="25"
-              width="200"
+              height="100"
+              width="300"
             ></canvas>
             <v-btn
               text
@@ -209,7 +209,7 @@ function handleCanvasClear() {
   //@ts-ignore
   const ctx = canvas?.getContext('2d');
 
-  ctx?.clearRect(0, 0, 200, 25);
+  ctx?.clearRect(0, 0, 300, 100);
   state.signature = '';
 }
 
@@ -225,11 +225,11 @@ function handleCanvasUpdate() {
 
   if (ctx) {
     ctx.font = '30px Brush Script MT';
-    ctx.clearRect(0, 0, 200, 25);
+    ctx.clearRect(0, 0, 300, 100);
     app?.proxy.$vuetify.theme.dark
       ? (ctx.fillStyle = '#111')
       : (ctx.fillStyle = '#FFF');
-    ctx.fillRect(0, 0, 200, 25);
+    ctx.fillRect(0, 0, 300, 100);
     app?.proxy.$vuetify.theme.dark
       ? (ctx.fillStyle = '#FFF')
       : (ctx.fillStyle = '#111');
