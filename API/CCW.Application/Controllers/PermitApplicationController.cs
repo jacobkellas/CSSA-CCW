@@ -892,7 +892,8 @@ public class PermitApplicationController : ControllerBase
             docFileAll.Close();
 
             byte[] byteInfo = outStream.ToArray();
-            outStream.Write(byteInfo, 0, byteInfo.Length);
+            outStream.WriteAsync(byteInfo, 0, byteInfo.Length);
+            //outStream.Write(byteInfo, 0, byteInfo.Length);
             outStream.Position = 0;
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
