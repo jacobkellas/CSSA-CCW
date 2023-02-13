@@ -892,11 +892,14 @@ public class PermitApplicationController : ControllerBase
             docFileAll.Close();
 
             byte[] byteInfo = outStream.ToArray();
-            outStream.WriteAsync(byteInfo, 0, byteInfo.Length);
+            var pdfString = Convert.ToBase64String(byteInfo);
+
+            await outStream.WriteAsync(byteInfo);
             //outStream.Write(byteInfo, 0, byteInfo.Length);
             outStream.Position = 0;
+            //Stream blob = new StreamWriter();
 
-            FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
+            //FileStreamResult fileStreamResult = new FileStreamResult(blob, "application/pdf");
 
             //var fileName = userApplication.Id + "_" +
             //               userApplication.Application.PersonalInfo?.LastName + "_" +
@@ -912,7 +915,9 @@ public class PermitApplicationController : ControllerBase
             //Uncomment this to return the file as a download
             //fileStreamResult.FileDownloadName = "Output.pdf";
 
-            return fileStreamResult;
+            //return fileStreamResult;
+            return Content("data:application/pdf;base64," + pdfString);
+
         }
         catch (Exception e)
         {
