@@ -550,7 +550,7 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printApplication")]
     [HttpPut]
-    public async Task<IActionResult> PrintApplication(string applicationId, bool sholdAddDownloadFilename = false)
+    public async Task<IActionResult> PrintApplication(string applicationId, bool shouldAddDownloadFilename = false)
     {
         try
         {
@@ -921,7 +921,7 @@ public class PermitApplicationController : ControllerBase
             FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
 
             //Uncomment this to return the file as a download
-            if (sholdAddDownloadFilename)
+            if (shouldAddDownloadFilename)
             {
                 fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
@@ -940,7 +940,7 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printOfficialLicense")]
     [HttpPut]
-    public async Task<IActionResult> PrintOfficialLicense(string applicationId, bool sholdAddDownloadFilename = false)
+    public async Task<IActionResult> PrintOfficialLicense(string applicationId, bool shouldAddDownloadFilename = false)
     {
         try
         {
@@ -1128,7 +1128,7 @@ public class PermitApplicationController : ControllerBase
             FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
 
             //Uncomment this to return the file as a download
-            if (sholdAddDownloadFilename)
+            if (shouldAddDownloadFilename)
             {
                 fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
@@ -1148,7 +1148,7 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printUnofficialLicense")]
     [HttpPut]
-    public async Task<IActionResult> PrintUnofficialLicense(string applicationId, bool sholdAddDownloadFilename = false)
+    public async Task<IActionResult> PrintUnofficialLicense(string applicationId, bool shouldAddDownloadFilename = false)
     {
         try
         {
@@ -1255,7 +1255,7 @@ public class PermitApplicationController : ControllerBase
             FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
 
             //Uncomment this to return the file as a download
-            if (sholdAddDownloadFilename)
+            if (shouldAddDownloadFilename)
             {
                 fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
