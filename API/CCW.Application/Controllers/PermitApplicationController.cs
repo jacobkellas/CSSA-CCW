@@ -11,6 +11,9 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using iText.Layout;
 using CCW.Application.Enum;
+using iText.IO.Image;
+using iText.Layout.Element;
+using iText.Layout.Borders;
 
 namespace CCW.Application.Controllers;
 
@@ -566,14 +569,23 @@ public class PermitApplicationController : ControllerBase
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
             MemoryStream outStream = new MemoryStream();
 
+            //MemoryStream tempStream = new MemoryStream();
+            //streamToReadFrom.CopyTo(tempStream);
+
+            //FileStream fs = new FileStream(@"C:\\temp\ApplicationTemplate.pdf", FileMode.OpenOrCreate);
+            //fs.Write(tempStream.ToArray());
+            //fs.Flush();
+            //fs.Close();
+            //fs.Dispose();
+
             PdfReader pdfReader = new PdfReader(streamToReadFrom);
             PdfWriter pdfWriter = new PdfWriter(outStream);
-            PdfDocument doc = new PdfDocument(pdfReader, pdfWriter);
+            PdfDocument pdfDoc = new PdfDocument(pdfReader, pdfWriter);
 
-            Document docFileAll = new Document(doc);
+            Document mainDocument = new Document(pdfDoc);
             pdfWriter.SetCloseStream(false);
 
-            PdfAcroForm form = PdfAcroForm.GetAcroForm(doc, true);
+            PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
             form.SetGenerateAppearance(true);
 
             var issueDate = string.Empty;
@@ -888,8 +900,11 @@ public class PermitApplicationController : ControllerBase
 
             form.GetField("form1[0].#subform[9].GOOD_CAUSE_STATEMENT[0]").SetValue(userApplication.Application.QualifyingQuestions?.QuestionSeventeenExp ?? "", true);
 
-            await streamToReadFrom.DisposeAsync();
-            docFileAll.Close();
+            // await streamToReadFrom.DisposeAsync();
+            mainDocument.Close();
+
+            Response.Headers.Append("Content-Disposition", "inline");
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
             byte[] byteInfo = outStream.GetBuffer();
 
@@ -897,7 +912,7 @@ public class PermitApplicationController : ControllerBase
             outStream.Write(byteInfo, 0, byteInfo.Length);
             outStream.Position = 0;
 
-            FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
+            FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
 
             //var fileName = userApplication.Id + "_" +
             //               userApplication.Application.PersonalInfo?.LastName + "_" +
@@ -907,16 +922,10 @@ public class PermitApplicationController : ControllerBase
 
             //var saveFileResult = await _documentHttpClient.SaveApplicationPdfAsync(fileToSave, fileName, cancellationToken: default);
 
-            Response.Headers.Append("Content-Disposition", "inline");
-            Response.Headers.Add("X-Content-Type-Options", "nosniff");
-
             //Uncomment this to return the file as a download
-            fileStreamResult.FileDownloadName = "Output.pdf";
-            
-            
+            //fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "-Application.pdf";
 
-            return fileStreamResult;
-
+            return fileStreamResultDownload;
         }
         catch (Exception e)
         {
@@ -1063,55 +1072,24 @@ public class PermitApplicationController : ControllerBase
             var adminResponse = await _adminHttpClient.GetAgencyProfileSettingsAsync(cancellationToken: default);
             var response = await _documentHttpClient.GetOfficialLicenseTemplateAsync(cancellationToken: default);
 
-            //var thumbprintFileName = userApplication.UserId + "_" +
-            //                         userApplication.Application.PersonalInfo?.LastName + "_" +
-            //                         userApplication.Application.PersonalInfo?.FirstName + "_" + "Thumbprint";
-
-            var thumbprintFileName = "Signature";
-
-            var thumbprintResponse = await _documentHttpClient.GetApplicantImageAsync(thumbprintFileName, cancellationToken: default);
-            byte[] myBinary = new byte[thumbprintResponse.Content.ReadAsStreamAsync().Result.Length];
-            string datauri = string.Empty;
-            //using (var memoryStream = new MemoryStream())
-            //{
-            //    await thumbprintResponse.Content.ReadAsStreamAsync().Result.DownloadToStreamAsync(memoryStream);
-            //    var bytes = memoryStream.ToArray();
-            var b64String = Convert.ToBase64String(myBinary);
-            datauri = "data:image/png;base64," + b64String;
-            //}
-
-
-            //paramFile.Read(myBinary, 0, (int)paramFile.Length);
-            //  Image imageData = new Image(ImageDataFactory.Create(myBinary)); 
-
-            var signatureFileName = userApplication.UserId + "_" +
-                                    userApplication.Application.PersonalInfo?.LastName + "_" +
-                                    userApplication.Application.PersonalInfo?.FirstName + "_" + "Signature";
-            //  var signatureResponse = await _documentHttpClient.GetApplicantImageAsync(signatureFileName, cancellationToken: default);
-
-            //var photoFileName = userApplication.UserId + "_" +
-            //                    userApplication.Application.PersonalInfo?.LastName + "_" +
-            //                    userApplication.Application.PersonalInfo?.FirstName + "_" + "Photo";
-            var photoFileName = userApplication.UserId + "_" +
-                                userApplication.Application.PersonalInfo?.LastName + "_" +
-                                userApplication.Application.PersonalInfo?.FirstName + "_" + "Photo";
-            //var photoResponse = await _documentHttpClient.GetApplicantImageAsync(photoFileName, cancellationToken: default);
-
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
             MemoryStream outStream = new MemoryStream();
 
             PdfReader pdfReader = new PdfReader(streamToReadFrom);
             PdfWriter pdfWriter = new PdfWriter(outStream);
-            PdfDocument doc = new PdfDocument(pdfReader, pdfWriter);
+            PdfDocument pdfDoc = new PdfDocument(pdfReader, pdfWriter);
 
-            Document docFileAll = new Document(doc);
+            Document mainDocument = new Document(pdfDoc);
             pdfWriter.SetCloseStream(false);
 
-            PdfAcroForm form = PdfAcroForm.GetAcroForm(doc, true);
+            await AddApplicantSignatureImage(userApplication, mainDocument);
+            await AddApplicantThumbprintImage(userApplication, mainDocument);
+            await AddApplicantPhotoImage(userApplication, mainDocument);
+
+            PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfDoc, true);
             form.SetGenerateAppearance(true);
 
             form.GetField("AGENCY").SetValue(adminResponse.AgencyName ?? "", true);
-            form.GetField("APPLICANT_THUMBPRINT").SetValue(datauri, true);
             form.GetField("ORI").SetValue(adminResponse.ORI ?? "", true);
             form.GetField("CII_NUMBER").SetValue("CII Number Here", true);
             form.GetField("LOCAL_AGENCY_NUMBER").SetValue(adminResponse.LocalAgencyNumber ?? "", true);
@@ -1246,16 +1224,16 @@ public class PermitApplicationController : ControllerBase
             //  form.GetField("APPLICANT_SIGNATURE").SetValue(signature, true);
             form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue("Ofelia Test", true);
 
-            docFileAll.Close();
+            mainDocument.Close();
 
-            ////FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
-            ////var fileName = userApplication.Id + "_" +
-            ////               userApplication.Application.PersonalInfo?.LastName + "_" +
-            ////               userApplication.Application.PersonalInfo?.FirstName + "_Printed_Application";
+            FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
+            var fileName = userApplication.Id + "_" +
+                           userApplication.Application.PersonalInfo?.LastName + "_" +
+                           userApplication.Application.PersonalInfo?.FirstName + "_Printed_Application";
 
-            ////FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
+            FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
-            ////var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
+            var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
 
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
@@ -1267,7 +1245,7 @@ public class PermitApplicationController : ControllerBase
             FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
 
             //Uncomment this to return the file as a download
-            //fileStreamResultDownload.FileDownloadName = "Output.pdf";
+            // fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + fileName + ".pdf";
 
             return fileStreamResultDownload;
 
@@ -1279,6 +1257,148 @@ public class PermitApplicationController : ControllerBase
 
             throw new Exception("An error occur while trying to print official license.");
         }
+    }
+
+    private async Task AddApplicantSignatureImage(PermitApplication? userApplication, Document mainDocument)
+    {
+        var signatureFileName = BuildApplicantDocumentName(userApplication, "signature");
+        var imageData = await GetImageDataForPdf(signatureFileName);
+
+        var leftPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 180,
+            Height = 30,
+            Left = 110,
+            Bottom = 460
+        };
+
+        var leftImage = GetImageForImageData(imageData, leftPosition);
+        mainDocument.Add(leftImage);
+
+        var rightPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 180,
+            Height = 30,
+            Left = 415,
+            Bottom = 460
+        };
+
+        var rightImage = GetImageForImageData(imageData, rightPosition);
+        mainDocument.Add(rightImage);
+    }
+
+    private async Task AddApplicantThumbprintImage(PermitApplication? userApplication, Document mainDocument)
+    {
+        var signatureFileName = BuildApplicantDocumentName(userApplication, "thumbprint");
+        var imageData = await GetImageDataForPdf(signatureFileName);
+
+        var leftPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 60,
+            Height = 70,
+            Left = 10,
+            Bottom = 450
+        };
+
+        var leftImage = GetImageForImageData(imageData, leftPosition);
+        mainDocument.Add(leftImage);
+
+        var rightPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 60,
+            Height = 70,
+            Left = 340,
+            Bottom = 450
+        };
+
+        var rightImage = GetImageForImageData(imageData, rightPosition);
+        mainDocument.Add(rightImage);
+    }
+
+    private async Task AddApplicantPhotoImage(PermitApplication? userApplication, Document mainDocument)
+    {
+        var signatureFileName = BuildApplicantDocumentName(userApplication, "portrait");
+        var imageData = await GetImageDataForPdf(signatureFileName);
+
+        var leftPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 70,
+            Height = 95,
+            Left = 160,
+            Bottom = 370
+        };
+
+        var leftImage = GetImageForImageData(imageData, leftPosition);
+        mainDocument.Add(leftImage);
+
+        var rightPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 70,
+            Height = 95,
+            Left = 440,
+            Bottom = 385
+        };
+
+        var rightImage = GetImageForImageData(imageData, rightPosition);
+        mainDocument.Add(rightImage);
+    }
+
+
+    private async Task<ImageData> GetImageDataForPdf(string fileName)
+    {
+        var documentResponse = await _documentHttpClient.GetApplicantImageAsync(fileName, cancellationToken: default);
+        var streamContent = await documentResponse.Content.ReadAsStreamAsync();
+
+        using (var memoryStream = new MemoryStream())
+        {
+            await streamContent.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+            var sr = new StreamReader(memoryStream);
+            string imageUri = sr.ReadToEnd();
+            string imageBase64Data = imageUri.Remove(0, 22);
+            byte[] imageBinaryData = Convert.FromBase64String(imageBase64Data);
+            
+            //FileStream fs = new FileStream(@"C:\\temp\pdf-test.png", FileMode.OpenOrCreate);
+            //fs.Write(imageBinaryData);
+            //fs.Flush();
+            //fs.Close();
+            //fs.Dispose();
+
+            return ImageDataFactory.Create(imageBinaryData);
+        }
+
+        throw new FileNotFoundException("File not found: " + fileName);
+    }
+
+    private Image GetImageForImageData(ImageData imageData, ImagePosition imagePosition)
+    {
+        return new Image(imageData)
+            .ScaleToFit(imagePosition.Width, imagePosition.Height)
+            .SetFixedPosition(imagePosition.Page, imagePosition.Left, imagePosition.Bottom);
+    }
+
+    private string BuildApplicantDocumentName(PermitApplication? userApplication, string documentName)
+    {
+        string fullFilename = userApplication.UserId + "_" +
+            userApplication.Application.PersonalInfo?.LastName + "_" +
+            userApplication.Application.PersonalInfo?.FirstName + "_" + documentName;
+
+        return fullFilename;
+    }
+
+    private sealed class ImagePosition
+    {
+        public int Page { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int Left { get; set; }
+        public int Bottom { get; set; }
     }
 
     private void GetUserId(out string? userId)

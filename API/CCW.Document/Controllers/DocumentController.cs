@@ -12,7 +12,7 @@ public class DocumentController : ControllerBase
     private IAzureStorage _azureStorage;
     private readonly ILogger<DocumentController> _logger;
 
-    private string[] _allowedFileTypes = new[] { "image/jpeg", "image/png", "application/pdf" };
+    private string[] _allowedFileTypes = new[] { "image/jpeg", "image/png", "application/pdf", "multipart/form-data" };
 
     public DocumentController(
         IAzureStorage azureStorage,
