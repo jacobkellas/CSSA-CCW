@@ -17,6 +17,7 @@ using iText.Layout.Borders;
 
 namespace CCW.Application.Controllers;
 
+
 [Route(Constants.AppName + "/v1/[controller]")]
 [ApiController]
 public class PermitApplicationController : ControllerBase
@@ -127,7 +128,7 @@ public class PermitApplicationController : ControllerBase
         {
             var originalException = e.GetBaseException();
             _logger.LogError(originalException, originalException.Message);
-            throw new Exception("An error occur while trying to retrieve user ssn.");
+            throw new Exception("An error occur while trying to retrieve user permit application.");
         }
     }
 
@@ -146,7 +147,7 @@ public class PermitApplicationController : ControllerBase
         {
             var originalException = e.GetBaseException();
             _logger.LogError(originalException, originalException.Message);
-            throw new Exception("An error occur while trying to retrieve user ssn.");
+            throw new Exception("An error occur while trying to retrieve user permit application.");
         }
     }
 
@@ -318,11 +319,6 @@ public class PermitApplicationController : ControllerBase
                 return NotFound("Permit application cannot be found or application already submitted.");
             }
 
-            if (existingApplication.Application.IsComplete)
-            {
-                return NotFound("Permit application submitted changes cannot be made.");
-            }
-
             if (application.Application.PersonalInfo.Ssn.ToLower().Contains("xxx"))
             {
                 application.Application.PersonalInfo.Ssn = existingApplication.Application.PersonalInfo.Ssn;
@@ -399,7 +395,7 @@ public class PermitApplicationController : ControllerBase
         {
             var originalException = e.GetBaseException();
             _logger.LogError(originalException, originalException.Message);
-            throw new Exception("An error occur while trying to update user permit application.");
+            throw new Exception("An error occur while trying to update permit application.");
         }
     }
 
@@ -546,7 +542,7 @@ public class PermitApplicationController : ControllerBase
             var originalException = e.GetBaseException();
             _logger.LogError(originalException, originalException.Message);
 
-            throw new Exception("An error occur while trying to delete user permit application.");
+            throw new Exception("An error occur while trying to delete permit application.");
         }
     }
 
@@ -554,7 +550,7 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printApplication")]
     [HttpPut]
-    public async Task<IActionResult> PrintApplication(string applicationId)
+    public async Task<IActionResult> PrintApplication(string applicationId, bool sholdAddDownloadFilename = false)
     {
         try
         {
@@ -567,12 +563,7 @@ public class PermitApplicationController : ControllerBase
                 return NotFound("Permit application cannot be found.");
             }
 
-            if (string.IsNullOrEmpty(userApplication.Application.PersonalInfo?.LastName)
-                && string.IsNullOrEmpty(userApplication.Application.PersonalInfo?.FirstName))
-            {
-                return NotFound("Applicant personal information incomplete.");
-            }
-
+            var template = "ApplicationTemplate";
             var response = await _documentHttpClient.GetApplicationTemplateAsync(cancellationToken: default);
 
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
@@ -657,6 +648,7 @@ public class PermitApplicationController : ControllerBase
                     .SetValue("true", true);
             }
 
+
             if (userApplication.Application.ApplicationType != null && userApplication.Application.ApplicationType.Contains("renew"))
             {
                 form.GetField("form1[0].#subform[2].RENEWAL_APP[0]")
@@ -722,8 +714,8 @@ public class PermitApplicationController : ControllerBase
                 .SetValue(userApplication.Application.QualifyingQuestions.QuestionTwo.Value.ToString(), true);
 
             //don't have the data
-            form.GetField("form1[0].#subform[2].AGENCY_NAME[0]").SetValue("", true);
-            form.GetField("form1[0].#subform[2].DATE[1]").SetValue("", true);
+            //form.GetField("form1[0].#subform[2].AGENCY_NAME[0]").SetValue("", true);
+            //form.GetField("form1[0].#subform[2].DATE[1]").SetValue("", true);
 
             form.GetField("form1[0].#subform[2].DENIAL_REASON[0]").SetValue(userApplication.Application.QualifyingQuestions?.QuestionTwoExp ?? "", true);
 
@@ -911,28 +903,30 @@ public class PermitApplicationController : ControllerBase
             // await streamToReadFrom.DisposeAsync();
             mainDocument.Close();
 
+            FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
+
+            var fileName = BuildApplicantDocumentName(userApplication, "_Application");
+
+            FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
+
+            var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
+
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-            byte[] byteInfo = outStream.GetBuffer();
-
-            await outStream.WriteAsync(byteInfo);
+            byte[] byteInfo = outStream.ToArray();
             outStream.Write(byteInfo, 0, byteInfo.Length);
             outStream.Position = 0;
 
             FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
 
-            var fileName = userApplication.Id + "_" +
-                           userApplication.Application.PersonalInfo?.LastName + "_" +
-                           userApplication.Application.PersonalInfo?.FirstName + "_Printed_Application";
-
-            FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
-            await _documentHttpClient.SaveApplicationPdfAsync(fileToSave, fileName, cancellationToken: default);
-
             //Uncomment this to return the file as a download
-            //fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + "-Application.pdf";
+            if (sholdAddDownloadFilename)
+            {
+                fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
+            }
 
-            return fileStreamResultDownload;
+            return fileStreamResult;
         }
         catch (Exception e)
         {
@@ -943,132 +937,10 @@ public class PermitApplicationController : ControllerBase
         }
     }
 
-
-    [Authorize(Policy = "AADUsers")]
-    [Route("printUnofficialLicense")]
-    [HttpPut]
-    public async Task<IActionResult> PrintUnofficialLicense(string applicationId)
-    {
-        try
-        {
-            var userApplication = await _cosmosDbService.GetUserApplicationAsync(applicationId, cancellationToken: default);
-
-            if (userApplication == null)
-            {
-                return NotFound("Permit application cannot be found.");
-            }
-
-            var template = "UnofficialPermitTemplate";
-            var response = await _documentHttpClient.GetApplicationTemplateAsync(cancellationToken: default);
-
-            Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
-            MemoryStream outStream = new MemoryStream();
-
-            PdfReader pdfReader = new PdfReader(streamToReadFrom);
-            PdfWriter pdfWriter = new PdfWriter(outStream);
-            PdfDocument doc = new PdfDocument(pdfReader, pdfWriter);
-
-            Document docFileAll = new Document(doc);
-            pdfWriter.SetCloseStream(false);
-
-            PdfAcroForm form = PdfAcroForm.GetAcroForm(doc, true);
-            form.SetGenerateAppearance(true);
-
-            //TODO: Get value from admin settings but waiting to know who will provide the value in cosmos
-            form.GetField("REPLACE_PASS:~data.officeuse.CIINUMBERstatus").SetValue("", true);
-
-            //TODO: Where are restrictions?
-            //form.GetField("REPLACE_PASS:~data.officeuse.RESTRICTIONSstatus").SetValue("", true);
-
-            var issueDate = DateTime.Now.ToString("MM/dd/yyyy");
-            var expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
-            form.GetField("ISSUE_DATE").SetValue(issueDate, true);
-            form.GetField("EXPIRATION_DATE").SetValue(expDate, true);
-
-            //Name
-            var fullName = userApplication.Application.PersonalInfo?.LastName + " " +
-                           userApplication.Application.PersonalInfo?.FirstName + " " +
-                           userApplication.Application.PersonalInfo?.MiddleName;
-            form.GetField("FULL_NAME").SetValue(fullName, true);
-
-            //Personal Info
-            form.GetField("order.data.application.weight").SetValue(userApplication.Application.PhysicalAppearance?.Weight + "lbs" ?? "", true);
-            form.GetField("order.data.application.eyeColor").SetValue(userApplication.Application.PhysicalAppearance?.EyeColor ?? "", true);
-            form.GetField("order.data.application.hairColor").SetValue(userApplication.Application.PhysicalAppearance?.HairColor ?? "", true);
-
-            var height = (userApplication.Application.PhysicalAppearance?.HeightFeet + "ft " +
-                          userApplication.Application.PhysicalAppearance?.HeightInch + "in");
-            form.GetField("${(data_application_heightFeet!\"\")}' ${(data_application_heightInches!\"\")}").SetValue(height, true);
-
-            //Current Address
-            string? residenceAddress = string.IsNullOrEmpty(userApplication.Application.CurrentAddress?.AddressLine1) ? "" :
-                                        userApplication.Application.CurrentAddress?.AddressLine1 + " " +
-                                        userApplication.Application.CurrentAddress?.AddressLine2 + ",\n" +
-                                        userApplication.Application.CurrentAddress?.City + ", " +
-                                        GetStateByName(userApplication.Application.CurrentAddress?.State) + " " +
-                                        userApplication.Application.CurrentAddress?.Zip;
-            form.GetField("${(data_application_currentaddressline1!\"\")} ${(data_application_currentaddressline2!\"\")}").SetValue(residenceAddress, true);
-
-            //Work
-            string workAddress = string.IsNullOrEmpty(userApplication.Application.WorkInformation?.EmployerAddressLine1) ? "" :
-                                userApplication.Application.WorkInformation?.EmployerAddressLine1 + " " +
-                                userApplication.Application.WorkInformation?.EmployerAddressLine2 + ", " +
-                                userApplication.Application.WorkInformation?.EmployerCity + ", " +
-                                GetStateByName(userApplication.Application.WorkInformation?.EmployerState) + " " +
-                                userApplication.Application.WorkInformation?.EmployerZip;
-            form.GetField("${(data_application_workaddressline1!\"\")} ${(data_application_workaddressline2!\"\")}").SetValue(workAddress, true);
-            form.GetField("order.data.application.workoccupationfield").SetValue(userApplication.Application.WorkInformation?.Occupation ?? "", true);
-
-            //DOB
-            form.GetField("DATE~order.data.application.bpbobvalue").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
-
-            //Weapons
-            var weapons = string.Empty;
-
-            //only the first 3 weapons add a for loop
-            form.GetField("order.data.weapons[make]").SetValue(userApplication.Application.Weapons[0].Make ?? "", true);
-            form.GetField("order.data.weapons[serial]").SetValue(userApplication.Application.Weapons[0].SerialNumber ?? "", true);
-            form.GetField("order.data.weapons[caliber]").SetValue(userApplication.Application.Weapons[0].Caliber ?? "", true);
-            form.GetField("order.data.weapons[model]").SetValue(userApplication.Application.Weapons[0].Model ?? "", true);
-
-            docFileAll.Close();
-
-            byte[] byteInfo = outStream.ToArray();
-            outStream.Write(byteInfo, 0, byteInfo.Length);
-            outStream.Position = 0;
-
-            FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
-
-            var fileName = userApplication.Id + "_" +
-                           userApplication.Application.PersonalInfo?.LastName + "_" +
-                           userApplication.Application.PersonalInfo?.FirstName + "_Printed_UnofficialPermit";
-
-            FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
-
-            var saveFileResult = await _documentHttpClient.SaveApplicationPdfAsync(fileToSave, fileName, cancellationToken: default);
-
-            Response.Headers.Append("Content-Disposition", "inline");
-            Response.Headers.Add("X-Content-Type-Options", "nosniff");
-
-            //Uncomment this to return the file as a download
-            //fileStreamResult.FileDownloadName = "Output.pdf";
-
-            return fileStreamResult;
-        }
-        catch (Exception e)
-        {
-            var originalException = e.GetBaseException();
-            _logger.LogError(originalException, originalException.Message);
-
-            throw new Exception("An error occur while trying to print unofficial license.");
-        }
-    }
-
-
     [Authorize(Policy = "AADUsers")]
     [Route("printOfficialLicense")]
     [HttpPut]
-    public async Task<IActionResult> PrintOfficialLicense(string applicationId)
+    public async Task<IActionResult> PrintOfficialLicense(string applicationId, bool sholdAddDownloadFilename = false)
     {
         try
         {
@@ -1081,50 +953,8 @@ public class PermitApplicationController : ControllerBase
                 return NotFound("Permit application cannot be found.");
             }
 
-            if (string.IsNullOrEmpty(userApplication.Application.PersonalInfo?.LastName) 
-                && string.IsNullOrEmpty(userApplication.Application.PersonalInfo?.FirstName))
-            {
-                return NotFound("Applicant personal information incomplete.");
-            }
-
             var adminResponse = await _adminHttpClient.GetAgencyProfileSettingsAsync(cancellationToken: default);
             var response = await _documentHttpClient.GetOfficialLicenseTemplateAsync(cancellationToken: default);
-
-            var sheriffSignResponse = await _documentHttpClient.GetSheriffSignatureAsync(cancellationToken: default);
-            byte[] sheriffSignBinary = new byte[sheriffSignResponse.Content.ReadAsStreamAsync().Result.Length];
-            string sheriffSignDataUri = string.Empty;
-            var sheriffSignb64String = Convert.ToBase64String(sheriffSignBinary);
-            sheriffSignDataUri = "data:image/jpeg;base64," + sheriffSignb64String;
-
-            var thumbprintFileName = userApplication.UserId + "_" +
-                                     userApplication.Application.PersonalInfo?.LastName + "_" +
-                                     userApplication.Application.PersonalInfo?.FirstName + "_" + "Thumbprint";
-
-            var thumbprintResponse = await _documentHttpClient.GetApplicantImageAsync(thumbprintFileName, cancellationToken: default);
-            byte[] thumbprintBinary = new byte[thumbprintResponse.Content.ReadAsStreamAsync().Result.Length];
-            string thumbprintDataUri = string.Empty;
-            var b64String = Convert.ToBase64String(thumbprintBinary);
-            thumbprintDataUri = "data:image/jpeg;base64," + b64String;
-
-            var signatureFileName = userApplication.UserId + "_" +
-                                    userApplication.Application.PersonalInfo?.LastName + "_" +
-                                    userApplication.Application.PersonalInfo?.FirstName + "_" + "Signature";
-
-            var signatureResponse = await _documentHttpClient.GetApplicantImageAsync(signatureFileName, cancellationToken: default);
-            byte[] signatureBinary = new byte[signatureResponse.Content.ReadAsStreamAsync().Result.Length];
-            string signatureDataUri = string.Empty;
-            var signb64String = Convert.ToBase64String(signatureBinary);
-            signatureDataUri = "data:image/jpeg;base64," + signb64String;
-
-            var photoFileName = userApplication.UserId + "_" +
-                                userApplication.Application.PersonalInfo?.LastName + "_" +
-                                userApplication.Application.PersonalInfo?.FirstName + "_" + "Photo";
-
-            var photoResponse = await _documentHttpClient.GetApplicantImageAsync(photoFileName, cancellationToken: default);
-            byte[] photoBinary = new byte[photoResponse.Content.ReadAsStreamAsync().Result.Length];
-            string photoDataUri = string.Empty;
-            var photob64String = Convert.ToBase64String(photoBinary);
-            photoDataUri = "data:image/jpeg;base64," + photob64String;
 
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
             MemoryStream outStream = new MemoryStream();
@@ -1147,7 +977,7 @@ public class PermitApplicationController : ControllerBase
             form.GetField("ORI").SetValue(adminResponse.ORI ?? "", true);
             form.GetField("CII_NUMBER").SetValue("CII Number Here", true);
             form.GetField("LOCAL_AGENCY_NUMBER").SetValue(adminResponse.LocalAgencyNumber ?? "", true);
-            form.GetField("SIGNATURE_IMAGE_BOX_af_image").SetValue(sheriffSignDataUri, true);
+            form.GetField("SIGNATURE_IMAGE_BOX_af_image").SetValue("Sheriff sign", true);
 
             var issueDate = string.Empty;
             var expDate = string.Empty;
@@ -1260,6 +1090,7 @@ public class PermitApplicationController : ControllerBase
 
                 for (int i = 0; i < totalWeapons; i++)
                 {
+                    // var subIdValue = (i > 0) ? ".i" : "";
                     form.GetField("WEAPON_MAKE")
                         .SetValue(userApplication.Application.Weapons[i].Make, true);
                     form.GetField("WEAPON_SERIAL")
@@ -1269,45 +1100,40 @@ public class PermitApplicationController : ControllerBase
                     form.GetField("WEAPON_MODEL")
                         .SetValue(userApplication.Application.Weapons[i].SerialNumber, true);
                 }
-
-                if (userApplication.Application.Weapons.Length > 3)
-                {
-                    //I don't have the rest of the fields to loop thru
-                    form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue(userApplication.Application.Weapons[3].Make, true);
-                    form.GetField("ADDITIONAL_WEAPON_MODEL").SetValue(userApplication.Application.Weapons[3].Model, true);
-                    form.GetField("ADDITIONAL_WEAPON_SERIAL").SetValue(userApplication.Application.Weapons[3].SerialNumber, true);
-                    form.GetField("ADDITIONAL_WEAPON_CALIBER").SetValue(userApplication.Application.Weapons[3].Caliber, true);
-                }
             }
 
-            //don't have the restrictions
-            form.GetField("RESTRICTIONS").SetValue("", true);
-            form.GetField("APPLICANT_THUMBPRINT").SetValue(thumbprintDataUri, true);
-            form.GetField("APPLICANT_SIGNATURE").SetValue(signatureDataUri, true);
-            form.GetField("APPLICANT_PHOTO").SetValue(photoDataUri, true);
+            //don't have restrictions
+            //form.GetField("RESTRICTIONS").SetValue("", true);
+            //  form.GetField("APPLICANT_THUMBPRINT").SetValue(thumbprint, true);
+            //  form.GetField("APPLICANT_SIGNATURE").SetValue(signature, true);
+            form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue("Ofelia Test", true);
 
             mainDocument.Close();
-            
-            byte[] byteInfo = outStream.ToArray();
-            outStream.Write(byteInfo, 0, byteInfo.Length);
-            outStream.Position = 0;
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
-            var fileName = userApplication.Id + "_" +
-                           userApplication.Application.PersonalInfo?.LastName + "_" +
-                           userApplication.Application.PersonalInfo?.FirstName + "_Printed_OfficialPermit";
+
+            var fileName = BuildApplicantDocumentName(userApplication, "_Official_License");
 
             FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
-            await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
+            var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
 
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-            ////Uncomment this to return the file as a download
-            fileStreamResult.FileDownloadName = "Output.pdf";
+            byte[] byteInfo = outStream.ToArray();
+            outStream.Write(byteInfo, 0, byteInfo.Length);
+            outStream.Position = 0;
 
-            return fileStreamResult;
+            FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
+
+            //Uncomment this to return the file as a download
+            if (sholdAddDownloadFilename)
+            {
+                fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
+            }
+
+            return fileStreamResultDownload;
 
         }
         catch (Exception e)
@@ -1318,6 +1144,133 @@ public class PermitApplicationController : ControllerBase
             throw new Exception("An error occur while trying to print official license.");
         }
     }
+
+    [Authorize(Policy = "AADUsers")]
+    [Route("printUnofficialLicense")]
+    [HttpPut]
+    public async Task<IActionResult> PrintUnofficialLicense(string applicationId, bool sholdAddDownloadFilename = false)
+    {
+        try
+        {
+            var userApplication = await _cosmosDbService.GetUserApplicationAsync(applicationId, cancellationToken: default);
+
+            if (userApplication == null)
+            {
+                return NotFound("Permit application cannot be found.");
+            }
+
+            var template = "UnofficialPermitTemplate";
+            var response = await _documentHttpClient.GetApplicationTemplateAsync(cancellationToken: default);
+
+            Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
+            MemoryStream outStream = new MemoryStream();
+
+            PdfReader pdfReader = new PdfReader(streamToReadFrom);
+            PdfWriter pdfWriter = new PdfWriter(outStream);
+            PdfDocument doc = new PdfDocument(pdfReader, pdfWriter);
+
+            Document docFileAll = new Document(doc);
+            pdfWriter.SetCloseStream(false);
+
+            PdfAcroForm form = PdfAcroForm.GetAcroForm(doc, true);
+            form.SetGenerateAppearance(true);
+
+            //TODO: Get value from admin settings but waiting to know who will provide the value in cosmos
+            form.GetField("REPLACE_PASS:~data.officeuse.CIINUMBERstatus").SetValue("", true);
+
+            //TODO: Where are restrictions?
+            //form.GetField("REPLACE_PASS:~data.officeuse.RESTRICTIONSstatus").SetValue("", true);
+
+            var issueDate = DateTime.Now.ToString("MM/dd/yyyy");
+            var expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
+            form.GetField("ISSUE_DATE").SetValue(issueDate, true);
+            form.GetField("EXPIRATION_DATE").SetValue(expDate, true);
+
+            //Name
+            var fullName = userApplication.Application.PersonalInfo?.LastName + " " +
+                           userApplication.Application.PersonalInfo?.FirstName + " " +
+                           userApplication.Application.PersonalInfo?.MiddleName;
+            form.GetField("FULL_NAME").SetValue(fullName, true);
+
+            //Personal Info
+            form.GetField("order.data.application.weight").SetValue(userApplication.Application.PhysicalAppearance?.Weight + "lbs" ?? "", true);
+            form.GetField("order.data.application.eyeColor").SetValue(userApplication.Application.PhysicalAppearance?.EyeColor ?? "", true);
+            form.GetField("order.data.application.hairColor").SetValue(userApplication.Application.PhysicalAppearance?.HairColor ?? "", true);
+
+            var height = (userApplication.Application.PhysicalAppearance?.HeightFeet + "ft " +
+                          userApplication.Application.PhysicalAppearance?.HeightInch + "in");
+            form.GetField("${(data_application_heightFeet!\"\")}' ${(data_application_heightInches!\"\")}").SetValue(height, true);
+
+            //Current Address
+            string? residenceAddress = string.IsNullOrEmpty(userApplication.Application.CurrentAddress?.AddressLine1) ? "" :
+                                        userApplication.Application.CurrentAddress?.AddressLine1 + " " +
+                                        userApplication.Application.CurrentAddress?.AddressLine2 + ",\n" +
+                                        userApplication.Application.CurrentAddress?.City + ", " +
+                                        GetStateByName(userApplication.Application.CurrentAddress?.State) + " " +
+                                        userApplication.Application.CurrentAddress?.Zip;
+            form.GetField("${(data_application_currentaddressline1!\"\")} ${(data_application_currentaddressline2!\"\")}").SetValue(residenceAddress, true);
+
+            //Work
+            string workAddress = string.IsNullOrEmpty(userApplication.Application.WorkInformation?.EmployerAddressLine1) ? "" :
+                                userApplication.Application.WorkInformation?.EmployerAddressLine1 + " " +
+                                userApplication.Application.WorkInformation?.EmployerAddressLine2 + ", " +
+                                userApplication.Application.WorkInformation?.EmployerCity + ", " +
+                                GetStateByName(userApplication.Application.WorkInformation?.EmployerState) + " " +
+                                userApplication.Application.WorkInformation?.EmployerZip;
+            form.GetField("${(data_application_workaddressline1!\"\")} ${(data_application_workaddressline2!\"\")}").SetValue(workAddress, true);
+            form.GetField("order.data.application.workoccupationfield").SetValue(userApplication.Application.WorkInformation?.Occupation ?? "", true);
+
+            //DOB
+            form.GetField("DATE~order.data.application.bpbobvalue").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
+
+            //Weapons
+            var weapons = string.Empty;
+
+            //only the first 3 weapons
+            foreach (var item in userApplication.Application.Weapons)
+            {
+                form.GetField("order.data.weapons[make]").SetValue(item.Make ?? "", true);
+                form.GetField("order.data.weapons[serial]").SetValue(item.SerialNumber ?? "", true);
+                form.GetField("order.data.weapons[caliber]").SetValue(item.Caliber ?? "", true);
+                form.GetField("order.data.weapons[model]").SetValue(item.Model ?? "", true);
+            }
+
+            docFileAll.Close();
+
+            FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
+
+            var fileName = BuildApplicantDocumentName(userApplication, "_Unofficial_License");
+
+            FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
+
+            var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
+
+            Response.Headers.Append("Content-Disposition", "inline");
+            Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+            byte[] byteInfo = outStream.ToArray();
+            outStream.Write(byteInfo, 0, byteInfo.Length);
+            outStream.Position = 0;
+
+            FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
+
+            //Uncomment this to return the file as a download
+            if (sholdAddDownloadFilename)
+            {
+                fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
+            }
+
+            return fileStreamResult;
+        }
+        catch (Exception e)
+        {
+            var originalException = e.GetBaseException();
+            _logger.LogError(originalException, originalException.Message);
+
+            throw new Exception("An error occur while trying to print unofficial license.");
+        }
+    }
+
 
     private async Task AddApplicantSignatureImage(PermitApplication? userApplication, Document mainDocument)
     {
@@ -1423,7 +1376,7 @@ public class PermitApplicationController : ControllerBase
             string imageUri = sr.ReadToEnd();
             string imageBase64Data = imageUri.Remove(0, 22);
             byte[] imageBinaryData = Convert.FromBase64String(imageBase64Data);
-            
+
             //FileStream fs = new FileStream(@"C:\\temp\pdf-test.png", FileMode.OpenOrCreate);
             //fs.Write(imageBinaryData);
             //fs.Flush();
@@ -1956,3 +1909,4 @@ public class PermitApplicationController : ControllerBase
 
         return expDate;
     }
+}
