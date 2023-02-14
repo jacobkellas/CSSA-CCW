@@ -30,7 +30,7 @@
               id="signatureCanvas"
               ref="signatureCanvas"
               height="100"
-              width="250"
+              width="300"
             ></canvas>
             <v-btn
               text
