@@ -905,7 +905,7 @@ public class PermitApplicationController : ControllerBase
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
 
-            var fileName = BuildApplicantDocumentName(userApplication, "_Application");
+            var fileName = BuildApplicantDocumentName(userApplication, "Application");
 
             FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
@@ -1112,7 +1112,7 @@ public class PermitApplicationController : ControllerBase
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
 
-            var fileName = BuildApplicantDocumentName(userApplication, "_Official_License");
+            var fileName = BuildApplicantDocumentName(userApplication, "Official_License");
 
             FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
@@ -1239,7 +1239,7 @@ public class PermitApplicationController : ControllerBase
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
 
-            var fileName = BuildApplicantDocumentName(userApplication, "_Unofficial_License");
+            var fileName = BuildApplicantDocumentName(userApplication, "Unofficial_License");
 
             FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
