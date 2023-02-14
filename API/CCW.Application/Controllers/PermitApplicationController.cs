@@ -1159,8 +1159,7 @@ public class PermitApplicationController : ControllerBase
                 return NotFound("Permit application cannot be found.");
             }
 
-            var template = "UnofficialPermitTemplate";
-            var response = await _documentHttpClient.GetApplicationTemplateAsync(cancellationToken: default);
+            var response = await _documentHttpClient.GetUnofficialLicenseTemplateAsync(cancellationToken: default);
 
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
             MemoryStream outStream = new MemoryStream();
@@ -1175,65 +1174,65 @@ public class PermitApplicationController : ControllerBase
             PdfAcroForm form = PdfAcroForm.GetAcroForm(doc, true);
             form.SetGenerateAppearance(true);
 
-            //TODO: Get value from admin settings but waiting to know who will provide the value in cosmos
-            form.GetField("REPLACE_PASS:~data.officeuse.CIINUMBERstatus").SetValue("", true);
+            ////TODO: Get value from admin settings but waiting to know who will provide the value in cosmos
+            //form.GetField("REPLACE_PASS:~data.officeuse.CIINUMBERstatus").SetValue("", true);
 
-            //TODO: Where are restrictions?
-            //form.GetField("REPLACE_PASS:~data.officeuse.RESTRICTIONSstatus").SetValue("", true);
+            ////TODO: Where are restrictions?
+            ////form.GetField("REPLACE_PASS:~data.officeuse.RESTRICTIONSstatus").SetValue("", true);
 
-            var issueDate = DateTime.Now.ToString("MM/dd/yyyy");
-            var expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
-            form.GetField("ISSUE_DATE").SetValue(issueDate, true);
-            form.GetField("EXPIRATION_DATE").SetValue(expDate, true);
+            //var issueDate = DateTime.Now.ToString("MM/dd/yyyy");
+            //var expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
+            //form.GetField("ISSUE_DATE").SetValue(issueDate, true);
+            //form.GetField("EXPIRATION_DATE").SetValue(expDate, true);
 
-            //Name
-            var fullName = userApplication.Application.PersonalInfo?.LastName + " " +
-                           userApplication.Application.PersonalInfo?.FirstName + " " +
-                           userApplication.Application.PersonalInfo?.MiddleName;
-            form.GetField("FULL_NAME").SetValue(fullName, true);
+            ////Name
+            //var fullName = userApplication.Application.PersonalInfo?.LastName + " " +
+            //               userApplication.Application.PersonalInfo?.FirstName + " " +
+            //               userApplication.Application.PersonalInfo?.MiddleName;
+            //form.GetField("FULL_NAME").SetValue(fullName, true);
 
-            //Personal Info
-            form.GetField("order.data.application.weight").SetValue(userApplication.Application.PhysicalAppearance?.Weight + "lbs" ?? "", true);
-            form.GetField("order.data.application.eyeColor").SetValue(userApplication.Application.PhysicalAppearance?.EyeColor ?? "", true);
-            form.GetField("order.data.application.hairColor").SetValue(userApplication.Application.PhysicalAppearance?.HairColor ?? "", true);
+            ////Personal Info
+            //form.GetField("order.data.application.weight").SetValue(userApplication.Application.PhysicalAppearance?.Weight + "lbs" ?? "", true);
+            //form.GetField("order.data.application.eyeColor").SetValue(userApplication.Application.PhysicalAppearance?.EyeColor ?? "", true);
+            //form.GetField("order.data.application.hairColor").SetValue(userApplication.Application.PhysicalAppearance?.HairColor ?? "", true);
 
-            var height = (userApplication.Application.PhysicalAppearance?.HeightFeet + "ft " +
-                          userApplication.Application.PhysicalAppearance?.HeightInch + "in");
-            form.GetField("${(data_application_heightFeet!\"\")}' ${(data_application_heightInches!\"\")}").SetValue(height, true);
+            //var height = (userApplication.Application.PhysicalAppearance?.HeightFeet + "ft " +
+            //              userApplication.Application.PhysicalAppearance?.HeightInch + "in");
+            //form.GetField("${(data_application_heightFeet!\"\")}' ${(data_application_heightInches!\"\")}").SetValue(height, true);
 
-            //Current Address
-            string? residenceAddress = string.IsNullOrEmpty(userApplication.Application.CurrentAddress?.AddressLine1) ? "" :
-                                        userApplication.Application.CurrentAddress?.AddressLine1 + " " +
-                                        userApplication.Application.CurrentAddress?.AddressLine2 + ",\n" +
-                                        userApplication.Application.CurrentAddress?.City + ", " +
-                                        GetStateByName(userApplication.Application.CurrentAddress?.State) + " " +
-                                        userApplication.Application.CurrentAddress?.Zip;
-            form.GetField("${(data_application_currentaddressline1!\"\")} ${(data_application_currentaddressline2!\"\")}").SetValue(residenceAddress, true);
+            ////Current Address
+            //string? residenceAddress = string.IsNullOrEmpty(userApplication.Application.CurrentAddress?.AddressLine1) ? "" :
+            //                            userApplication.Application.CurrentAddress?.AddressLine1 + " " +
+            //                            userApplication.Application.CurrentAddress?.AddressLine2 + ",\n" +
+            //                            userApplication.Application.CurrentAddress?.City + ", " +
+            //                            GetStateByName(userApplication.Application.CurrentAddress?.State) + " " +
+            //                            userApplication.Application.CurrentAddress?.Zip;
+            //form.GetField("${(data_application_currentaddressline1!\"\")} ${(data_application_currentaddressline2!\"\")}").SetValue(residenceAddress, true);
 
-            //Work
-            string workAddress = string.IsNullOrEmpty(userApplication.Application.WorkInformation?.EmployerAddressLine1) ? "" :
-                                userApplication.Application.WorkInformation?.EmployerAddressLine1 + " " +
-                                userApplication.Application.WorkInformation?.EmployerAddressLine2 + ", " +
-                                userApplication.Application.WorkInformation?.EmployerCity + ", " +
-                                GetStateByName(userApplication.Application.WorkInformation?.EmployerState) + " " +
-                                userApplication.Application.WorkInformation?.EmployerZip;
-            form.GetField("${(data_application_workaddressline1!\"\")} ${(data_application_workaddressline2!\"\")}").SetValue(workAddress, true);
-            form.GetField("order.data.application.workoccupationfield").SetValue(userApplication.Application.WorkInformation?.Occupation ?? "", true);
+            ////Work
+            //string workAddress = string.IsNullOrEmpty(userApplication.Application.WorkInformation?.EmployerAddressLine1) ? "" :
+            //                    userApplication.Application.WorkInformation?.EmployerAddressLine1 + " " +
+            //                    userApplication.Application.WorkInformation?.EmployerAddressLine2 + ", " +
+            //                    userApplication.Application.WorkInformation?.EmployerCity + ", " +
+            //                    GetStateByName(userApplication.Application.WorkInformation?.EmployerState) + " " +
+            //                    userApplication.Application.WorkInformation?.EmployerZip;
+            //form.GetField("${(data_application_workaddressline1!\"\")} ${(data_application_workaddressline2!\"\")}").SetValue(workAddress, true);
+            //form.GetField("order.data.application.workoccupationfield").SetValue(userApplication.Application.WorkInformation?.Occupation ?? "", true);
 
-            //DOB
-            form.GetField("DATE~order.data.application.bpbobvalue").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
+            ////DOB
+            //form.GetField("DATE~order.data.application.bpbobvalue").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
 
-            //Weapons
-            var weapons = string.Empty;
+            ////Weapons
+            //var weapons = string.Empty;
 
-            //only the first 3 weapons
-            foreach (var item in userApplication.Application.Weapons)
-            {
-                form.GetField("order.data.weapons[make]").SetValue(item.Make ?? "", true);
-                form.GetField("order.data.weapons[serial]").SetValue(item.SerialNumber ?? "", true);
-                form.GetField("order.data.weapons[caliber]").SetValue(item.Caliber ?? "", true);
-                form.GetField("order.data.weapons[model]").SetValue(item.Model ?? "", true);
-            }
+            ////only the first 3 weapons
+            //foreach (var item in userApplication.Application.Weapons)
+            //{
+            //    form.GetField("order.data.weapons[make]").SetValue(item.Make ?? "", true);
+            //    form.GetField("order.data.weapons[serial]").SetValue(item.SerialNumber ?? "", true);
+            //    form.GetField("order.data.weapons[caliber]").SetValue(item.Caliber ?? "", true);
+            //    form.GetField("order.data.weapons[model]").SetValue(item.Model ?? "", true);
+            //}
 
             docFileAll.Close();
 
