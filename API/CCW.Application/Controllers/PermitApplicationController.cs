@@ -550,8 +550,9 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printApplication")]
     [HttpPut]
-    public async Task<IActionResult> PrintApplication(string applicationId, bool shouldAddDownloadFilename = false)
+    public async Task<IActionResult> PrintApplication(bool shouldAddDownloadFilename = true) //string applicationId, 
     {
+        string applicationId = "612840e6-bf20-4e9a-8826-4580d1ca7543";
         try
         {
             GetAADUserName(out var userName);
@@ -1439,7 +1440,7 @@ public class PermitApplicationController : ControllerBase
 
     private static int CalculateAge(DateTime birthDate)
     {
-        var birthday = new DateTime(birthDate.Year, birthDate.Day, birthDate.Month);
+        var birthday = new DateTime(birthDate.Year, birthDate.Month, birthDate.Day);
         int age = (int)((DateTime.Now - birthday).TotalDays / 365.242199);
 
         return age;
