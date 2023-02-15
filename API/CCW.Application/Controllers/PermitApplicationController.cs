@@ -14,6 +14,7 @@ using CCW.Application.Enum;
 using iText.IO.Image;
 using iText.Layout.Element;
 using iText.Layout.Borders;
+using System.Net.Http;
 
 namespace CCW.Application.Controllers;
 
@@ -550,7 +551,7 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printApplication")]
     [HttpPut]
-    public async Task<IActionResult> PrintApplication(string applicationId, bool shouldAddDownloadFilename = true) 
+    public async Task<IActionResult> PrintApplication(string applicationId, bool shouldAddDownloadFilename = true)
     {
         try
         {
@@ -940,8 +941,9 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printOfficialLicense")]
     [HttpPut]
-    public async Task<IActionResult> PrintOfficialLicense(string applicationId, bool shouldAddDownloadFilename = false)
+    public async Task<IActionResult> PrintOfficialLicense(bool shouldAddDownloadFilename = true) //, bool shouldAddDownloadFilename = false)
     {
+        string applicationId = "97fa060f-473f-48d8-8b20-18d4b890a265";
         try
         {
             GetAADUserName(out var userName);
@@ -966,6 +968,7 @@ public class PermitApplicationController : ControllerBase
             Document mainDocument = new Document(pdfDoc);
             pdfWriter.SetCloseStream(false);
 
+            await AddSheriffSignatureImage(userApplication, mainDocument);
             await AddApplicantSignatureImage(userApplication, mainDocument);
             await AddApplicantThumbprintImage(userApplication, mainDocument);
             await AddApplicantPhotoImage(userApplication, mainDocument);
@@ -977,7 +980,7 @@ public class PermitApplicationController : ControllerBase
             form.GetField("ORI").SetValue(adminResponse.ORI ?? "", true);
             form.GetField("CII_NUMBER").SetValue("CII Number Here", true);
             form.GetField("LOCAL_AGENCY_NUMBER").SetValue(adminResponse.LocalAgencyNumber ?? "", true);
-            form.GetField("SIGNATURE_IMAGE_BOX_af_image").SetValue("Sheriff sign", true);
+            //form.GetField("SIGNATURE_IMAGE_BOX_af_image").SetValue("Sheriff sign", true);
 
             var issueDate = string.Empty;
             var expDate = string.Empty;
@@ -1270,6 +1273,40 @@ public class PermitApplicationController : ControllerBase
         }
     }
 
+    private async Task AddSheriffSignatureImage(PermitApplication? userApplication, Document mainDocument)
+    {
+        var documentResponse = await _documentHttpClient.GetSheriffSignatureAsync(cancellationToken: default);
+        var streamContent = await documentResponse.Content.ReadAsStreamAsync();
+
+        var memoryStream = new MemoryStream();
+        await streamContent.CopyToAsync(memoryStream);
+        memoryStream.Position = 0;
+        var imageData = ImageDataFactory.Create(memoryStream.ToArray());
+
+        var leftPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 180,
+            Height = 17,
+            Left = 90,
+            Bottom = 667
+        };
+
+        var leftImage = GetImageForImageData(imageData, leftPosition);
+        mainDocument.Add(leftImage);
+
+        var rightPosition = new ImagePosition()
+        {
+            Page = 1,
+            Width = 180,
+            Height = 17,
+            Left = 395,
+            Bottom = 667
+        };
+
+        var rightImage = GetImageForImageData(imageData, rightPosition);
+        mainDocument.Add(rightImage);
+    }
 
     private async Task AddApplicantSignatureImage(PermitApplication? userApplication, Document mainDocument)
     {
@@ -1281,8 +1318,8 @@ public class PermitApplicationController : ControllerBase
             Page = 1,
             Width = 180,
             Height = 30,
-            Left = 110,
-            Bottom = 460
+            Left = 125,
+            Bottom = 457
         };
 
         var leftImage = GetImageForImageData(imageData, leftPosition);
@@ -1293,8 +1330,8 @@ public class PermitApplicationController : ControllerBase
             Page = 1,
             Width = 180,
             Height = 30,
-            Left = 415,
-            Bottom = 460
+            Left = 430,
+            Bottom = 457
         };
 
         var rightImage = GetImageForImageData(imageData, rightPosition);
@@ -1311,8 +1348,8 @@ public class PermitApplicationController : ControllerBase
             Page = 1,
             Width = 60,
             Height = 70,
-            Left = 10,
-            Bottom = 450
+            Left = 35,
+            Bottom = 425
         };
 
         var leftImage = GetImageForImageData(imageData, leftPosition);
@@ -1324,7 +1361,7 @@ public class PermitApplicationController : ControllerBase
             Width = 60,
             Height = 70,
             Left = 340,
-            Bottom = 450
+            Bottom = 425
         };
 
         var rightImage = GetImageForImageData(imageData, rightPosition);
@@ -1341,8 +1378,8 @@ public class PermitApplicationController : ControllerBase
             Page = 1,
             Width = 70,
             Height = 95,
-            Left = 160,
-            Bottom = 370
+            Left = 145,
+            Bottom = 385
         };
 
         var leftImage = GetImageForImageData(imageData, leftPosition);
@@ -1353,7 +1390,7 @@ public class PermitApplicationController : ControllerBase
             Page = 1,
             Width = 70,
             Height = 95,
-            Left = 440,
+            Left = 450,
             Bottom = 385
         };
 
@@ -1362,10 +1399,14 @@ public class PermitApplicationController : ControllerBase
     }
 
 
-    private async Task<ImageData> GetImageDataForPdf(string fileName)
+    private async Task<ImageData> GetImageDataForPdf(string fileName, Stream? contentStream = null)
     {
-        var documentResponse = await _documentHttpClient.GetApplicantImageAsync(fileName, cancellationToken: default);
-        var streamContent = await documentResponse.Content.ReadAsStreamAsync();
+        var streamContent = contentStream;
+        if (null == contentStream)
+        {
+            var documentResponse = await _documentHttpClient.GetApplicantImageAsync(fileName, cancellationToken: default);
+            streamContent = await documentResponse.Content.ReadAsStreamAsync();
+        }
 
         using (var memoryStream = new MemoryStream())
         {
