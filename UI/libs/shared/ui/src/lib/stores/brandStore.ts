@@ -14,6 +14,7 @@ export const useBrandStore = defineStore('BrandStore', () => {
   const app = getCurrentInstance();
 
   const brand = ref<BrandType>({
+    id: '00000000-0000-0000-0000-000000000000',
     agencyName: 'XXXXXXXXXXX',
     agencyAddress: 'XXXXXXXXXXX',
     agencyTelephone: 'XXXXXXXXXXX',
