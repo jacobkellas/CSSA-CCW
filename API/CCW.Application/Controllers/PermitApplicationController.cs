@@ -550,9 +550,8 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printApplication")]
     [HttpPut]
-    public async Task<IActionResult> PrintApplication(bool shouldAddDownloadFilename = true) //string applicationId, 
+    public async Task<IActionResult> PrintApplication(string applicationId, bool shouldAddDownloadFilename = true) 
     {
-        string applicationId = "612840e6-bf20-4e9a-8826-4580d1ca7543";
         try
         {
             GetAADUserName(out var userName);
