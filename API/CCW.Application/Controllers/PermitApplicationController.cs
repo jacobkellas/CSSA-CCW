@@ -941,9 +941,8 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printOfficialLicense")]
     [HttpPut]
-    public async Task<IActionResult> PrintOfficialLicense(bool shouldAddDownloadFilename = true) //, bool shouldAddDownloadFilename = false)
+    public async Task<IActionResult> PrintOfficialLicense(string applicationId, bool shouldAddDownloadFilename = true)
     {
-        string applicationId = "97fa060f-473f-48d8-8b20-18d4b890a265";
         try
         {
             GetAADUserName(out var userName);
