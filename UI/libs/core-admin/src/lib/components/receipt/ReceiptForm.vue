@@ -7,7 +7,7 @@
     class="receipt-container"
     id="print-container"
   >
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-col
         cols="12"
         lg="2"
@@ -22,7 +22,7 @@
         {{ currentDate.toLocaleString() }}
       </v-col>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-text-field
         dense
         readonly
@@ -32,7 +32,7 @@
       >
       </v-text-field>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-text-field
         dense
         readonly
@@ -42,17 +42,17 @@
       >
       </v-text-field>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-text-field
         dense
         readonly
-        label="Order Id"
+        label="Application Type"
         v-model="permitStore.getPermitDetail.application.applicationType"
         outlined
       >
       </v-text-field>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-select
         dense
         :items="paymentOptions"
@@ -62,7 +62,7 @@
       >
       </v-select>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-text-field
         dense
         label=" Vendor Information "
@@ -71,7 +71,7 @@
       >
       </v-text-field>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-text-field
         dense
         type="number"
@@ -81,7 +81,7 @@
       >
       </v-text-field>
     </v-row>
-    <v-row class="payment-row ma-5 text-left">
+    <v-row class="payment-row ma-2 text-left">
       <v-text-field
         dense
         label="Transaction Id"
@@ -90,7 +90,7 @@
       >
       </v-text-field>
     </v-row>
-    <v-row class="payment-row ma-5">
+    <v-row class="payment-row ma-2">
       <v-spacer />
       <v-btn
         color="accent"
@@ -125,19 +125,28 @@
           :application-type="state.applicationType"
           :order-id="permitStore.getPermitDetail.application.orderId"
           :transaction-id="state.transactionId"
+          :auth="authStore.getAuthState.userName"
         />
       </section>
     </vue-html2pdf>
+    <v-snackbar
+      v-model="state.snackbar"
+      :timeout="4000"
+      color="error"
+      class="font-weight-bold"
+    >
+      {{ $t('Payment History failed to update. Please try again') }}
+    </v-snackbar>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { usePermitsStore } from "@core-admin/stores/permitsStore";
-import Receipt from "@core-admin/components/receipt/Receipt.vue";
-import VueHtml2pdf from "vue-html2pdf";
-import { PaymentHistoryType } from "@shared-utils/types/defaultTypes";
-import { useAuthStore } from "@shared-ui/stores/auth";
+import { PaymentHistoryType } from '@shared-utils/types/defaultTypes';
+import Receipt from '@core-admin/components/receipt/Receipt.vue';
+import { usePermitsStore } from '@core-admin/stores/permitsStore';
+import VueHtml2pdf from 'vue-html2pdf';
+import { useAuthStore } from '@shared-ui/stores/auth';
+import { reactive, ref } from 'vue';
 
 interface ReceiptFormProps {
   updatePayment: any;
@@ -156,6 +165,8 @@ const state = reactive({
   total: '',
   transactionId: '',
   date: '',
+  auth: '',
+  snackbar: false,
 });
 
 const props = defineProps<ReceiptFormProps>();
@@ -167,18 +178,25 @@ function submitAndPrint() {
   const body: PaymentHistoryType = {
     amount: state.total,
     paymentDateTimeUtc: currentDate.toISOString(),
-    recordedBy: authStore.getAuthState.userEmail,
-    comments: state.paymentType,
+    recordedBy: authStore.getAuthState.userName,
+    paymentType: state.paymentType,
+    transactionId: state.transactionId,
+    vendorInfo: state.vendorInfo,
   };
 
   permitStore.permitDetail.paymentHistory.push(body);
 
-  permitStore.updatePermitDetailApi('Payment History added').then(() => {
-    props.updatePayment;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    html2Pdf.value.generatePdf();
-  });
+  permitStore
+    .updatePermitDetailApi('Payment History added')
+    .then(() => {
+      props.updatePayment;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      html2Pdf.value.generatePdf();
+    })
+    .catch(() => {
+      state.snackbar = true;
+    });
 }
 </script>
 
@@ -188,7 +206,7 @@ function submitAndPrint() {
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  width: 50%;
+  width: 60%;
 }
 
 .payment-row {

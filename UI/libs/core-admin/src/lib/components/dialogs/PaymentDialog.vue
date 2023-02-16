@@ -51,10 +51,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from "vue";
-import { usePermitsStore } from "@core-admin/stores/permitsStore";
-import PaymentHistory from "@core-admin/components/receipt/PaymentHistory.vue";
-import ReceiptForm from "@core-admin/components/receipt/ReceiptForm.vue";
+import { computed, reactive } from 'vue';
+import { usePermitsStore } from '@core-admin/stores/permitsStore';
+import PaymentHistory from '@core-admin/components/receipt/PaymentHistory.vue';
+import ReceiptForm from '@core-admin/components/receipt/ReceiptForm.vue';
 
 const permitStore = usePermitsStore();
 
@@ -77,10 +77,12 @@ const mostRecentPayment = computed(
   }
 
   &section {
+    overflow-y: auto;
     height: 100%;
     border-right-color: #616161;
     border-right-width: 1px;
     border-right-style: solid;
+    padding-bottom: 4em;
   }
 
   &row {
