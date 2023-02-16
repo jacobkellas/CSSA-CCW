@@ -368,15 +368,15 @@ public class CosmosDbService : ICosmosDbService
         {
             var modelSPayment = JsonConvert.SerializeObject(application.PaymentHistory[0]);
             var modelPayment = JsonConvert.DeserializeObject<PaymentHistory>(modelSPayment);
-            var paymentHistory = new PaymentHistory[1] {
-            new PaymentHistory {
+            var paymentHistory = new PaymentHistory {
+            
                 PaymentDateTimeUtc = modelPayment.PaymentDateTimeUtc,
                 PaymentType = modelPayment.PaymentType,
                 VendorInfo= modelPayment.VendorInfo,
                 Amount = modelPayment.Amount,
                 RecordedBy = modelPayment.RecordedBy,
                 TransactionId = modelPayment.TransactionId,
-            } };
+            };
             patches.Add(PatchOperation.Add("/PaymentHistory/-", paymentHistory));
         }
 
