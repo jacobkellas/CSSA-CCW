@@ -24,10 +24,12 @@ public class RequestPermitApplicationToPaymentHistoryMapper : IMapper<PermitAppl
 
     private static PaymentHistory MapAlias(PaymentHistory uiPaymentHistory, PaymentHistory dbPaymentHistory)
     {
-        dbPaymentHistory.Amount = uiPaymentHistory.Amount;
         dbPaymentHistory.PaymentDateTimeUtc = uiPaymentHistory.PaymentDateTimeUtc;
+        dbPaymentHistory.PaymentType = uiPaymentHistory.PaymentType;
+        dbPaymentHistory.VendorInfo = uiPaymentHistory.VendorInfo;
+        dbPaymentHistory.Amount = uiPaymentHistory.Amount;
         dbPaymentHistory.RecordedBy = uiPaymentHistory.RecordedBy;
-        dbPaymentHistory.Comments = uiPaymentHistory.Comments;
+        dbPaymentHistory.TransactionId = uiPaymentHistory.TransactionId;
 
         return dbPaymentHistory;
     }
