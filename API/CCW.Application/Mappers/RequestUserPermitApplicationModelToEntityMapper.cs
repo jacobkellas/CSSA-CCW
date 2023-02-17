@@ -1,4 +1,4 @@
-﻿using CCW.Application.Entities;
+using CCW.Application.Entities;
 using CCW.Application.Models;
 
 namespace CCW.Application.Mappers
@@ -17,6 +17,7 @@ namespace CCW.Application.Mappers
         public PermitApplication Map(bool isNewApplication, string comments, UserPermitApplicationRequestModel source)
         {
             History[] history = Array.Empty<History>();
+            PaymentHistory[] paymentHistory = Array.Empty<PaymentHistory>();
 
             if (isNewApplication)
             {
@@ -34,10 +35,11 @@ namespace CCW.Application.Mappers
 
             return new PermitApplication
             {
-                Application = _applicationMapper.Map(comments, source),
                 Id = source.Id,
-                History = history, //recorded for public only on create
                 UserId = source.UserId,
+                History = history, //recorded for public only on create
+                PaymentHistory = paymentHistory,
+                Application = _applicationMapper.Map(comments, source),
             };
         }
 

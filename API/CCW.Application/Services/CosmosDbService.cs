@@ -366,18 +366,29 @@ public class CosmosDbService : ICosmosDbService
 
         if (null != application.PaymentHistory && application.PaymentHistory.Length > 0)
         {
-            var modelSPayment = JsonConvert.SerializeObject(application.PaymentHistory[0]);
-            var modelPayment = JsonConvert.DeserializeObject<PaymentHistory>(modelSPayment);
-            var paymentHistory = new PaymentHistory {
-            
-                PaymentDateTimeUtc = modelPayment.PaymentDateTimeUtc,
-                PaymentType = modelPayment.PaymentType,
-                VendorInfo= modelPayment.VendorInfo,
-                Amount = modelPayment.Amount,
-                RecordedBy = modelPayment.RecordedBy,
-                TransactionId = modelPayment.TransactionId,
-            };
-            patches.Add(PatchOperation.Add("/PaymentHistory/-", paymentHistory));
+            int paymentHistoryCount = application.PaymentHistory.Length;
+            PaymentHistory[] paymentHistories = new PaymentHistory[paymentHistoryCount];
+
+            for(int i = 0; i < paymentHistoryCount; i++)
+            {
+                var modelSPayment = JsonConvert.SerializeObject(application.PaymentHistory[i]);
+                var modelPayment = JsonConvert.DeserializeObject<PaymentHistory>(modelSPayment);
+                var paymentHistory = new PaymentHistory
+                {
+
+                    PaymentDateTimeUtc = modelPayment.PaymentDateTimeUtc,
+                    PaymentType = modelPayment.PaymentType,
+                    VendorInfo = modelPayment.VendorInfo,
+                    Amount = modelPayment.Amount,
+                    RecordedBy = modelPayment.RecordedBy,
+                    TransactionId = modelPayment.TransactionId,
+                };
+
+                paymentHistories[i] = paymentHistory;
+            }
+
+
+            patches.Add(PatchOperation.Replace("/PaymentHistory", paymentHistories));
         }
 
         await _container.PatchItemAsync<PermitApplication>(
