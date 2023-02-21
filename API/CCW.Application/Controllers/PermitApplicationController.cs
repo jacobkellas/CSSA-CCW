@@ -15,6 +15,8 @@ using iText.IO.Image;
 using iText.Layout.Element;
 using iText.Layout.Borders;
 using System.Net.Http;
+using System.Text;
+using Microsoft.Extensions.Azure;
 
 namespace CCW.Application.Controllers;
 
@@ -977,7 +979,7 @@ public class PermitApplicationController : ControllerBase
 
             form.GetField("AGENCY").SetValue(adminResponse.AgencyName ?? "", true);
             form.GetField("ORI").SetValue(adminResponse.ORI ?? "", true);
-            form.GetField("CII_NUMBER").SetValue("CII Number Here", true);
+            form.GetField("CII_NUMBER").SetValue(userApplication.Application.OrderId, true);
             form.GetField("LOCAL_AGENCY_NUMBER").SetValue(adminResponse.LocalAgencyNumber ?? "", true);
             //form.GetField("SIGNATURE_IMAGE_BOX_af_image").SetValue("Sheriff sign", true);
 
@@ -1056,11 +1058,12 @@ public class PermitApplicationController : ControllerBase
             }
 
             //Section A
-            var fullName = userApplication.Application.PersonalInfo?.LastName + " " +
-                           userApplication.Application.PersonalInfo?.FirstName + " " +
-                           userApplication.Application.PersonalInfo?.MiddleName;
+            var fullName = userApplication.Application.PersonalInfo?.FirstName + " " +
+                           userApplication.Application.PersonalInfo?.MiddleName + " " +
+                           userApplication.Application.PersonalInfo?.LastName + " " +
+                           userApplication.Application.PersonalInfo?.Suffix;
 
-            form.GetField("FULL_NAME").SetValue(fullName, true);
+            form.GetField("FULL_NAME").SetValue(fullName.Replace("  ", "").Trim(), true);
 
             string? residenceAddress = userApplication.Application.CurrentAddress?.AddressLine1 +
                                        userApplication.Application.CurrentAddress?.AddressLine2;
@@ -1074,41 +1077,75 @@ public class PermitApplicationController : ControllerBase
                                  userApplication.Application.WorkInformation?.EmployerCity + ", " +
                                  GetStateByName(userApplication.Application.WorkInformation?.EmployerState) + " " +
                                  userApplication.Application.WorkInformation?.EmployerZip;
-            form.GetField("BUSINESS_ADDRESS").SetValue(workAddress, true);
+
+            if (workAddress.Replace(" ", "") != ",,")
+            {
+                form.GetField("BUSINESS_ADDRESS").SetValue(workAddress, true);
+            }
+
             form.GetField("OCCUPATION").SetValue(userApplication.Application.WorkInformation?.Occupation ?? "", true);
             form.GetField("BIRTHDATE").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
             form.GetField("HEIGHT_FEET").SetValue(userApplication.Application.PhysicalAppearance?.HeightFeet + "'" ?? "", true);
-            form.GetField("HEIGHT_INCHES").SetValue(userApplication.Application.PhysicalAppearance?.HeightInch ?? "", true);
+            form.GetField("HEIGHT_INCHES").SetValue(userApplication.Application.PhysicalAppearance?.HeightInch + "\"" ?? "", true);
             form.GetField("WEIGHT").SetValue(userApplication.Application.PhysicalAppearance?.Weight ?? "", true);
             form.GetField("EYE_COLOR").SetValue(GetEyeColor(userApplication.Application.PhysicalAppearance?.EyeColor), true);
             form.GetField("HAIR_COLOR").SetValue(GetHairColor(userApplication.Application.PhysicalAppearance?.HairColor), true);
 
+            var weapons = userApplication.Application.Weapons;
             //Section B
-            if (userApplication.Application.Weapons != null && userApplication.Application.Weapons.Length > 0)
+            if (null != weapons && weapons.Length > 0)
             {
-                int totalWeapons = (userApplication.Application.Weapons.Length > 3)
-                    ? 3
-                    : userApplication.Application.Weapons.Length;
+                int totalWeapons = (weapons.Length > 3) ? 3 : weapons.Length;
+
+                StringBuilder makeSB = new StringBuilder();
+                StringBuilder serialSB = new StringBuilder();
+                StringBuilder caliberSB = new StringBuilder();
+                StringBuilder modelSB = new StringBuilder();
 
                 for (int i = 0; i < totalWeapons; i++)
                 {
-                    // var subIdValue = (i > 0) ? ".i" : "";
-                    form.GetField("WEAPON_MAKE")
-                        .SetValue(userApplication.Application.Weapons[i].Make, true);
-                    form.GetField("WEAPON_SERIAL")
-                        .SetValue(userApplication.Application.Weapons[i].Model, true);
-                    form.GetField("WEAPON_CALIBER")
-                        .SetValue(userApplication.Application.Weapons[i].Caliber, true);
-                    form.GetField("WEAPON_MODEL")
-                        .SetValue(userApplication.Application.Weapons[i].SerialNumber, true);
+                    makeSB.AppendLine(weapons[i].Make);
+                    serialSB.AppendLine(weapons[i].SerialNumber);
+                    caliberSB.AppendLine(weapons[i].Caliber);
+                    modelSB.AppendLine(weapons[i].Model);
+                }
+
+                form.GetField("WEAPON_MAKE").SetValue(makeSB.ToString(), true);
+                form.GetField("WEAPON_SERIAL").SetValue(serialSB.ToString(), true);
+                form.GetField("WEAPON_CALIBER").SetValue(caliberSB.ToString(), true);
+                form.GetField("WEAPON_MODEL").SetValue(modelSB.ToString(), true);
+
+                if (weapons.Length > 3)
+                {
+                    makeSB = new StringBuilder();
+                    serialSB = new StringBuilder();
+                    caliberSB = new StringBuilder();
+                    modelSB = new StringBuilder();
+
+                    totalWeapons = weapons.Length > 42 ? 42 : weapons.Length;
+
+                    for (int x = 3; x < totalWeapons; x++)
+                    {
+                        makeSB.AppendLine(weapons[x].Make);
+                        serialSB.AppendLine(weapons[x].SerialNumber);
+                        caliberSB.AppendLine(weapons[x].Caliber);
+                        modelSB.AppendLine(weapons[x].Model);
+                    }
+
+                    form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue(makeSB.ToString(), true);
+                    form.GetField("ADDITIONAL_WEAPON_SERIAL").SetValue(serialSB.ToString(), true);
+                    form.GetField("ADDITIONAL_WEAPON_CALIBER").SetValue(caliberSB.ToString(), true);
+                    form.GetField("ADDITIONAL_WEAPON_MODEL").SetValue(modelSB.ToString(), true);
                 }
             }
 
             //don't have restrictions
             //form.GetField("RESTRICTIONS").SetValue("", true);
-            //  form.GetField("APPLICANT_THUMBPRINT").SetValue(thumbprint, true);
-            //  form.GetField("APPLICANT_SIGNATURE").SetValue(signature, true);
-            form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue("Ofelia Test", true);
+            //form.GetField("APPLICANT_THUMBPRINT").SetValue(thumbprint, true);
+
+            // TODO: 
+            //form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue("Ofelia Test", true);
+
 
             mainDocument.Close();
 
