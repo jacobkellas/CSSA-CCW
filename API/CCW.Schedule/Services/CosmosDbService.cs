@@ -1,6 +1,8 @@
 using CCW.Schedule.Entities;
 using Microsoft.Azure.Cosmos;
+using System.ComponentModel;
 using System.Globalization;
+using System.Threading.Tasks;
 using Container = Microsoft.Azure.Cosmos.Container;
 
 
@@ -64,17 +66,17 @@ public class CosmosDbService : ICosmosDbService
 
         if ((numOfIncomingApptSlots - numOfExistingApptSlots) < 0 && (numOfIncomingApptSlots > numOfBookedAppts) && isCreateAction)
         {
-           //delete
-           var deleteExtraSlots = numOfExistingApptSlots - numOfIncomingApptSlots;
+            //delete
+            var deleteExtraSlots = numOfExistingApptSlots - numOfIncomingApptSlots;
 
-           for (int i = 0; i < deleteExtraSlots; i++)
-           {
-               concurrentTasks.Add(
-                   _container.DeleteItemAsync<AppointmentWindow>(availExistingSlots[i].Id.ToString(),
-                       new PartitionKey(availExistingSlots[i].Id.ToString()),
-                       cancellationToken: cancellationToken)
-                   );
-           }
+            for (int i = 0; i < deleteExtraSlots; i++)
+            {
+                concurrentTasks.Add(
+                    _container.DeleteItemAsync<AppointmentWindow>(availExistingSlots[i].Id.ToString(),
+                        new PartitionKey(availExistingSlots[i].Id.ToString()),
+                        cancellationToken: cancellationToken)
+                    );
+            }
         }
 
         if ((numOfIncomingApptSlots - numOfExistingApptSlots) < 0 && (numOfIncomingApptSlots < numOfBookedAppts) && isCreateAction)
@@ -180,6 +182,51 @@ public class CosmosDbService : ICosmosDbService
         return null!;
     }
 
+    public async Task<List<AppointmentWindow>> ResetApplicantAppointmentsAsync(string applicationId, CancellationToken cancellationToken)
+    {
+        var parameterizedQuery = new QueryDefinition(
+                query: "SELECT * FROM appointments p WHERE p.applicationId = @applicationId"
+            ).WithParameter("@applicationId", applicationId);
+
+        using FeedIterator<AppointmentWindow> filteredFeed = 
+            _container.GetItemQueryIterator<AppointmentWindow>(queryDefinition: parameterizedQuery);
+
+        List<AppointmentWindow> appointments = new List<AppointmentWindow>();
+        while (filteredFeed.HasMoreResults)
+        {
+            var nextResult = await filteredFeed.ReadNextAsync();
+            appointments.AddRange(nextResult.ToList());
+
+            List<Task> tasks = new List<Task>(appointments.Count);
+
+            foreach (var appointment in appointments)
+            {
+                appointment.ApplicationId = null;
+                appointment.Status = null;
+                appointment.Name = null;
+                appointment.Permit = null;
+                appointment.Payment = null;
+
+                tasks.Add(Update(appointment));
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+
+        return appointments;
+    }
+
+    private async Task Update(AppointmentWindow appointment)
+    {
+        await _container.ReplaceItemAsync(
+            appointment,
+            appointment.Id.ToString(),
+            new PartitionKey(appointment.Id.ToString()),
+            new ItemRequestOptions { IfMatchEtag = appointment._etag }
+        );
+    }
+
     public async Task<List<AppointmentWindow>> GetAvailableTimesAsync(CancellationToken cancellationToken)
     {
         List<AppointmentWindow> availableTimes = new List<AppointmentWindow>();
@@ -249,6 +296,6 @@ public class CosmosDbService : ICosmosDbService
 
     public async Task DeleteAsync(string appointmentId, CancellationToken cancellationToken)
     {
-        await _container.DeleteItemAsync<AppointmentWindow>(appointmentId, new PartitionKey(appointmentId), cancellationToken:cancellationToken);
+        await _container.DeleteItemAsync<AppointmentWindow>(appointmentId, new PartitionKey(appointmentId), cancellationToken: cancellationToken);
     }
 }

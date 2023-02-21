@@ -267,6 +267,8 @@ public class AppointmentController : ControllerBase
     {
         try
         {
+            var existingAppointments = await _cosmosDbService.ResetApplicantAppointmentsAsync(appointment.ApplicationId, cancellationToken: default);
+            
             AppointmentWindow appt = _requestUpdateApptMapper.Map(appointment);
             await _cosmosDbService.UpdateAsync(appt, cancellationToken: default);
 

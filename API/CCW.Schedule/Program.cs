@@ -177,13 +177,21 @@ app.MapControllers();
 app.Run();
 
 static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(
-    IConfigurationSection configurationSection, SecretClient secretClient)
+    IConfigurationSection configurationSection, 
+    SecretClient secretClient)
 {
     var databaseName = configurationSection["DatabaseName"];
     var containerName = configurationSection["ContainerName"];
     var key = secretClient.GetSecret("cosmos-db-connection-primary").Value.Value;
-    var client = new Microsoft.Azure.Cosmos.CosmosClient(key);
+    var client = new Microsoft.Azure.Cosmos.CosmosClient(
+        key, 
+        new Microsoft.Azure.Cosmos.CosmosClientOptions() 
+        { 
+            AllowBulkExecution= true,
+        });
+
     var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
+
     return cosmosDbService;
 }
 

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace CCW.Schedule.Entities;
 
@@ -22,4 +22,7 @@ public class AppointmentWindow
     public string? Payment { set; get; }
     [JsonProperty("isManuallyCreated")]
     public bool IsManuallyCreated { get; set; }
+
+    [JsonIgnore]
+    public string _etag { get; set; }
 }

@@ -1,10 +1,11 @@
-﻿using CCW.Schedule.Entities;
+using CCW.Schedule.Entities;
 
 namespace CCW.Schedule.Services;
 
 public interface ICosmosDbService
 {
     Task<AppointmentWindow> GetAsync(string applicationId, CancellationToken cancellationToken);
+    Task<List<AppointmentWindow>> ResetApplicantAppointmentsAsync(string applicationId, CancellationToken cancellationToken);
     Task<AppointmentWindow> GetAppointmentByIdAsync(string appointmentId, CancellationToken cancellationToken);
     Task<List<AppointmentWindow>> GetAvailableTimesAsync(CancellationToken cancellationToken);
     Task<List<AppointmentWindow>> GetAllBookedAppointmentsAsync(CancellationToken cancellationToken);
