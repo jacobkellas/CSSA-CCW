@@ -305,6 +305,128 @@
             </template>
           </v-text-field>
         </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('ORI')"
+            :rules="[v => !!v || $t(' ORI is required')]"
+            :hint="$t('ORI')"
+            color="blue1"
+            v-model="brandStore.getBrand.ori"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.ori"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="accent"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Local Agency Number')"
+            :rules="[v => !!v || $t(' Local Agency Number is required')]"
+            :hint="$t('Local Agency Number')"
+            color="blue1"
+            v-model="brandStore.getBrand.localAgencyNumber"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.localAgencyNumber"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="accent"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Courthouse')"
+            :rules="[v => !!v || $t('Courthouse is required')]"
+            :hint="$t('Courthouse')"
+            color="blue1"
+            v-model="brandStore.getBrand.courthouse"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.courthouse"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="accent"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
       </v-row>
       <v-row justify="space-between">
         <v-col
