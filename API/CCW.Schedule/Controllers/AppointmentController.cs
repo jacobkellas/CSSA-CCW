@@ -59,14 +59,16 @@ public class AppointmentController : ControllerBase
                     List<AppointmentWindow> appointmentsToAdd = new List<AppointmentWindow>();
                     List<AppointmentWindow> appointmentsToDelete = new List<AppointmentWindow>();
 
-                    DateTime startDateAndTime = 
+                    DateTime startDateAndTime =
                         Convert.ToDateTime(record.Date)
-                            .Add(TimeSpan.Parse(record.Time)).ToUniversalTime();
+                            .Add(TimeSpan.Parse(record.Time));
 
-                    if (DateTime.Now.ToUniversalTime() >= startDateAndTime)
+                    if (DateTime.Now > startDateAndTime)
                     {
                         continue;
                     }
+
+                    startDateAndTime = startDateAndTime.ToUniversalTime();
 
                     DateTime endDateAndTime = 
                         Convert.ToDateTime(record.Date)
