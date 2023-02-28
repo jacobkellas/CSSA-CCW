@@ -232,7 +232,7 @@ public class CosmosDbService : ICosmosDbService
         List<AppointmentWindow> availableTimes = new List<AppointmentWindow>();
 
         QueryDefinition queryDefinition = new QueryDefinition(
-                "SELECT * FROM appointments a where a.applicationId = null");
+                "SELECT * FROM appointments a where a.applicationId = null Order by a.start");
 
         using (FeedIterator<AppointmentWindow> feedIterator = _container.GetItemQueryIterator<AppointmentWindow>(
                    queryDefinition,
