@@ -92,8 +92,9 @@
                           <v-icon
                             v-if="
                               !permitStore.getPermitDetail.application
-                                .backgroudCheck[item.value].value
-                              && permitStore.getPermitDetail.application.backgroudCheck[item.value].value !== null
+                                .backgroudCheck[item.value].value &&
+                              permitStore.getPermitDetail.application
+                                .backgroudCheck[item.value].value !== null
                             "
                           >
                             mdi-close-circle
@@ -101,8 +102,9 @@
                           <v-icon
                             v-if="
                               permitStore.getPermitDetail.application
-                                .backgroudCheck[item.value].value
-                              || permitStore.getPermitDetail.application.backgroudCheck[item.value].value === null
+                                .backgroudCheck[item.value].value ||
+                              permitStore.getPermitDetail.application
+                                .backgroudCheck[item.value].value === null
                             "
                           >
                             mdi-close-circle-outline
