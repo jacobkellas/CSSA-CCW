@@ -183,6 +183,18 @@ export default class Endpoints {
     }/userprofile/v1/user/create`;
   }
 
+  static get GET_ADMIN_USER_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.userProfileApiBaseUrl
+    }/userprofile/v1/adminuser/getAdminUser`;
+  }
+
+  static get PUT_CREATE_ADMIN_USER_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.userProfileApiBaseUrl
+    }/userprofile/v1/adminuser/createAdminUser`;
+  }
+
   /********DOCUMENTS******************/
 
   static get GET_DOCUMENT_AGENCY_ENDPOINT() {
@@ -209,6 +221,12 @@ export default class Endpoints {
     }/document/v1/document/downloadApplicantFile`;
   }
 
+  static get GET_ADMIN_USER_FILE_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.documentApiBaseUrl
+    }/document/v1/document/downloadAdminUserFile`;
+  }
+
   static get GET_DOCUMENT_AGENCY_FILE_ENDPOINT() {
     return `${
       useAppConfigStore().getAppConfig.documentApiBaseUrl
@@ -224,5 +242,11 @@ export default class Endpoints {
     return `${
       useAppConfigStore().getAppConfig.documentApiBaseUrl
     }/document/v1/document/uploadUserApplicantFile`;
+  }
+
+  static get POST_UPLOAD_ADMIN_USER_FILE_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.documentApiBaseUrl
+    }/document/v1/document/uploadAdminUserFile`;
   }
 }

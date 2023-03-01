@@ -475,6 +475,11 @@ const appointmentTime = computed(() => {
   const date = new Date(
     permitStore.getPermitDetail?.application.appointmentDateTime
   );
+  let offset = date.getTimezoneOffset() / 60;
+  let difference = date.getHours() - offset;
+
+
+  date.setHours(difference);
 
   return date.toLocaleTimeString('en-US', {
     hour12: true,

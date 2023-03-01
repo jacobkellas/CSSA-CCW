@@ -206,6 +206,7 @@
     "cdb_appointments_container_name": "appointments",
     "cdb_applications_container_name": "applications",
     "cdb_users_container_name": "users",
+    "cdb_admin_users_container_name": "admin-users",
 
     "logAnalytics_nsgfl_name": "[toLower(concat(variables('rn_loganalytics'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-', parameters('application'), '-', parameters('environment_type'), '-nsg-fl-', parameters('instance_number')))]",
     "logAnalytics_reslogs_name": "[toLower(concat(variables('rn_loganalytics'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-', parameters('application'), '-', parameters('environment_type'), '-resource-logs-', parameters('instance_number')))]",
@@ -239,6 +240,7 @@
     "sa_func_name": "[toLower(concat(variables('rn_storageacct'), parameters('agency_abbreviation'), parameters('agency_type'), parameters('application'), parameters('environment_type'), 'f'))]",
     "sa_nsgflow_name": "[toLower(concat(variables('rn_storageacct'), parameters('agency_abbreviation'), parameters('agency_type'), parameters('application'), parameters('environment_type'), 'l'))]",
     "sa_ct_agency_name": "ccw-agency-documents",
+    "sa_ct_admin_users_name": "ccw-admin-user-documents",
     "sa_ct_public_name": "ccw-public-documents",
     "sa_ct_connstring_primary_name": "storage-ct-connection-primary",
     "sa_ct_connstring_secondary_name": "storage-ct-connection-secondary",
@@ -1348,6 +1350,7 @@
       "name": "[variables('cosmosdb_name')]",
       "location": "[parameters('location')]",
       "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
       ],
       "kind": "GlobalDocumentDB",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.DocumentDB/databaseAccounts'), parameters('user_tags')['Microsoft.DocumentDB/databaseAccounts'], json('{}')))]",
@@ -1939,6 +1942,50 @@
       "properties": {
         "resource": {
           "id": "[variables('cdb_users_container_name')]",
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "automatic": true,
+            "includedPaths": [
+              {
+                "path": "/*"
+              },
+              {
+                "path": "/email/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/\"_etag\"/?"
+              }
+            ]
+          },
+          "partitionKey": {
+            "paths": [
+              "/id"
+            ],
+            "kind": "Hash"
+          },
+          "uniqueKeyPolicy": {
+            "uniqueKeys": []
+          },
+          "conflictResolutionPolicy": {
+            "mode": "LastWriterWins",
+            "conflictResolutionPath": "/_ts"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2020-09-01",
+      "name": "[concat(variables('cosmosdb_name'), '/', variables('cdb_users_db_name'),'/', variables('cdb_admin_users_container_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('cosmosdb_name'), variables('cdb_users_db_name'))]",
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('cosmosdb_name'))]"
+      ],
+      "properties": {
+        "resource": {
+          "id": "[variables('cdb_admin_users_container_name')]",
           "indexingPolicy": {
             "indexingMode": "consistent",
             "automatic": true,
@@ -2660,6 +2707,10 @@
               "value": "[variables('sa_ct_agency_name')]"
             },
             {
+              "name": "Storage__AdminUserContainerName",
+              "value": "[variables('sa_ct_admin_users_name')]"
+            },
+            {
               "name": "Storage__PublicContainerName",
               "value": "[variables('sa_ct_public_name')]"
             },
@@ -2860,7 +2911,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
-        "[resourceId('microsoft.insights/components', variables('ai_payment_name'))]"
+        "[resourceId('microsoft.insights/components', variables('ai_payment_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks',variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -3146,7 +3198,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
-        "[resourceId('microsoft.insights/components', variables('ai_schedule_name'))]"
+        "[resourceId('microsoft.insights/components', variables('ai_schedule_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks',variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -3419,7 +3472,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
-        "[resourceId('microsoft.insights/components', variables('ai_userprofile_name'))]"
+        "[resourceId('microsoft.insights/components', variables('ai_userprofile_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks',variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -3474,6 +3528,10 @@
             {
               "name": "CosmosDb__ContainerName",
               "value": "[variables('cdb_users_container_name')]"
+            },
+            {
+              "name": "CosmosDb__AdminUsersContainerName",
+              "value": "[variables('cdb_admin_users_container_name')]"
             },
             {
               "name": "CosmosDb__DatabaseName",
@@ -3751,6 +3809,10 @@
               "value": "[variables('cdb_users_container_name')]"
             },
             {
+              "name": "CosmosDb__AdminUsersContainerName",
+              "value": "[variables('cdb_admin_users_container_name')]"
+            },
+            {
               "name": "CosmosDb__DatabaseName",
               "value": "[variables('cdb_users_db_name')]"
             },
@@ -3993,6 +4055,20 @@
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('sa_sws_publicui_name'), 'default')]",
         "[resourceId('Microsoft.Storage/storageAccounts', variables('sa_sws_publicui_name'))]"
+      ],
+      "properties": {
+        "defaultEncryptionScope": "$account-encryption-key",
+        "denyEncryptionScopeOverride": false,
+        "publicAccess": "None"
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2021-01-01",
+      "name": "[concat(variables('sa_content_name'), '/default/ccw-admin-user-documents')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('sa_content_name'), 'default')]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name'))]"
       ],
       "properties": {
         "defaultEncryptionScope": "$account-encryption-key",

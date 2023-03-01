@@ -207,8 +207,6 @@ const getAppointmentMutation = useMutation({
   //@ts-ignore
   mutationFn: () => {
     const appRes = appointmentsStore.getAvailableAppointments();
-// Uncomment below If switching to utc from get available.
-   // let local = DateTime.local();
 
     appRes
       .then((data: Array<AppointmentType>) => {
@@ -226,7 +224,6 @@ const getAppointmentMutation = useMutation({
             end.getMonth() + 1
           }-${end.getDate()} ${end.getHours()}:${end.getMinutes().toFixed(2)}`;
 
-          //event.name = local.offsetNameShort;
           event.name = 'open';
           event.start = formatedStart;
           event.end = formatedEnd;

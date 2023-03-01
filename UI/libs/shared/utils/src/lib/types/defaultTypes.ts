@@ -69,6 +69,19 @@ export type AppearanceInfoType = {
   physicalDesc: string;
 };
 
+export type UploadedDocType = {
+  name: string;
+  uploadedDateTimeUtc: string;
+  uploadedBy: string;
+  documentType: string;
+};
+
+export type AdminUserType = {
+  id?: string;
+  badgeNumber: string;
+  uploadedDocuments: Array<UploadedDocType>;
+};
+
 export type AuthType = {
   id?: string;
   userName: string;
@@ -80,6 +93,9 @@ export type AuthType = {
   roles: Array<string>;
   sessionStarted: string;
   tokenExpired: boolean;
+  adminUser: AdminUserType;
+  adminUserSignature: string;
+  validAdminUser: boolean;
 };
 
 export type CitizenshipType = {
@@ -247,13 +263,6 @@ export type AppointmentType = {
   start: string;
   end: string;
   isManuallyCreated: boolean;
-};
-
-export type UploadedDocType = {
-  name: string;
-  uploadedDateTimeUtc: string;
-  uploadedBy: string;
-  documentType: string;
 };
 
 export type BackgroundCheckType = {
