@@ -1350,6 +1350,7 @@
       "name": "[variables('cosmosdb_name')]",
       "location": "[parameters('location')]",
       "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
       ],
       "kind": "GlobalDocumentDB",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.DocumentDB/databaseAccounts'), parameters('user_tags')['Microsoft.DocumentDB/databaseAccounts'], json('{}')))]",
@@ -2910,7 +2911,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
-        "[resourceId('microsoft.insights/components', variables('ai_payment_name'))]"
+        "[resourceId('microsoft.insights/components', variables('ai_payment_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks',variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -3196,7 +3198,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
-        "[resourceId('microsoft.insights/components', variables('ai_schedule_name'))]"
+        "[resourceId('microsoft.insights/components', variables('ai_schedule_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks',variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -3469,7 +3472,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
-        "[resourceId('microsoft.insights/components', variables('ai_userprofile_name'))]"
+        "[resourceId('microsoft.insights/components', variables('ai_userprofile_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks',variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
