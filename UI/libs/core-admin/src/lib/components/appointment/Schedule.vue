@@ -177,6 +177,7 @@ import { computed, reactive, ref } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
+import {DateTime} from "luxon";
 
 const permitStore = usePermitsStore();
 const appointmentsStore = useAppointmentsStore();
@@ -206,6 +207,8 @@ const getAppointmentMutation = useMutation({
   //@ts-ignore
   mutationFn: () => {
     const appRes = appointmentsStore.getAvailableAppointments();
+// Uncomment below If switching to utc from get available.
+   // let local = DateTime.local();
 
     appRes
       .then((data: Array<AppointmentType>) => {
@@ -215,12 +218,15 @@ const getAppointmentMutation = useMutation({
 
           let formatedStart = `${start.getFullYear()}-${
             start.getMonth() + 1
-          }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
+          }-${start.getDate()} ${start.getHours()}:${start
+            .getMinutes()
+            .toFixed(2)}`;
 
           let formatedEnd = `${end.getFullYear()}-${
             end.getMonth() + 1
-          }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
+          }-${end.getDate()} ${end.getHours()}:${end.getMinutes().toFixed(2)}`;
 
+          //event.name = local.offsetNameShort;
           event.name = 'open';
           event.start = formatedStart;
           event.end = formatedEnd;
