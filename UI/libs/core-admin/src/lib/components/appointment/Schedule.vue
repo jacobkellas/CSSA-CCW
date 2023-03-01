@@ -177,7 +177,6 @@ import { computed, reactive, ref } from 'vue';
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
 import { useMutation, useQuery } from '@tanstack/vue-query';
 import { usePermitsStore } from '@core-admin/stores/permitsStore';
-import {DateTime} from "luxon";
 
 const permitStore = usePermitsStore();
 const appointmentsStore = useAppointmentsStore();
@@ -216,13 +215,11 @@ const getAppointmentMutation = useMutation({
 
           let formatedStart = `${start.getFullYear()}-${
             start.getMonth() + 1
-          }-${start.getDate()} ${start.getHours()}:${start
-            .getMinutes()
-            .toFixed(2)}`;
+          }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
 
           let formatedEnd = `${end.getFullYear()}-${
             end.getMonth() + 1
-          }-${end.getDate()} ${end.getHours()}:${end.getMinutes().toFixed(2)}`;
+          }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
 
           event.name = 'open';
           event.start = formatedStart;

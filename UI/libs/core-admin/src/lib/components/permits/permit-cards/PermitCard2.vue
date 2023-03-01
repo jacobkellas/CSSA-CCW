@@ -478,7 +478,6 @@ const appointmentTime = computed(() => {
   let offset = date.getTimezoneOffset() / 60;
   let difference = date.getHours() - offset;
 
-
   date.setHours(difference);
 
   return date.toLocaleTimeString('en-US', {
