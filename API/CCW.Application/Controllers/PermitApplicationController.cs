@@ -912,7 +912,7 @@ public class PermitApplicationController : ControllerBase
 
             FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
-            var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
+            var saveFileResult = await _documentHttpClient.SaveApplicationPdfAsync(fileToSave, fileName, cancellationToken: default);
 
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
@@ -929,7 +929,7 @@ public class PermitApplicationController : ControllerBase
                 fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
 
-            return fileStreamResult;
+            return fileStreamResultDownload;
         }
         catch (Exception e)
         {

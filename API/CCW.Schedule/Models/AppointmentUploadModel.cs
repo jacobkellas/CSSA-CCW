@@ -1,4 +1,4 @@
-﻿using CsvHelper.Configuration;
+using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using Newtonsoft.Json;
 using System;
@@ -9,12 +9,16 @@ public class AppointmentUploadModel
 {
     [Index(0)]
     public string Date { get; set; }
+
     [Index(1)]
     public string Time { get; set; }
+
     [Index(2)]
     public int Duration { get; set; }
+
     [Index(3)]
     public int Slots { get; set; }
+
     [Index(4)]
     public string Action { get; set; }
 }
