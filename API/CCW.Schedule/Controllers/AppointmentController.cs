@@ -301,7 +301,7 @@ public class AppointmentController : ControllerBase
             await _cosmosDbService.UpdateAsync(appt, cancellationToken: default);
 
             var response = await _applicationHttpClient.UpdateApplicationAppointmentAsync(appointment.ApplicationId,
-                appointment.Start, cancellationToken: default);
+                appointment.Start.ToString(Constants.DateTimeFormat), cancellationToken: default);
 
             if (response.IsSuccessStatusCode)
             {

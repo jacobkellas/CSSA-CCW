@@ -1,4 +1,4 @@
-﻿using CCW.Schedule.Models;
+using CCW.Schedule.Models;
 
 namespace CCW.Schedule.Clients;
 
@@ -26,7 +26,7 @@ public class ApplicationServiceClient: IApplicationServiceClient
     }
 
 
-    public async Task<HttpResponseMessage> UpdateApplicationAppointmentAsync(string applicationId, DateTime appointmentDate, CancellationToken cancellationToken)
+    public async Task<HttpResponseMessage> UpdateApplicationAppointmentAsync(string applicationId, string appointmentDate, CancellationToken cancellationToken)
     {
         var request = new HttpRequestMessage(HttpMethod.Put, updateAppointmentUrl +
                                                              "applicationId=" + applicationId +
