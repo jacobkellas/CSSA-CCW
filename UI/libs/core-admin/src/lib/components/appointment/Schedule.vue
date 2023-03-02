@@ -162,7 +162,8 @@
               class="font-weight-bold"
             >
               {{ $t(`Appointment is confirmed for: `) }}
-              {{ state.selectedEvent.start }} - {{ state.selectedEvent.end }}
+              {{ new Date(state.selectedEvent.start).toLocaleString() }} - {{ new
+            Date(state.selectedEvent.end).toLocaleString() }}
             </v-snackbar>
           </v-col>
         </v-row>
@@ -172,11 +173,11 @@
 </template>
 
 <script setup lang="ts">
-import { AppointmentType } from '@shared-utils/types/defaultTypes';
-import { computed, reactive, ref } from 'vue';
-import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
-import { useMutation, useQuery } from '@tanstack/vue-query';
-import { usePermitsStore } from '@core-admin/stores/permitsStore';
+import { AppointmentType } from "@shared-utils/types/defaultTypes";
+import { reactive, ref } from "vue";
+import { useAppointmentsStore } from "@shared-ui/stores/appointmentsStore";
+import { useMutation } from "@tanstack/vue-query";
+import { usePermitsStore } from "@core-admin/stores/permitsStore";
 
 const permitStore = usePermitsStore();
 const appointmentsStore = useAppointmentsStore();
@@ -215,11 +216,11 @@ const getAppointmentMutation = useMutation({
 
           let formatedStart = `${start.getFullYear()}-${
             start.getMonth() + 1
-          }-${start.getDate()} ${start.getHours()}:${start.getMinutes().toFixed(2)}`;
+          }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
 
           let formatedEnd = `${end.getFullYear()}-${
             end.getMonth() + 1
-          }-${end.getDate()} ${end.getHours()}:${end.getMinutes().toFixed(2)}`;
+          }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
 
           event.name = 'open';
           event.start = formatedStart;
