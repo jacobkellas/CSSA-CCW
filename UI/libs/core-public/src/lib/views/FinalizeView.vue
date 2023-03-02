@@ -126,19 +126,16 @@
 </template>
 
 <script lang="ts" setup>
-import AppointmentContainer from '@core-public/components/containers/AppointmentContainer.vue';
-import { AppointmentType } from '@shared-utils/types/defaultTypes';
-import FinalizeContainer from '@core-public/components/containers/FinalizeContainer.vue';
-import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue';
-import Routes from '@core-public/router/routes';
-import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore';
-import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication';
-import { useCurrentInfoSection } from '@core-public/stores/currentInfoSection';
-import { onMounted, reactive } from 'vue';
-import { useMutation, useQuery } from '@tanstack/vue-query';
-import { useRoute, useRouter } from 'vue-router/composables';
-
-const currentInfoSectionStore = useCurrentInfoSection();
+import AppointmentContainer from "@core-public/components/containers/AppointmentContainer.vue";
+import { AppointmentType } from "@shared-utils/types/defaultTypes";
+import FinalizeContainer from "@core-public/components/containers/FinalizeContainer.vue";
+import PaymentContainer from "@core-public/components/containers/PaymentContainer.vue";
+import Routes from "@core-public/router/routes";
+import { useAppointmentsStore } from "@shared-ui/stores/appointmentsStore";
+import { useCompleteApplicationStore } from "@shared-ui/stores/completeApplication";
+import { onMounted, reactive } from "vue";
+import { useMutation, useQuery } from "@tanstack/vue-query";
+import { useRoute, useRouter } from "vue-router/composables";
 
 const state = reactive({
   snackbar: false,
