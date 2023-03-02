@@ -215,11 +215,11 @@ const getAppointmentMutation = useMutation({
 
           let formatedStart = `${start.getFullYear()}-${
             start.getMonth() + 1
-          }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`;
+          }-${start.getDate()} ${start.getHours()}:${start.getMinutes().toFixed(2)}`;
 
           let formatedEnd = `${end.getFullYear()}-${
             end.getMonth() + 1
-          }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`;
+          }-${end.getDate()} ${end.getHours()}:${end.getMinutes().toFixed(2)}`;
 
           event.name = 'open';
           event.start = formatedStart;
