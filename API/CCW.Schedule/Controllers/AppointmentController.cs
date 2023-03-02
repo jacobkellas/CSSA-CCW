@@ -68,12 +68,10 @@ public class AppointmentController : ControllerBase
                         continue;
                     }
 
-                    startDateAndTime = startDateAndTime.ToUniversalTime();
-
                     DateTime endDateAndTime = 
                         Convert.ToDateTime(record.Date)
                             .Add(TimeSpan.Parse(record.Time))
-                            .AddMinutes(record.Duration).ToUniversalTime();
+                            .AddMinutes(record.Duration);
 
                     if (record.Action.ToLower().Contains("create"))
                     {
@@ -83,8 +81,8 @@ public class AppointmentController : ControllerBase
                             {
                                 Id = Guid.NewGuid(),
                                 ApplicationId = null,
-                                End = endDateAndTime,
-                                Start = startDateAndTime,
+                                Start = startDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat),
+                                End = endDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat),
                                 Status = null,
                                 Name = null,
                                 Permit = null,
@@ -104,8 +102,8 @@ public class AppointmentController : ControllerBase
                             {
                                 Id = Guid.NewGuid(),
                                 ApplicationId = null,
-                                End = endDateAndTime,
-                                Start = startDateAndTime,
+                                End = endDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat),
+                                Start = startDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat),
                                 Status = null,
                                 Name = null,
                                 Permit = null,
@@ -257,7 +255,7 @@ public class AppointmentController : ControllerBase
 
                 var slot = nextSlot.First();
                 appointment.Id = slot.Id.ToString();
-                appointment.End = slot.End;
+                appointment.End = DateTime.Parse(slot.End);
                 appointment.IsManuallyCreated = slot.IsManuallyCreated;
             }
 
@@ -295,7 +293,7 @@ public class AppointmentController : ControllerBase
                 
                 var slot = nextSlot.First();
                 appointment.Id = slot.Id.ToString();
-                appointment.End = slot.End;
+                appointment.End = DateTime.Parse(slot.End);
                 appointment.IsManuallyCreated = slot.IsManuallyCreated;
             }
             

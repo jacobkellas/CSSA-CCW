@@ -125,15 +125,15 @@ public class CosmosDbService : ICosmosDbService
         await Task.WhenAll(concurrentTasks);
     }
 
-    public async Task<List<AppointmentWindow>> GetExistingAppointments(DateTime startDateTime, DateTime endDateTime, CancellationToken cancellationToken)
+    public async Task<List<AppointmentWindow>> GetExistingAppointments(string startDateTime, string endDateTime, CancellationToken cancellationToken)
     {
         List<AppointmentWindow> existingAppointments = new List<AppointmentWindow>();
 
         var parameterizedQuery = new QueryDefinition(
                 query: "SELECT * FROM appointments a where a['start'] = @startTime and a['end'] = @endTime"
             )
-            .WithParameter("@startTime", startDateTime.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture))
-            .WithParameter("@endTime", endDateTime.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture));
+            .WithParameter("@startTime", startDateTime)
+            .WithParameter("@endTime", endDateTime);
 
         using FeedIterator<AppointmentWindow> feedIterator = _container.GetItemQueryIterator<AppointmentWindow>(
             queryDefinition: parameterizedQuery
