@@ -553,8 +553,13 @@ public class PermitApplicationController : ControllerBase
     [Authorize(Policy = "AADUsers")]
     [Route("printApplication")]
     [HttpPut]
-    public async Task<IActionResult> PrintApplication(string applicationId, bool shouldAddDownloadFilename = true)
+    public async Task<IActionResult> PrintApplication() //string applicationId, bool shouldAddDownloadFilename = true)
     {
+        string applicationId = "97fa060f-473f-48d8-8b20-18d4b890a265";
+        applicationId = "caeb8369-4fbf-4f66-9c97-a9be2d73c24c";
+
+        bool shouldAddDownloadFilename = true;
+
         try
         {
             GetAADUserName(out var userName);
@@ -566,20 +571,16 @@ public class PermitApplicationController : ControllerBase
                 return NotFound("Permit application cannot be found.");
             }
 
-            var template = "ApplicationTemplate";
+            string? applicationType = userApplication.Application.ApplicationType;
+            if (string.IsNullOrEmpty(applicationType))
+            {
+                throw new ArgumentNullException("ApplicationType");
+            }
+
             var response = await _documentHttpClient.GetApplicationTemplateAsync(cancellationToken: default);
 
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
             MemoryStream outStream = new MemoryStream();
-
-            //MemoryStream tempStream = new MemoryStream();
-            //streamToReadFrom.CopyTo(tempStream);
-
-            //FileStream fs = new FileStream(@"C:\\temp\ApplicationTemplate.pdf", FileMode.OpenOrCreate);
-            //fs.Write(tempStream.ToArray());
-            //fs.Flush();
-            //fs.Close();
-            //fs.Dispose();
 
             PdfReader pdfReader = new PdfReader(streamToReadFrom);
             PdfWriter pdfWriter = new PdfWriter(outStream);
@@ -603,19 +604,19 @@ public class PermitApplicationController : ControllerBase
             {
                 issueDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                if (userApplication.Application.ApplicationType != null &&
-                    userApplication.Application.ApplicationType.Contains("reserve"))
+                switch (applicationType)
                 {
-                    expDate = DateTime.Now.AddYears(4).ToString("MM/dd/yyyy");
-                }
-                else if (userApplication.Application.ApplicationType != null &&
-                         userApplication.Application.ApplicationType.Contains("judge"))
-                {
-                    expDate = DateTime.Now.AddYears(3).ToString("MM/dd/yyyy");
-                }
-                else
-                {
-                    expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
+                    case "reserve":
+                    case "renew-reserve":
+                        expDate = DateTime.Now.AddYears(4).ToString("MM/dd/yyyy");
+                        break;
+                    case "judge":
+                    case "renew-judge":
+                        expDate = DateTime.Now.AddYears(3).ToString("MM/dd/yyyy");
+                        break;
+                    default:
+                        expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
+                        break;
                 }
 
                 //save to db issue date and expiration date
@@ -635,43 +636,46 @@ public class PermitApplicationController : ControllerBase
                 await _cosmosDbService.UpdateUserApplicationAsync(userApplication, cancellationToken: default);
             }
 
-            if (userApplication.Application.ApplicationType != null && userApplication.Application.ApplicationType.Contains("reserve"))
+            switch (applicationType)
             {
-                form.GetField("form1[0].#subform[2].RESERVE_OFFICER[0]")
-                    .SetValue("true", true);
-            }
-            else if (userApplication.Application.ApplicationType != null && userApplication.Application.ApplicationType.Contains("judge"))
-            {
-                form.GetField("form1[0].#subform[2].JUDGE[0]")
-                    .SetValue("true", true);
-            }
-            else
-            {
-                form.GetField("form1[0].#subform[2].STANDARD[0]")
-                    .SetValue("true", true);
+                case "reserve":
+                case "renew-reserve":
+                    form.GetField("form1[0].#subform[2].RESERVE_OFFICER[0]").SetValue("true", true);
+                    break;
+                case "judge":
+                case "renew-judge":
+                    form.GetField("form1[0].#subform[2].JUDGE[0]").SetValue("true", true);
+                    break;
+                default:
+                    form.GetField("form1[0].#subform[2].STANDARD[0]").SetValue("true", true);
+                    break;
             }
 
-
-            if (userApplication.Application.ApplicationType != null && userApplication.Application.ApplicationType.Contains("renew"))
+            switch (applicationType)
             {
-                form.GetField("form1[0].#subform[2].RENEWAL_APP[0]")
-                    .SetValue(userApplication.Application.ApplicationType ?? "", true);
+                case "renew-reserve":
+                case "renew-judge":
+                    form.GetField("form1[0].#subform[2].RENEWAL_APP[0]").SetValue(applicationType, true);
+                    break;
+                default:
+                    form.GetField("form1[0].#subform[2].INITIAL_APP[0]").SetValue(applicationType, true);
+                    break;
             }
-            else
+
+            var paersonalInfo = userApplication.Application.PersonalInfo;
+            if (paersonalInfo == null)
             {
-                form.GetField("form1[0].#subform[2].INITIAL_APP[0]")
-                    .SetValue(userApplication.Application.ApplicationType ?? "", true);
+                throw new ArgumentNullException("PersonalInfo");
             }
 
             //Applicant Personal Information
-            form.GetField("form1[0].#subform[2].APP_LAST_NAME[0]").SetValue(userApplication.Application.PersonalInfo?.LastName ?? "", true);
-            form.GetField("form1[0].#subform[2].APP_FIRST_NAME[0]").SetValue(userApplication.Application.PersonalInfo?.FirstName ?? "", true);
-            form.GetField("form1[0].#subform[2].APP_MIDDLE_NAME[0]").SetValue(userApplication.Application.PersonalInfo?.MiddleName ?? "", true);
+            form.GetField("form1[0].#subform[2].APP_LAST_NAME[0]").SetValue(paersonalInfo?.LastName ?? "", true);
+            form.GetField("form1[0].#subform[2].APP_FIRST_NAME[0]").SetValue(paersonalInfo?.FirstName ?? "", true);
+            form.GetField("form1[0].#subform[2].APP_MIDDLE_NAME[0]").SetValue(paersonalInfo?.MiddleName ?? "", true);
 
-            if (!string.IsNullOrEmpty(userApplication.Application.PersonalInfo?.MaidenName) ||
-                !string.IsNullOrWhiteSpace(userApplication.Application.PersonalInfo?.MaidenName))
+            if (!string.IsNullOrWhiteSpace(paersonalInfo?.MaidenName))
             {
-                form.GetField("form1[0].#subform[2].APP_MAIDEN_NAME[0]").SetValue(userApplication.Application.PersonalInfo?.MaidenName, true);
+                form.GetField("form1[0].#subform[2].APP_MAIDEN_NAME[0]").SetValue(paersonalInfo?.MaidenName, true);
             }
             else if (userApplication.Application.Aliases?.Length > 0)
             {
@@ -903,7 +907,6 @@ public class PermitApplicationController : ControllerBase
 
             form.GetField("form1[0].#subform[9].GOOD_CAUSE_STATEMENT[0]").SetValue(userApplication.Application.QualifyingQuestions?.QuestionSeventeenExp ?? "", true);
 
-            // await streamToReadFrom.DisposeAsync();
             mainDocument.Close();
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
@@ -912,24 +915,17 @@ public class PermitApplicationController : ControllerBase
 
             FormFile fileToSave = new FormFile(fileStreamResult.FileStream, 0, outStream.Length, null!, fileName);
 
-            var saveFileResult = await _documentHttpClient.SaveApplicationPdfAsync(fileToSave, fileName, cancellationToken: default);
+            var saveFileResult = await _documentHttpClient.SaveOfficialLicensePdfAsync(fileToSave, fileName, cancellationToken: default);
 
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-            byte[] byteInfo = outStream.ToArray();
-            outStream.Write(byteInfo, 0, byteInfo.Length);
-            outStream.Position = 0;
-
-            FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
-
-            //Uncomment this to return the file as a download
             if (shouldAddDownloadFilename)
             {
-                fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
+                fileStreamResult.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
 
-            return fileStreamResultDownload;
+            return fileStreamResult;
         }
         catch (Exception e)
         {
@@ -954,6 +950,12 @@ public class PermitApplicationController : ControllerBase
             if (userApplication == null)
             {
                 return NotFound("Permit application cannot be found.");
+            }
+
+            string? applicationType = userApplication.Application.ApplicationType;
+            if (string.IsNullOrEmpty(applicationType))
+            {
+                throw new ArgumentNullException("ApplicationType");
             }
 
             var adminResponse = await _adminHttpClient.GetAgencyProfileSettingsAsync(cancellationToken: default);
@@ -981,7 +983,6 @@ public class PermitApplicationController : ControllerBase
             form.GetField("ORI").SetValue(adminResponse.ORI ?? "", true);
             form.GetField("CII_NUMBER").SetValue(userApplication.Application.OrderId, true);
             form.GetField("LOCAL_AGENCY_NUMBER").SetValue(adminResponse.LocalAgencyNumber ?? "", true);
-            //form.GetField("SIGNATURE_IMAGE_BOX_af_image").SetValue("Sheriff sign", true);
 
             var issueDate = string.Empty;
             var expDate = string.Empty;
@@ -995,19 +996,19 @@ public class PermitApplicationController : ControllerBase
             {
                 issueDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                if (userApplication.Application.ApplicationType != null &&
-                    userApplication.Application.ApplicationType.Contains("reserve"))
+                switch (applicationType)
                 {
-                    expDate = DateTime.Now.AddYears(4).ToString("MM/dd/yyyy");
-                }
-                else if (userApplication.Application.ApplicationType != null &&
-                         userApplication.Application.ApplicationType.Contains("judge"))
-                {
-                    expDate = DateTime.Now.AddYears(3).ToString("MM/dd/yyyy");
-                }
-                else
-                {
-                    expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
+                    case "reserve":
+                    case "renew-reserve":
+                        expDate = DateTime.Now.AddYears(4).ToString("MM/dd/yyyy");
+                        break;
+                    case "judge":
+                    case "renew-judge":
+                        expDate = DateTime.Now.AddYears(3).ToString("MM/dd/yyyy");
+                        break;
+                    default:
+                        expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
+                        break;
                 }
 
                 //save to db issue date and expiration date
@@ -1027,28 +1028,25 @@ public class PermitApplicationController : ControllerBase
                 await _cosmosDbService.UpdateUserApplicationAsync(userApplication, cancellationToken: default);
             }
 
-            if (userApplication.Application.ApplicationType != null &&
-                userApplication.Application.ApplicationType.Contains("reserve"))
+            switch (applicationType)
             {
-                form.GetField("RESERVE_LICENSE_TYPE_CHECKBOX")
-                    .SetValue("true", true);
-            }
-            else if (userApplication.Application.ApplicationType != null &&
-                     userApplication.Application.ApplicationType.Contains("judge"))
-            {
-                form.GetField("JUDICIAL_LICENSE_TYPE_CHECKBOX")
-                    .SetValue("true", true);
-            }
-            else
-            {
-                form.GetField("STANDARD_LICENSE_TYPE_CHECKBOX")
-                    .SetValue("true", true);
+                case "reserve":
+                case "renew-reserve":
+                    form.GetField("RESERVE_LICENSE_TYPE_CHECKBOX").SetValue("true", true);
+                    break;
+                case "judge":
+                case "renew-judge":
+                    form.GetField("JUDICIAL_LICENSE_TYPE_CHECKBOX").SetValue("true", true);
+                    break;
+                default:
+                    form.GetField("STANDARD_LICENSE_TYPE_CHECKBOX").SetValue("true", true);
+                    break;
             }
 
             form.GetField("ISSUE_DATE").SetValue(issueDate, true);
             form.GetField("EXPIRATION_DATE").SetValue(expDate, true);
 
-            if (userApplication.Application.ApplicationType.Contains("renew"))
+            if (applicationType.Contains("renew"))
             {
                 form.GetField("SUBSEQUENT_CHECKBOX").SetValue(expDate, true);
             }
@@ -1160,19 +1158,12 @@ public class PermitApplicationController : ControllerBase
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-            byte[] byteInfo = outStream.ToArray();
-            outStream.Write(byteInfo, 0, byteInfo.Length);
-            outStream.Position = 0;
-
-            FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
-
-            //Uncomment this to return the file as a download
             if (shouldAddDownloadFilename)
             {
-                fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
+                fileStreamResult.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
 
-            return fileStreamResultDownload;
+            return fileStreamResult;
 
         }
         catch (Exception e)
@@ -1286,16 +1277,9 @@ public class PermitApplicationController : ControllerBase
             Response.Headers.Append("Content-Disposition", "inline");
             Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
-            byte[] byteInfo = outStream.ToArray();
-            outStream.Write(byteInfo, 0, byteInfo.Length);
-            outStream.Position = 0;
-
-            FileStreamResult fileStreamResultDownload = new FileStreamResult(outStream, "application/pdf");
-
-            //Uncomment this to return the file as a download
             if (shouldAddDownloadFilename)
             {
-                fileStreamResultDownload.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
+                fileStreamResult.FileDownloadName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-") + fileName + ".pdf";
             }
 
             return fileStreamResult;
@@ -1963,26 +1947,5 @@ public class PermitApplicationController : ControllerBase
             default:
                 return color;
         }
-    }
-
-    private static string ExpDate(PermitApplicationRequestModel application)
-    {
-        var expDate = string.Empty;
-
-        if (application.Application.ApplicationType != null && application.Application.ApplicationType.Contains("reserve"))
-        {
-            expDate = DateTime.Now.AddYears(4).ToString("MM/dd/yyyy");
-        }
-        else if (application.Application.ApplicationType != null &&
-                 application.Application.ApplicationType.Contains("judge"))
-        {
-            expDate = DateTime.Now.AddYears(3).ToString("MM/dd/yyyy");
-        }
-        else
-        {
-            expDate = DateTime.Now.AddYears(2).ToString("MM/dd/yyyy");
-        }
-
-        return expDate;
     }
 }
