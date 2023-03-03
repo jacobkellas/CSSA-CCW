@@ -910,7 +910,10 @@ public class PermitApplicationController : ControllerBase
 
             mainDocument.Close();
 
+            byte[] byteInfo = outStream.ToArray();
+            outStream.Write(byteInfo, 0, byteInfo.Length);
             outStream.Position = 0;
+
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
 
             var fileName = BuildApplicantDocumentName(userApplication, "Application");
