@@ -578,6 +578,7 @@ public class PermitApplicationController : ControllerBase
             }
 
             var response = await _documentHttpClient.GetApplicationTemplateAsync(cancellationToken: default);
+            // TODO: LM: Add check for OK
 
             Stream streamToReadFrom = await response.Content.ReadAsStreamAsync();
             MemoryStream outStream = new MemoryStream();
@@ -909,6 +910,7 @@ public class PermitApplicationController : ControllerBase
 
             mainDocument.Close();
 
+            outStream.Position = 0;
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
 
             var fileName = BuildApplicantDocumentName(userApplication, "Application");
