@@ -1234,7 +1234,8 @@ public class PermitApplicationController : ControllerBase
             // TODO: 
             //form.GetField("ADDITIONAL_WEAPON_MAKE").SetValue("Ofelia Test", true);
 
-
+            mainDocument.Flush();
+            form.FlattenFields();
             mainDocument.Close();
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
@@ -1368,6 +1369,9 @@ public class PermitApplicationController : ControllerBase
             //    form.GetField("order.data.weapons[model]").SetValue(item.Model ?? "", true);
             //}
 
+
+            docFileAll.Flush();
+            form.FlattenFields();
             docFileAll.Close();
 
             FileStreamResult fileStreamResult = new FileStreamResult(outStream, "application/pdf");
