@@ -50,14 +50,10 @@ How to add a new settings:
     - Keep in mind that CCW implments Linux App Services.
 3. These settings should be configured in the [IaC](../../Deployment/IaC) as well so that they get deployed with the system.
 
-### App Settings
+### App Settings Example
 
----
+|![Azure App Service Application Settings](../images/CSSA-CCW-WebAPI-App-Settings.png)|
+|---|
 
-![Azure App Service Application Settings](../images/CSSA-CCW-WebAPI-App-Settings.png)
-
----
-
-![Azure App Service Application Settings](../images/CSSA-CCW-WebAPI-App-Settings-DU.png)
-
----
+|![Azure App Service Application Settings](../images/CSSA-CCW-WebAPI-App-Settings-DU.png)|
+|---|
