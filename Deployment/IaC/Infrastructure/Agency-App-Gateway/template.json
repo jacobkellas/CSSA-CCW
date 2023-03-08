@@ -48,7 +48,7 @@
         "ag-name-gwip": "[concat('gwip-ag-', parameters('agency_abbreviation'), '-ag-', parameters('environment'), '-shd')]",
         "ag_name_ds": "[concat('ds-ag-', parameters('agency_abbreviation'), '-ag-', parameters('environment'), '-shd')]",
         "default_tags": {
-            "application_name": "ccw",
+            "application_name": "[parameters('application')]",
             "agency": "[if(empty(parameters('agency_abbreviation')), resourceGroup().tags.agency_name, parameters('agency_abbreviation')) ]",
             "agency_ori": "[if(empty(parameters('agency_ori')), resourceGroup().tags.agency_ori, parameters('agency_ori')) ]",
             "business_unit": "[if(empty(parameters('agency_type')), resourceGroup().tags.business_unit, parameters('agency_type')) ]",
