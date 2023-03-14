@@ -769,9 +769,9 @@ public class PermitApplicationController : ControllerBase
             {
                 if (!string.IsNullOrEmpty(userApplication.Application.License?.PermitNumber))
                 {
-                    form.GetField("form1[0].#subform[2].ISSUING_AGENCY[0]").SetValue(userApplication.Application.License?.IssuingCounty, true);
-                    form.GetField("form1[0].#subform[2].ISSUE_DATE[0]").SetValue(userApplication.Application.License?.IssueDate, true);
-                    form.GetField("form1[0].#subform[2].CCW_NO[0]").SetValue(userApplication.Application.License?.PermitNumber, true);
+                    form.GetField("form1[0].#subform[2].ISSUING_AGENCY[0]").SetValue(userApplication.Application.QualifyingQuestions.QuestionOneAgency, true);
+                    form.GetField("form1[0].#subform[2].ISSUE_DATE[0]").SetValue(userApplication.Application.QualifyingQuestions.QuestionOneIssueDate, true);
+                    form.GetField("form1[0].#subform[2].CCW_NO[0]").SetValue(userApplication.Application.QualifyingQuestions.QuestionOneNumber, true);
                 }
                 else
                 {
