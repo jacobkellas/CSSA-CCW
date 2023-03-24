@@ -20,7 +20,6 @@ echo
 # CSSA_CERT_KEY_VAULT_RG: This is the resource group where the CSSA wildcard certificate is stored (sdsd-gen-p-rg)
 # CSSA_CERT_KEY_VAULT_NAME: This is the name of hte key vault where the CSSA wildcard certificate is stored (sdsd-gen-p-kv)
 # CSSA_CERT_SECRET_NAME: This is the name of the secret where the CSSA wildcard certificate is stored (star-cssa-cloud)
-# CSSA_CERT_SECRET_VERSION: This identifies the version of the certificate secret to use (Latest)
 # APP_DOMAIN_TYPE: This identifies the type of domain the user chose during deployment (private_domain or cssa_cloud_domain)
 
 # These settings are only used when the user select private/custom domain

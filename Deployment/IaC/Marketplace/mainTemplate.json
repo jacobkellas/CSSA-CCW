@@ -201,7 +201,6 @@
 
     "wa_hostnamessl_ep_host": ".azurewebsites.us",
     "wa_hostnamessl_scm_ep_host": ".scm.azurewebsites.us",
-    "sa_static_web_ep_host": ".z3.web.core.usgovcloudapi.net",
 
     "instance_number": "[concat('-', parameters('instance_number'))]",
 
@@ -344,9 +343,9 @@
     "cdn_profile_name": "[toLower(concat(variables('rn_cdn_profile'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), variables('instance_number')))]",
     "cdn_admin_endpoint_name": "[toLower(concat(variables('rn_cdn_endpoint'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-admin', variables('instance_number')))]",
     "cdn_public_endpoint_name": "[toLower(concat(variables('rn_cdn_endpoint'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-public', variables('instance_number')))]",
-    "cdn_admin_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-admin.cssa.cloud')]",
-    "cdn_public_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '.cssa.cloud')]",
-    "cdn_api_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-api.cssa.cloud')]",
+    // "cdn_admin_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-admin.cssa.cloud')]",
+    // "cdn_public_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '.cssa.cloud')]",
+    // "cdn_api_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-api.cssa.cloud')]",
 
     "default_tags": {
       "application_name": "ccw",
@@ -5348,11 +5347,11 @@
           },
           {
             "name": "CSSA_CDN_PROFILE_NAME",
-            "value": "#{CSSA_CDN_PROFILE_NAME}#"
+            "value": "[variables('cdn_profile_name')]"
           },
           {
             "name": "CSSA_CDN_ENDPOINT_NAME",
-            "value": "#{CSSA_CDN_ENDPOINT_NAME}#"
+            "value": "[variables('cdn_admin_endpoint_name')]"
           },
           {
             "name": "CSSA_CDN_ENDPOINT_TYPE",
@@ -5373,10 +5372,6 @@
           {
             "name": "CSSA_CERT_SECRET_NAME",
             "value": "#{CSSA_CERT_SECRET_NAME}#"
-          },
-          {
-            "name": "CSSA_CERT_SECRET_VERSION",
-            "value": "#{CSSA_CERT_SECRET_VERSION}#"
           },
           {
             "name": "AGENCY_ORI",
@@ -5488,11 +5483,11 @@
           },
           {
             "name": "CSSA_CDN_PROFILE_NAME",
-            "value": "#{CSSA_CDN_PROFILE_NAME}#"
+            "value": "[variables('cdn_profile_name')]"
           },
           {
             "name": "CSSA_CDN_ENDPOINT_NAME",
-            "value": "#{CSSA_CDN_ENDPOINT_NAME}#"
+            "value": "[variables('cdn_public_endpoint_name')]"
           },
           {
             "name": "CSSA_CDN_ENDPOINT_TYPE",
@@ -5513,10 +5508,6 @@
           {
             "name": "CSSA_CERT_SECRET_NAME",
             "value": "#{CSSA_CERT_SECRET_NAME}#"
-          },
-          {
-            "name": "CSSA_CERT_SECRET_VERSION",
-            "value": "#{CSSA_CERT_SECRET_VERSION}#"
           },
           {
             "name": "AGENCY_ORI",
