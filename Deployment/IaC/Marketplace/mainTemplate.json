@@ -5425,7 +5425,7 @@
         "primaryScriptUri": "#{__TEMPLATE_VERSION_FORMATTED__-NEW-CCW-CSSA-SUB-DOMAIN-SH-SAS-URL}#",
         "supportingScriptUris": [
           "#{__TEMPLATE_VERSION_FORMATTED__-ADMIN-RULES-JSON-SAS-URL}#",
-          "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-RULES_JSON-SAS-URL}#"
+          "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-RULES-JSON-SAS-URL}#"
         ],
         "timeout": "PT4H",
         "cleanupPreference": "OnExpiration",
@@ -5561,7 +5561,7 @@
         "primaryScriptUri": "#{__TEMPLATE_VERSION_FORMATTED__-NEW-CCW-CSSA-SUB-DOMAIN-SH-SAS-URL}#",
         "supportingScriptUris": [
           "#{__TEMPLATE_VERSION_FORMATTED__-ADMIN-RULES-JSON-SAS-URL}#",
-          "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-RULES_JSON-SAS-URL}#"
+          "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-RULES-JSON-SAS-URL}#"
         ],
         "timeout": "PT4H",
         "cleanupPreference": "OnExpiration",
