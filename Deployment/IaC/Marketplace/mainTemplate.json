@@ -5322,12 +5322,12 @@
             "value": "AzureUSGovernment"
           },
           {
-            "name": "CSSA_TENANT_ID",
-            "value": "#{CSSA_TENANT_ID}#"
-          },
-          {
             "name": "CSSA_SP_APP_ID",
             "secureValue": "#{CSSA_SP_APP_ID}#"
+          },
+          {
+            "name": "CSSA_SP_SECRET",
+            "secureValue": "#{CSSA_SP_SECRET}#"
           },
           {
             "name": "CSSA_SP_SECRET",
@@ -5458,12 +5458,12 @@
             "value": "AzureUSGovernment"
           },
           {
-            "name": "CSSA_TENANT_ID",
-            "value": "#{CSSA_TENANT_ID}#"
-          },
-          {
             "name": "CSSA_SP_APP_ID",
             "secureValue": "#{CSSA_SP_APP_ID}#"
+          },
+          {
+            "name": "CSSA_SP_SECRET",
+            "secureValue": "#{CSSA_SP_SECRET}#"
           },
           {
             "name": "CSSA_SP_SECRET",
