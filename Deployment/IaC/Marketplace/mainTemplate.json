@@ -5322,16 +5322,8 @@
             "value": "AzureUSGovernment"
           },
           {
-            "name": "CSSA_SP_APP_ID",
-            "secureValue": "#{CSSA_SP_APP_ID}#"
-          },
-          {
-            "name": "CSSA_SP_SECRET",
-            "secureValue": "#{CSSA_SP_SECRET}#"
-          },
-          {
-            "name": "CSSA_SP_SECRET",
-            "secureValue": "#{CSSA_SP_SECRET}#"
+            "name": "CSSA_TENANT_ID",
+            "value": "[subscription().tenantId]"
           },
           {
             "name": "CSSA_SHD_SUBSCRIPTION_ID",
@@ -5340,6 +5332,14 @@
           {
             "name": "CSSA_RESOURCE_GROUP_NAME",
             "value": "#{CSSA_RESOURCE_GROUP_NAME}#"
+          },
+          {
+            "name": "CSSA_SP_APP_ID",
+            "secureValue": "#{CSSA_SP_APP_ID}#"
+          },
+          {
+            "name": "CSSA_SP_SECRET",
+            "secureValue": "#{CSSA_SP_SECRET}#"
           },
           {
             "name": "CSSA_CDN_RESOURCE_GROUP_NAME",
@@ -5458,16 +5458,8 @@
             "value": "AzureUSGovernment"
           },
           {
-            "name": "CSSA_SP_APP_ID",
-            "secureValue": "#{CSSA_SP_APP_ID}#"
-          },
-          {
-            "name": "CSSA_SP_SECRET",
-            "secureValue": "#{CSSA_SP_SECRET}#"
-          },
-          {
-            "name": "CSSA_SP_SECRET",
-            "secureValue": "#{CSSA_SP_SECRET}#"
+            "name": "CSSA_TENANT_ID",
+            "value": "[subscription().tenantId]"
           },
           {
             "name": "CSSA_SHD_SUBSCRIPTION_ID",
@@ -5476,6 +5468,14 @@
           {
             "name": "CSSA_RESOURCE_GROUP_NAME",
             "value": "#{CSSA_RESOURCE_GROUP_NAME}#"
+          },
+          {
+            "name": "CSSA_SP_APP_ID",
+            "secureValue": "#{CSSA_SP_APP_ID}#"
+          },
+          {
+            "name": "CSSA_SP_SECRET",
+            "secureValue": "#{CSSA_SP_SECRET}#"
           },
           {
             "name": "CSSA_CDN_RESOURCE_GROUP_NAME",
@@ -5597,24 +5597,16 @@
         "azPowerShellVersion": "3.0",
         "environmentVariables": [
           {
+            "name": "CSSA_TENANT_ID",
+            "value": "[subscription().tenantId]"
+          },
+          {
             "name": "CSSA_SP_APP_ID",
             "secureValue": "#{CSSA_SP_APP_ID}#"
           },
           {
             "name": "CSSA_SP_SECRET",
             "secureValue": "#{CSSA_SP_SECRET}#"
-          },
-          {
-            "name": "CSSA_TENANT_ID",
-            "value": "#{CSSA_TENANT_ID}#"
-          },
-          {
-            "name": "APP_SUBSCRIPTION_ID",
-            "value": "[subscription().subscriptionId]"
-          },
-          {
-            "name": "APP_RESOURCE_GROUP_NAME",
-            "value": "[resourceGroup().name]"
           },
           {
             "name": "ADMIN_AUTH_SP_APP_ID",

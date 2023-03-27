@@ -60,7 +60,8 @@ fi
 
 if [ $CSSA_CDN_ENDPOINT_TYPE == 'admin' ]
 then
-    $APPLICATION_NAME += '-admin'
+    APPLICATION_NAME="$APPLICATION_NAME-admin";
+    echo "CSSA_CDN_ENDPOINT_TYPE: " $CSSA_CDN_ENDPOINT_TYPE "using ADMIN configuration" $APPLICATION_NAME;
 fi
 
 echo "CLOUD_TYPE: " $CLOUD_TYPE
@@ -95,11 +96,12 @@ echo
 echo "Setting Azure cloud:" $CLOUD_TYPE
 result=$(az cloud set -n $CLOUD_TYPE)
 echo "Logging in with Azure CLI:" $CSSA_TENANT_ID $CSSA_SP_APP_ID
-result=$(az login --service-principal --tenant $CSSA_TENANT_ID -u $CSSA_SP_APP_ID -p $CSSA_SP_SECRET)
+result=$(az login --service-principal --tenant $CSSA_TENANT_ID -u $CSSA_SP_APP_ID -p "$CSSA_SP_SECRET")
 echo "Setting default subscription:" $CSSA_SHD_SUBSCRIPTION_ID
 result=$(az account set -s $CSSA_SHD_SUBSCRIPTION_ID)
 az account show
 echo
+
 
 echo "Configuring storage account static website:" $APPLICATION_RESOURCE_GROUP_NAME"/"$APPLICATION_UI_SA_NAME
 staticWebResult=$(az storage blob service-properties update --subscription $APPLICATION_SUBSCRIPTION_ID --account-name $APPLICATION_UI_SA_NAME --index-document index.html --static-website true)
