@@ -193,7 +193,7 @@ endpointResult=$(
         --content-types-to-compress $CompressedContentTypes \
         --tags ori=$ori agency=$agency application=ccw
     )
-
+    
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$endpointResult"; fi;
 
 echo "Created:" $CSSA_CDN_ENDPOINT_NAME
@@ -216,7 +216,7 @@ echo
 
 echo "Creating custom domain" $dns_host_name
 customDomainResult=$(az cdn custom-domain create \
-        --resource-group $CSSA_RESOURCE_GROUP_NAME \
+        --resource-group $CSSA_CDN_RESOURCE_GROUP_NAME \
         --profile-name $CSSA_CDN_PROFILE_NAME \
         --endpoint-name $CSSA_CDN_ENDPOINT_NAME \
         --hostname $dns_host_name \
@@ -229,7 +229,7 @@ echo
 
 echo "Enabling HTTPS on custom domain" $dns_host_name
 enableHttpsResult=$(az cdn custom-domain enable-https \
-        --resource-group $CSSA_RESOURCE_GROUP_NAME \
+        --resource-group $CSSA_CDN_RESOURCE_GROUP_NAME \
         --profile-name $CSSA_CDN_PROFILE_NAME \
         --endpoint-name $CSSA_CDN_ENDPOINT_NAME \
         --name $dns_hostname_name \
