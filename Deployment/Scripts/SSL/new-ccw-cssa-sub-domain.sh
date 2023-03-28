@@ -39,6 +39,12 @@ echo
 # CUSTOM_CERT_KEY_VAULT_RID: This is the resource id (RID) of the key vault that holds the private/custom certificate (/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.KeyVault/vaults/{keyVaultName})
 # CUSTOM_CERT_SECRET_NAME: This is the secret name of the private/custom certififcate
 
+if [ $CSSA_CDN_ENDPOINT_TYPE == 'admin' ]
+then
+    APPLICATION_NAME="$APPLICATION_NAME-admin";
+    echo "CSSA_CDN_ENDPOINT_TYPE: " $CSSA_CDN_ENDPOINT_TYPE "using ADMIN configuration" $APPLICATION_NAME;
+fi
+
 dns_sub_domain_name=$APPLICATION_NAME-$AGENCY_ABBREVIATION
 
 # If user chose private/custom domain we must remap the correct values provided from MP UI
@@ -56,12 +62,6 @@ then
     CSSA_CERT_SECRET_NAME=$CUSTOM_CERT_SECRET_NAME
 
     dns_sub_domain_name=$CUSTOM_APP_CNAME_ALIAS
-fi
-
-if [ $CSSA_CDN_ENDPOINT_TYPE == 'admin' ]
-then
-    APPLICATION_NAME="$APPLICATION_NAME-admin";
-    echo "CSSA_CDN_ENDPOINT_TYPE: " $CSSA_CDN_ENDPOINT_TYPE "using ADMIN configuration" $APPLICATION_NAME;
 fi
 
 echo "CLOUD_TYPE: " $CLOUD_TYPE
