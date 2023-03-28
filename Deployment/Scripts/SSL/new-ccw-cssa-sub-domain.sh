@@ -39,6 +39,8 @@ echo
 # CUSTOM_CERT_KEY_VAULT_RID: This is the resource id (RID) of the key vault that holds the private/custom certificate (/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.KeyVault/vaults/{keyVaultName})
 # CUSTOM_CERT_SECRET_NAME: This is the secret name of the private/custom certififcate
 
+API_APPLICATION_NAME="$APPLICATION_NAME-api-$AGENCY_ABBREVIATION";
+
 if [ $CSSA_CDN_ENDPOINT_TYPE == 'admin' ]
 then
     APPLICATION_NAME="$APPLICATION_NAME-admin";
@@ -81,6 +83,7 @@ echo "APPLICATION_SUBSCRIPTION_ID: " $APPLICATION_SUBSCRIPTION_ID
 echo "APPLICATION_RESOURCE_GROUP_NAME: " $APPLICATION_RESOURCE_GROUP_NAME
 echo "APPLICATION_NAME: " $APPLICATION_NAME
 echo "APPLICATION_UI_SA_NAME: " $APPLICATION_UI_SA_NAME
+echo "API_APPLICATION_NAME:" $API_APPLICATION_NAME
 echo "CSSA_CERT_KEY_VAULT_RG: " $CSSA_CERT_KEY_VAULT_RG
 echo "CSSA_CERT_KEY_VAULT_NAME: " $CSSA_CERT_KEY_VAULT_NAME
 echo "CSSA_CERT_SECRET_NAME: " $CSSA_CERT_SECRET_NAME
@@ -116,6 +119,9 @@ echo "WEB_CONTENT_URL: " $WEB_CONTENT_URL
 echo
 
 dns_host_name=$dns_sub_domain_name.$CSSA_DNS_ROOT_ZONE
+API_HOST_NAME=$API_APPLICATION_NAME"."$CSSA_DNS_ROOT_ZONE
+
+echo "API_HOST_NAME:" $API_HOST_NAME
 
 # Default to Gov cloud, change if not
 cname_alias=$CSSA_CDN_ENDPOINT_NAME".azureedge.us"
@@ -151,7 +157,7 @@ then
     if [ -n "$APPLICATION_FW_PUBLIC_IPA" ] # -n If NOT NULL/EMPTY
     then 
         echo "Creating API Host record"
-        result=$(az network dns record-set a add-record --subscription $CSSA_SHD_SUBSCRIPTION_ID -g $CSSA_RESOURCE_GROUP_NAME -z $CSSA_DNS_ROOT_ZONE -n $dns_sub_domain_name"-api" -a "$APPLICATION_FW_PUBLIC_IPA")
+        result=$(az network dns record-set a add-record --subscription $CSSA_SHD_SUBSCRIPTION_ID -g $CSSA_RESOURCE_GROUP_NAME -z $CSSA_DNS_ROOT_ZONE -n $API_HOST_NAME -a "$APPLICATION_FW_PUBLIC_IPA")
         if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$result"; fi;
         echo "Created "$dns_sub_domain_name"-api record"
     fi
