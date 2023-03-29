@@ -12,11 +12,15 @@ apt-get --yes upgrade
 apt install curl
 curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
+# $env:DEPLOY_FROM_MP="true"
 # $env:CSSA_SP_APP_ID="12341234-1234-1234-1234-123412341234"
 # $env:CSSA_SP_SECRET="*****************************"
 # $env:CSSA_TENANT_ID="12341234-1234-1234-1234-123412341234"
+# $env:AGENCY_ABBREVIATION="sdsd"
+# $env:ENVIRONMENT="PROD"
 # $env:APPLICATION_SUBSCRIPTION_ID="12341234-1234-1234-1234-123412341234"
 # $env:APPLICATION_RESOURCE_GROUP_NAME="some-resource-group"
+# $env:APPLICATION_NAME="some-application-name"
 
 # # UI config.json settings 
 # $env:AUTH_SP_APP_ID="12341234-1234-1234-1234-123412341234"
@@ -25,15 +29,18 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # $env:AUTH_PRIMARY_DOMAIN="somedomain.gov"
 # $env:DEFAULT_COUNTY="Some County"
 
-# $env:AGENCY_ABBREVIATION="sdsd"
-# $env:ENVIRONMENT="PROD"
-# $env:ENABLE_BEATS="false"
 # $env:ENABLE_STOP_DEBUGGER="false"
 # $env:DEPLOY_WEB_CONFIG_JSON="false"
 
-Write-Host "CSSA_SP_APP_ID: $env:CSSA_SP_APP_ID"
+Write-Host "DEPLOY_FROM_MP: $env:DEPLOY_FROM_MP"
 Write-Host "CSSA_TENANT_ID: $env:CSSA_TENANT_ID"
+
+Write-Host "APPLICATION_SUBSCRIPTION_ID: $env:APPLICATION_SUBSCRIPTION_ID"
 Write-Host "APPLICATION_RESOURCE_GROUP_NAME: $env:APPLICATION_RESOURCE_GROUP_NAME"
+Write-Host "AGENCY_ABBREVIATION: $env:AGENCY_ABBREVIATION"
+Write-Host "ENVIRONMENT: $env:ENVIRONMENT"
+Write-Host "APPLICATION_NAME: $env:APPLICATION_NAME"
+
 Write-Host "DEPLOY_WEB_CONFIG_JSON: $env:DEPLOY_WEB_CONFIG_JSON"
 
 Write-Host "logging into azure powershell"
@@ -100,6 +107,7 @@ az storage blob upload-batch --overwrite true --timeout 300 -d '$web' --account-
 if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
 {
     Write-Host "Creating admin config.json"
+
     
     Write-Host "AUTH_SP_APP_ID: $env:ADMIN_AUTH_SP_APP_ID"
     Write-Host "AUTH_TENANT_ID: $env:ADMIN_AUTH_TENANT_ID"
@@ -119,7 +127,7 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     Expand-Archive -Path "./$fileName" -DestinationPath "./" -Force
     Write-Host "Filename:" $fileName
     Get-ChildItem -Path "./"
-
+    
     Rename-Item -Path $fileName -NewName "config.json" -Force
     
     Write-Host "Displaying current config.json"
@@ -134,40 +142,52 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
     
     $configJson = $configJson.Replace("#{Environment}#", $env:ENVIRONMENT)
-
+    
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)
-
+    
     $configJson = $configJson.Replace("#{DefaultCounty}#", $env:DEFAULT_COUNTY)
     $configJson = $configJson.Replace("#{DisplayDebugger}#", $env:ENABLE_STOP_DEBUGGER)
+    
+    if("true" -eq $env:DEPLOY_FROM_MP) {
+        $API_CUSTOM_DOMAIN_URL="https://$env:APPLICATION_NAME-api-$AGENCY_ABBREVIATION.cssa.cloud"
 
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("admin") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $appName)
-
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("application") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $appName)
+        $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appAPI_CUSTOM_DOMAIN_URLame)
+        $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+    }
+    else {
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("admin") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $appName)
     
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("document") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $appName)
-    
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("payment") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appName)
-    
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("schedule") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $appName)
-    
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("userprofile") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $appName)
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("application") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("document") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("payment") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("schedule") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("userprofile") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $appName)
+    }
 
     Write-Host "Saving config.json"
     Set-Content -Path "config.json" -Value $configJson -Force
@@ -228,30 +248,42 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
 
     $configJson = $configJson.Replace("#{DefaultCounty}#", $env:DEFAULT_COUNTY)
     $configJson = $configJson.Replace("#{DisplayDebugger}#", $env:ENABLE_STOP_DEBUGGER)
+    
+    if("true" -eq $env:DEPLOY_FROM_MP) {
+        $API_CUSTOM_DOMAIN_URL="https://$env:APPLICATION_NAME-api-$AGENCY_ABBREVIATION.cssa.cloud"
 
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("admin") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $appName)
-
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("application") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $appName)
+        $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appAPI_CUSTOM_DOMAIN_URLame)
+        $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+        $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
+    }
+    else {
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("admin") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $appName)
     
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("document") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $appName)
-    
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("payment") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appName)
-    
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("schedule") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $appName)
-    
-    $appName = ($webappNames | Where-Object { $_.Name.Contains("userprofile") }).Name
-    $appName = "htps://$appName.azurewebsites.us"
-    $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $appName)
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("application") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("document") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("payment") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("schedule") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $appName)
+        
+        $appName = ($webappNames | Where-Object { $_.Name.Contains("userprofile") }).Name
+        $appName = "htps://$appName.azurewebsites.us"
+        $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $appName)
+    }
 
     Write-Host "Saving config.json"
     Set-Content -Path "config.json" -Value $configJson -Force
