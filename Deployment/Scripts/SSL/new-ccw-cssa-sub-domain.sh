@@ -74,7 +74,7 @@ echo "CSSA_RESOURCE_GROUP_NAME: " $CSSA_RESOURCE_GROUP_NAME
 
 echo "CSSA_CDN_RESOURCE_GROUP_NAME: " $CSSA_CDN_RESOURCE_GROUP_NAME
 echo "CSSA_CDN_PROFILE_NAME: " $CSSA_CDN_PROFILE_NAME
-echo "CSSA_CDN_CSSA_CDN_ENDPOINT_NAME: " $CSSA_CDN_CSSA_CDN_ENDPOINT_NAME
+echo "CSSA_CDN_ENDPOINT_NAME: " $CSSA_CDN_ENDPOINT_NAME
 
 echo "CSSA_DNS_ROOT_ZONE: " $CSSA_DNS_ROOT_ZONE
 echo "AGENCY_ORI: " $AGENCY_ORI
@@ -109,12 +109,12 @@ echo
 echo "Configuring storage account static website:" $APPLICATION_RESOURCE_GROUP_NAME"/"$APPLICATION_UI_SA_NAME
 staticWebResult=$(az storage blob service-properties update --subscription $APPLICATION_SUBSCRIPTION_ID --account-name $APPLICATION_UI_SA_NAME --index-document index.html --static-website true)
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$staticWebResult"; fi;
+
 WEB_CONTENT_URL1=$(az storage account show --subscription $APPLICATION_SUBSCRIPTION_ID -g $APPLICATION_RESOURCE_GROUP_NAME -n $APPLICATION_UI_SA_NAME --query "primaryEndpoints.web" --output tsv)
 echo "WEB_CONTENT_URL1: " $WEB_CONTENT_URL1
 WEB_CONTENT_URL2="${WEB_CONTENT_URL1///$''}"
 echo "WEB_CONTENT_URL2: " $WEB_CONTENT_URL2
 WEB_CONTENT_URL="${WEB_CONTENT_URL2/https:$''}"
-echo
 echo "WEB_CONTENT_URL: " $WEB_CONTENT_URL
 echo
 
@@ -168,34 +168,31 @@ echo "Creating CDN Profile" $CSSA_CDN_PROFILE_NAME
 
 profileResult=$(az cdn profile create --subscription $CSSA_SHD_SUBSCRIPTION_ID -g $CSSA_CDN_RESOURCE_GROUP_NAME -n $CSSA_CDN_PROFILE_NAME -l Global --sku Standard_Microsoft)
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$profileResult"; fi;
-
 echo "Created:" $CSSA_CDN_PROFILE_NAME
 echo
 
 echo "Creating CDN Endpoint" $CSSA_CDN_ENDPOINT_NAME
-CompressedContentTypes="application/octet-stream image/bmp text/css text/csv application/msword application/vnd.ms-fontobject image/gif text/html image/vnd.microsoft.icon text/calendar image/jpeg text/javascript application/json application/ld+json text/javascript font/otf image/png application/pdf application/rtf image/svg+xml image/tiff font/ttf text/plain font/woff font/woff2 application/xhtml+xml application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet application/xml"
 
  # Force these values to lowercase
 ori=${AGENCY_ORI,,}
 agency=${AGENCY_ABBREVIATION,,}
+
+# echo "az cdn endpoint create --subscription $CSSA_SHD_SUBSCRIPTION_ID --resource-group $CSSA_CDN_RESOURCE_GROUP_NAME --profile-name $CSSA_CDN_PROFILE_NAME --name $CSSA_CDN_ENDPOINT_NAME --location Global --origin $WEB_CONTENT_URL --origin-host-header $WEB_CONTENT_URL --enable-compression true --no-http false --no-https false"
 endpointResult=$(
     az cdn endpoint create \
         --subscription $CSSA_SHD_SUBSCRIPTION_ID \
         --resource-group $CSSA_CDN_RESOURCE_GROUP_NAME \
         --profile-name $CSSA_CDN_PROFILE_NAME \
         --name $CSSA_CDN_ENDPOINT_NAME \
-        --location "Global" \
+        --location Global \
         --origin $WEB_CONTENT_URL \
         --origin-host-header $WEB_CONTENT_URL \
         --enable-compression true \
         --no-http false \
         --no-https false \
-        --content-types-to-compress $CompressedContentTypes \
         --tags ori=$ori agency=$agency application=ccw
     )
-    
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$endpointResult"; fi;
-
 echo "Created:" $CSSA_CDN_ENDPOINT_NAME
 echo
 
@@ -208,27 +205,26 @@ geoFilterResult=$(
         --name $CSSA_CDN_ENDPOINT_NAME \
         --set geoFilters="[{\"relativePath\":\"/\",\"action\":\"Allow\",\"countryCodes\":[\"US\"]}]"
     )
-
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$geoFilterResult"; fi;
-
 echo "Configured Geo filters:" $CSSA_CDN_ENDPOINT_NAME
 echo
 
 echo "Creating custom domain" $dns_host_name
-customDomainResult=$(az cdn custom-domain create \
+customDomainResult=$(
+    az cdn custom-domain create \
         --resource-group $CSSA_CDN_RESOURCE_GROUP_NAME \
         --profile-name $CSSA_CDN_PROFILE_NAME \
         --endpoint-name $CSSA_CDN_ENDPOINT_NAME \
         --hostname $dns_host_name \
-        --name $dns_hostname_name)
-
+        --name $dns_hostname_name
+    )
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$customDomainResult"; fi;
-
 echo "Created:" $dns_host_name
 echo
 
 echo "Enabling HTTPS on custom domain" $dns_host_name
-enableHttpsResult=$(az cdn custom-domain enable-https \
+enableHttpsResult=$(
+    az cdn custom-domain enable-https \
         --resource-group $CSSA_CDN_RESOURCE_GROUP_NAME \
         --profile-name $CSSA_CDN_PROFILE_NAME \
         --endpoint-name $CSSA_CDN_ENDPOINT_NAME \
@@ -238,10 +234,9 @@ enableHttpsResult=$(az cdn custom-domain enable-https \
         --user-cert-group-name $CSSA_RESOURCE_GROUP_NAME \
         --user-cert-vault-name $CSSA_CERT_KEY_VAULT_NAME \
         --user-cert-secret-name $CSSA_CERT_SECRET_NAME \
-        --user-cert-protocol-type 'sni')
-
+        --user-cert-protocol-type 'sni'
+    )
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$enableHttpsResult"; fi;
-
 echo "Enabled Https:" $dns_host_name
 echo
 
@@ -260,9 +255,7 @@ rulesResult=$(
         --name $CSSA_CDN_ENDPOINT_NAME \
         --set deliveryPolicy.rules="$rulesFileContent"
     )
-
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$enableHttpsResult"; fi;
-
 echo "Created rules:" $CSSA_CDN_ENDPOINT_NAME
 echo
 
