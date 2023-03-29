@@ -5953,6 +5953,10 @@
         "azPowerShellVersion": "3.0",
         "environmentVariables": [
           {
+            "name": "DEPLOY_FROM_MP",
+            "value": "true"
+          },
+          {
             "name": "CSSA_TENANT_ID",
             "value": "[subscription().tenantId]"
           },
