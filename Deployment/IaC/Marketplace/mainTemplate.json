@@ -2280,7 +2280,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -2630,7 +2630,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -2922,7 +2922,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -3210,7 +3210,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -3501,7 +3501,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -3780,7 +3780,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -4073,7 +4073,7 @@
             "action": "Allow",
             "description": "Allow traffic from Azure so we can deploy he application",
             "headers": null,
-            "ipAddress": "AzureCloud.usgovvirginia",
+            "ipAddress": "AzureCloud",
             "name": "allow_azure_cloud",
             "priority": 1000,
             "subnetMask": null,
@@ -5607,6 +5607,14 @@
           {
             "name": "CSSA_SP_SECRET",
             "secureValue": "#{CSSA_SP_SECRET}#"
+          },
+          {
+            "name": "APPLICATION_SUBSCRIPTION_ID",
+            "value": "[subscription().subscriptionId]"
+          },
+          {
+            "name": "APPLICATION_RESOURCE_GROUP_NAME",
+            "value": "[resourceGroup().Name]"
           },
           {
             "name": "ADMIN_AUTH_SP_APP_ID",

@@ -15,8 +15,8 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # $env:CSSA_SP_APP_ID="12341234-1234-1234-1234-123412341234"
 # $env:CSSA_SP_SECRET="*****************************"
 # $env:CSSA_TENANT_ID="12341234-1234-1234-1234-123412341234"
-# $env:APP_SUBSCRIPTION_ID="12341234-1234-1234-1234-123412341234"
-# $env:APP_RESOURCE_GROUP_NAME="some-resource-group"
+# $env:APPLICATION_SUBSCRIPTION_ID="12341234-1234-1234-1234-123412341234"
+# $env:APPLICATION_RESOURCE_GROUP_NAME="some-resource-group"
 
 # # UI config.json settings 
 # $env:AUTH_SP_APP_ID="12341234-1234-1234-1234-123412341234"
@@ -33,7 +33,7 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 Write-Host "CSSA_SP_APP_ID: $env:CSSA_SP_APP_ID"
 Write-Host "CSSA_TENANT_ID: $env:CSSA_TENANT_ID"
-Write-Host "APP_RESOURCE_GROUP_NAME: $env:APP_RESOURCE_GROUP_NAME"
+Write-Host "APPLICATION_RESOURCE_GROUP_NAME: $env:APPLICATION_RESOURCE_GROUP_NAME"
 Write-Host "DEPLOY_WEB_CONFIG_JSON: $env:DEPLOY_WEB_CONFIG_JSON"
 
 Write-Host "logging into azure powershell"
@@ -41,7 +41,7 @@ Write-Host "logging into azure powershell"
 [string]$userpassword = $env:CSSA_SP_SECRET
 [securestring]$secstringpassword = convertto-securestring $userpassword -asplaintext -force
 [pscredential]$credobject = new-object system.management.automation.pscredential ($username, $secstringpassword)
-Connect-AzAccount -environment azureusgovernment -Tenant $env:CSSA_TENANT_ID -Subscription $env:APP_SUBSCRIPTION_ID -ServicePrincipal -Credential $credobject
+Connect-AzAccount -environment azureusgovernment -Tenant $env:CSSA_TENANT_ID -Subscription $env:APPLICATION_SUBSCRIPTION_ID -ServicePrincipal -Credential $credobject
 
 Write-Host "checking login context"
 Get-AzContext
@@ -49,12 +49,12 @@ Get-AzContext
 Write-Host "logging into azure cli"
 az cloud set -n azureusgovernment 
 az login --service-principal --tenant $env:CSSA_TENANT_ID -u $env:CSSA_SP_APP_ID -p $env:CSSA_SP_SECRET
-az account set -s $env:APP_SUBSCRIPTION_ID
+az account set -s $env:APPLICATION_SUBSCRIPTION_ID
 
 Write-Host "checking cli login context"
 az account show
 
-$webappNames = (az webapp list -g $env:APP_RESOURCE_GROUP_NAME --query "[].{Name:name}" -o json) | ConvertFrom-Json
+$webappNames = (az webapp list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query "[].{Name:name}" -o json) | ConvertFrom-Json
 $webappNames = $webappNames | Sort-Object -Property Name
 
 foreach ($webappName in $webappNames) {
@@ -67,23 +67,29 @@ foreach ($webappName in $webappNames) {
     Write-Host "API Web App:" $webappName.Name
 
     Write-Host "Enabling SCM Access Restrictions"
-    $accessRestriction = (az webapp update -g $env:APP_RESOURCE_GROUP_NAME -n $webappName.Name  --set publicNetworkAccess=Enabled)
+    $accessRestriction = (az webapp update -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $webappName.Name  --set publicNetworkAccess=Enabled)
+
+    Write-Host "Reviewing app configuration"
+    az webapp show -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $webappName.Name
 
     Write-Host "Deploying function:" $webappName.Name
     $fileName = (Get-ChildItem -Filter "*$appName-api.zip").Name
     Write-Host "Deploying package:" $fileName
-    az webapp deployment source config-zip -g $env:APP_RESOURCE_GROUP_NAME --src "./$fileName" -n $webappName.Name
+    az webapp deployment source config-zip -g $env:APPLICATION_RESOURCE_GROUP_NAME --src "./$fileName" -n $webappName.Name
 
 
     Write-Host "Disabling SCM Access Restrictions"
-    $accessRestriction = (az webapp update -g $env:APP_RESOURCE_GROUP_NAME -n $webappName.Name  --set publicNetworkAccess=Disabled)
+    $accessRestriction = (az webapp update -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $webappName.Name  --set publicNetworkAccess=Disabled)
+
+    Write-Host "Reviewing app configuration"
+    az webapp show -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $webappName.Name
 
     Write-Host "Deployment complete:" $webappName.Name
     Write-Host
 }
 
 Write-Host "Publishing Admin UI package"
-$uiStorageAccountName = ((az storage account list -g $env:APP_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'a')].{Name:name}" -o json) | ConvertFrom-Json).Name
+$uiStorageAccountName = ((az storage account list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'a')].{Name:name}" -o json) | ConvertFrom-Json).Name
 Write-Host "Publishing to:" $uiStorageAccountName
 
 $fileName = (Get-ChildItem -Path "./" -Filter "*admin.zip").Name
@@ -168,7 +174,7 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
 }
 
 Write-Host "Publishing Public UI package"
-$uiStorageAccountName = ((az storage account list -g $env:APP_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'p')].{Name:name}" -o json) | ConvertFrom-Json).Name
+$uiStorageAccountName = ((az storage account list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'p')].{Name:name}" -o json) | ConvertFrom-Json).Name
 Write-Host "Publishing to:" $uiStorageAccountName
 
 $fileName = (Get-ChildItem -Path "./" -Filter "*public.zip").Name
