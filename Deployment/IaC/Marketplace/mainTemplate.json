@@ -274,8 +274,6 @@
     "sa_ct_public_name": "ccw-public-documents",
     "sa_ct_connstring_primary_name": "storage-ct-connection-primary",
     "sa_ct_connstring_secondary_name": "storage-ct-connection-secondary",
-    "sa_ct_primary_key_name": "storage-ct-primary",
-    "sa_ct_secondary_key_name": "storage-ct-secondary",
 
     "vnet_name": "[toLower(concat(variables('rn_vnet'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), variables('instance_number')))]",
     "sn_kv_name": "[toLower(concat(variables('rn_subnet'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-kv', variables('instance_number')))]",
@@ -935,6 +933,26 @@
       }
     },
     {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('vnet_name'))]",
+      "scope": "[format('Microsoft.Network/virtualNetworks/{0}', variables('vnet_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.KeyVault/vaults",
       "apiVersion": "2022-07-01",
       "name": "[variables('keyvault_name')]",
@@ -966,6 +984,35 @@
         "enabledForDiskEncryption": false,
         "enabledForTemplateDeployment": false,
         "enableSoftDelete": true
+      }
+    },
+    {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('keyvault_name'))]",
+      "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AuditEvent",
+            "enabled": true
+          },
+          {
+            "category": "AzurePolicyEvaluationDetails",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
       }
     },
     {
@@ -1559,40 +1606,6 @@
           "enabled": true
         },
         "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('sa_content_name'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name')), '2022-05-01').keys[1].value,';EndpointSuffix=', parameters('storage_ep_suff'))]"
-      }
-    },
-    {
-      "type": "Microsoft.KeyVault/vaults/secrets",
-      "apiVersion": "2022-07-01",
-      "name": "[concat(variables('keyvault_name'), '/', variables('sa_ct_primary_key_name'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name'))]"
-      ],
-      "properties": {
-        "contentType": "domain storage connection string",
-        "attributes": {
-          "enabled": true
-        },
-        "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name')), '2022-05-01').keys[0].value]"
-      }
-    },
-    {
-      "type": "Microsoft.KeyVault/vaults/secrets",
-      "apiVersion": "2022-07-01",
-      "name": "[concat(variables('keyvault_name'), '/', variables('sa_ct_secondary_key_name'))]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name'))]"
-      ],
-      "properties": {
-        "contentType": "domain storage connection string",
-        "attributes": {
-          "enabled": true
-        },
-        "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name')), '2022-05-01').keys[1].value]"
       }
     },
     {
@@ -2325,6 +2338,59 @@
       }
     },
     {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('wa_admin_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('wa_admin_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('wa_admin_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AppServiceAntivirusScanAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceHTTPLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceConsoleLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAppLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceFileAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceIPSecAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServicePlatformLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.Web/sites/hostNameBindings",
       "apiVersion": "2022-03-01",
       "name": "[concat(variables('wa_admin_name'), '/', variables('wa_admin_name'), variables('wa_hostnamessl_ep_host'))]",
@@ -2678,6 +2744,59 @@
       }
     },
     {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('wa_application_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('wa_application_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('wa_application_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AppServiceAntivirusScanAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceHTTPLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceConsoleLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAppLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceFileAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceIPSecAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServicePlatformLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.Web/sites/hostNameBindings",
       "apiVersion": "2022-03-01",
       "name": "[concat(variables('wa_application_name'), '/', variables('wa_application_name'), variables('wa_hostnamessl_ep_host'))]",
@@ -2969,6 +3088,59 @@
       }
     },
     {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('wa_document_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('wa_document_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('wa_document_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AppServiceAntivirusScanAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceHTTPLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceConsoleLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAppLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceFileAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceIPSecAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServicePlatformLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.Web/sites/hostNameBindings",
       "apiVersion": "2022-03-01",
       "name": "[concat(variables('wa_document_name'), '/', variables('wa_document_name'), variables('wa_hostnamessl_ep_host'))]",
@@ -3254,6 +3426,59 @@
         "healthCheckPath": "/health",
         "functionsRuntimeScaleMonitoringEnabled": false,
         "minimumElasticInstanceCount": 0
+      }
+    },
+    {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('wa_payment_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('wa_payment_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('wa_payment_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AppServiceAntivirusScanAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceHTTPLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceConsoleLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAppLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceFileAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceIPSecAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServicePlatformLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
       }
     },
     {
@@ -3548,6 +3773,59 @@
       }
     },
     {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('wa_schedule_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('wa_schedule_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('wa_schedule_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AppServiceAntivirusScanAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceHTTPLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceConsoleLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAppLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceFileAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceIPSecAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServicePlatformLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
+      }
+    },
+    {
       "type": "Microsoft.Web/sites/hostNameBindings",
       "apiVersion": "2022-03-01",
       "name": "[concat(variables('wa_schedule_name'), '/', variables('wa_schedule_name'), variables('wa_hostnamessl_ep_host'))]",
@@ -3824,6 +4102,59 @@
         "healthCheckPath": "/health",
         "functionsRuntimeScaleMonitoringEnabled": false,
         "minimumElasticInstanceCount": 0
+      }
+    },
+    {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('wa_userprofile_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('wa_userprofile_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('wa_userprofile_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "AppServiceAntivirusScanAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceHTTPLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceConsoleLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAppLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceFileAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServiceIPSecAuditLogs",
+            "enabled": true
+          },
+          {
+            "category": "AppServicePlatformLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
       }
     },
     {
@@ -4117,6 +4448,31 @@
         "functionAppScaleLimit": 0,
         "functionsRuntimeScaleMonitoringEnabled": false,
         "minimumElasticInstanceCount": 0
+      }
+    },
+    {
+      "type": "Microsoft.Insights/diagnosticSettings",
+      "apiVersion": "2021-05-01-preview",
+      "name": "[concat('ds-', variables('fa_reminders_name'))]",
+      "scope": "[format('Microsoft.Web/sites/{0}', variables('fa_reminders_name'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('fa_reminders_name'))]",
+        "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]"
+      ],
+      "properties": {
+        "workspaceId": "[resourceId('microsoft.operationalinsights/workspaces', variables('logAnalytics_weblogs_name'))]",
+        "logs": [
+          {
+            "category": "FunctionAppLogs",
+            "enabled": true
+          }
+        ],
+        "metrics": [
+          {
+            "category": "AllMetrics",
+            "enabled": true
+          }
+        ]
       }
     },
     {
@@ -5402,8 +5758,8 @@
             "value": "[parameters('public_app_domain_type')]"
           },
           {
-              "name" : "APPLICATION_FW_PUBLIC_IPA",
-              "value" : "[parameters('fw_public_ip_address')]"
+            "name": "APPLICATION_FW_PUBLIC_IPA",
+            "value": "[parameters('fw_public_ip_address')]"
           },
           {
             "name": "CUSTOM_PRIMARY_DOMAIN",
@@ -5538,8 +5894,8 @@
             "value": "[parameters('public_app_domain_type')]"
           },
           {
-              "name" : "APPLICATION_FW_PUBLIC_IPA",
-              "value" : "[parameters('fw_public_ip_address')]"
+            "name": "APPLICATION_FW_PUBLIC_IPA",
+            "value": "[parameters('fw_public_ip_address')]"
           },
           {
             "name": "CUSTOM_PRIMARY_DOMAIN",

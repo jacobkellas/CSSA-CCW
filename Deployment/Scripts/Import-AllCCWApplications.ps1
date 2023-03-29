@@ -146,21 +146,27 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     $configJson = $configJson.Replace("#{DisplayDebugger}#", $env:ENABLE_STOP_DEBUGGER)
 
     $appName = ($webappNames | Where-Object { $_.Name.Contains("admin") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $appName)
 
     $appName = ($webappNames | Where-Object { $_.Name.Contains("application") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("document") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("payment") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("schedule") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("userprofile") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $appName)
 
     Write-Host "Saving config.json"
@@ -224,21 +230,27 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     $configJson = $configJson.Replace("#{DisplayDebugger}#", $env:ENABLE_STOP_DEBUGGER)
 
     $appName = ($webappNames | Where-Object { $_.Name.Contains("admin") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $appName)
 
     $appName = ($webappNames | Where-Object { $_.Name.Contains("application") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("document") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{DocumentServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("payment") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{PaymentServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("schedule") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{ScheduleServicesBaseUrl}#", $appName)
     
     $appName = ($webappNames | Where-Object { $_.Name.Contains("userprofile") }).Name
+    $appName = "htps://$appName.azurewebsites.us"
     $configJson = $configJson.Replace("#{UserProfileServicesBaseUrl}#", $appName)
 
     Write-Host "Saving config.json"
