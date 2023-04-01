@@ -4935,8 +4935,7 @@
       "apiVersion": "2022-05-01",
       "name": "[concat(variables('pe_wa_admin_name'), '/default')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_admin_name'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZones_privatelink_azurewebsites_name'))]"
+        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_admin_name'))]"
       ],
       "properties": {
         "privateDnsZoneConfigs": [
@@ -4982,8 +4981,7 @@
       "apiVersion": "2022-05-01",
       "name": "[concat(variables('pe_wa_application_name'), '/default')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_application_name'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZones_privatelink_azurewebsites_name'))]"
+        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_application_name'))]"
       ],
       "properties": {
         "privateDnsZoneConfigs": [
@@ -5029,8 +5027,7 @@
       "apiVersion": "2022-05-01",
       "name": "[concat(variables('pe_wa_document_name'), '/default')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_document_name'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZones_privatelink_azurewebsites_name'))]"
+        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_document_name'))]"
       ],
       "properties": {
         "privateDnsZoneConfigs": [
@@ -5076,8 +5073,7 @@
       "apiVersion": "2022-05-01",
       "name": "[concat(variables('pe_wa_payment_name'), '/default')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_payment_name'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZones_privatelink_azurewebsites_name'))]"
+        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_payment_name'))]"
       ],
       "properties": {
         "privateDnsZoneConfigs": [
@@ -5123,8 +5119,7 @@
       "apiVersion": "2022-05-01",
       "name": "[concat(variables('pe_wa_schedule_name'), '/default')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_schedule_name'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZones_privatelink_azurewebsites_name'))]"
+        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_schedule_name'))]"
       ],
       "properties": {
         "privateDnsZoneConfigs": [
@@ -5170,8 +5165,7 @@
       "apiVersion": "2022-05-01",
       "name": "[concat(variables('pe_wa_userprofile_name'), '/default')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_userprofile_name'))]",
-        "[resourceId('Microsoft.Network/privateDnsZones', variables('privateDnsZones_privatelink_azurewebsites_name'))]"
+        "[resourceId('Microsoft.Network/privateEndpoints', variables('pe_wa_userprofile_name'))]"
       ],
       "properties": {
         "privateDnsZoneConfigs": [
