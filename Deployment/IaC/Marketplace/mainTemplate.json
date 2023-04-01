@@ -5368,7 +5368,7 @@
                         "id": "[concat(parameters('ag_resource_id'), '/frontendPorts/http-fe-port')]"
                       },
                       "protocol": "Http",
-                      "hostName": "[concat(variables('app_environment'), '-api.cssa.cloud')]",
+                      "hostName": "[concat(parameters('application'), '-api-', parameters('agency_abbreviation'), '.cssa.cloud')]",
                       "hostNames": [],
                       "requireServerNameIndication": false,
                       "customErrorConfigurations": []
@@ -5387,7 +5387,7 @@
                       "sslCertificate": {
                         "id": "[concat(parameters('ag_resource_id'), '/sslCertificates/star-cssa-cloud')]"
                       },
-                      "hostName": "[concat(variables('app_environment'), '-api.cssa.cloud')]",
+                      "hostName": "[concat(parameters('application'), '-api-', parameters('agency_abbreviation'), '.cssa.cloud')]",
                       "hostNames": [],
                       "requireServerNameIndication": false,
                       "customErrorConfigurations": []
