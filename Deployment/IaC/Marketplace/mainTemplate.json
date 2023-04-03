@@ -199,6 +199,11 @@
     "rn_cdn_profile": "cp",
     "rn_cdn_endpoint": "ce",
 
+
+    
+    "JwtBearerAAD__Authority": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'), '/v2.0/')]",
+    "JwtBearerB2C__Authority" : "[concat(parameters('public_auth_authority'), '/v2.0')]",
+
     "wa_hostnamessl_ep_host": ".azurewebsites.us",
     "wa_hostnamessl_scm_ep_host": ".scm.azurewebsites.us",
 
@@ -2153,7 +2158,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -2161,7 +2166,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -2499,7 +2504,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -2507,7 +2512,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -2897,7 +2902,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -2905,7 +2910,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -3249,7 +3254,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -3257,7 +3262,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -3590,7 +3595,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -3598,7 +3603,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -3938,7 +3943,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -3946,7 +3951,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -4271,7 +4276,7 @@
             },
             {
               "name": "JwtBearerAAD__Authority",
-              "value": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerAAD__Authority')]"
             },
             {
               "name": "JwtBearerAAD__ValidAudiences",
@@ -4279,7 +4284,7 @@
             },
             {
               "name": "JwtBearerB2C__Authority",
-              "value": "[concat(parameters('public_auth_authority'),'/',parameters('public_auth_tenant_id'))]"
+              "value": "[variables('JwtBearerB2C__Authority')]"
             },
             {
               "name": "JwtBearerB2C__ValidAudiences",
@@ -5529,7 +5534,7 @@
                       "pickHostNameFromBackendHttpSettings": true,
                       "minServers": 0,
                       "match": {
-                        "body": "Healthy",
+                        "body": "",
                         "statusCodes": [
                           "200-401"
                         ]
@@ -5549,7 +5554,7 @@
                       "pickHostNameFromBackendSettings": "false",
                       "minServers": 0,
                       "match": {
-                        "body": "Healthy",
+                        "body": "",
                         "statusCodes": [
                           "200-401"
                         ]
