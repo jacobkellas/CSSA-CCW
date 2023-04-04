@@ -154,7 +154,7 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     $configJson = $configJson.Replace("#{DisplayDebugger}#", $env:ENABLE_STOP_DEBUGGER)
     
     if("true" -eq $env:DEPLOY_FROM_MP) {
-        $API_CUSTOM_DOMAIN_URL="https://$env:APPLICATION_NAME-api-$AGENCY_ABBREVIATION.cssa.cloud"
+        $API_CUSTOM_DOMAIN_URL="https://$env:APPLICATION_NAME-api-$env:AGENCY_ABBREVIATION.cssa.cloud"
 
         $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
         $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
@@ -250,7 +250,7 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     $configJson = $configJson.Replace("#{DisplayDebugger}#", $env:ENABLE_STOP_DEBUGGER)
     
     if("true" -eq $env:DEPLOY_FROM_MP) {
-        $API_CUSTOM_DOMAIN_URL="https://$env:APPLICATION_NAME-api-$AGENCY_ABBREVIATION.cssa.cloud"
+        $API_CUSTOM_DOMAIN_URL="https://$env:APPLICATION_NAME-api-$env:AGENCY_ABBREVIATION.cssa.cloud"
 
         $configJson = $configJson.Replace("#{AdminServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
         $configJson = $configJson.Replace("#{ApplicationServicesBaseUrl}#", $API_CUSTOM_DOMAIN_URL)
