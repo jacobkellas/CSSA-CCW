@@ -37,6 +37,10 @@
         "type": "Microsoft.Common.DropDown",
         "label": "Agency",
         "toolTip": "Select the agency that you are deploying this application for.",
+        "multiselect": false,
+        "selectAll": false,
+        "filter": true,
+        "filterPlaceholder": "Select your agency",
         "constraints": {
           "allowedValues": [
             {
@@ -1248,7 +1252,8 @@
       "public_auth_fqdn": "[steps('steps_b2c_authentication').auth_fqdn]",
       "public_auth_app_id": "[steps('steps_b2c_authentication').auth_app_id]",
       "public_auth_tenant_id": "[steps('steps_b2c_authentication').auth_tenant_id]",
-      "public_auth_authority": "[concat(steps('steps_b2c_authentication').auth_authority, '/', steps('steps_b2c_authentication').auth_tenant_id, '/', steps('steps_b2c_authentication').auth_workflow)]",
+      "public_auth_authority": "[steps('steps_b2c_authentication').auth_authority]",
+      "public_auth_workflow": "steps('steps_b2c_authentication').auth_workflow",
       "agancy_size": "[basics('agancy_size')]",
       "asp_sku": {
         "name": "p2v3",

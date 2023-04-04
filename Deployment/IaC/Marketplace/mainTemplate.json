@@ -154,6 +154,9 @@
     "public_auth_authority": {
       "type": "string"
     },
+    "public_auth_workflow": {
+      "type": "string"
+    },
     "enable_stop_debugger": {
       "type": "bool",
       "defaultValue": false
@@ -199,10 +202,8 @@
     "rn_cdn_profile": "cp",
     "rn_cdn_endpoint": "ce",
 
-
-    
     "JwtBearerAAD__Authority": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'), '/v2.0/')]",
-    "JwtBearerB2C__Authority" : "[concat(parameters('public_auth_authority'), '/v2.0')]",
+    "JwtBearerB2C__Authority" : "[concat(parameters('public_auth_authority'), '/', parameters('public_auth_tenant_id'), '/', parameters('public_auth_workflow'), '/v2.0/')]",
 
     "wa_hostnamessl_ep_host": ".azurewebsites.us",
     "wa_hostnamessl_scm_ep_host": ".scm.azurewebsites.us",
@@ -2094,18 +2095,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('wa_admin_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('wa_admin_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('wa_admin_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('wa_admin_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -2209,7 +2210,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
-        "clientCertMode": "Required",
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 0,
         "dailyMemoryTimeQuota": 0,
@@ -2440,18 +2441,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('wa_application_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('wa_application_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('wa_application_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('wa_application_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -2618,7 +2619,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
-        "clientCertMode": "Required",
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 0,
         "dailyMemoryTimeQuota": 0,
@@ -2846,18 +2847,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('wa_document_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('wa_document_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('wa_document_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('wa_document_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -2959,7 +2960,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
-        "clientCertMode": "Required",
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 0,
         "dailyMemoryTimeQuota": 0,
@@ -3190,18 +3191,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('wa_payment_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('wa_payment_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('wa_payment_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('wa_payment_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -3300,7 +3301,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
-        "clientCertMode": "Required",
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 0,
         "dailyMemoryTimeQuota": 0,
@@ -3531,18 +3532,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('wa_schedule_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('wa_schedule_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('wa_schedule_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('wa_schedule_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -3657,6 +3658,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 1536,
         "dailyMemoryTimeQuota": 0,
@@ -3875,18 +3877,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('wa_userprofile_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('wa_userprofile_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('wa_userprofile_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('wa_userprofile_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -3989,6 +3991,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 1536,
         "dailyMemoryTimeQuota": 0,
@@ -4208,18 +4211,18 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        "hostNameSslStates": [
-          {
-            "name": "[concat(variables('fa_reminders_name'), variables('wa_hostnamessl_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Standard"
-          },
-          {
-            "name": "[concat(variables('fa_reminders_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-            "sslState": "Disabled",
-            "hostType": "Repository"
-          }
-        ],
+        // "hostNameSslStates": [
+        //   {
+        //     "name": "[concat(variables('fa_reminders_name'), variables('wa_hostnamessl_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Standard"
+        //   },
+        //   {
+        //     "name": "[concat(variables('fa_reminders_name'), variables('wa_hostnamessl_scm_ep_host'))]",
+        //     "sslState": "Disabled",
+        //     "hostType": "Repository"
+        //   }
+        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_fa_reminders_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -4322,6 +4325,7 @@
         "scmSiteAlsoStopped": false,
         "clientAffinityEnabled": false,
         "clientCertEnabled": false,
+        "clientCertMode": "Optional",
         "hostNamesDisabled": false,
         "containerSize": 1536,
         "dailyMemoryTimeQuota": 0,
@@ -6016,6 +6020,10 @@
           {
             "name": "PUBLIC_AUTH_PRIMARY_DOMAIN",
             "value": "[parameters('public_auth_fqdn')]"
+          },
+          {
+            "name": "PUBLIC_AUTH_WORKFLOW",
+            "value": "[parameters('public_auth_workflow')]"
           },
           {
             "name": "AGENCY_ABBREVIATION",

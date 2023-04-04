@@ -216,6 +216,7 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     Write-Host "AUTH_TENANT_ID: $env:PUBLIC_AUTH_TENANT_ID"
     Write-Host "AUTH_AUTHORITY: $env:PUBLIC_AUTH_AUTHORITY"
     Write-Host "AUTH_PRIMARY_DOMAIN: $env:PUBLIC_AUTH_PRIMARY_DOMAIN"
+    Write-Host "AUTH_WORKFLOW: $env:PUBLIC_AUTH_WORKFLOW"
     Write-Host "DEFAULT_COUNTY: $env:DEFAULT_COUNTY"
     
     Write-Host "AGENCY_ABBREVIATION: $env:AGENCY_ABBREVIATION"
@@ -237,9 +238,13 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     Get-Content -Path "config.json"
 
     Write-Host "Executing variable replacement"
+
+    $public_authority = $env:PUBLIC_AUTH_AUTHORITY + "/" + $env:PUBLIC_AUTH_TENANT_ID + "/" + $env:PUBLIC_AUTH_WORKFLOW
+    Write-Host "Using public authority:" $public_authority
+
     $configJson = Get-Content -Path "config.json"
     $configJson = $configJson.Replace("#{ClientId}#", $env:PUBLIC_AUTH_SP_APP_ID)
-    $configJson = $configJson.Replace("#{AuthorityUrl}#", $env:PUBLIC_AUTH_AUTHORITY)
+    $configJson = $configJson.Replace("#{AuthorityUrl}#", $public_authority)
     $configJson = $configJson.Replace("#{KnownAuthorities}#", $env:PUBLIC_AUTH_AUTHORITY)
     $configJson = $configJson.Replace("#{TenantId}#", $env:PUBLIC_AUTH_TENANT_ID)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:PUBLIC_AUTH_PRIMARY_DOMAIN)
