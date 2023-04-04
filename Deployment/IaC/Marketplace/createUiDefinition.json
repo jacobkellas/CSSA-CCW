@@ -1228,7 +1228,7 @@
       "deploy_function_resources": "[basics('deploy_function_resources')]",
       "ag_resource_id": "[steps('steps_app_gateway').ag_resource_id.id]",
       "ag_vnet_subnet_id": "[concat(subscription().id, '/resourceGroups/', steps('steps_app_gateway').ag_vnet_subnet.resourceGroup, '/providers/Microsoft.Network/virtualNetworks/', steps('steps_app_gateway').ag_vnet_subnet.name, '/subnets/', steps('steps_app_gateway').ag_vnet_subnet.subnets.ag_subnet.name)]",
-      "ag_pip_resource_id": "[first(filter(steps('steps_app_gateway').ag_api_result.properties.frontendIPConfigurations, (item) => greater(length(item.properties.publicIPAddress), 0))).properties.publicIPAddress]",
+      "ag_pip_resource_id": "[first(filter(steps('steps_app_gateway').ag_api_result.properties.frontendIPConfigurations, (item) => greater(length(item.properties.publicIPAddress), 0))).properties.publicIPAddress.id]",
       "fw_public_ip_address": "[steps('steps_app_gateway').ag_pip_resource.id]",
       "ag_private_ip_address": "[first(filter(steps('steps_app_gateway').ag_api_result.properties.frontendIPConfigurations, (item) => greater(length(item.properties.privateIPAddress), 0))).properties.privateIPAddress]",
       "admin_app_domain_type": "[steps('steps_admin_app_domain').app_domain_type]",
