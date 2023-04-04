@@ -134,9 +134,13 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     Get-Content -Path "config.json"
     
     Write-Host "Executing variable replacement"
+
+    $admin_authority = $env:ADMIN_AUTH_AUTHORITY + "/" + $env:ADMIN_AUTH_TENANT_IDW
+    Write-Host "Using public authority:" $admin_authority
+
     $configJson = Get-Content -Path "config.json"
     $configJson = $configJson.Replace("#{ClientId}#", $env:ADMIN_AUTH_SP_APP_ID)
-    $configJson = $configJson.Replace("#{AuthorityUrl}#", $env:ADMIN_AUTH_AUTHORITY)
+    $configJson = $configJson.Replace("#{AuthorityUrl}#", $admin_authority)
     $configJson = $configJson.Replace("#{KnownAuthorities}#", $env:ADMIN_AUTH_AUTHORITY)
     $configJson = $configJson.Replace("#{TenantId}#", $env:ADMIN_AUTH_TENANT_ID)
     $configJson = $configJson.Replace("#{PrimaryDomain}#", $env:ADMIN_AUTH_PRIMARY_DOMAIN)

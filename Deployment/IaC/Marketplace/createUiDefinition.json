@@ -809,6 +809,14 @@
                 "subscription": "cssa-shd"
               }
             }
+          },
+          {
+            "name": "pip_api_result",
+            "type": "Microsoft.Solutions.ArmApiControl",
+            "request": {
+              "method": "GET",
+              "path": "[concat(steps('steps_app_gateway').ag_pip_resource.id, '?api-version=2020-08-01')]"
+            }
           }
         ]
       },
@@ -1039,6 +1047,7 @@
             "type": "Microsoft.Common.TextBox",
             "label": "AAD App Registration ID",
             "placeholder": "********-****-****-****-************",
+            "defaultValue": "12345678-1234-1234-1234-123456789012",
             "toolTip": "This should be a valid App ID (clientId) configured for CCW authentication.",
             "constraints": {
               "required": true,
@@ -1052,6 +1061,7 @@
             "type": "Microsoft.Common.TextBox",
             "label": "Tenant ID",
             "placeholder": "********-****-****-****-************",
+            "defaultValue": "12345678-1234-1234-1234-123456789012",
             "toolTip": "This should be the GUID (tenant_id) of the tenant being used for authentication.",
             "constraints": {
               "required": true,
@@ -1122,6 +1132,7 @@
             "type": "Microsoft.Common.TextBox",
             "label": "B2C AAD App Registration ID",
             "placeholder": "********-****-****-****-************",
+            "defaultValue": "12345678-1234-1234-1234-123456789012",
             "toolTip": "This should be a valid App ID (clientId) configured for CCW authentication.",
             "constraints": {
               "required": true,
@@ -1135,6 +1146,7 @@
             "type": "Microsoft.Common.TextBox",
             "label": "B2C AAD Tenant ID",
             "placeholder": "********-****-****-****-************",
+            "defaultValue": "12345678-1234-1234-1234-123456789012",
             "toolTip": "This should be the GUID (tenant_id) of the tenant being used for authentication.",
             "constraints": {
               "required": true,
@@ -1233,7 +1245,7 @@
       "ag_resource_id": "[steps('steps_app_gateway').ag_resource_id.id]",
       "ag_vnet_subnet_id": "[concat(subscription().id, '/resourceGroups/', steps('steps_app_gateway').ag_vnet_subnet.resourceGroup, '/providers/Microsoft.Network/virtualNetworks/', steps('steps_app_gateway').ag_vnet_subnet.name, '/subnets/', steps('steps_app_gateway').ag_vnet_subnet.subnets.ag_subnet.name)]",
       "ag_pip_resource_id": "[first(filter(steps('steps_app_gateway').ag_api_result.properties.frontendIPConfigurations, (item) => greater(length(item.properties.publicIPAddress), 0))).properties.publicIPAddress.id]",
-      "fw_public_ip_address": "[steps('steps_app_gateway').ag_pip_resource.id]",
+      "fw_public_ip_address": "[steps('steps_app_gateway').pip_api_result.properties.ipAddress]",
       "ag_private_ip_address": "[first(filter(steps('steps_app_gateway').ag_api_result.properties.frontendIPConfigurations, (item) => greater(length(item.properties.privateIPAddress), 0))).properties.privateIPAddress]",
       "admin_app_domain_type": "[steps('steps_admin_app_domain').app_domain_type]",
       "admin_certificate_key_vault_rid": "[steps('steps_admin_app_domain').private_domain.private_domain_kv.keyVaultId]",

@@ -2089,7 +2089,8 @@
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "[resourceId('microsoft.insights/components', variables('ai_admin_name'))]",
         "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
-        "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('cosmosdb_name'))]"
+        "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('cosmosdb_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -2435,7 +2436,8 @@
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "[resourceId('microsoft.insights/components', variables('ai_applicaton_name'))]",
         "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
-        "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('cosmosdb_name'))]"
+        "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('cosmosdb_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -2841,7 +2843,8 @@
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "[resourceId('microsoft.insights/components', variables('ai_document_name'))]",
         "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('sa_content_name'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
       ],
       "kind": "app,linux",
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
@@ -4205,6 +4208,7 @@
         "[resourceId('Microsoft.Web/serverfarms', variables('asp_fa_reminders_name'))]",
         "[resourceId('microsoft.insights/components', variables('ai_fa_reminders_name'))]",
         "[resourceId('Microsoft.KeyVault/vaults', variables('keyvault_name'))]",
+        "[resourceId('Microsoft.DocumentDb/databaseAccounts', variables('cosmosdb_name'))]",
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
       ],
       "kind": "functionapp,linux",
