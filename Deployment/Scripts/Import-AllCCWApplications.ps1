@@ -135,7 +135,7 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     
     Write-Host "Executing variable replacement"
 
-    $admin_authority = $env:ADMIN_AUTH_AUTHORITY + "/" + $env:ADMIN_AUTH_TENANT_IDW
+    $admin_authority = $env:ADMIN_AUTH_AUTHORITY + "/" + $env:ADMIN_AUTH_TENANT_ID
     Write-Host "Using public authority:" $admin_authority
 
     $configJson = Get-Content -Path "config.json"
