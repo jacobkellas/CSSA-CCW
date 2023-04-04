@@ -243,7 +243,7 @@ if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$enableHttpsResult"; fi;
 echo "Enabled Https:" $dns_host_name
 echo
 
-rulesFile="$CSSA_CDN_ENDPOINT_TYPE-rules.json"
+rulesFile="*-$CSSA_CDN_ENDPOINT_TYPE-rules.json"
 echo "Using rules file:" "$rulesFile"
 
 rulesFileContent="$(cat $rulesFile)"
