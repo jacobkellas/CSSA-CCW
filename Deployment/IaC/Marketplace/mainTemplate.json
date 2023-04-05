@@ -203,7 +203,7 @@
     "rn_cdn_endpoint": "ce",
 
     "JwtBearerAAD__Authority": "[concat(parameters('admin_auth_authority'),'/',parameters('admin_auth_tenant_id'), '/v2.0/')]",
-    "JwtBearerB2C__Authority" : "[concat(parameters('public_auth_authority'), '/', parameters('public_auth_tenant_id'), '/', parameters('public_auth_workflow'), '/v2.0/')]",
+    "JwtBearerB2C__Authority": "[concat(parameters('public_auth_authority'), '/', parameters('public_auth_tenant_id'), '/', parameters('public_auth_workflow'), '/v2.0/')]",
 
     "wa_hostnamessl_ep_host": ".azurewebsites.us",
     "wa_hostnamessl_scm_ep_host": ".scm.azurewebsites.us",
@@ -348,7 +348,7 @@
     "cdn_profile_name": "[toLower(concat(variables('rn_cdn_profile'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), variables('instance_number')))]",
     "cdn_admin_endpoint_name": "[toLower(concat(variables('rn_cdn_endpoint'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-admin', variables('instance_number')))]",
     "cdn_public_endpoint_name": "[toLower(concat(variables('rn_cdn_endpoint'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-public', variables('instance_number')))]",
-    
+
     "default_tags": {
       "application_name": "ccw",
       "agency": "[if(empty(parameters('agency_abbreviation')), resourceGroup().tags.agency_name, parameters('agency_abbreviation')) ]",
@@ -5261,7 +5261,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2021-04-01",
-      "name": "virtualNetworkPeeringsTemplate",      
+      "name": "virtualNetworkPeeringsTemplate",
       "resourceGroup": "[variables('ag_resource_group_name')]",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet_name'))]"
@@ -5653,6 +5653,10 @@
           {
             "name": "APPLICATION_RESOURCE_GROUP_NAME",
             "value": "[resourceGroup().Name]"
+          },
+          {
+            "name": "APP_GATEWAY_RESOURCE_ID",
+            "value": "[parameters('ag_resource_id')]"
           },
           {
             "name": "ADMIN_AUTH_SP_APP_ID",
