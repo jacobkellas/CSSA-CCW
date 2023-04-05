@@ -348,10 +348,7 @@
     "cdn_profile_name": "[toLower(concat(variables('rn_cdn_profile'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), variables('instance_number')))]",
     "cdn_admin_endpoint_name": "[toLower(concat(variables('rn_cdn_endpoint'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-admin', variables('instance_number')))]",
     "cdn_public_endpoint_name": "[toLower(concat(variables('rn_cdn_endpoint'), '-', parameters('agency_abbreviation'), '-', variables('app_environment'), '-public', variables('instance_number')))]",
-    // "cdn_admin_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-admin.cssa.cloud')]",
-    // "cdn_public_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '.cssa.cloud')]",
-    // "cdn_api_custom_domain_name": "[concat(variables('app_environment'), '-', parameters('agency_abbreviation'), parameters('agency_type'), '-api.cssa.cloud')]",
-
+    
     "default_tags": {
       "application_name": "ccw",
       "agency": "[if(empty(parameters('agency_abbreviation')), resourceGroup().tags.agency_name, parameters('agency_abbreviation')) ]",
@@ -773,7 +770,7 @@
     {
       "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01", // API version to call the role assignment PUT.
+      "apiVersion": "2022-04-01",
       "name": "[variables('wa_userprofile_roledefname')]",
       "condition": "[parameters('include_role_assignments')]",
       "dependsOn": [
@@ -790,7 +787,7 @@
     {
       "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01", // API version to call the role assignment PUT.
+      "apiVersion": "2022-04-01",
       "name": "[variables('wa_admin_roledefname')]",
       "condition": "[parameters('include_role_assignments')]",
       "dependsOn": [
@@ -807,7 +804,7 @@
     {
       "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01", // API version to call the role assignment PUT.
+      "apiVersion": "2022-04-01",
       "name": "[variables('wa_application_roledefname')]",
       "condition": "[parameters('include_role_assignments')]",
       "dependsOn": [
@@ -824,7 +821,7 @@
     {
       "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01", // API version to call the role assignment PUT.
+      "apiVersion": "2022-04-01",
       "name": "[variables('wa_document_roledefname')]",
       "condition": "[parameters('include_role_assignments')]",
       "dependsOn": [
@@ -841,7 +838,7 @@
     {
       "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01", // API version to call the role assignment PUT.
+      "apiVersion": "2022-04-01",
       "name": "[variables('wa_payment_roledefname')]",
       "condition": "[parameters('include_role_assignments')]",
       "dependsOn": [
@@ -858,7 +855,7 @@
     {
       "scope": "[format('Microsoft.KeyVault/vaults/{0}', variables('keyvault_name'))]",
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2022-04-01", // API version to call the role assignment PUT.
+      "apiVersion": "2022-04-01",
       "name": "[variables('wa_schedule_roledefname')]",
       "condition": "[parameters('include_role_assignments')]",
       "dependsOn": [
@@ -1844,18 +1841,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('wa_admin_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('wa_admin_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -2191,18 +2176,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('wa_application_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('wa_application_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -2598,18 +2571,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('wa_document_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('wa_document_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -2942,18 +2903,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('wa_payment_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('wa_payment_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -3283,18 +3232,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('wa_schedule_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('wa_schedule_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -3628,18 +3565,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('wa_userprofile_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('wa_userprofile_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_wa_name'))]",
         "reserved": true,
         "isXenon": false,
@@ -3963,18 +3888,6 @@
       "tags": "[union(variables('default_tags'), if(contains(parameters('user_tags'), 'Microsoft.Web/sites'), parameters('user_tags')['Microsoft.Web/sites'], json('{}')))]",
       "properties": {
         "enabled": true,
-        // "hostNameSslStates": [
-        //   {
-        //     "name": "[concat(variables('fa_reminders_name'), variables('wa_hostnamessl_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Standard"
-        //   },
-        //   {
-        //     "name": "[concat(variables('fa_reminders_name'), variables('wa_hostnamessl_scm_ep_host'))]",
-        //     "sslState": "Disabled",
-        //     "hostType": "Repository"
-        //   }
-        // ],
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('asp_fa_reminders_name'))]",
         "reserved": true,
         "isXenon": false,
