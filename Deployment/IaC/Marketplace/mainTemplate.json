@@ -2221,11 +2221,11 @@
             },
             {
               "name": "CosmosDb__ContainerName",
-              "value": "[variables('cdb_agencies_container_name')]"
+              "value": "[variables('cdb_applications_container_name')]"
             },
             {
               "name": "CosmosDb__DatabaseName",
-              "value": "[variables('cdb_settings_db_name')]"
+              "value": "[variables('cdb_users_db_name')]"
             },
             {
               "name": "DiagnosticServices_EXTENSION_VERSION",
@@ -2948,11 +2948,11 @@
             },
             {
               "name": "CosmosDb__ContainerName",
-              "value": "[variables('cdb_agencies_container_name')]"
+              "value": "[variables('cdb_applications_container_name')]"
             },
             {
               "name": "CosmosDb__DatabaseName",
-              "value": "[variables('cdb_settings_db_name')]"
+              "value": "[variables('cdb_users_db_name')]"
             },
             {
               "name": "DiagnosticServices_EXTENSION_VERSION",

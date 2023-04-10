@@ -2,6 +2,7 @@ echo "Setting variables"
 echo
 
 OUTPUT_LEVEL="DEBUG"
+echo "OUTPUT_LEVEL:" $OUTPUT_LEVEL
 
 # Creates DNS & CDN Endpoints and configures custom DNS for cssa.cloud based URLs
 echo
