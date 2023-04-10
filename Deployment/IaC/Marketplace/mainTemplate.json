@@ -1733,7 +1733,7 @@
           },
           "partitionKey": {
             "paths": [
-              "/id"
+              "/userid"
             ],
             "kind": "Hash"
           },
