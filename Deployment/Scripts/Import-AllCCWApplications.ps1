@@ -305,6 +305,23 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
     az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "config.json" -c '$web' -f "config.json" 
 }
 
+
+Write-Host "Publishing Printed Documents"
+$uiStorageAccountName = ((az storage account list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'c')].{Name:name}" -o json) | ConvertFrom-Json).Name
+Write-Host "Publishing to:" $uiStorageAccountName
+
+$fileName = (Get-ChildItem -Path "./" -Filter "*applicationtemplate").Name
+Write-Host "Deploying applicationtemplate:" $fileName
+az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "ApplicationTemplate" -c '$web' -f $fileName 2>&1
+
+$fileName = (Get-ChildItem -Path "./" -Filter "*officialpermittemplate").Name
+Write-Host "Deploying applicationtemplate:" $fileName
+az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "OfficialPermitTemplate" -c '$web' -f $fileName 2>&1
+
+$fileName = (Get-ChildItem -Path "./" -Filter "*unofficialpermittemplate").Name
+Write-Host "Deploying applicationtemplate:" $fileName
+az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "UnofficialPermitTemplate" -c '$web' -f $fileName 2>&1
+
 Write-Host "Stopping the App Gateway"
 az network application-gateway stop --ids $env:APP_GATEWAY_RESOURCE_ID
 
