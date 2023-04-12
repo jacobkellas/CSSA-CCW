@@ -307,20 +307,28 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
 
 
 Write-Host "Publishing Printed Documents"
-$uiStorageAccountName = ((az storage account list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'c')].{Name:name}" -o json 2>&1) | ConvertFrom-Json).Name
-Write-Host "Publishing to:" $uiStorageAccountName
+$ctStorageAccountName = ((az storage account list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query "[? ends_with(name, 'c')].{Name:name}" -o json 2>&1) | ConvertFrom-Json).Name
+Write-Host "Publishing to:" $ctStorageAccountName
+
+Write-Host "Adding public IP to SA Network Firewall"
+$ipAddress=(Invoke-WebRequest -uri \"http://ifconfig.me/ip\").Content
+Write-Host \"My IP Address is:\" $ipAddress        
+az storage account network-rule add -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $ctStorageAccountName --ip-address $ipAddress 2>&1
 
 $fileName = (Get-ChildItem -Path "./" -Filter "*applicationtemplate").Name
 Write-Host "Deploying applicationtemplate:" $fileName
-az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "ApplicationTemplate" -c '$web' -f $fileName 2>&1
+az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n "ApplicationTemplate" -c '$web' -f $fileName 2>&1
 
 $fileName = (Get-ChildItem -Path "./" -Filter "*officialpermittemplate").Name
 Write-Host "Deploying applicationtemplate:" $fileName
-az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "OfficialPermitTemplate" -c '$web' -f $fileName 2>&1
+az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n "OfficialPermitTemplate" -c '$web' -f $fileName 2>&1
 
 $fileName = (Get-ChildItem -Path "./" -Filter "*unofficialpermittemplate").Name
 Write-Host "Deploying applicationtemplate:" $fileName
-az storage blob upload --overwrite true --timeout 300 --account-name $uiStorageAccountName -n "UnofficialPermitTemplate" -c '$web' -f $fileName 2>&1
+az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n "UnofficialPermitTemplate" -c '$web' -f $fileName 2>&1
+
+Write-Host "Removing public IP from SA Network Firewall"
+az storage account network-rule remove -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $ctStorageAccountName --ip-address $ipAddress 2>&1
 
 Write-Host "Stopping the App Gateway"
 az network application-gateway stop --ids $env:APP_GATEWAY_RESOURCE_ID 2>&1
