@@ -5716,10 +5716,6 @@
             "value": "[parameters('application')]"
           },
           {
-            "name": "STORAGE_ACCOUNT_NAME",
-            "value": "[variables('sa_admin_ui_name')]"
-          },
-          {
             "name": "DEFAULT_COUNTY",
             "value": "[parameters('agency_county')]"
           },
@@ -5751,7 +5747,10 @@
           "#{__TEMPLATE_VERSION_FORMATTED__-ADMIN-ZIP-SAS-URL}#",
           "#{__TEMPLATE_VERSION_FORMATTED__-ADMIN-CONFIG-ZIP-SAS-URL}#",
           "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-ZIP-SAS-URL}#",
-          "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-CONFIG-ZIP-SAS-URL}#"
+          "#{__TEMPLATE_VERSION_FORMATTED__-PUBLIC-CONFIG-ZIP-SAS-URL}#",
+          "#{__TEMPLATE_VERSION_FORMATTED__-APPLICATIONTEMPLATE-SAS-URL}#",
+          "#{__TEMPLATE_VERSION_FORMATTED__-OFFICIALPERMITTEMPLATE-SAS-URL}#",
+          "#{__TEMPLATE_VERSION_FORMATTED__-UNOFFICIALPERMITTEMPLATE-SAS-URL}#"
         ],
         "timeout": "PT4H",
         "cleanupPreference": "OnExpiration",
