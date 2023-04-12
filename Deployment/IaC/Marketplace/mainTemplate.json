@@ -5624,6 +5624,7 @@
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', variables('sa_admin_ui_name'), 'default', '$web')]",
         "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', variables('sa_public_ui_name'), 'default', '$web')]",
+        "[resourceId('Microsoft.Storage/storageAccounts/blobServices/containers', variables('sa_content_name'), 'default', 'ccw-agency-documents')]",
         "[resourceId('Microsoft.Web/sites/config', variables('wa_admin_name'), 'web')]",
         "[resourceId('Microsoft.Web/sites/config', variables('wa_application_name'), 'web')]",
         "[resourceId('Microsoft.Web/sites/config', variables('wa_document_name'), 'web')]",
