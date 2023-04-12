@@ -899,8 +899,8 @@
         "workspaceCapping": {
           "dailyQuotaGb": -1
         },
-        "publicNetworkAccessForIngestion": "Disabled",
-        "publicNetworkAccessForQuery": "Disabled"
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
       }
     },
     {
@@ -920,8 +920,8 @@
         "workspaceCapping": {
           "dailyQuotaGb": -1
         },
-        "publicNetworkAccessForIngestion": "Disabled",
-        "publicNetworkAccessForQuery": "Disabled"
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
       }
     },
     {
@@ -943,8 +943,8 @@
         "workspaceCapping": {
           "dailyQuotaGb": -1
         },
-        "publicNetworkAccessForIngestion": "Disabled",
-        "publicNetworkAccessForQuery": "Disabled"
+        "publicNetworkAccessForIngestion": "Enabled",
+        "publicNetworkAccessForQuery": "Enabled"
       }
     },
     {
@@ -966,7 +966,7 @@
         "allowBlobPublicAccess": true,
         "allowSharedKeyAccess": true,
         "networkAcls": {
-          "bypass": "AzureServices",
+          "bypass": "Logging, Metrics, AzureServices",
           "virtualNetworkRules": [
             {
               "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnet_name'), variables('sn_content_name'))]",
@@ -974,7 +974,7 @@
             }
           ],
           "ipRules": [],
-          "defaultAction": "Allow"
+          "defaultAction": "Deny"
         },
         "supportsHttpsTrafficOnly": true,
         "encryption": {
@@ -1008,10 +1008,10 @@
         "minimumTlsVersion": "TLS1_2",
         "networkAcls": {
           "resourceAccessRules": [],
-          "bypass": "AzureServices",
+          "bypass": "Logging, Metrics, AzureServices",
           "virtualNetworkRules": [],
           "ipRules": [],
-          "defaultAction": "Allow"
+          "defaultAction": "Deny"
         },
         "supportsHttpsTrafficOnly": true,
         "encryption": {
@@ -1045,10 +1045,10 @@
         "allowBlobPublicAccess": true,
         "allowSharedKeyAccess": true,
         "networkAcls": {
-          "bypass": "AzureServices",
+          "bypass": "Logging, Metrics, AzureServices",
           "virtualNetworkRules": [],
           "ipRules": [],
-          "defaultAction": "Allow"
+          "defaultAction": "Deny"
         },
         "supportsHttpsTrafficOnly": true,
         "encryption": {
@@ -1083,7 +1083,7 @@
         "allowBlobPublicAccess": true,
         "allowSharedKeyAccess": true,
         "networkAcls": {
-          "bypass": "AzureServices",
+          "bypass": "Logging, Metrics, AzureServices",
           "virtualNetworkRules": [],
           "ipRules": [],
           "defaultAction": "Allow"
@@ -1124,7 +1124,7 @@
         "allowBlobPublicAccess": true,
         "allowSharedKeyAccess": true,
         "networkAcls": {
-          "bypass": "AzureServices",
+          "bypass": "Logging, Metrics, AzureServices",
           "virtualNetworkRules": [],
           "ipRules": [],
           "defaultAction": "Allow"
@@ -1733,7 +1733,7 @@
           },
           "partitionKey": {
             "paths": [
-              "/userid"
+              "/userId"
             ],
             "kind": "Hash"
           },
