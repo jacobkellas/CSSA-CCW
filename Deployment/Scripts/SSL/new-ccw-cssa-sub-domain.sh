@@ -4,6 +4,9 @@ echo
 OUTPUT_LEVEL="DEBUG"
 echo "OUTPUT_LEVEL:" $OUTPUT_LEVEL
 
+sleep_time=1s
+echo "Setting sleep time to: $sleep_time"
+
 # Creates DNS & CDN Endpoints and configures custom DNS for cssa.cloud based URLs
 echo
 echo
@@ -168,6 +171,10 @@ then
         echo "Created "$dns_sub_domain_name"-api record"
     fi
     echo
+
+    echo "Sleeping $sleep_time seconds"
+    echo
+    sleep $sleep_time
 fi
 
 echo "Creating CDN Profile" $CSSA_CDN_PROFILE_NAME
@@ -176,6 +183,9 @@ profileResult=$(az cdn profile create --subscription $CSSA_SHD_SUBSCRIPTION_ID -
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$profileResult"; fi;
 echo "Created:" $CSSA_CDN_PROFILE_NAME
 echo
+
+echo "Sleeping $sleep_time seconds"
+sleep $sleep_time
 
 echo "Creating CDN Endpoint" $CSSA_CDN_ENDPOINT_NAME
 
@@ -201,6 +211,9 @@ if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$endpointResult"; fi;
 echo "Created:" $CSSA_CDN_ENDPOINT_NAME
 echo
 
+echo "Sleeping $sleep_time seconds"
+sleep $sleep_time
+
 echo "Setting Geo filters"
 geoFilterResult=$(
     az cdn endpoint update \
@@ -213,6 +226,9 @@ if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$geoFilterResult"; fi;
 echo "Configured Geo filters:" $CSSA_CDN_ENDPOINT_NAME
 echo
 
+echo "Sleeping $sleep_time seconds"
+sleep $sleep_time
+
 echo "Creating custom domain" $dns_host_name
 customDomainResult=$(
     az cdn custom-domain create \
@@ -224,6 +240,9 @@ customDomainResult=$(
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$customDomainResult"; fi;
 echo "Created:" $dns_host_name
 echo
+
+echo "Sleeping $sleep_time seconds"
+sleep $sleep_time
 
 echo "Enabling HTTPS on custom domain" $dns_host_name
 enableHttpsResult=$(
@@ -241,6 +260,9 @@ enableHttpsResult=$(
 if [ $OUTPUT_LEVEL == 'DEBUG' ]; then echo "$enableHttpsResult"; fi;
 echo "Enabled Https:" $dns_host_name
 echo
+
+echo "Sleeping $sleep_time seconds"
+sleep $sleep_time
 
 rulesFile="*-$CSSA_CDN_ENDPOINT_TYPE-rules.json"
 echo "Using rules file:" "$rulesFile"
