@@ -5418,18 +5418,18 @@
             $ctStorageAccountName = ((az storage account list -g $env:APPLICATION_RESOURCE_GROUP_NAME --query \"[? ends_with(name, 'c')].{Name:name}\" -o json 2>&1) | ConvertFrom-Json).Name
             Write-Host \"Publishing to:\" $ctStorageAccountName
 
-            $fileName = (Get-ChildItem -Path \"./\" -Filter \"*applicationtemplate\").Name
+            $fileName = (Get-ChildItem -Path \"./\" -Filter \"*-applicationtemplate\").Name
             Write-Host \"Deploying applicationtemplate:\" $fileName
             az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n \"ApplicationTemplate\" -c 'ccw-agency-documents' -f \"$fileName\" 2>&1
 
-            $fileName = (Get-ChildItem -Path \"./\" -Filter \"*officialpermittemplate\").Name
+            $fileName = (Get-ChildItem -Path \"./\" -Filter \"*-officialpermittemplate\").Name
             Write-Host \"Deploying applicationtemplate:\" $fileName
             az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n \"OfficialPermitTemplate\" -c 'ccw-agency-documents' -f \"$fileName\" 2>&1
 
-            $fileName = (Get-ChildItem -Path \"./\" -Filter \"*unofficialpermittemplate\").Name
+            $fileName = (Get-ChildItem -Path \"./\" -Filter \"*-unofficialpermittemplate\").Name
             Write-Host \"Deploying applicationtemplate:\" $fileName
             az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n \"UnofficialPermitTemplate\" -c 'ccw-agency-documents' -f \"$fileName\" 2>&1
-        
+         
         ",
         "supportingScriptUris": [
           "#{__TEMPLATE_VERSION_FORMATTED__-APPLICATIONTEMPLATE-SAS-URL}#",
