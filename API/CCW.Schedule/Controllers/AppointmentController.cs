@@ -73,6 +73,8 @@ public class AppointmentController : ControllerBase
                             .Add(TimeSpan.Parse(record.Time))
                             .AddMinutes(record.Duration);
 
+                    _logger.LogInformation("Processing schedule record: {0}, {1}, {2}, {3}, {4}", record.Slots, startDateAndTime.ToString(), endDateAndTime.ToString(), startDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat), endDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat));
+
                     if (record.Action.ToLower().Contains("create"))
                     {
                         for (int i = 0; i < record.Slots; i++)
