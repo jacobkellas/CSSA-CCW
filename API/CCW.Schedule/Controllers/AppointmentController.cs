@@ -65,7 +65,7 @@ public class AppointmentController : ControllerBase
                         Convert.ToDateTime(record.Date)
                             .Add(TimeSpan.Parse(record.Time));
 
-                    startDateAndTime = TimeZoneInfo.ConvertTimeFromUtc(startDateAndTime, timezoneInfo);
+                    startDateAndTime = TimeZoneInfo.ConvertTimeToUtc(startDateAndTime, timezoneInfo);
 
                     if (DateTime.Now > startDateAndTime)
                     {
@@ -74,7 +74,7 @@ public class AppointmentController : ControllerBase
 
                     DateTime endDateAndTime = startDateAndTime.AddMinutes(record.Duration);
 
-                    _logger.LogInformation("Processing schedule record: {0}, {1}, {2}, {3}, {4}", record.Slots, startDateAndTime.ToString(), endDateAndTime.ToString(), startDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat), endDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat));
+                    _logger.LogInformation("Processing schedule record: {0}, {1}, {2}, {3}, {4}", record.Slots, record.Date, record.Time, startDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat), endDateAndTime.ToUniversalTime().ToString(Constants.DateTimeFormat));
 
                     if (record.Action.ToLower().Contains("create"))
                     {
