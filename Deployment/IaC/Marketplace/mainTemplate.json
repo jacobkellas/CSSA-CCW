@@ -5421,6 +5421,9 @@
             Write-Host \"Enabling network access to sa: $ctStorageAccountName\"
             az storage account update -g $env:APPLICATION_RESOURCE_GROUP_NAME -n $ctStorageAccountName --default-action Allow
 
+            Write-Host \"Sleeping to allow SA to propogate network changes\"
+            Start-Sleep -Seconds 30
+
             $fileName = (Get-ChildItem -Path \"./\" -Filter \"*-applicationtemplate\").Name
             Write-Host \"Deploying applicationtemplate:\" $fileName
             az storage blob upload --overwrite true --timeout 300 --account-name $ctStorageAccountName -n \"ApplicationTemplate\" -c 'ccw-agency-documents' -f \"$fileName\" 2>&1
