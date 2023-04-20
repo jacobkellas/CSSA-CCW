@@ -6,7 +6,7 @@
             "value": "sdsd"
         },
         "environment": {
-            "value": "test"
+            "value": "dev"
         },
         "agency_ori": {
             "value": "ORI123456"
@@ -27,11 +27,10 @@
                 "value": ""
         },
         "ag_private_ip_address" : {
-                "value" : "172.16.21.04"
+                "value" : "172.16.20.04"
         },
         "user_tags": {
             "value": {
-                "mytag": "AWESOME"
             }
         }
     }
