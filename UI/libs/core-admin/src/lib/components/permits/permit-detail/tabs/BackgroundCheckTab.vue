@@ -3,7 +3,6 @@
   <div>
     <v-list>
       <v-list-item-group
-        v-model="settings"
         multiple
         active-class=""
         aria-label="Background Checklist"
@@ -101,9 +100,8 @@
                           permitStore.getPermitDetail.application
                             .backgroundCheck[item.value].value !== null
                         "
-                        v-model="dialog"
-                        width="800"
                         :retain-focus="false"
+                        width="800"
                       >
                         <template #activator="{ on, attrs }">
                           <v-list-item-avatar
@@ -117,10 +115,12 @@
                                 permitStore.getPermitDetail.application
                                   .backgroundCheck[item.value]
                                   ? formatInitials(
-                                      authStore.getAuthState.userName.split(
-                                        ', '
-                                      )[1],
-                                      authStore.getAuthState.userName
+                                      permitStore.getPermitDetail.application.backgroundCheck[
+                                        item.value
+                                      ].changeMadeBy.split(', ')[1],
+                                      permitStore.getPermitDetail.application
+                                        .backgroundCheck[item.value]
+                                        .changeMadeBy
                                     )
                                   : ''
                               }}
@@ -128,13 +128,17 @@
                           </v-list-item-avatar>
                         </template>
 
-                        <v-card>
+                        <v-card min-height="135">
                           <v-card-title> Change made by: </v-card-title>
                           <v-card-text>
+                            <v-divider></v-divider>
+                            <v-row>
+                              <v-col></v-col>
+                            </v-row>
                             <v-row
                               align="center"
                               justify="center"
-                              class="mt-2"
+                              class="text-center"
                             >
                               <v-col>
                                 {{
@@ -162,17 +166,6 @@
                               </v-col>
                             </v-row>
                           </v-card-text>
-                          <v-divider></v-divider>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="error"
-                              text
-                              @click="dialog = false"
-                            >
-                              Close
-                            </v-btn>
-                          </v-card-actions>
                         </v-card>
                       </v-dialog>
                     </v-col>
@@ -217,6 +210,7 @@
     </v-dialog>
   </div>
 </template>
+
 <script setup lang="ts">
 import { VListItem } from 'vuetify/lib'
 import { ref } from 'vue'
@@ -232,8 +226,6 @@ import {
 const permitStore = usePermitsStore()
 const authStore = useAuthStore()
 const changed = ref('')
-const settings = ref([])
-const dialog = ref(false)
 const ninetyDayDialog = ref(false)
 const currentBackgroundCheckItem = ref('')
 
@@ -335,7 +327,10 @@ function handlePass(itemValue: string, itemLabel: string) {
   changed.value = itemLabel
   permitStore.getPermitDetail.application.backgroundCheck[
     itemValue
-  ].changeMadeBy = authStore.getAuthState.userEmail
+  ].changeMadeBy = authStore.getAuthState.userName
+  permitStore.getPermitDetail.application.backgroundCheck[
+    itemValue
+  ].changeDateTimeUtc = new Date()
 
   if (
     permitStore.getPermitDetail.application.backgroundCheck.doj.value &&
@@ -356,7 +351,10 @@ function handleFail(itemValue: string) {
     false
   permitStore.getPermitDetail.application.backgroundCheck[
     itemValue
-  ].changeMadeBy = authStore.getAuthState.userEmail
+  ].changeMadeBy = authStore.getAuthState.userName
+  permitStore.getPermitDetail.application.backgroundCheck[
+    itemValue
+  ].changeDateTimeUtc = new Date()
   updatePermitDetails()
 }
 
