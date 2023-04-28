@@ -109,7 +109,6 @@ if("True" -eq $env:DEPLOY_WEB_CONFIG_JSON)
 {
     Write-Host "Creating admin config.json"
 
-    
     Write-Host "AUTH_SP_APP_ID: $env:ADMIN_AUTH_SP_APP_ID"
     Write-Host "AUTH_TENANT_ID: $env:ADMIN_AUTH_TENANT_ID"
     Write-Host "AUTH_AUTHORITY: $env:ADMIN_AUTH_AUTHORITY"

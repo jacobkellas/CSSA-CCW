@@ -5321,7 +5321,7 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "[concat(parameters('agency_abbreviation'), '-cssa-document-import-runonce-delete-me-dps')]",
+      "name": "[concat(parameters('agency_abbreviation'), '-ccw-document-import-runonce-delete-me-dps')]",
       "location": "[resourceGroup().location]",
       "kind": "AzurePowerShell",
       "dependsOn": [
@@ -5331,7 +5331,7 @@
       "properties": {
         "forceUpdateTag": "newGuid()",
         "containerSettings": {
-          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-cssa-app-import-runonce-delete-me-dps')]"
+          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-ccw-app-import-runonce-delete-me-dps')]"
         },
         "storageAccountSettings": {
           "storageAccountName": "#{CSSA_STORAGE_ACCOUNT_NAME}#",
@@ -5427,7 +5427,7 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "[concat(parameters('agency_abbreviation'), '-cssa-app-import-runonce-delete-me-dps')]",
+      "name": "[concat(parameters('agency_abbreviation'), '-ccw-app-import-runonce-delete-me-dps')]",
       "location": "[resourceGroup().location]",
       "kind": "AzurePowerShell",
       "dependsOn": [
@@ -5445,7 +5445,7 @@
       "properties": {
         "forceUpdateTag": "newGuid()",
         "containerSettings": {
-          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-cssa-app-import-runonce-delete-me-dps')]"
+          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-ccw-app-import-runonce-delete-me-dps')]"
         },
         "storageAccountSettings": {
           "storageAccountName": "#{CSSA_STORAGE_ACCOUNT_NAME}#",
@@ -5567,7 +5567,7 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "[concat(parameters('agency_abbreviation'), '-cssa-admin-dns-subdomain-runonce-delete-me-dps')]",
+      "name": "[concat(parameters('agency_abbreviation'), '-ccw-admin-dns-subdomain-runonce-delete-me-dps')]",
       "location": "[resourceGroup().location]",
       "kind": "AzureCLI",
       "dependsOn": [
@@ -5578,7 +5578,7 @@
       "properties": {
         "forceUpdateTag": "newGuid()",
         "containerSettings": {
-          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-cssa-admin-dns-subdomain-runonce-delete-me-dps')]"
+          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-ccw-admin-dns-subdomain-runonce-delete-me-dps')]"
         },
         "storageAccountSettings": {
           "storageAccountName": "#{CSSA_STORAGE_ACCOUNT_NAME}#",
@@ -5704,7 +5704,7 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "[concat(parameters('agency_abbreviation'), '-cssa-public-dns-subdomain-runonce-delete-me-dps')]",
+      "name": "[concat(parameters('agency_abbreviation'), '-ccw-public-dns-subdomain-runonce-delete-me-dps')]",
       "location": "[resourceGroup().location]",
       "kind": "AzureCLI",
       "dependsOn": [
@@ -5716,7 +5716,7 @@
       "properties": {
         "forceUpdateTag": "newGuid()",
         "containerSettings": {
-          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-cssa-public-dns-subdomain-runonce-delete-me-dps')]"
+          "containerGroupName": "[concat(parameters('agency_abbreviation'), '-ccw-public-dns-subdomain-runonce-delete-me-dps')]"
         },
         "storageAccountSettings": {
           "storageAccountName": "#{CSSA_STORAGE_ACCOUNT_NAME}#",

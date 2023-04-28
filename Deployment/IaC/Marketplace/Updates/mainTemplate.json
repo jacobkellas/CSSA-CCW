@@ -14,7 +14,7 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "[concat(toLower(take(uniqueString(parameters('utcNowValue')), 3)), 'cssa-app-update-runonce-deleteme-iappme-dps')]",
+      "name": "[concat(toLower(take(uniqueString(parameters('utcNowValue')), 3)), 'cssa-app-update-runonce-deleteme-dps')]",
       "location": "[resourceGroup().location]",
       "kind": "AzurePowerShell",
       "dependsOn": [],
@@ -22,7 +22,7 @@
       "properties": {
         "forceUpdateTag": "newGuid()",
         "containerSettings": {
-          "containerGroupName": "[concat(toLower(take(uniqueString(parameters('utcNowValue')), 3)), 'cssa-app-update-runonce-deleteme-iappme-dps')]"
+          "containerGroupName": "[concat(toLower(take(uniqueString(parameters('utcNowValue')), 3)), 'cssa-app-update-runonce-deleteme-dps')]"
         },
         "storageAccountSettings": {
           "storageAccountName": "#{CSSA_STORAGE_ACCOUNT_NAME}#",
@@ -30,6 +30,14 @@
         },
         "azPowerShellVersion": "3.0",
         "environmentVariables": [
+          {
+            "name": "DEPLOY_FROM_MP",
+            "value": "true"
+          },
+          {
+            "name": "CSSA_TENANT_ID",
+            "value": "[subscription().tenantId]"
+          },
           {
             "name": "CSSA_SP_APP_ID",
             "secureValue": "#{CSSA_SP_APP_ID}#"
@@ -39,20 +47,24 @@
             "secureValue": "#{CSSA_SP_SECRET}#"
           },
           {
-            "name": "CSSA_TENANT_ID",
-            "value": "#{CSSA_TENANT_ID}#"
-          },
-          {
             "name": "APPLICATION_SUBSCRIPTION_ID",
             "value": "[subscription().subscriptionId]"
           },
           {
             "name": "APPLICATION_RESOURCE_GROUP_NAME",
-            "value": "[resourceGroup().name]"
+            "value": "[resourceGroup().Name]"
+          },
+          {
+            "name": "ENVIRONMENT",
+            "value": "ANY"
           },
           {
             "name": "DEPLOY_WEB_CONFIG_JSON",
             "value": "False"
+          },
+          {
+            "name": "TEMPLATE_VERSION_FORMATTED",
+            "value": "#{TEMPLATE_VERSION_FORMATTED}#"
           }
         ],
         "primaryScriptUri": "#{__TEMPLATE_VERSION_FORMATTED__-IMPORT-ALLCCWAPPLICATIONS-PS1-SAS-URL}#",
