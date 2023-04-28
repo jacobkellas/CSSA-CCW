@@ -17,7 +17,6 @@ Set-Location $BaseFolder
 
 Get-ChildItem
 Import-Module "$BaseFolder/Deployment/Scripts/Upload-CCWMPArtifact.psm1" -Force
-Import-Module .\Upload-CCWMPArtifact -Force
 
 Write-Host "Processing Printed Documents"
 Write-Host "Renaming Documents"
