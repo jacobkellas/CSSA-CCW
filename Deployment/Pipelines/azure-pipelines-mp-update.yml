@@ -6,21 +6,23 @@ pool:
   vmImage: ubuntu-latest
   
 variables:
-- template: variables/marketplace-install-vars.yml
-- name: mpPath
-  value: 'Deployment\IaC\Infrastructure\Marketplace\Updates'
-- name: CSSA_SP_APP_ID
-  value: '$(cssa-marketplace-ccw-deployment-spn)'
-- name: CSSA_SP_SECRET
-  value: '$(cssa-marketplace-ccw-deployment-pwd)'
-- name: CSSA_STORAGE_ACCOUNT_KEY
-  value: '$(cssa-storage-account-key)'
-- name: DATE_COUNTER
-  value: $[counter(format('CCWMP{0:yyyy}{0:MM}{0:dd}', pipeline.startTime), 1)]
-- name: TEMPLATE_VERSION
-  value: $[format('wccwu-v{0:yyyy}.{0:MM}.{0:dd}.{1}', pipeline.startTime, variables['DATE_COUNTER'])]
-- name: TEMPLATE_VERSION_FORMATTED
-  value: $[upper(replace(variables['TEMPLATE_VERSION'], '.', '-'))]
+    - template: variables/marketplace-install-vars.yml
+    - name: mpPath
+      value: 'Deployment\IaC\Infrastructure\Marketplace'
+    - name: CSSA_SP_APP_ID
+      value: "$(cssa-marketplace-ccw-deployment-spn)"
+    - name: CSSA_SP_SECRET
+      value: "$(cssa-marketplace-ccw-deployment-pwd)"
+    - name: CSSA_STORAGE_ACCOUNT_KEY
+      value: "$(cssa-storage-account-key)"
+    - name: DATE_COUNTER
+      value: $[counter(format('CCWIMP{0:yyyy}{0:MM}{0:dd}', pipeline.startTime), 1)]
+    - name: TEMPLATE_VERSION
+      value: $[format('wccwu-v{0:yyyy}.{0:MM}.{0:dd}.{1}', pipeline.startTime, variables['DATE_COUNTER'])]
+    - name: TEMPLATE_VERSION_FORMATTED
+      value: $[upper(replace(variables['TEMPLATE_VERSION'], '.', '-'))]
+    - name: MP_PID_NUMBER
+      value: "$(mp-pid-number)"
 
 stages:
   - stage: MP_Publish_Package
@@ -44,7 +46,7 @@ stages:
           displayName: 'Azure CLI: Upload & Save Secrets'
           inputs:
             azureSubscription: '$(CSSA_CERT_KEY_VAULT_SERVICE_CONNECTION)'
-            scriptType: ps
+            scriptType: pscore
             scriptPath: '$(System.DefaultWorkingDirectory)/Deployment/Scripts/Upload-CCWMPUpdatePackage.ps1'
             arguments: '-BaseFolder $(System.DefaultWorkingDirectory) -FileVersion $(TEMPLATE_VERSION) -CSSA_STORAGE_ACCOUNT_NAME $(CSSA_STORAGE_ACCOUNT_NAME) -CSSA_STORAGE_ACCOUNT_KEY $(CSSA_STORAGE_ACCOUNT_KEY) -CSSA_MP_DEPLOYMENT_CONTAINER $(CSSA_MP_DEPLOYMENT_CONTAINER) -CSSA_CERT_KEY_VAULT_NAME $(CSSA_CERT_KEY_VAULT_NAME) -CSSA_SAS_EXPIRY_YEARS $(CSSA_SAS_EXPIRY_YEARS) -CSSA_SAS_EXPIRY_MONTHS $(CSSA_SAS_EXPIRY_MONTHS) -CSSA_SAS_EXPIRY_DAYS $(CSSA_SAS_EXPIRY_DAYS)'
             workingDirectory: '$(System.DefaultWorkingDirectory)/Deployment/Scripts'    
@@ -59,7 +61,7 @@ stages:
           displayName: 'Azure CLI: Prepare MP files'
           inputs:
             azureSubscription: '$(CSSA_SERVICE_CONNECTION)'
-            scriptType: ps
+            scriptType: pscore
             scriptLocation: inlineScript
             workingDirectory: '$(System.DefaultWorkingDirectory)/Deployment/Scripts'
             inlineScript: |
@@ -98,7 +100,7 @@ stages:
           displayName: 'Azure CLI: Create MP package'
           inputs:
             azureSubscription: '$(CSSA_SERVICE_CONNECTION)'
-            scriptType: ps
+            scriptType: pscore
             scriptLocation: inlineScript
             inlineScript: |
               Set-Location $(System.DefaultWorkingDirectory)
