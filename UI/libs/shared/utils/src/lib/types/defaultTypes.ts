@@ -54,7 +54,6 @@ export type AppConfigType = {
   defaultCounty: string
   displayDebugger: boolean
   environmentName: string
-  loginType: string
   refreshTime: number
   questions: QuestionsConfig
 }
@@ -413,6 +412,7 @@ export type CompleteApplication = {
     orderId: string
     uploadedDocuments: Array<UploadedDocType>
     backgroundCheck: BackgroundCheckType
+    startOfNinetyDayCountdown: string
   }
   history: Array<HistoryType>
   paymentHistory: Array<PaymentHistoryType>

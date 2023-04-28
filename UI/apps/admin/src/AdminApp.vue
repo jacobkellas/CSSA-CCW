@@ -42,7 +42,6 @@
 import Loader from './Loader.vue'
 import PageTemplate from '@core-admin/components/templates/PageTemplate.vue'
 import Vue from 'vue'
-import initialize from '@core-admin/api/config'
 import interceptors from '@core-admin/api/interceptors'
 import { useAdminUserStore } from '@core-admin/stores/adminUserStore'
 import { useAppConfigStore } from '@shared-ui/stores/configStore'
@@ -51,7 +50,18 @@ import { useBrandStore } from '@shared-ui/stores/brandStore'
 import { usePermitsStore } from '@core-admin/stores/permitsStore'
 import { useQuery } from '@tanstack/vue-query'
 import { useThemeStore } from '@shared-ui/stores/themeStore'
-import { computed, getCurrentInstance, onBeforeMount, ref, watch } from 'vue'
+import {
+  MsalBrowser,
+  getMsalInstance,
+} from '@shared-ui/api/auth/authentication'
+import {
+  computed,
+  getCurrentInstance,
+  onBeforeMount,
+  provide,
+  ref,
+  watch,
+} from 'vue'
 
 const prompt = ref(false)
 const app = getCurrentInstance()
@@ -61,6 +71,12 @@ const themeStore = useThemeStore()
 const configStore = useAppConfigStore()
 const permitsStore = usePermitsStore()
 const adminUserStore = useAdminUserStore()
+const msalInstance = ref<MsalBrowser>()
+
+provide(
+  'msalInstance',
+  computed(() => msalInstance.value)
+)
 
 const isAuthenticated = computed(() => authStore.getAuthState.isAuthenticated)
 const validApiUrl = computed(
@@ -100,8 +116,9 @@ onBeforeMount(async () => {
     prompt.value = true
   })
 
-  await initialize()
-  interceptors()
+  msalInstance.value = await getMsalInstance()
+
+  await interceptors(msalInstance.value)
 
   if (app) {
     app.proxy.$vuetify.theme.dark = themeStore.getThemeConfig.isDark

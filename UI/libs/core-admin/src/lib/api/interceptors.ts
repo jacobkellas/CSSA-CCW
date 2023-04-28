@@ -1,10 +1,10 @@
-import auth from '@shared-ui/api/auth/authentication'
+import { MsalBrowser } from '@shared-ui/api/auth/authentication'
 import axios from 'axios'
 import { useAuthStore } from '@shared-ui/stores/auth'
 
 // Setup Axios Request Interceptors
 // to add the authentication token to each header
-export default function interceptors() {
+export default async function interceptors(msalInstance: MsalBrowser) {
   const authStore = useAuthStore()
 
   axios.interceptors.request.use(async req => {
@@ -12,7 +12,7 @@ export default function interceptors() {
       return req
     }
 
-    const token = await auth.acquireToken()
+    const token = await msalInstance.acquireToken()
 
     if (req.headers) {
       req.headers.Authorization = `Bearer ${token}`
@@ -25,9 +25,9 @@ export default function interceptors() {
     async res => {
       return res
     },
-    error => {
+    async error => {
       if (error.response.status === 401) {
-        auth.acquireToken()
+        await msalInstance.acquireToken()
       }
 
       return Promise.reject(error)
