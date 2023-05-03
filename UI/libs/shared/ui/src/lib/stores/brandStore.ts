@@ -22,6 +22,10 @@ export const useBrandStore = defineStore('BrandStore', () => {
     agencyEmail: 'XXXXXXXXXXX',
     agencySheriffName: 'XXXXXXXXXXX',
     chiefOfPoliceName: 'XXXXXXXXXXX',
+    agencyBillingNumber: 'XXXXXXXXXXX',
+    contactName: 'XXXXXXXXXXX',
+    shippingAddress: 'XXXXXXXXXXX',
+    mailCode: 'XXXXXXXXXXX',
     primaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.primary,
     secondaryThemeColor: app?.proxy?.$vuetify.theme.themes.light.secondary,
     liveScanURL:

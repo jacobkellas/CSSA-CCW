@@ -428,6 +428,176 @@
           </v-text-field>
         </v-col>
       </v-row>
+      <v-row>
+        <v-divider></v-divider>
+      </v-row>
+      <v-row>
+        <p>Live Scan Form</p>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Agency Billing Number')"
+            :rules="[v => !!v || $t('Agency Billing Number is required')]"
+            :hint="$t('Billing Number')"
+            color="blue1"
+            v-model="brandStore.getBrand.agencyBillingNumber"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.agencyBillingNumber"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Contact Name')"
+            :rules="[v => !!v || $t('Contact Name is required')]"
+            :hint="$t('Contact Name')"
+            color="blue1"
+            v-model="brandStore.getBrand.contactName"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.contactName"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Shipping Address')"
+            :rules="[v => !!v || $t('Shipping Address is required')]"
+            :hint="$t('Shipping Address')"
+            color="blue1"
+            v-model="brandStore.getBrand.shippingAddress"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.shippingAddress"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Mail Code')"
+            :rules="[v => !!v || $t('Mail Code is required')]"
+            :hint="$t('Mail Code')"
+            color="blue1"
+            v-model="brandStore.getBrand.mailCode"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.mailCode"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
       <v-row justify="space-between">
         <v-col
           cols="12"

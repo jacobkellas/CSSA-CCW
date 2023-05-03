@@ -451,6 +451,10 @@ export type BrandType = {
   courthouse: string
   localAgencyNumber: string
   cost: CostType
+  agencyBillingNumber: string
+  contactName: string
+  shippingAddress: string
+  mailCode: string
 }
 
 export type AgencyDocumentsType = {
