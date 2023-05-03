@@ -43,6 +43,10 @@ public class EntityToAgencyProfileSettingsResponseModelMapper : IMapper<AgencyPr
             Courthouse = source.Courthouse,
             LocalAgencyNumber = source.LocalAgencyNumber,
             ORI = source.ORI,
+            AgencyBillingNumber = source.AgencyBillingNumber,
+            ContactName = source.ContactName,
+            ShippingAddress = source.ShippingAddress,
+            MailCode = source.MailCode,
         };
     }
 }

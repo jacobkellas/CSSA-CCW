@@ -1,4 +1,4 @@
-﻿using CCW.Admin.Entities;
+using CCW.Admin.Entities;
 using Newtonsoft.Json;
 
 namespace CCW.Admin.Models;
@@ -36,4 +36,12 @@ public class AgencyProfileSettingsResponseModel
     public string Courthouse { get; set; }
     [JsonProperty("localAgencyNumber")]
     public string LocalAgencyNumber { get; set; }
+    [JsonProperty("agencyBillingNumber")]
+    public string AgencyBillingNumber { get; set; }
+    [JsonProperty("contactName")]
+    public string ContactName { get; set; }
+    [JsonProperty("shippingAddress")]
+    public string ShippingAddress { get; set; }
+    [JsonProperty("mailCode")]
+    public string MailCode { get; set; }
 }

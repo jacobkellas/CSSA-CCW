@@ -1,4 +1,4 @@
-﻿using CCW.Admin.Entities;
+using CCW.Admin.Entities;
 using CCW.Admin.Models;
 
 namespace CCW.Admin.Mappers;
@@ -43,6 +43,12 @@ public class AgencyProfileRequestSettingsModelToEntityMapper : IMapper<AgencyPro
             Courthouse = source.Courthouse,
             LocalAgencyNumber = source.LocalAgencyNumber,
             ORI = source.ORI,
+            AgencyBillingNumber = source.AgencyBillingNumber,
+            ContactName = source.ContactName,
+            ShippingAddress = source.ShippingAddress,
+            MailCode = source.MailCode,
+
+
         };
     }
 }
