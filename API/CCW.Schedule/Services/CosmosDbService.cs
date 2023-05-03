@@ -1,8 +1,5 @@
 using CCW.Schedule.Entities;
 using Microsoft.Azure.Cosmos;
-using System.ComponentModel;
-using System.Globalization;
-using System.Threading.Tasks;
 using Container = Microsoft.Azure.Cosmos.Container;
 
 
@@ -188,7 +185,7 @@ public class CosmosDbService : ICosmosDbService
                 query: "SELECT * FROM appointments p WHERE p.applicationId = @applicationId"
             ).WithParameter("@applicationId", applicationId);
 
-        using FeedIterator<AppointmentWindow> filteredFeed = 
+        using FeedIterator<AppointmentWindow> filteredFeed =
             _container.GetItemQueryIterator<AppointmentWindow>(queryDefinition: parameterizedQuery);
 
         List<AppointmentWindow> appointments = new List<AppointmentWindow>();
@@ -337,5 +334,156 @@ public class CosmosDbService : ICosmosDbService
     public async Task DeleteAsync(string appointmentId, CancellationToken cancellationToken)
     {
         await _container.DeleteItemAsync<AppointmentWindow>(appointmentId, new PartitionKey(appointmentId), cancellationToken: cancellationToken);
+    }
+
+    public async Task<int> DeleteAllAppointmentsByDate(DateTime date, CancellationToken cancellationToken)
+    {
+        var isoDate = date.ToUniversalTime().ToString(Constants.DateTimeFormat);
+        var datePortion = isoDate.Substring(0, 10);
+        var parameterizedQuery = new QueryDefinition(
+                query: "SELECT * FROM c WHERE STARTSWITH(c.start, @date) AND (NOT IS_DEFINED(c.applicationId) OR c.applicationId = null)"
+            )
+            .WithParameter("@date", datePortion);
+
+        var documentIds = new List<Guid>();
+        var resultSetIterator = _container.GetItemQueryIterator<AppointmentWindow>(parameterizedQuery);
+
+        while (resultSetIterator.HasMoreResults)
+        {
+            var response = await resultSetIterator.ReadNextAsync();
+
+            foreach (var document in response)
+            {
+                documentIds.Add(document.Id);
+            }
+        }
+
+        var concurrentTasks = new List<Task>();
+        int deletedCount = 0;
+
+        foreach (Guid id in documentIds)
+        {
+            concurrentTasks.Add(_container.DeleteItemAsync<AppointmentWindow>(id.ToString(), new PartitionKey(id.ToString()), null, cancellationToken));
+            deletedCount++;
+        }
+
+        await Task.WhenAll(concurrentTasks);
+
+        return deletedCount;
+    }
+
+    public async Task<int> DeleteAppointmentsByTimeSlot(DateTime date, CancellationToken cancellationToken)
+    {
+        var isoDate = date.ToUniversalTime().ToString(Constants.DateTimeFormat);
+        var parameterizedQuery = new QueryDefinition(
+                query: "SELECT * FROM c WHERE c.start = @date AND (NOT IS_DEFINED(c.applicationId) OR c.applicationId = null)"
+            )
+            .WithParameter("@date", isoDate);
+
+        var documentIds = new List<Guid>();
+        var resultSetIterator = _container.GetItemQueryIterator<AppointmentWindow>(parameterizedQuery);
+
+        while (resultSetIterator.HasMoreResults)
+        {
+            var response = await resultSetIterator.ReadNextAsync();
+
+            foreach (var document in response)
+            {
+                documentIds.Add(document.Id);
+            }
+        }
+
+        var concurrentTasks = new List<Task>();
+        int deletedCount = 0;
+
+        foreach (Guid id in documentIds)
+        {
+            concurrentTasks.Add(_container.DeleteItemAsync<AppointmentWindow>(id.ToString(), new PartitionKey(id.ToString()), null, cancellationToken));
+            deletedCount++;
+        }
+
+        await Task.WhenAll(concurrentTasks);
+
+        return deletedCount;
+    }
+
+    public async Task<int> CreateAppointmentsFromAppointmentManagementTemplate(AppointmentManagement appointmentManagement, CancellationToken cancellationToken)
+    {
+        var concurrentTasks = new List<Task>();
+        var count = 0;
+        var query = _container.GetItemQueryIterator<AppointmentWindow>("SELECT TOP 1 c.start FROM c ORDER BY c.start DESC");
+        var nextDay = new DateTime();
+
+        while (query.HasMoreResults)
+        {
+            var response = await query.ReadNextAsync();
+
+            foreach (var item in response)
+            {
+                DateTime startDate = DateTime.Parse(item.Start);
+                nextDay = startDate.AddDays(1);
+            }
+        }
+
+        if (nextDay == DateTime.MinValue || nextDay < DateTime.Now)
+        {
+            nextDay = DateTime.Now;
+        }
+
+        for (int i = 0; i < appointmentManagement.NumberOfWeeksToCreate; i++)
+        {
+            foreach (var dayOfTheWeek in appointmentManagement.DaysOfTheWeek)
+            {
+                DateTime currentDate = nextDay.AddDays(i * 7);
+
+                while (currentDate.DayOfWeek != (DayOfWeek)Enum.Parse(typeof(DayOfWeek), dayOfTheWeek))
+                {
+                    currentDate = currentDate.AddDays(1);
+                }
+
+                var startTime = new TimeSpan(int.Parse(appointmentManagement.FirstAppointmentStartTime.Split(':')[0]), int.Parse(appointmentManagement.FirstAppointmentStartTime.Split(':')[1]), 0);
+                var endTime = new TimeSpan(int.Parse(appointmentManagement.FirstAppointmentStartTime.Split(':')[0]), int.Parse(appointmentManagement.FirstAppointmentStartTime.Split(':')[1]) + appointmentManagement.AppointmentLength, 0);
+                var lastAppointmentStartTime = new TimeSpan(int.Parse(appointmentManagement.LastAppointmentStartTime.Split(':')[0]), int.Parse(appointmentManagement.LastAppointmentStartTime.Split(':')[1]), 0);
+
+                while (startTime <= lastAppointmentStartTime)
+                {
+                    if (!string.IsNullOrEmpty(appointmentManagement.BreakStartTime) && WillAppointmentFallInBreakTime(appointmentManagement, startTime))
+                    {
+                        startTime = startTime.Add(new TimeSpan(0, appointmentManagement.AppointmentLength, 0));
+                        endTime = endTime.Add(new TimeSpan(0, appointmentManagement.AppointmentLength, 0));
+                        continue;
+                    }
+
+
+                    for (var j = 0; j < appointmentManagement.NumberOfSlotsPerAppointment; j++)
+                    {
+                        var appointment = new AppointmentWindow()
+                        {
+                            Id = Guid.NewGuid(),
+                            Start = (currentDate.Date + startTime).ToUniversalTime().ToString(Constants.DateTimeFormat),
+                            End = (currentDate.Date + endTime).ToUniversalTime().ToString(Constants.DateTimeFormat),
+                        };
+
+                        concurrentTasks.Add(_container.CreateItemAsync(appointment, new PartitionKey(appointment.Id.ToString()), cancellationToken: cancellationToken));
+                        count += 1;
+                    }
+
+                    startTime = startTime.Add(new TimeSpan(0, appointmentManagement.AppointmentLength, 0));
+                    endTime = endTime.Add(new TimeSpan(0, appointmentManagement.AppointmentLength, 0));
+                }
+            }
+        }
+
+        await Task.WhenAll(concurrentTasks);
+
+        return count;
+    }
+
+    private bool WillAppointmentFallInBreakTime(AppointmentManagement appointmentManagement, TimeSpan startTime)
+    {
+        TimeSpan breakStart = new TimeSpan(int.Parse(appointmentManagement.BreakStartTime.Split(':')[0]), int.Parse(appointmentManagement.BreakStartTime.Split(":")[1]), 0);
+        TimeSpan breakEnd = new TimeSpan(int.Parse(appointmentManagement.BreakStartTime.Split(':')[0]), int.Parse(appointmentManagement.BreakStartTime.Split(':')[1]) + appointmentManagement.BreakLength ?? appointmentManagement.AppointmentLength, 0);
+
+        return startTime >= breakStart && startTime < breakEnd;
     }
 }

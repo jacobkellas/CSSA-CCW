@@ -20,6 +20,7 @@ public class AppointmentController : ControllerBase
     private readonly IMapper<AppointmentWindowCreateRequestModel, AppointmentWindow> _requestCreateApptMapper;
     private readonly IMapper<AppointmentWindowUpdateRequestModel, AppointmentWindow> _requestUpdateApptMapper;
     private readonly IMapper<AppointmentWindow, AppointmentWindowResponseModel> _responseMapper;
+    private readonly IMapper<AppointmentManagementRequestModel, AppointmentManagement> _requestApptManagementMapper;
     private readonly ILogger<AppointmentController> _logger;
 
     public AppointmentController(
@@ -28,12 +29,14 @@ public class AppointmentController : ControllerBase
         IMapper<AppointmentWindowCreateRequestModel, AppointmentWindow> requestCreateApptMapper,
         IMapper<AppointmentWindowUpdateRequestModel, AppointmentWindow> requestUpdateApptMapper,
         IMapper<AppointmentWindow, AppointmentWindowResponseModel> responseMapper,
+        IMapper<AppointmentManagementRequestModel, AppointmentManagement> requestApptManagementMapper,
         ILogger<AppointmentController> logger)
     {
         _applicationHttpClient = applicationHttpClient;
         _cosmosDbService = cosmosDbService ?? throw new ArgumentNullException(nameof(cosmosDbService));
         _requestCreateApptMapper = requestCreateApptMapper;
         _requestUpdateApptMapper = requestUpdateApptMapper;
+        _requestApptManagementMapper = requestApptManagementMapper;
         _responseMapper = responseMapper;
         _logger = logger;
     }
@@ -140,6 +143,27 @@ public class AppointmentController : ControllerBase
         }
 
         return Ok();
+    }
+
+    [Authorize(Policy = "AADUsers")]
+    [HttpPost("createNewAppointments", Name = "createNewAppointments")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateNewAppointments([FromBody] AppointmentManagementRequestModel appointmentManagementRequest)
+    {
+        try
+        {
+            AppointmentManagement appointmentManagement = _requestApptManagementMapper.Map(appointmentManagementRequest);
+            var numberOfAppointmentsCreated = await _cosmosDbService.CreateAppointmentsFromAppointmentManagementTemplate(appointmentManagement, cancellationToken: default);
+
+            return Ok(numberOfAppointmentsCreated);
+        }
+        catch (Exception e)
+        {
+            var originalException = e.GetBaseException();
+            _logger.LogError(originalException, originalException.Message);
+            throw new Exception("An error occur while trying to create appointments.");
+        }
     }
 
 
@@ -341,6 +365,46 @@ public class AppointmentController : ControllerBase
         }
 
         return Ok();
+    }
+
+    [Authorize(Policy = "AADUsers")]
+    [Route("deleteAppointmentsByDate")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [HttpDelete]
+    public async Task<IActionResult> DeleteAppointmentsByDate(DateTime date)
+    {
+        try
+        {
+            var response = await _cosmosDbService.DeleteAllAppointmentsByDate(date, cancellationToken: default);
+            return Ok(response);
+        }
+        catch (Exception e)
+        {
+            var originalException = e.GetBaseException();
+            _logger.LogError(originalException, originalException.Message);
+            throw new Exception("An error occur while trying to delete appointments by date.");
+        }
+    }
+
+    [Authorize(Policy = "AADUsers")]
+    [Route("deleteAppointmentsByTimeSlot")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [HttpDelete]
+    public async Task<IActionResult> DeleteAppointmentsByTimeSlot(DateTime date)
+    {
+        try
+        {
+            var response = await _cosmosDbService.DeleteAppointmentsByTimeSlot(date, cancellationToken: default);
+            return Ok(response);
+        }
+        catch (Exception e)
+        {
+            var originalException = e.GetBaseException();
+            _logger.LogError(originalException, originalException.Message);
+            throw new Exception("An error occur while trying to delete appointments by date.");
+        }
     }
 
 
