@@ -139,6 +139,12 @@ export default class Endpoints {
     }/schedule/v1/appointment/uploadFile`
   }
 
+  static get CREATE_APPOINTMENTS_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/schedule/v1/appointment/createNewAppointments`
+  }
+
   static get GET_SINGLE_APPOINTMENT() {
     return `${
       useAppConfigStore().getAppConfig.scheduleApiBaseUrl
@@ -161,6 +167,18 @@ export default class Endpoints {
     return `${
       useAppConfigStore().getAppConfig.scheduleApiBaseUrl
     }/schedule/v1/appointment/delete`
+  }
+
+  static get DELETE_APPOINTMENTS_BY_DATE() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/schedule/v1/appointment/deleteAppointmentsByDate`
+  }
+
+  static get DELETE_APPOINTMENTS_BY_TIME_SLOT() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/schedule/v1/appointment/deleteAppointmentsByTimeSlot`
   }
 
   static get DELETE_USER_FROM_APPOINTMENT() {

@@ -1,7 +1,10 @@
-import { AppointmentType } from '@shared-utils/types/defaultTypes'
 import Endpoints from '@shared-ui/api/endpoints'
 import axios from 'axios'
 import { defineStore } from 'pinia'
+import {
+  AppointmentManagement,
+  AppointmentType,
+} from '@shared-utils/types/defaultTypes'
 import { computed, ref } from 'vue'
 import {
   formatDate,
@@ -61,6 +64,18 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
       `${Endpoints.POST_UPLOAD_APPOINTMENTS_ENDPOINT}`,
       formData
     )
+
+    return res?.data
+  }
+
+  async function createNewAppointments(body: AppointmentManagement) {
+    const res = await axios
+      .post(Endpoints.CREATE_APPOINTMENTS_ENDPOINT, body)
+      .catch(err => {
+        console.warn(err)
+
+        return Promise.reject()
+      })
 
     return res?.data
   }
@@ -131,6 +146,36 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     return res?.data
   }
 
+  async function deleteAppointmentsByDate(date: Date | undefined) {
+    const res = await axios
+      .delete(Endpoints.DELETE_APPOINTMENTS_BY_DATE, {
+        params: {
+          date,
+        },
+      })
+      .catch(err => {
+        window.console.warn(err)
+        Promise.reject()
+      })
+
+    return res?.data
+  }
+
+  async function deleteAppointmentsByTimeSlot(date: Date | undefined) {
+    const res = await axios
+      .delete(Endpoints.DELETE_APPOINTMENTS_BY_TIME_SLOT, {
+        params: {
+          date,
+        },
+      })
+      .catch(err => {
+        window.console.warn(err)
+        Promise.reject()
+      })
+
+    return res?.data
+  }
+
   return {
     appointments,
     currentAppointment,
@@ -150,5 +195,8 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     sendAppointmentCheck,
     uploadAppointmentsApi,
     deleteUserFromAppointment,
+    deleteAppointmentsByDate,
+    deleteAppointmentsByTimeSlot,
+    createNewAppointments,
   }
 })
