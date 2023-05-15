@@ -139,6 +139,12 @@ export default class Endpoints {
     }/schedule/v1/appointment/uploadFile`
   }
 
+  static get PUT_CREATE_MANUAL_APPOINTMENT_ENDPOINT() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/schedule/v1/appointment/create`
+  }
+
   static get CREATE_APPOINTMENTS_ENDPOINT() {
     return `${
       useAppConfigStore().getAppConfig.scheduleApiBaseUrl
@@ -149,12 +155,6 @@ export default class Endpoints {
     return `${
       useAppConfigStore().getAppConfig.scheduleApiBaseUrl
     }/schedule/v1/appointment/get`
-  }
-
-  static get CREATE_SINGLE_APPOINTMENT() {
-    return `${
-      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
-    }/schedule/v1/appointment/create`
   }
 
   static get PUT_USER_APPOINTMENT() {
@@ -185,6 +185,18 @@ export default class Endpoints {
     return `${
       useAppConfigStore().getAppConfig.scheduleApiBaseUrl
     }/schedule/v1/appointment/reopenSlot`
+  }
+
+  static get DELETE_APPOINTMENT_BY_APPLICATION_ID() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/schedule/v1/appointment/deleteSlotByApplicationId`
+  }
+
+  static get REOPEN_APPOINTMENT_BY_APPLICATION_ID() {
+    return `${
+      useAppConfigStore().getAppConfig.scheduleApiBaseUrl
+    }/schedule/v1/appointment/reopenSlotByApplicationId`
   }
 
   /********USER PROFILE******************/

@@ -307,10 +307,7 @@
             </v-row>
             <v-row>
               <v-col>
-                <DateTimePicker
-                  v-model="datetime"
-                  label
-                />
+                <DateTimePicker @on-save-reschedule="handleSaveReschedule" />
               </v-col>
               <v-col>
                 <Schedule />
@@ -372,16 +369,18 @@
 </template>
 
 <script setup lang="ts">
+import { AppointmentWindowCreateRequestModel } from '@shared-utils/types/defaultTypes'
 import DateTimePicker from '@core-admin/components/appointment/DateTimePicker.vue'
 import FileUploadDialog from '@core-admin/components/dialogs/FileUploadDialog.vue'
 import Schedule from '@core-admin/components/appointment/Schedule.vue'
 import { formatDate } from '@shared-utils/formatters/defaultFormatters'
 import { liveScanUrl } from '@shared-utils/lists/defaultConstants'
+import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore'
 import { useDocumentsStore } from '@core-admin/stores/documentsStore'
 import { usePermitsStore } from '@core-admin/stores/permitsStore'
-import { useQuery } from '@tanstack/vue-query'
 import { useRoute } from 'vue-router/composables'
 import { computed, onMounted, reactive, ref } from 'vue'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 
 const state = reactive({
   isSelecting: false,
@@ -395,10 +394,10 @@ const state = reactive({
 })
 
 const ninetyDayDialog = ref(false)
-const datetime = ref(null)
 const route = useRoute()
 const permitStore = usePermitsStore()
 const documentsStore = useDocumentsStore()
+const appointmentStore = useAppointmentsStore()
 const changed = ref('')
 
 const allowedExtension = [
@@ -424,6 +423,21 @@ const { refetch: updatePermitDetails } = useQuery(
   }
 )
 
+const { mutate: deleteSlotByApplicationId } = useMutation({
+  mutationFn: (applicationId: string) =>
+    appointmentStore.deleteSlotByApplicationId(applicationId),
+})
+
+const { mutate: reopenSlotByApplicationId } = useMutation({
+  mutationFn: (applicationId: string) =>
+    appointmentStore.putReopenSlotByApplicationId(applicationId),
+})
+
+const { mutate: createManualAppointment } = useMutation({
+  mutationFn: (appointment: AppointmentWindowCreateRequestModel) =>
+    appointmentStore.putCreateManualAppointment(appointment),
+})
+
 onMounted(() => {
   permitStore.getPermitDetailApi(route.params.orderId).then(() => {
     documentsStore.getApplicationDocumentApi('portrait').then(res => {
@@ -440,7 +454,10 @@ function onFileChanged(e: File, target: string) {
       reader.onload = event => {
         let img = document.getElementById('user-photo')
 
-        img?.setAttribute('src', event.target.result)
+        if (event.target?.result) {
+          img?.setAttribute('src', event.target.result as string)
+        }
+
         img?.setAttribute('width', '100')
         img?.setAttribute('height', '100')
       }
@@ -509,13 +526,17 @@ const appointmentTime = computed(() => {
 })
 
 const daysLeft = computed(() => {
-  const date = new Date(
-    permitStore.getPermitDetail?.application.startOfNinetyDayCountdown
-  )
-  const ninetyDays = date.setDate(date.getDate() + 91)
-  const today = new Date()
+  if (permitStore.getPermitDetail?.application.startOfNinetyDayCountdown) {
+    const date = new Date(
+      permitStore.getPermitDetail?.application.startOfNinetyDayCountdown
+    )
+    const ninetyDays = date.setDate(date.getDate() + 91)
+    const today = new Date()
 
-  return Math.floor((ninetyDays - today.getTime()) / (1000 * 60 * 60 * 24))
+    return Math.floor((ninetyDays - today.getTime()) / (1000 * 60 * 60 * 24))
+  }
+
+  return 0
 })
 
 function handleStart90DayCountdown() {
@@ -533,5 +554,35 @@ function handle90DayCountdownConfirm() {
 
 function handle90DayCountdownDeny() {
   ninetyDayDialog.value = false
+}
+
+function handleSaveReschedule(reschedule) {
+  changed.value = reschedule.change
+  permitStore.getPermitDetail.application.appointmentDateTime =
+    reschedule.dateAndTime
+
+  updatePermitDetails()
+
+  const appointmentRequest: AppointmentWindowCreateRequestModel = {
+    start: permitStore.getPermitDetail.application.appointmentDateTime,
+    end: permitStore.getPermitDetail.application.appointmentDateTime,
+    applicationId: permitStore.getPermitDetail.id,
+    status: true.toString(),
+    name: `${permitStore.getPermitDetail.application.personalInfo.firstName} ${permitStore.getPermitDetail.application.personalInfo.lastName}`,
+    permit: permitStore.getPermitDetail.application.orderId,
+    payment:
+      permitStore.getPermitDetail.application.paymentStatus === 1
+        ? 'cash'
+        : 'credit',
+    isManuallyCreated: true,
+  }
+
+  createManualAppointment(appointmentRequest)
+
+  if (reschedule.removeOldAppointment) {
+    deleteSlotByApplicationId(permitStore.getPermitDetail.id)
+  } else {
+    reopenSlotByApplicationId(permitStore.getPermitDetail.id)
+  }
 }
 </script>
