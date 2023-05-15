@@ -67,7 +67,7 @@ stages:
             inlineScript: |
               Set-Location $(System.DefaultWorkingDirectory)
               
-              $mpFolderName = "mp"
+              $mpFolderName = "mp\Updates"
               
               $ErrorActionPreference = "SilentlyContinue"
               
