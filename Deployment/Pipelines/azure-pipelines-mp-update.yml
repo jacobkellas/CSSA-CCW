@@ -67,7 +67,7 @@ stages:
             inlineScript: |
               Set-Location $(System.DefaultWorkingDirectory)
               
-              $mpFolderName = "mp\Updates"
+              $mpFolderName = "mp"
               
               $ErrorActionPreference = "SilentlyContinue"
               
@@ -76,9 +76,9 @@ stages:
               
               $ErrorActionPreference = "Stop"
               
-              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/mainTemplate.json -Destination $mpFullPath -Force 
+              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/Updates/mainTemplate.json -Destination $mpFullPath -Force 
               
-              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/createUiDefinition.json -Destination $mpFullPath -Force 
+              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/Updates/createUiDefinition.json -Destination $mpFullPath -Force 
               
               $mainTemplatePath = (Join-Path -Path $mpFullPath -ChildPath "mainTemplate.json")
               Write-Host "Using file:" $mainTemplatePath
