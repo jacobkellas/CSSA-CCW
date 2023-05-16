@@ -453,8 +453,21 @@ export type BrandType = {
   cost: CostType
   agencyBillingNumber: string
   contactName: string
+  contactNumber: string
   shippingAddress: string
   mailCode: string
+  AgencyStreetAddress: string
+  AgencyAptBuildingNumber: string
+  AgencyCity: string
+  AgencyState: string
+  AgencyZip: string
+  AgencyCounty: string
+  AgencyShippingStreetAddress: string
+  AgencyShippingAptBuildingNumber: string
+  AgencyShippingCity: string
+  AgencyShippingState: string
+  AgencyShippingZip: string
+  AgencyShippingCounty: string
 }
 
 export type AgencyDocumentsType = {

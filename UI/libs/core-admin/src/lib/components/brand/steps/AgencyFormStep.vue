@@ -141,46 +141,6 @@
             </template>
           </v-text-field>
         </v-col>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <v-text-field
-            dense
-            filled
-            :label="$t('Agency Address')"
-            :rules="[v => !!v || $t('Agency Address is required')]"
-            :hint="$t('Enter Agency address')"
-            color="blue1"
-            v-model="brandStore.getBrand.agencyAddress"
-            required
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-            <template #append>
-              <v-icon
-                color="error"
-                medium
-                v-if="!brandStore.getBrand.agencyAddress"
-              >
-                mdi-alert-octagon
-              </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
       </v-row>
       <v-row>
         <v-col
@@ -432,6 +392,478 @@
         <v-divider></v-divider>
       </v-row>
       <v-row>
+        <p>Agency Address</p>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Street')"
+            :rules="[v => !!v || $t('Street address is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyStreetAddress"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyStreetAddress"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Apt / Building Number')"
+            :hint="$t('Apt / Building Number')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyAptBuildingNumber"
+            required
+          >
+            <template #append>
+              <v-icon
+                medium
+                color="primary"
+                v-if="brandStore.getBrand.AgencyAptBuildingNumber"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('City')"
+            :rules="[v => !!v || $t('Agency city is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyCity"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyCity"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('State')"
+            :rules="[v => !!v || $t('Agency state is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyState"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyState"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Zip')"
+            :rules="[v => !!v || $t('Agency zip is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyZip"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyZip"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('County')"
+            :rules="[v => !!v || $t('Agency County is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyCounty"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyCounty"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-divider></v-divider>
+      </v-row>
+      <v-row>
+        <p>Agency Shipping Address</p>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Street')"
+            :rules="[v => !!v || $t('Street address is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyShippingStreetAddress"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyShippingStreetAddress"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Apt / Building Number')"
+            :hint="$t('Apt / Building Number')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyShippingAptBuildingNumber"
+            required
+          >
+            <template #append>
+              <v-icon
+                medium
+                color="primary"
+                v-if="brandStore.getBrand.AgencyShippingAptBuildingNumber"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('City')"
+            :rules="[v => !!v || $t('Agency city is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyShippingCity"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyShippingCity"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('State')"
+            :rules="[v => !!v || $t('Agency state is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyShippingState"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyShippingState"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('Zip')"
+            :rules="[v => !!v || $t('Agency zip is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyShippingZip"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyShippingZip"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
+            :label="$t('County')"
+            :rules="[v => !!v || $t('Agency County is required.')]"
+            :hint="$t('Street address')"
+            color="blue1"
+            v-model="brandStore.getBrand.AgencyShippingCounty"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.AgencyShippingCounty"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-divider></v-divider>
+      </v-row>
+      <v-row>
         <p>Live Scan Form</p>
       </v-row>
       <v-row>
@@ -482,6 +914,48 @@
           <v-text-field
             dense
             filled
+            :label="$t('Mail Code')"
+            :rules="[v => !!v || $t('Mail Code is required')]"
+            :hint="$t('Mail Code')"
+            color="blue1"
+            v-model="brandStore.getBrand.mailCode"
+            required
+          >
+            <template #prepend>
+              <v-icon
+                x-small
+                color="error"
+              >
+                mdi-star
+              </v-icon>
+            </template>
+            <template #append>
+              <v-icon
+                color="error"
+                medium
+                v-if="!brandStore.getBrand.mailCode"
+              >
+                mdi-alert-octagon
+              </v-icon>
+              <v-icon
+                v-else
+                medium
+                color="primary"
+              >
+                mdi-checkbox-marked-circle
+              </v-icon>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          cols="12"
+          md="6"
+        >
+          <v-text-field
+            dense
+            filled
             :label="$t('Contact Name')"
             :rules="[v => !!v || $t('Contact Name is required')]"
             :hint="$t('Contact Name')"
@@ -515,8 +989,6 @@
             </template>
           </v-text-field>
         </v-col>
-      </v-row>
-      <v-row>
         <v-col
           cols="12"
           md="6"
@@ -524,11 +996,11 @@
           <v-text-field
             dense
             filled
-            :label="$t('Shipping Address')"
-            :rules="[v => !!v || $t('Shipping Address is required')]"
-            :hint="$t('Shipping Address')"
+            :label="$t('Contact Number')"
+            :rules="[v => !!v || $t('Contact Number is required')]"
+            :hint="$t('Contact Name')"
             color="blue1"
-            v-model="brandStore.getBrand.shippingAddress"
+            v-model="brandStore.getBrand.contactNumber"
             required
           >
             <template #prepend>
@@ -543,47 +1015,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.shippingAddress"
-              >
-                mdi-alert-octagon
-              </v-icon>
-              <v-icon
-                v-else
-                medium
-                color="primary"
-              >
-                mdi-checkbox-marked-circle
-              </v-icon>
-            </template>
-          </v-text-field>
-        </v-col>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <v-text-field
-            dense
-            filled
-            :label="$t('Mail Code')"
-            :rules="[v => !!v || $t('Mail Code is required')]"
-            :hint="$t('Mail Code')"
-            color="blue1"
-            v-model="brandStore.getBrand.mailCode"
-            required
-          >
-            <template #prepend>
-              <v-icon
-                x-small
-                color="error"
-              >
-                mdi-star
-              </v-icon>
-            </template>
-            <template #append>
-              <v-icon
-                color="error"
-                medium
-                v-if="!brandStore.getBrand.mailCode"
+                v-if="!brandStore.getBrand.contactNumber"
               >
                 mdi-alert-octagon
               </v-icon>
