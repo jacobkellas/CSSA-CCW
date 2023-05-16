@@ -8,7 +8,7 @@ pool:
 variables:
     - template: variables/marketplace-install-vars.yml
     - name: mpPath
-      value: 'Deployment\IaC\Infrastructure\Marketplace'
+      value: 'Deployment\IaC\Infrastructure\Marketplace\Updates'
     - name: CSSA_SP_APP_ID
       value: "$(cssa-marketplace-ccw-deployment-spn)"
     - name: CSSA_SP_SECRET
@@ -76,9 +76,9 @@ stages:
               
               $ErrorActionPreference = "Stop"
               
-              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/mainTemplate.json -Destination $mpFullPath -Force 
+              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/Updates/mainTemplate.json -Destination $mpFullPath -Force 
               
-              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/createUiDefinition.json -Destination $mpFullPath -Force 
+              Copy-Item $(System.DefaultWorkingDirectory)/Deployment/IaC/Marketplace/Updates/createUiDefinition.json -Destination $mpFullPath -Force 
               
               $mainTemplatePath = (Join-Path -Path $mpFullPath -ChildPath "mainTemplate.json")
               Write-Host "Using file:" $mainTemplatePath

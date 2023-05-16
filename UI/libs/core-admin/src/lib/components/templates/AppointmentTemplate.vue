@@ -137,6 +137,7 @@
 
 <script setup lang="ts">
 import Routes from '@core-admin/router/routes'
+import { formatLocalTimeStringToUtcTimeString } from '@shared-utils/formatters/defaultFormatters'
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore'
 import { useMutation } from '@tanstack/vue-query'
 import { computed, onMounted, ref } from 'vue'
@@ -168,8 +169,12 @@ const { isLoading, mutate: uploadAppointments } = useMutation({
   mutationFn: async () =>
     await appointmentsStore.createNewAppointments({
       daysOfTheWeek: selectedDays.value,
-      firstAppointmentStartTime: selectedStartTime.value,
-      lastAppointmentStartTime: selectedEndTime.value,
+      firstAppointmentStartTime: formatLocalTimeStringToUtcTimeString(
+        selectedStartTime.value
+      ),
+      lastAppointmentStartTime: formatLocalTimeStringToUtcTimeString(
+        selectedEndTime.value
+      ),
       numberOfSlotsPerAppointment: selectedNumberOfSlots.value,
       appointmentLength: selectedAppointmentLength.value,
       numberOfWeeksToCreate: selectedNumberOfWeeks.value,

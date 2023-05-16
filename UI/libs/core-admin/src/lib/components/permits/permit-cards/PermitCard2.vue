@@ -41,8 +41,8 @@
               </v-col>
               <v-col>
                 <div class="text-no-wrap">
-                  ID Number:
-                  {{ permitStore.getPermitDetail.application.idInfo.idNumber }}
+                  CII Number:
+                  {{ permitStore.getPermitDetail.application.ciiNumber }}
                 </div>
               </v-col>
             </v-row>
@@ -205,14 +205,39 @@
           <v-spacer></v-spacer>
 
           <v-card-text class="text-center">
-            <v-btn
-              color="primary"
-              :href="`mailto:${permitStore.getPermitDetail.application.userEmail}`"
-              target="_blank"
-            >
-              <v-icon left> mdi-email-outline </v-icon>
-              Send Request
-            </v-btn>
+            <v-row>
+              <v-col
+                cols="12"
+                lg="6"
+              >
+                <v-btn
+                  @click="handleStart90DayCountdown"
+                  :disabled="
+                    permitStore.getPermitDetail.application
+                      .startOfNinetyDayCountdown
+                  "
+                  color="primary"
+                  block
+                >
+                  <v-icon left>mdi-timer</v-icon>
+                  Start 90 Days
+                </v-btn>
+              </v-col>
+              <v-col
+                cols="12"
+                lg="6"
+              >
+                <v-btn
+                  color="primary"
+                  :href="`mailto:${permitStore.getPermitDetail.application.userEmail}`"
+                  target="_blank"
+                  block
+                >
+                  <v-icon left>mdi-email-outline</v-icon>
+                  Send Request
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
@@ -282,10 +307,7 @@
             </v-row>
             <v-row>
               <v-col>
-                <DateTimePicker
-                  v-model="datetime"
-                  label
-                />
+                <DateTimePicker @on-save-reschedule="handleSaveReschedule" />
               </v-col>
               <v-col>
                 <Schedule />
@@ -313,19 +335,52 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <v-dialog
+      v-model="ninetyDayDialog"
+      persistent
+      max-width="300"
+    >
+      <v-card>
+        <v-card-title>90 Day Countdown Begins</v-card-title>
+        <v-card-text>
+          This will begin a 90 day countdown, are you sure?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="error"
+            text
+            @click="handle90DayCountdownDeny"
+          >
+            No
+          </v-btn>
+          <v-btn
+            color="primary"
+            text
+            @click="handle90DayCountdownConfirm"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
+
 <script setup lang="ts">
+import { AppointmentWindowCreateRequestModel } from '@shared-utils/types/defaultTypes'
 import DateTimePicker from '@core-admin/components/appointment/DateTimePicker.vue'
 import FileUploadDialog from '@core-admin/components/dialogs/FileUploadDialog.vue'
 import Schedule from '@core-admin/components/appointment/Schedule.vue'
 import { formatDate } from '@shared-utils/formatters/defaultFormatters'
 import { liveScanUrl } from '@shared-utils/lists/defaultConstants'
+import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore'
 import { useDocumentsStore } from '@core-admin/stores/documentsStore'
 import { usePermitsStore } from '@core-admin/stores/permitsStore'
-import { useQuery } from '@tanstack/vue-query'
 import { useRoute } from 'vue-router/composables'
 import { computed, onMounted, reactive, ref } from 'vue'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 
 const state = reactive({
   isSelecting: false,
@@ -338,10 +393,12 @@ const state = reactive({
   userPhoto: '',
 })
 
-const datetime = ref(null)
+const ninetyDayDialog = ref(false)
 const route = useRoute()
 const permitStore = usePermitsStore()
 const documentsStore = useDocumentsStore()
+const appointmentStore = useAppointmentsStore()
+const changed = ref('')
 
 const allowedExtension = [
   '.png',
@@ -357,6 +414,29 @@ const { isLoading, refetch } = useQuery(
   ['permitDetail', route.params.orderId],
   () => permitStore.getPermitDetailApi(route.params.orderId)
 )
+
+const { refetch: updatePermitDetails } = useQuery(
+  ['setPermitsDetails'],
+  () => permitStore.updatePermitDetailApi(`Updated ${changed.value}`),
+  {
+    enabled: false,
+  }
+)
+
+const { mutate: deleteSlotByApplicationId } = useMutation({
+  mutationFn: (applicationId: string) =>
+    appointmentStore.deleteSlotByApplicationId(applicationId),
+})
+
+const { mutate: reopenSlotByApplicationId } = useMutation({
+  mutationFn: (applicationId: string) =>
+    appointmentStore.putReopenSlotByApplicationId(applicationId),
+})
+
+const { mutate: createManualAppointment } = useMutation({
+  mutationFn: (appointment: AppointmentWindowCreateRequestModel) =>
+    appointmentStore.putCreateManualAppointment(appointment),
+})
 
 onMounted(() => {
   permitStore.getPermitDetailApi(route.params.orderId).then(() => {
@@ -374,7 +454,10 @@ function onFileChanged(e: File, target: string) {
       reader.onload = event => {
         let img = document.getElementById('user-photo')
 
-        img?.setAttribute('src', event.target.result)
+        if (event.target?.result) {
+          img?.setAttribute('src', event.target.result as string)
+        }
+
         img?.setAttribute('width', '100')
         img?.setAttribute('height', '100')
       }
@@ -443,12 +526,63 @@ const appointmentTime = computed(() => {
 })
 
 const daysLeft = computed(() => {
-  const date = new Date(
-    permitStore.getPermitDetail?.application.startOfNinetyDayCountdown
-  )
-  const ninetyDays = date.setDate(date.getDate() + 91)
-  const today = new Date()
+  if (permitStore.getPermitDetail?.application.startOfNinetyDayCountdown) {
+    const date = new Date(
+      permitStore.getPermitDetail?.application.startOfNinetyDayCountdown
+    )
+    const ninetyDays = date.setDate(date.getDate() + 91)
+    const today = new Date()
 
-  return Math.floor((ninetyDays - today.getTime()) / (1000 * 60 * 60 * 24))
+    return Math.floor((ninetyDays - today.getTime()) / (1000 * 60 * 60 * 24))
+  }
+
+  return 0
 })
+
+function handleStart90DayCountdown() {
+  ninetyDayDialog.value = true
+}
+
+function handle90DayCountdownConfirm() {
+  changed.value = '90 Day Countdown'
+  permitStore.getPermitDetail.application.startOfNinetyDayCountdown = new Date(
+    Date.now()
+  ).toISOString()
+  ninetyDayDialog.value = false
+  updatePermitDetails()
+}
+
+function handle90DayCountdownDeny() {
+  ninetyDayDialog.value = false
+}
+
+function handleSaveReschedule(reschedule) {
+  changed.value = reschedule.change
+  permitStore.getPermitDetail.application.appointmentDateTime =
+    reschedule.dateAndTime
+
+  updatePermitDetails()
+
+  const appointmentRequest: AppointmentWindowCreateRequestModel = {
+    start: permitStore.getPermitDetail.application.appointmentDateTime,
+    end: permitStore.getPermitDetail.application.appointmentDateTime,
+    applicationId: permitStore.getPermitDetail.id,
+    status: true.toString(),
+    name: `${permitStore.getPermitDetail.application.personalInfo.firstName} ${permitStore.getPermitDetail.application.personalInfo.lastName}`,
+    permit: permitStore.getPermitDetail.application.orderId,
+    payment:
+      permitStore.getPermitDetail.application.paymentStatus === 1
+        ? 'cash'
+        : 'credit',
+    isManuallyCreated: true,
+  }
+
+  createManualAppointment(appointmentRequest)
+
+  if (reschedule.removeOldAppointment) {
+    deleteSlotByApplicationId(permitStore.getPermitDetail.id)
+  } else {
+    reopenSlotByApplicationId(permitStore.getPermitDetail.id)
+  }
+}
 </script>
