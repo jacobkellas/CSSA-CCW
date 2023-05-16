@@ -13,7 +13,6 @@ public class EntityToAgencyProfileSettingsResponseModelMapper : IMapper<AgencyPr
             AgencySheriffName = source.AgencySheriffName,
             AgencyName = source.AgencyName,
             ChiefOfPoliceName = source.ChiefOfPoliceName,
-            AgencyAddress = source.AgencyAddress,
             AgencyTelephone = source.AgencyTelephone,
             AgencyFax = source.AgencyFax,
             AgencyEmail = source.AgencyEmail,

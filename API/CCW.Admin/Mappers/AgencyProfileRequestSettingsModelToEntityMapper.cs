@@ -17,7 +17,6 @@ public class AgencyProfileRequestSettingsModelToEntityMapper : IMapper<AgencyPro
             SecondaryThemeColor = source.SecondaryThemeColor,
             PaymentURL = source.PaymentURL,
             RefreshTokenTime = source.RefreshTokenTime,
-            AgencyAddress = source.AgencyAddress,
             AgencyEmail = source.AgencyEmail,
             AgencyFax = source.AgencyFax,
             AgencyTelephone = source.AgencyTelephone,

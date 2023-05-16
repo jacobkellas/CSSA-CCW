@@ -1492,7 +1492,7 @@ public class PermitApplicationController : ControllerBase
     }
 
     [Authorize(Policy = "AADUsers")]
-    [Route("printUnofficialLicense")]
+    [Route("printLiveScan")]
     [HttpPut]
     public async Task<IActionResult> PrintLiveScanForm(string applicationId, bool shouldAddDownloadFilename = true)
     {
