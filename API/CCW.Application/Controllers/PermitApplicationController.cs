@@ -1542,13 +1542,13 @@ public class PermitApplicationController : ControllerBase
             form.GetField("FIRST_NAME_2").SetValue(userApplication.Application.Aliases[0].PrevFirstName ?? "", true);
             form.GetField("SUFFIX_2").SetValue(userApplication.Application.Aliases[0].PrevSuffix ?? "", true);
             form.GetField("DATE_OF_BIRTH").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
-            if(userApplication.Application.PhysicalAppearance.Gender == "Male")
+            if (userApplication.Application.PhysicalAppearance.Gender == "Male")
             {
-                form.GetField("Sex").SetValue("Male");
+                form.GetField("MALE").SetValue("true");
             }
             else
             {
-                form.GetField("Sex").SetValue("Female");
+                form.GetField("FEMALE").SetValue("true");
             }
             form.GetField("DL_NUMBER").SetValue(userApplication.Application.IdInfo.IdNumber ?? "", true);
             string? height = userApplication.Application.PhysicalAppearance?.HeightFeet + "'" + userApplication.Application.PhysicalAppearance?.HeightInch;
@@ -1584,7 +1584,7 @@ public class PermitApplicationController : ControllerBase
             form.GetField("EMPLOYER_ZIP").SetValue(userApplication.Application.WorkInformation.EmployerZip ?? "", true);
             form.GetField("EMPLOYER_MAIL_CODE").SetValue(userApplication.Application.WorkInformation.EmployerMailCode ?? "", true);
 
-            docFileAll.Flush();
+            //docFileAll.Flush();
             form.FlattenFields();
             docFileAll.Close();
 

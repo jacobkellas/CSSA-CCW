@@ -406,7 +406,7 @@
             :rules="[v => !!v || $t('Street address is required.')]"
             :hint="$t('Street address')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyStreetAddress"
+            v-model="brandStore.getBrand.agencyStreetAddress"
             required
           >
             <template #prepend>
@@ -421,7 +421,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyStreetAddress"
+                v-if="!brandStore.getBrand.agencyStreetAddress"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -445,14 +445,14 @@
             :label="$t('Apt / Building Number')"
             :hint="$t('Apt / Building Number')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyAptBuildingNumber"
+            v-model="brandStore.getBrand.agencyAptBuildingNumber"
             required
           >
             <template #append>
               <v-icon
                 medium
                 color="primary"
-                v-if="brandStore.getBrand.AgencyAptBuildingNumber"
+                v-if="brandStore.getBrand.agencyAptBuildingNumber"
               >
                 mdi-checkbox-marked-circle
               </v-icon>
@@ -470,9 +470,9 @@
             filled
             :label="$t('City')"
             :rules="[v => !!v || $t('Agency city is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('City')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyCity"
+            v-model="brandStore.getBrand.agencyCity"
             required
           >
             <template #prepend>
@@ -487,7 +487,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyCity"
+                v-if="!brandStore.getBrand.agencyCity"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -510,9 +510,9 @@
             filled
             :label="$t('State')"
             :rules="[v => !!v || $t('Agency state is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('State')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyState"
+            v-model="brandStore.getBrand.agencyState"
             required
           >
             <template #prepend>
@@ -527,7 +527,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyState"
+                v-if="!brandStore.getBrand.agencyState"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -552,9 +552,9 @@
             filled
             :label="$t('Zip')"
             :rules="[v => !!v || $t('Agency zip is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('Zip Code')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyZip"
+            v-model="brandStore.getBrand.agencyZip"
             required
           >
             <template #prepend>
@@ -569,7 +569,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyZip"
+                v-if="!brandStore.getBrand.agencyZip"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -592,9 +592,9 @@
             filled
             :label="$t('County')"
             :rules="[v => !!v || $t('Agency County is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('County')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyCounty"
+            v-model="brandStore.getBrand.agencyCounty"
             required
           >
             <template #prepend>
@@ -609,7 +609,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyCounty"
+                v-if="!brandStore.getBrand.agencyCounty"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -642,7 +642,7 @@
             :rules="[v => !!v || $t('Street address is required.')]"
             :hint="$t('Street address')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyShippingStreetAddress"
+            v-model="brandStore.getBrand.agencyShippingStreetAddress"
             required
           >
             <template #prepend>
@@ -657,7 +657,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyShippingStreetAddress"
+                v-if="!brandStore.getBrand.agencyShippingStreetAddress"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -681,14 +681,14 @@
             :label="$t('Apt / Building Number')"
             :hint="$t('Apt / Building Number')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyShippingAptBuildingNumber"
+            v-model="brandStore.getBrand.agencyShippingAptBuildingNumber"
             required
           >
             <template #append>
               <v-icon
                 medium
                 color="primary"
-                v-if="brandStore.getBrand.AgencyShippingAptBuildingNumber"
+                v-if="brandStore.getBrand.agencyShippingAptBuildingNumber"
               >
                 mdi-checkbox-marked-circle
               </v-icon>
@@ -706,9 +706,9 @@
             filled
             :label="$t('City')"
             :rules="[v => !!v || $t('Agency city is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('City')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyShippingCity"
+            v-model="brandStore.getBrand.agencyShippingCity"
             required
           >
             <template #prepend>
@@ -723,7 +723,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyShippingCity"
+                v-if="!brandStore.getBrand.agencyShippingCity"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -746,9 +746,9 @@
             filled
             :label="$t('State')"
             :rules="[v => !!v || $t('Agency state is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('State')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyShippingState"
+            v-model="brandStore.getBrand.agencyShippingState"
             required
           >
             <template #prepend>
@@ -763,7 +763,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyShippingState"
+                v-if="!brandStore.getBrand.agencyShippingState"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -788,9 +788,9 @@
             filled
             :label="$t('Zip')"
             :rules="[v => !!v || $t('Agency zip is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('Zip Code')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyShippingZip"
+            v-model="brandStore.getBrand.agencyShippingZip"
             required
           >
             <template #prepend>
@@ -805,7 +805,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyShippingZip"
+                v-if="!brandStore.getBrand.agencyShippingZip"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -828,9 +828,9 @@
             filled
             :label="$t('County')"
             :rules="[v => !!v || $t('Agency County is required.')]"
-            :hint="$t('Street address')"
+            :hint="$t('County')"
             color="blue1"
-            v-model="brandStore.getBrand.AgencyShippingCounty"
+            v-model="brandStore.getBrand.agencyShippingCounty"
             required
           >
             <template #prepend>
@@ -845,7 +845,7 @@
               <v-icon
                 color="error"
                 medium
-                v-if="!brandStore.getBrand.AgencyShippingCounty"
+                v-if="!brandStore.getBrand.agencyShippingCounty"
               >
                 mdi-alert-octagon
               </v-icon>
@@ -998,7 +998,7 @@
             filled
             :label="$t('Contact Number')"
             :rules="[v => !!v || $t('Contact Number is required')]"
-            :hint="$t('Contact Name')"
+            :hint="$t('Contact Number')"
             color="blue1"
             v-model="brandStore.getBrand.contactNumber"
             required
@@ -1087,6 +1087,8 @@ const {
 })
 
 async function getFormValues() {
+  window.console.log('queryBrand: ', queryBrandSettings)
+  window.console.log('BrandStore: ', brandStore)
   queryBrandSettings()
 }
 </script>

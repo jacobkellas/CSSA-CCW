@@ -39,8 +39,6 @@ public class AgencyProfileSettings
     public string ContactName { get; set; }
     [JsonProperty("contactNumber")]
     public string ContactNumber { get; set; }
-    [JsonProperty("shippingAddress")]
-    public string ShippingAddress { get; set; }
     [JsonProperty("mailCode")]
     public string MailCode { get; set; }
     [JsonProperty("agencyStreetAddress")]

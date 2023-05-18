@@ -432,13 +432,11 @@ export type StatusType = {
 export type BrandType = {
   id?: string
   agencyName: string
-  agencyAddress: string
   agencyTelephone: string
   agencyFax: string
   agencyEmail: string
   agencySheriffName: string
   chiefOfPoliceName: string
-  liveScanURL: string
   primaryThemeColor: string | VuetifyThemeItem
   secondaryThemeColor: string | VuetifyThemeItem
   standardCost: number
@@ -455,20 +453,19 @@ export type BrandType = {
   agencyBillingNumber: string
   contactName: string
   contactNumber: string
-  shippingAddress: string
   mailCode: string
-  AgencyStreetAddress: string
-  AgencyAptBuildingNumber: string
-  AgencyCity: string
-  AgencyState: string
-  AgencyZip: string
-  AgencyCounty: string
-  AgencyShippingStreetAddress: string
-  AgencyShippingAptBuildingNumber: string
-  AgencyShippingCity: string
-  AgencyShippingState: string
-  AgencyShippingZip: string
-  AgencyShippingCounty: string
+  agencyStreetAddress: string
+  agencyAptBuildingNumber: string
+  agencyCity: string
+  agencyState: string
+  agencyZip: string
+  agencyCounty: string
+  agencyShippingStreetAddress: string
+  agencyShippingAptBuildingNumber: string
+  agencyShippingCity: string
+  agencyShippingState: string
+  agencyShippingZip: string
+  agencyShippingCounty: string
 }
 
 export type AgencyDocumentsType = {

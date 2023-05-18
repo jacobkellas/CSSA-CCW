@@ -28,7 +28,7 @@ public class DocumentServiceClient : IDocumentServiceClient
         applicationTemplate = documentSettings.GetSection("ApplicationTemplateName").Value;
         unofficialPermitTemplate = documentSettings.GetSection("UnofficalLicenseTemplateName").Value;
         officialPermitTemplate = documentSettings.GetSection("OfficialLicenseTemplateName").Value;
-        officialPermitTemplate = documentSettings.GetSection("LiveScanTemplateName").Value;
+        liveScanTemplate = documentSettings.GetSection("LiveScanTemplateName").Value;
 
         var documentClientSettings = configuration.GetSection("DocumentServiceClient");
         downloadAgencyUri = documentClientSettings.GetSection("DownloadAgencyBaseUrl").Value;
