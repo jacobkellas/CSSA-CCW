@@ -39,23 +39,12 @@
         </v-row>
 
         <v-row>
-          <v-col>
+          <v-col cols="6">
             <v-text-field
               v-model="model.application.contact.workPhoneNumber"
               :hint="$t('Only numbers no spaces or dashes')"
               :label="$t('Work phone number')"
               :rules="notRequiredPhoneRuleSet"
-              :dense="isMobile"
-              maxlength="10"
-              outlined
-            />
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="model.application.contact.faxPhoneNumber"
-              :hint="$t('Only numbers no spaces or dashes')"
-              :rules="notRequiredPhoneRuleSet"
-              :label="$t('Fax number')"
               :dense="isMobile"
               maxlength="10"
               outlined
