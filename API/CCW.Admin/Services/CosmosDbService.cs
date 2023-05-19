@@ -1,6 +1,6 @@
-﻿using Microsoft.Azure.Cosmos;
-using System.Net;
 using CCW.Admin.Entities;
+using Microsoft.Azure.Cosmos;
+using System.Net;
 
 
 namespace CCW.Admin.Services;
@@ -46,16 +46,17 @@ public class CosmosDbService : ICosmosDbService
 
     public async Task<AgencyProfileSettings> UpdateSettingsAsync(AgencyProfileSettings agencyProfile, CancellationToken cancellationToken)
     {
-        var storedProfile = await GetSettingsAsync(cancellationToken);
-        if (storedProfile?.AgencyName == null)
-        {
-            agencyProfile.Id = Guid.NewGuid().ToString();
-            AgencyProfileSettings createdItem = await _container.CreateItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id), null, cancellationToken);
+        /*        var storedProfile = await GetSettingsAsync(cancellationToken);
+                if (storedProfile?.AgencyName == null)
+                {
+                    agencyProfile.Id = Guid.NewGuid().ToString();
+                    AgencyProfileSettings createdItem = await _container.CreateItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id), null, cancellationToken);
 
-            return createdItem;
-        }
+                    return createdItem;
+                }
 
-        agencyProfile.Id = storedProfile.Id;
+                agencyProfile.Id = storedProfile.Id;*/
+        agencyProfile.Id = Guid.NewGuid().ToString();
         var result = await _container.UpsertItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id), null, cancellationToken);
 
         return result.Resource;

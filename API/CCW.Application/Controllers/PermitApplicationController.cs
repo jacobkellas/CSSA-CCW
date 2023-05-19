@@ -1529,7 +1529,7 @@ public class PermitApplicationController : ControllerBase
             form.GetField("AGENCY_MAIL_CODE").SetValue(adminResponse.MailCode ?? "", true);
             form.GetField("AGENCY_ADDRESS_1").SetValue(adminResponse.AgencyShippingStreetAddress ?? "", true);
             form.GetField("AGENCY_CONTACT_NAME").SetValue(adminResponse.ContactName ?? "", true);
-            form.GetField("AGENCY_CITY").SetValue(adminResponse.AgencyCity ?? "", true);
+            form.GetField("AGENCY_CITY").SetValue(adminResponse.AgencyShippingCity ?? "", true);
             form.GetField("AGENCY_STATE").SetValue(adminResponse.AgencyShippingState ?? "", true);
             form.GetField("AGENCY_ZIP").SetValue(adminResponse.AgencyShippingZip ?? "", true);
             form.GetField("AGENCY_CONTACT_NUMBER").SetValue(adminResponse.ContactNumber ?? "", true);
