@@ -6,11 +6,11 @@
       v-model="valid"
     >
       <v-card-title v-if="!isMobile">
-        {{ $t('ID Information') }}
+        {{ $t("Driver's License") }}
       </v-card-title>
 
       <v-card-subtitle v-if="isMobile">
-        {{ $t('ID Information') }}
+        {{ $t("Driver's License") }}
       </v-card-subtitle>
 
       <v-card-text>
