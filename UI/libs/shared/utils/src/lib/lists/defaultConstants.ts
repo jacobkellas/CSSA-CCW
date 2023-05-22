@@ -71,7 +71,6 @@ export const defaultPermitState: CompleteApplication = {
     comments: '',
     contact: {
       cellPhoneNumber: '',
-      faxPhoneNumber: '',
       primaryPhoneNumber: '',
       textMessageUpdates: false,
       workPhoneNumber: '',
@@ -239,7 +238,7 @@ export const defaultPermitState: CompleteApplication = {
         changeMadeBy: null,
         value: null,
       },
-      akSsChecked: {
+      akasChecked: {
         changeDateTimeUtc: null,
         changeMadeBy: null,
         value: null,
@@ -289,12 +288,12 @@ export const defaultPermitState: CompleteApplication = {
         changeMadeBy: null,
         value: null,
       },
-      firearmsReg: {
+      firearms: {
         changeDateTimeUtc: null,
         changeMadeBy: null,
         value: null,
       },
-      allDearChiefLTRsRCRD: {
+      sidLettersReceived: {
         changeDateTimeUtc: null,
         changeMadeBy: null,
         value: null,

@@ -103,7 +103,6 @@ export type ContactInfoType = {
   primaryPhoneNumber: string
   cellPhoneNumber: string
   workPhoneNumber: string
-  faxPhoneNumber: string
   textMessageUpdates: boolean
 }
 
@@ -294,7 +293,7 @@ export type BackgroundCheckType = {
     changeMadeBy: null
     value: boolean | null
   }
-  akSsChecked: {
+  akasChecked: {
     changeDateTimeUtc: null
     changeMadeBy: null
     value: boolean | null
@@ -344,12 +343,12 @@ export type BackgroundCheckType = {
     changeMadeBy: null
     value: boolean | null
   }
-  firearmsReg: {
+  firearms: {
     changeDateTimeUtc: null
     changeMadeBy: null
     value: boolean | null
   }
-  allDearChiefLTRsRCRD: {
+  sidLettersReceived: {
     changeDateTimeUtc: null
     changeMadeBy: null
     value: boolean | null
