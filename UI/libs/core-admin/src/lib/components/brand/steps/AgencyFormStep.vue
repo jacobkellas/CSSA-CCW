@@ -1087,8 +1087,6 @@ const {
 })
 
 async function getFormValues() {
-  window.console.log('queryBrand: ', queryBrandSettings)
-  window.console.log('BrandStore: ', brandStore)
   queryBrandSettings()
 }
 </script>
