@@ -264,6 +264,44 @@
     </v-form>
 
     <v-card-title v-if="!isMobile">
+      {{ $t('Military Status') }}
+    </v-card-title>
+
+    <v-card-subtitle v-if="isMobile">
+      {{ $t('Military Status') }}
+    </v-card-subtitle>
+
+    <v-card-text>
+      <v-row>
+        <v-col
+          md="4"
+          cols="12"
+          :class="isMobile ? 'pb-0' : ''"
+        >
+          <v-select
+            v-model="model.application.citizenship.militaryStatus"
+            :items="items"
+            :label="$t('Military Status')"
+            :rules="[v => !!v || $t('Military Status is required')]"
+            outlined
+            :dense="isMobile"
+          />
+          <v-alert
+            v-if="
+              model.application.citizenship.militaryStatus === 'Discharged' ||
+              model.application.citizenship.militaryStatus === 'Retired'
+            "
+            :dense="isMobile"
+            outlined
+            type="warning"
+          >
+            {{ $t('discharged-disclaimer') }}
+          </v-alert>
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    <v-card-title v-if="!isMobile">
       {{ $t('Aliases') }}
     </v-card-title>
 
@@ -404,4 +442,12 @@ function handleValidateForm() {
     })
   }
 }
+
+const items = ref([
+  'Active',
+  'Reserve',
+  'Discharged',
+  'Retired',
+  'Never Served in the Military',
+])
 </script>
