@@ -1042,7 +1042,11 @@
                   : ''
               "
               :maxlength="config.getAppConfig.questions.fifteen"
-              :label="$t('Please explain')"
+              :label="
+                $t(
+                  'Please explain including the date, agency, charges, and disposition.'
+                )
+              "
               v-model="model.application.qualifyingQuestions.questionFifteenExp"
               :rules="[v => !!v || $t('Field cannot be blank')]"
             >
