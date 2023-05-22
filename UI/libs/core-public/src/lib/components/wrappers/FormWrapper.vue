@@ -41,7 +41,7 @@
             :color="stepTwoValid ? 'success' : 'primary'"
             :step="2"
           >
-            {{ $t('Citizenship') }}
+            {{ $t('ID Information') }}
           </v-stepper-step>
           <v-divider></v-divider>
           <v-stepper-step
@@ -245,7 +245,7 @@
         </v-expansion-panel>
         <v-expansion-panel>
           <v-expansion-panel-header>
-            {{ $t('Citizenship') }}
+            {{ $t('ID Information') }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <IdBirthInfoStep
