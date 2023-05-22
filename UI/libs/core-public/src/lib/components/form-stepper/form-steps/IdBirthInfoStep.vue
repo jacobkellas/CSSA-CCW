@@ -143,33 +143,6 @@
             </v-text-field>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col
-            md="4"
-            cols="12"
-            :class="isMobile ? 'pb-0' : ''"
-          >
-            <v-select
-              v-model="model.application.citizenship.militaryStatus"
-              :items="items"
-              :label="$t('Military Status')"
-              :rules="[v => !!v || $t('Military Status is required')]"
-              outlined
-              :dense="isMobile"
-            />
-            <v-alert
-              v-if="
-                model.application.citizenship.militaryStatus === 'Discharged' ||
-                model.application.citizenship.militaryStatus === 'Retired'
-              "
-              :dense="isMobile"
-              outlined
-              type="warning"
-            >
-              {{ $t('discharged-disclaimer') }}
-            </v-alert>
-          </v-col>
-        </v-row>
       </v-card-text>
 
       <v-card-title v-if="!isMobile">
@@ -321,13 +294,6 @@ const vuetify = useVuetify()
 const isMobile = computed(
   () => vuetify?.breakpoint.name === 'sm' || vuetify?.breakpoint.name === 'xs'
 )
-const items = ref([
-  'Active',
-  'Reserve',
-  'Discharged',
-  'Retired',
-  'Never Served in the Military',
-])
 const valid = ref(false)
 const menu = ref(false)
 const form = ref()
