@@ -22,8 +22,8 @@
           >
             <v-text-field
               v-model="model.application.idInfo.idNumber"
-              :label="$t('ID number')"
-              :rules="[v => !!v || $t('ID  number is required')]"
+              :label="$t('Driver\'s License Number')"
+              :rules="[v => !!v || $t('Driver\'s License Number is required')]"
               :dense="isMobile"
               outlined
               maxlength="25"
