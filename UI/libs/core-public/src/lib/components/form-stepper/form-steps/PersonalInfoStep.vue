@@ -92,6 +92,55 @@
       </v-card-text>
 
       <v-card-title v-if="!isMobile">
+        {{ $t('Contact Information') }}
+      </v-card-title>
+
+      <v-card-subtitle v-else>
+        {{ $t('Contact Information') }}
+      </v-card-subtitle>
+
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="model.application.contact.primaryPhoneNumber"
+              :hint="$t('Only numbers no spaces or dashes')"
+              :label="$t('Primary phone number')"
+              :rules="phoneRuleSet"
+              :dense="isMobile"
+              maxlength="10"
+              outlined
+            />
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="model.application.contact.cellPhoneNumber"
+              :hint="$t('Only numbers no spaces or dashes')"
+              :label="$t('Cell phone number')"
+              :rules="notRequiredPhoneRuleSet"
+              :dense="isMobile"
+              maxlength="10"
+              outlined
+            />
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="model.application.contact.workPhoneNumber"
+              :hint="$t('Only numbers no spaces or dashes')"
+              :label="$t('Work phone number')"
+              :rules="notRequiredPhoneRuleSet"
+              :dense="isMobile"
+              maxlength="10"
+              outlined
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+
+      <v-card-title v-if="!isMobile">
         {{ $t('Social Security Information') }}
       </v-card-title>
 
@@ -355,6 +404,7 @@ import { useVuetify } from '@shared-ui/composables/useVuetify'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import {
   notRequiredNameRuleSet,
+  notRequiredPhoneRuleSet,
   phoneRuleSet,
   requireNameRuleSet,
 } from '@shared-ui/rule-sets/ruleSets'
