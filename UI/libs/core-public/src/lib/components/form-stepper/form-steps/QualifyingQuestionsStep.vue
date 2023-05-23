@@ -1242,7 +1242,7 @@ const emit = defineEmits([
   'input',
   'handle-submit',
   'handle-save',
-  'update-step-nine-valid',
+  'update-step-eight-valid',
 ])
 
 const model = computed({
@@ -1258,12 +1258,12 @@ const state = reactive({
 })
 
 function handleSubmit() {
-  emit('update-step-nine-valid', true)
+  emit('update-step-eight-valid', true)
   emit('handle-submit')
 }
 
 function handleSave() {
-  emit('update-step-nine-valid', true)
+  emit('update-step-eight-valid', true)
   emit('handle-save')
 }
 </script>
