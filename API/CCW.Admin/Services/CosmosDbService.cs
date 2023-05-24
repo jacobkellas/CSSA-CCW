@@ -46,17 +46,15 @@ public class CosmosDbService : ICosmosDbService
 
     public async Task<AgencyProfileSettings> UpdateSettingsAsync(AgencyProfileSettings agencyProfile, CancellationToken cancellationToken)
     {
-        /*        var storedProfile = await GetSettingsAsync(cancellationToken);
-                if (storedProfile?.AgencyName == null)
-                {
-                    agencyProfile.Id = Guid.NewGuid().ToString();
-                    AgencyProfileSettings createdItem = await _container.CreateItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id), null, cancellationToken);
-
-                    return createdItem;
-                }
-
-                agencyProfile.Id = storedProfile.Id;*/
-        agencyProfile.Id = Guid.NewGuid().ToString();
+        var storedProfile = await GetSettingsAsync(cancellationToken);
+        if (storedProfile?.AgencyName == null)
+        {
+            agencyProfile.Id = Guid.NewGuid().ToString();
+        }
+        else
+        {
+            agencyProfile.Id = storedProfile.Id;
+        }
         var result = await _container.UpsertItemAsync(agencyProfile, new PartitionKey(agencyProfile.Id), null, cancellationToken);
 
         return result.Resource;

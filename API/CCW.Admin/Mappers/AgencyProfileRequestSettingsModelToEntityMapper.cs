@@ -44,6 +44,7 @@ public class AgencyProfileRequestSettingsModelToEntityMapper : IMapper<AgencyPro
             ORI = source.ORI,
             AgencyBillingNumber = source.AgencyBillingNumber,
             ContactName = source.ContactName,
+            ContactNumber = source.ContactNumber,
             MailCode = source.MailCode,
             AgencyStreetAddress = source.AgencyStreetAddress,
             AgencyAptBuildingNumber = source.AgencyAptBuildingNumber,
@@ -52,13 +53,11 @@ public class AgencyProfileRequestSettingsModelToEntityMapper : IMapper<AgencyPro
             AgencyZip = source.AgencyZip,
             AgencyCounty = source.AgencyCounty,
             AgencyShippingStreetAddress = source.AgencyShippingStreetAddress,
-            AgencyShippingAptBuildingNumber =source.AgencyShippingAptBuildingNumber,
+            AgencyShippingAptBuildingNumber = source.AgencyShippingAptBuildingNumber,
             AgencyShippingCity = source.AgencyShippingCity,
             AgencyShippingState = source.AgencyShippingState,
             AgencyShippingZip = source.AgencyShippingZip,
             AgencyShippingCounty = source.AgencyShippingCounty,
-
-
         };
     }
 }

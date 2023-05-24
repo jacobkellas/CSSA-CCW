@@ -23,6 +23,7 @@ using iText.Kernel.Font;
 using iText.Layout.Borders;
 using iText.Kernel.Colors;
 using System;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace CCW.Application.Controllers;
 
@@ -1520,9 +1521,13 @@ public class PermitApplicationController : ControllerBase
             PdfAcroForm form = PdfAcroForm.GetAcroForm(doc, true);
             form.SetGenerateAppearance(true);
 
+            await AddApplicantSignatureImageForLiveScan(userApplication, docFileAll);
+            //var submittedDate = userApplication.Application.SubmittedToLicensingDateTime.ToString();
+            var submittedDate = DateTime.Now.ToString("MM/dd/yyyy");
+            form.GetField("DATE").SetValue(submittedDate ?? "", true);
             form.GetField("ORI").SetValue(adminResponse.ORI ?? "", true);
             string? licenseType = userApplication.Application.ApplicationType?.ToString();
-            licenseType = char.ToUpper(licenseType[0]) + licenseType.Substring(1);
+            licenseType = licenseType.ToUpper() + " CCW";
             form.GetField("AUTHORIZED_APPLICANT_TYPE").SetValue(licenseType ?? "", true);
             form.GetField("LICENSE_TYPE").SetValue(licenseType ?? "", true);
             form.GetField("AGENCY_NAME").SetValue(adminResponse.AgencyName ?? "", true);
@@ -1530,7 +1535,7 @@ public class PermitApplicationController : ControllerBase
             form.GetField("AGENCY_ADDRESS_1").SetValue(adminResponse.AgencyShippingStreetAddress ?? "", true);
             form.GetField("AGENCY_CONTACT_NAME").SetValue(adminResponse.ContactName ?? "", true);
             form.GetField("AGENCY_CITY").SetValue(adminResponse.AgencyShippingCity ?? "", true);
-            form.GetField("AGENCY_STATE").SetValue(adminResponse.AgencyShippingState ?? "", true);
+            form.GetField("AGENCY_STATE").SetValue(GetStateByName(adminResponse.AgencyShippingState) ?? "", true);
             form.GetField("AGENCY_ZIP").SetValue(adminResponse.AgencyShippingZip ?? "", true);
             form.GetField("AGENCY_CONTACT_NUMBER").SetValue(adminResponse.ContactNumber ?? "", true);
             string fullname = BuildApplicantFullName(userApplication);
@@ -1538,11 +1543,14 @@ public class PermitApplicationController : ControllerBase
             form.GetField("FIRST_NAME").SetValue(userApplication.Application.PersonalInfo?.FirstName ?? "", true);
             form.GetField("MIDDLE_INITIAL").SetValue(userApplication.Application.PersonalInfo?.MiddleName.Substring(0,1) ?? "", true);
             form.GetField("SUFFIX").SetValue(userApplication.Application.PersonalInfo?.Suffix ?? "", true);
-            form.GetField("LAST_NAME_2").SetValue(userApplication.Application.Aliases[0].PrevLastName ?? "", true);
-            form.GetField("FIRST_NAME_2").SetValue(userApplication.Application.Aliases[0].PrevFirstName ?? "", true);
-            form.GetField("SUFFIX_2").SetValue(userApplication.Application.Aliases[0].PrevSuffix ?? "", true);
+            if(userApplication.Application.Aliases.Length > 0)
+            {
+                form.GetField("LAST_NAME_2").SetValue(userApplication.Application.Aliases[0].PrevLastName ?? "", true);
+                form.GetField("FIRST_NAME_2").SetValue(userApplication.Application.Aliases[0].PrevFirstName ?? "", true);
+                form.GetField("SUFFIX_2").SetValue(userApplication.Application.Aliases[0].PrevSuffix ?? "", true);
+            }
             form.GetField("DATE_OF_BIRTH").SetValue(userApplication.Application.DOB.BirthDate ?? "", true);
-            if (userApplication.Application.PhysicalAppearance.Gender == "Male")
+            if (userApplication.Application.PhysicalAppearance.Gender == "male")
             {
                 form.GetField("MALE").SetValue("true");
             }
@@ -1557,7 +1565,7 @@ public class PermitApplicationController : ControllerBase
             form.GetField("EYE_COLOR").SetValue(userApplication.Application.PhysicalAppearance.EyeColor ?? "", true);
             form.GetField("HAIR_COLOR").SetValue(userApplication.Application.PhysicalAppearance.HairColor ?? "", true);
             form.GetField("AGENCY_BILLING_NUMBER").SetValue(adminResponse.AgencyBillingNumber ?? "", true);
-            form.GetField("BIRTH_STATE").SetValue(userApplication.Application.DOB.BirthState ?? "", true);
+            form.GetField("BIRTH_STATE").SetValue(GetStateByName(userApplication.Application.DOB.BirthState) ?? "", true);
             form.GetField("SSN").SetValue(userApplication.Application.PersonalInfo.Ssn ?? "", true);
             string? residenceAddress1 = userApplication.Application.CurrentAddress?.AddressLine1;
             string? residenceAddress2 = userApplication.Application.CurrentAddress?.AddressLine2;
@@ -1567,24 +1575,9 @@ public class PermitApplicationController : ControllerBase
             }
             form.GetField("ADDRESS_1").SetValue(residenceAddress1 ?? "", true);
             form.GetField("CITY").SetValue(userApplication.Application.CurrentAddress?.City ?? "", true);
-            form.GetField("STATE").SetValue(userApplication.Application.CurrentAddress?.State ?? "", true);
+            form.GetField("STATE").SetValue(GetStateByName(userApplication.Application.CurrentAddress?.State) ?? "", true);
             form.GetField("ZIP").SetValue(userApplication.Application.CurrentAddress?.Zip ?? "", true);
-
-            form.GetField("EMPLOYER_NAME").SetValue(userApplication.Application.WorkInformation.EmployerName ?? "", true);
-            string? employerAddress1 = userApplication.Application.WorkInformation.EmployerAddressLine1;
-            string? employerAddress2 = userApplication.Application.WorkInformation.EmployerAddressLine2;
-            if (employerAddress2 != null)
-            {
-                employerAddress1 = employerAddress1 + ", " + employerAddress2;
-            }
-            form.GetField("EMPLOYER_ADDRESS_1").SetValue(employerAddress1 ?? "", true);
-            form.GetField("EMPLOYER_TELEPHONE_NUMBER").SetValue(userApplication.Application.WorkInformation.EmployerPhone ?? "", true);
-            form.GetField("EMPLOYER_CITY").SetValue(userApplication.Application.WorkInformation.EmployerCity ?? "", true);
-            form.GetField("EMPLOYER_STATE").SetValue(userApplication.Application.WorkInformation.EmployerState ?? "", true);
-            form.GetField("EMPLOYER_ZIP").SetValue(userApplication.Application.WorkInformation.EmployerZip ?? "", true);
-            form.GetField("EMPLOYER_MAIL_CODE").SetValue(userApplication.Application.WorkInformation.EmployerMailCode ?? "", true);
-
-            //docFileAll.Flush();
+            docFileAll.Flush();
             form.FlattenFields();
             docFileAll.Close();
 
@@ -1839,6 +1832,24 @@ public class PermitApplicationController : ControllerBase
 
         var rightImage = GetImageForImageData(imageData, rightPosition);
         mainDocument.Add(rightImage);
+    }
+
+    private async Task AddApplicantSignatureImageForLiveScan(PermitApplication? userApplication, Document docFileAll)
+    {
+        var signatureFileName = BuildApplicantDocumentName(userApplication, "signature");
+        var imageData = await GetImageDataForPdf(signatureFileName, shouldResize: true);
+
+        var position = new ImagePosition()
+        {
+            Page = 1,
+            Width = 200,
+            Height = 13,
+            Left = 65,
+            Bottom = 290
+        };
+
+        var image = GetImageForImageData(imageData, position);
+        docFileAll.Add(image);
     }
 
     private async Task AddApplicantSignatureImageForUnOfficial(PermitApplication? userApplication, Document docFileAll)

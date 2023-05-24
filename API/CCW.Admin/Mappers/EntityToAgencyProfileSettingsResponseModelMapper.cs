@@ -44,6 +44,7 @@ public class EntityToAgencyProfileSettingsResponseModelMapper : IMapper<AgencyPr
             ORI = source.ORI,
             AgencyBillingNumber = source.AgencyBillingNumber,
             ContactName = source.ContactName,
+            ContactNumber = source.ContactNumber,
             MailCode = source.MailCode,
             AgencyStreetAddress = source.AgencyStreetAddress,
             AgencyAptBuildingNumber = source.AgencyAptBuildingNumber,
