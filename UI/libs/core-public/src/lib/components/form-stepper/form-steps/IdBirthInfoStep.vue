@@ -6,11 +6,11 @@
       v-model="valid"
     >
       <v-card-title v-if="!isMobile">
-        {{ $t('ID Information') }}
+        {{ $t("Driver's License") }}
       </v-card-title>
 
       <v-card-subtitle v-if="isMobile">
-        {{ $t('ID Information') }}
+        {{ $t("Driver's License") }}
       </v-card-subtitle>
 
       <v-card-text>
@@ -22,8 +22,8 @@
           >
             <v-text-field
               v-model="model.application.idInfo.idNumber"
-              :label="$t('ID number')"
-              :rules="[v => !!v || $t('ID  number is required')]"
+              :label="$t('Driver\'s License Number')"
+              :rules="[v => !!v || $t('Driver\'s License Number is required')]"
               :dense="isMobile"
               outlined
               maxlength="25"
@@ -141,33 +141,6 @@
               maxlength="150"
             >
             </v-text-field>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            md="4"
-            cols="12"
-            :class="isMobile ? 'pb-0' : ''"
-          >
-            <v-select
-              v-model="model.application.citizenship.militaryStatus"
-              :items="items"
-              :label="$t('Military Status')"
-              :rules="[v => !!v || $t('Military Status is required')]"
-              outlined
-              :dense="isMobile"
-            />
-            <v-alert
-              v-if="
-                model.application.citizenship.militaryStatus === 'Discharged' ||
-                model.application.citizenship.militaryStatus === 'Retired'
-              "
-              :dense="isMobile"
-              outlined
-              type="warning"
-            >
-              {{ $t('discharged-disclaimer') }}
-            </v-alert>
           </v-col>
         </v-row>
       </v-card-text>
@@ -321,13 +294,6 @@ const vuetify = useVuetify()
 const isMobile = computed(
   () => vuetify?.breakpoint.name === 'sm' || vuetify?.breakpoint.name === 'xs'
 )
-const items = ref([
-  'Active',
-  'Reserve',
-  'Discharged',
-  'Retired',
-  'Never Served in the Military',
-])
 const valid = ref(false)
 const menu = ref(false)
 const form = ref()

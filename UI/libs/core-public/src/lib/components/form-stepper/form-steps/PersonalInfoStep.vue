@@ -92,6 +92,55 @@
       </v-card-text>
 
       <v-card-title v-if="!isMobile">
+        {{ $t('Contact Information') }}
+      </v-card-title>
+
+      <v-card-subtitle v-else>
+        {{ $t('Contact Information') }}
+      </v-card-subtitle>
+
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-text-field
+              v-model="model.application.contact.primaryPhoneNumber"
+              :hint="$t('Only numbers no spaces or dashes')"
+              :label="$t('Primary phone number')"
+              :rules="phoneRuleSet"
+              :dense="isMobile"
+              maxlength="10"
+              outlined
+            />
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="model.application.contact.cellPhoneNumber"
+              :hint="$t('Only numbers no spaces or dashes')"
+              :label="$t('Cell phone number')"
+              :rules="notRequiredPhoneRuleSet"
+              :dense="isMobile"
+              maxlength="10"
+              outlined
+            />
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="model.application.contact.workPhoneNumber"
+              :hint="$t('Only numbers no spaces or dashes')"
+              :label="$t('Work phone number')"
+              :rules="notRequiredPhoneRuleSet"
+              :dense="isMobile"
+              maxlength="10"
+              outlined
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+
+      <v-card-title v-if="!isMobile">
         {{ $t('Social Security Information') }}
       </v-card-title>
 
@@ -264,6 +313,44 @@
     </v-form>
 
     <v-card-title v-if="!isMobile">
+      {{ $t('Military Status') }}
+    </v-card-title>
+
+    <v-card-subtitle v-if="isMobile">
+      {{ $t('Military Status') }}
+    </v-card-subtitle>
+
+    <v-card-text>
+      <v-row>
+        <v-col
+          md="4"
+          cols="12"
+          :class="isMobile ? 'pb-0' : ''"
+        >
+          <v-select
+            v-model="model.application.citizenship.militaryStatus"
+            :items="items"
+            :label="$t('Military Status')"
+            :rules="[v => !!v || $t('Military Status is required')]"
+            outlined
+            :dense="isMobile"
+          />
+          <v-alert
+            v-if="
+              model.application.citizenship.militaryStatus === 'Discharged' ||
+              model.application.citizenship.militaryStatus === 'Retired'
+            "
+            :dense="isMobile"
+            outlined
+            type="warning"
+          >
+            {{ $t('discharged-disclaimer') }}
+          </v-alert>
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    <v-card-title v-if="!isMobile">
       {{ $t('Aliases') }}
     </v-card-title>
 
@@ -317,6 +404,7 @@ import { useVuetify } from '@shared-ui/composables/useVuetify'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import {
   notRequiredNameRuleSet,
+  notRequiredPhoneRuleSet,
   phoneRuleSet,
   requireNameRuleSet,
 } from '@shared-ui/rule-sets/ruleSets'
@@ -404,4 +492,12 @@ function handleValidateForm() {
     })
   }
 }
+
+const items = ref([
+  'Active',
+  'Reserve',
+  'Discharged',
+  'Retired',
+  'Never Served in the Military',
+])
 </script>
