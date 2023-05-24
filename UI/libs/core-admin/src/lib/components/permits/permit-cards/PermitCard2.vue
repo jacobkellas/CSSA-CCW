@@ -93,6 +93,7 @@
                       <template #activator="{ on, attrs }">
                         <v-btn
                           block
+                          :loading="state.loading"
                           v-bind="attrs"
                           v-on="on"
                           color="primary"
@@ -383,6 +384,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query'
 
 const state = reactive({
   isSelecting: false,
+  loading: false,
   snack: false,
   snackColor: '',
   snackText: '',
@@ -483,11 +485,13 @@ function onFileChanged(e: File, target: string) {
 }
 
 function printPdf(type) {
+  state.loading = true
   permitStore[type]().then(res => {
     // eslint-disable-next-line node/no-unsupported-features/node-builtins
     let fileURL = URL.createObjectURL(res.data)
 
     window.open(fileURL)
+    state.loading = false
   })
 }
 
