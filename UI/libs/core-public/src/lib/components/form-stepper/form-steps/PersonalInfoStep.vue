@@ -104,7 +104,7 @@
           <v-col>
             <v-text-field
               v-model="model.application.contact.primaryPhoneNumber"
-              @input="formatPhone($event.target.value)"
+              @input="formatPhone('primaryPhoneNumber')"
               :label="$t('Primary phone number')"
               :rules="phoneRuleSet"
               :dense="isMobile"
@@ -115,11 +115,11 @@
           <v-col>
             <v-text-field
               v-model="model.application.contact.cellPhoneNumber"
-              @input="formatPhone($event.target.value)"
+              @input="formatPhone('cellPhoneNumber')"
               :label="$t('Cell phone number')"
               :rules="notRequiredPhoneRuleSet"
               :dense="isMobile"
-              maxlength="10"
+              maxlength="14"
               outlined
             />
           </v-col>
@@ -129,11 +129,11 @@
           <v-col cols="6">
             <v-text-field
               v-model="model.application.contact.workPhoneNumber"
-              @input="formatPhone($event.target.value)"
+              @input="formatPhone('workPhoneNumber')"
               :label="$t('Work phone number')"
               :rules="notRequiredPhoneRuleSet"
               :dense="isMobile"
-              maxlength="10"
+              maxlength="14"
               outlined
             />
           </v-col>
@@ -493,18 +493,15 @@ function handleValidateForm() {
   }
 }
 
-function formatPhone(phoneNumber) {
-  window.console.log("application value: ", model.application.contact.primaryPhoneNumber)
-  phoneNumber.item = phoneNumber.item.replace(/\D/g, '')
-  const match = phoneNumber.item.match(/^(\d{1,3})(\d{0,3})(\d{0,4})$/)
+function formatPhone(modelName) {
+  let validInput = model.value.application.contact[modelName].replace(/\D/g, '')
+  const match = validInput.match(/^(\d{1,3})(\d{0,3})(\d{0,4})$/)
 
   if (match) {
-    phoneNumber.item = `(${match[1]})${match[2] ? ' ' : ''}${match[2]}${
-      match[3] ? '-' : ''
-    }${match[3]}`
+    model.value.application.contact[modelName] = `(${match[1]})${
+      match[2] ? ' ' : ''
+    }${match[2]}${match[3] ? '-' : ''}${match[3]}`
   }
-
-  return phoneNumber.item
 }
 
 const items = ref([
