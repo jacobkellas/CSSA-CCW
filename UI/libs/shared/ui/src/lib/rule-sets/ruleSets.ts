@@ -12,8 +12,8 @@ export const ssnRuleSet = [
 
 export const phoneRuleSet = [
   v => Boolean(v) || i18n.t('Primary phone number cannot be blank'),
-  v => Boolean(/^\d+$/.test(v)) || i18n.t('Must only contain numbers'),
-  v => v.length === 10 || i18n.t('Must be 10 numbers in length'),
+  //v => Boolean(/^\d+$/.test(v)) || i18n.t('Must only contain numbers'),
+  v => v.length === 14 || i18n.t('Must be 14 numbers in length'),
 ]
 
 export const notRequiredPhoneRuleSet = [

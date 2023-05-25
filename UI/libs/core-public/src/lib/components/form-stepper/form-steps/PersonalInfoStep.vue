@@ -104,18 +104,18 @@
           <v-col>
             <v-text-field
               v-model="model.application.contact.primaryPhoneNumber"
-              :hint="$t('Only numbers no spaces or dashes')"
+              @input="formatPhone($event.target.value)"
               :label="$t('Primary phone number')"
               :rules="phoneRuleSet"
               :dense="isMobile"
-              maxlength="10"
+              maxlength="14"
               outlined
             />
           </v-col>
           <v-col>
             <v-text-field
               v-model="model.application.contact.cellPhoneNumber"
-              :hint="$t('Only numbers no spaces or dashes')"
+              @input="formatPhone($event.target.value)"
               :label="$t('Cell phone number')"
               :rules="notRequiredPhoneRuleSet"
               :dense="isMobile"
@@ -129,7 +129,7 @@
           <v-col cols="6">
             <v-text-field
               v-model="model.application.contact.workPhoneNumber"
-              :hint="$t('Only numbers no spaces or dashes')"
+              @input="formatPhone($event.target.value)"
               :label="$t('Work phone number')"
               :rules="notRequiredPhoneRuleSet"
               :dense="isMobile"
@@ -491,6 +491,20 @@ function handleValidateForm() {
       form.value.validate()
     })
   }
+}
+
+function formatPhone(phoneNumber) {
+  window.console.log("application value: ", model.application.contact.primaryPhoneNumber)
+  phoneNumber.item = phoneNumber.item.replace(/\D/g, '')
+  const match = phoneNumber.item.match(/^(\d{1,3})(\d{0,3})(\d{0,4})$/)
+
+  if (match) {
+    phoneNumber.item = `(${match[1]})${match[2] ? ' ' : ''}${match[2]}${
+      match[3] ? '-' : ''
+    }${match[3]}`
+  }
+
+  return phoneNumber.item
 }
 
 const items = ref([
