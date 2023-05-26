@@ -92,6 +92,115 @@
       </v-card-text>
 
       <v-card-title v-if="!isMobile">
+        {{ $t('Birth Information') }}
+      </v-card-title>
+
+      <v-card-subtitle v-else>
+        {{ $t('Birth Information') }}
+      </v-card-subtitle>
+
+      <v-card-text>
+        <v-row>
+          <v-col
+            md="6"
+            cols="12"
+            :class="isMobile ? 'pb-0' : ''"
+          >
+            <v-menu
+              v-model="menu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template #activator="{ on, attrs }">
+                <v-text-field
+                  v-model="model.application.dob.birthDate"
+                  :label="$t('Date of Birth')"
+                  :rules="[
+                    checkFor21,
+                    v => !!v || $t('Date of birth is required'),
+                  ]"
+                  outlined
+                  :dense="isMobile"
+                  readonly
+                  prepend-inner-icon="mdi-calendar"
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="model.application.dob.birthDate"
+                no-title
+                scrollable
+              >
+              </v-date-picker>
+            </v-menu>
+          </v-col>
+          <v-col
+            md="6"
+            cols="12"
+            :class="isMobile ? 'pb-0' : ''"
+          >
+            <v-text-field
+              v-model="model.application.dob.birthCity"
+              :label="$t('Birth city')"
+              :rules="[v => !!v || $t('Birth city cannot be blank')]"
+              outlined
+              :dense="isMobile"
+              maxlength="150"
+            >
+            </v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            md="6"
+            cols="12"
+            :class="isMobile ? 'pb-0' : ''"
+          >
+            <v-combobox
+              v-model="model.application.dob.birthCountry"
+              :items="countries"
+              :label="$t('Birth country')"
+              :rules="[v => !!v || $t('Birth country cannot be blank')]"
+              outlined
+              :dense="isMobile"
+            >
+            </v-combobox>
+          </v-col>
+          <v-col
+            md="6"
+            cols="12"
+            :class="isMobile ? 'pb-0' : ''"
+          >
+            <v-autocomplete
+              v-if="model.application.dob.birthCountry === 'United States'"
+              v-model="model.application.dob.birthState"
+              :items="states"
+              :label="$t('Birth state')"
+              :rules="[v => !!v || $t('Birth state cannot be blank')]"
+              outlined
+              :dense="isMobile"
+              maxlength="150"
+              auto-select-first
+            >
+            </v-autocomplete>
+            <v-text-field
+              v-if="model.application.dob.birthCountry !== 'United States'"
+              v-model="model.application.dob.birthState"
+              :label="$t('Birth region')"
+              :rules="[v => !!v || $t('Birth region cannot be blank')]"
+              outlined
+              :dense="isMobile"
+              maxlength="150"
+            >
+            </v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+
+      <v-card-title v-if="!isMobile">
         {{ $t('Contact Information') }}
       </v-card-title>
 
@@ -400,8 +509,11 @@ import AliasDialog from '@shared-ui/components/dialogs/AliasDialog.vue'
 import AliasTable from '@shared-ui/components/tables/AliasTable.vue'
 import { CompleteApplication } from '@shared-utils/types/defaultTypes'
 import FormButtonContainer from '@shared-ui/components/containers/FormButtonContainer.vue'
+import { TranslateResult } from 'vue-i18n'
+import { i18n } from '@core-public/plugins'
 import { useVuetify } from '@shared-ui/composables/useVuetify'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { countries, states } from '@shared-utils/lists/defaultConstants'
 import {
   notRequiredNameRuleSet,
   notRequiredPhoneRuleSet,
@@ -434,6 +546,7 @@ const isMarried = computed(
 )
 const form = ref()
 const valid = ref(false)
+const menu = ref(false)
 
 watch(valid, (newValue, oldValue) => {
   if (newValue !== oldValue) {
@@ -511,4 +624,16 @@ const items = ref([
   'Retired',
   'Never Served in the Military',
 ])
+
+function checkFor21(input: string): boolean | TranslateResult {
+  const userDate = input
+  const targetDate = new Date(Date.now())
+  const formatedDate = `${targetDate.getFullYear() - 21}-${
+    targetDate.getMonth() + 1
+  }-${targetDate.getDate()}`
+
+  return userDate <= formatedDate
+    ? true
+    : i18n.t('You must be 21 or older to apply for a CCW permit')
+}
 </script>
