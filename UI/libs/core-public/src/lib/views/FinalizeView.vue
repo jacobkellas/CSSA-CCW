@@ -1,5 +1,5 @@
 <template>
-  <div class="finalize-view">
+  <div>
     <v-container
       fluid
       v-if="isLoading && !isError && !state.isLoading && !state.isError"
@@ -12,22 +12,32 @@
       >
       </v-skeleton-loader>
     </v-container>
-    <div v-else>
-      <FinalizeContainer />
-      <PaymentContainer
-        v-if="
-          completeApplicationStore.completeApplication.application
-            .applicationType
-        "
-        :toggle-payment="togglePaymentComplete"
-      />
-      <v-container
+
+    <v-container v-else>
+      <v-row class="mt-1">
+        <v-col>
+          <FinalizeContainer />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <PaymentContainer
+            v-if="
+              completeApplicationStore.completeApplication.application
+                .applicationType
+            "
+            :toggle-payment="togglePaymentComplete"
+          />
+        </v-col>
+      </v-row>
+
+      <template
         v-if="
           completeApplicationStore.completeApplication.application
             .paymentStatus !== 0
         "
       >
-        <v-card>
+        <v-card class="mt-4">
           <v-alert
             color="primary"
             outlined
@@ -38,7 +48,7 @@
             {{ $t('Payment method selected: Pay in person ') }}
           </v-alert>
         </v-card>
-      </v-container>
+      </template>
       <v-container
         v-if="!state.appointmentsLoaded && !state.appointmentComplete"
       >
@@ -52,7 +62,7 @@
       </v-container>
       <v-container
         v-if="
-          (!isLoading && !isError) ||
+          (isLoading && isError) ||
           (state.appointmentsLoaded && state.appointments.length === 0)
         "
       >
@@ -68,51 +78,65 @@
         </v-card>
       </v-container>
 
-      <AppointmentContainer
-        v-if="
-          (!isLoading && !isError) ||
-          (state.appointmentsLoaded &&
-            state.appointments.length > 0 &&
-            !state.appointmentComplete)
-        "
-        :events="state.appointments"
-        :toggle-appointment="toggleAppointmentComplete"
-        :reschedule="false"
-      />
-
-      <v-container v-else>
-        <v-card>
-          <v-alert
-            color="primary"
-            outlined
-            type="info"
-            class="font-weight-bold"
+      <v-row>
+        <v-col>
+          <v-card
+            elevation="2"
+            class="mt-3"
           >
-            {{ $t('Appointment has been set for ') }}
-            {{
-              new Date(
-                completeApplicationStore.completeApplication.application.appointmentDateTime
-              ).toLocaleString()
-            }}
-          </v-alert>
-        </v-card>
-      </v-container>
-      <v-container class="finalize-submit">
-        <v-btn
-          :disabled="!state.appointmentComplete || !state.paymentComplete"
-          color="primary"
-          @click="handleSubmit"
-        >
-          {{ $t('Submit Application') }}
-        </v-btn>
-        <v-btn
-          color="error"
-          to="/"
-        >
-          {{ $t('Cancel') }}
-        </v-btn>
-      </v-container>
-    </div>
+            <AppointmentContainer
+              v-if="
+                (isLoading && isError) ||
+                (state.appointmentsLoaded &&
+                  state.appointments.length > 0 &&
+                  !state.appointmentComplete)
+              "
+              :events="state.appointments"
+              :toggle-appointment="toggleAppointmentComplete"
+              :reschedule="false"
+            />
+
+            <v-container v-else>
+              <v-card>
+                <v-alert
+                  color="primary"
+                  outlined
+                  type="info"
+                  class="font-weight-bold"
+                >
+                  {{ $t('Appointment has been set for ') }}
+                  {{
+                    new Date(
+                      completeApplicationStore.completeApplication.application.appointmentDateTime
+                    ).toLocaleString()
+                  }}
+                </v-alert>
+              </v-card>
+            </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row class="float-right">
+        <v-col>
+          <v-btn
+            class="mr-10 mb-10"
+            color="error"
+            to="/"
+          >
+            {{ $t('Cancel') }}
+          </v-btn>
+          <v-btn
+            class="mb-10"
+            :disabled="!state.appointmentComplete || !state.paymentComplete"
+            color="primary"
+            @click="handleSubmit"
+          >
+            {{ $t('Submit Application') }}
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+
     <v-snackbar
       :value="state.snackbar"
       :timeout="3000"
@@ -155,36 +179,41 @@ const appointmentsStore = useAppointmentsStore()
 const route = useRoute()
 const router = useRouter()
 
-const { isLoading, isError } = useQuery(['getAvailableAppointments'], () => {
-  const appRes = appointmentsStore.getAvailableAppointments()
+const {
+  mutate: getAppointmentMutation,
+  isLoading,
+  isError,
+} = useMutation({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  mutationFn: () => {
+    const appRes = appointmentsStore.getAvailableAppointments()
 
-  appRes
-    .then((data: Array<AppointmentType>) => {
-      data.forEach(event => {
-        let start = new Date(event.start)
-        let end = new Date(event.end)
+    appRes
+      .then((data: Array<AppointmentType>) => {
+        data.forEach(event => {
+          let start = new Date(event.start)
+          let end = new Date(event.end)
 
-        let formatedStart = `${start.getFullYear()}-${
-          start.getMonth() + 1
-        }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`
+          let formatedStart = `${start.getFullYear()}-${
+            start.getMonth() + 1
+          }-${start.getDate()} ${start.getHours()}:${start.getMinutes()}`
 
-        let formatedEnd = `${end.getFullYear()}-${
-          end.getMonth() + 1
-        }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`
+          let formatedEnd = `${end.getFullYear()}-${
+            end.getMonth() + 1
+          }-${end.getDate()} ${end.getHours()}:${end.getMinutes()}`
 
-        event.name = 'open'
-        event.start = formatedStart
-        event.end = formatedEnd
+          event.name = 'open'
+          event.start = formatedStart
+          event.end = formatedEnd
+        })
+        state.appointments = data
+        state.appointmentsLoaded = true
       })
-      state.appointments = data
-      // isError.value = false;
-      state.appointmentsLoaded = true
-
-      return data
-    })
-    .catch(() => {
-      state.appointmentsLoaded = true
-    })
+      .catch(() => {
+        state.appointmentsLoaded = true
+      })
+  },
 })
 
 onMounted(() => {
@@ -230,6 +259,8 @@ onMounted(() => {
   ) {
     state.appointmentComplete = true
   }
+
+  getAppointmentMutation()
 })
 
 const updateMutation = useMutation({
@@ -263,18 +294,3 @@ function toggleAppointmentComplete() {
   })
 }
 </script>
-
-<style lang="scss" scoped>
-.finalize {
-  &-view {
-    height: 100%;
-    width: 100%;
-  }
-  &-submit {
-    display: flex;
-    justify-content: space-around;
-    height: 20em;
-    width: 80%;
-  }
-}
-</style>

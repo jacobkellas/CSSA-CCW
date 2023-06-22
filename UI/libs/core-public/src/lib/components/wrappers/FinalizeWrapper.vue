@@ -14,10 +14,7 @@
       >
       </v-skeleton-loader>
     </v-container>
-    <v-container
-      v-if="!state.isLoading && !state.isError"
-      class="carousel-container"
-    >
+    <template v-if="!state.isLoading && !state.isError">
       <v-card>
         <v-tooltip bottom>
           <template #activator="{ on, attrs }">
@@ -209,7 +206,7 @@
           </div>
         </v-card-text>
       </v-card>
-    </v-container>
+    </template>
   </div>
 </template>
 

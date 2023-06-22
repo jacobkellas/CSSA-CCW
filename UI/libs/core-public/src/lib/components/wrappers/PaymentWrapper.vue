@@ -1,62 +1,51 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template>
-  <v-card class="payment-wrapper">
-    <v-banner class="mb-5 text-xl font-weight-bold">
-      {{ $t('Application / Processing Cost') }}
-    </v-banner>
+  <v-container fluid>
+    <v-card
+      class="mx-auto"
+      color="grey-lighten-4"
+      outlined
+    >
+      <v-card-title class="headline">
+        {{ $t('Application / Processing Cost') }}
+      </v-card-title>
 
-    <v-card-text>
-      <v-row class="m-5">
-        <v-col>
-          <h3
-            class="font-weight-bold"
-            label
-            color="success"
-          >
-            {{ $t('Application Cost') }}
-          </h3>
-        </v-col>
-        <v-col>
-          <h3>$ {{ props.payment.applicationCost }}</h3>
-        </v-col>
-      </v-row>
-      <v-row class="m-5">
-        <v-col>
-          <h3>
-            {{ $t('Credit Card fee') }}
-          </h3>
-        </v-col>
-        <v-col>
-          <h3>$ {{ props.payment.creditFee }}</h3>
-        </v-col>
-      </v-row>
-      <v-row class="m-5">
-        <v-col>
-          <h3>
-            {{ $t(' Convenience fee') }}
-          </h3>
-        </v-col>
-        <v-col>
-          <h3>$ {{ props.payment.convenienceFee }}</h3>
-        </v-col>
-      </v-row>
-
-      <v-banner class="mb-5 text-xl font-weight-bold">
-        {{ $t('Total cost') }}
-      </v-banner>
-
-      <v-row class="m-5">
-        <v-col>
-          <h3>
-            {{ $t(' Total Cost') }}
-          </h3>
-        </v-col>
-        <v-col>
-          <h3>$ {{ props.payment.totalCost }}</h3>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+      <v-simple-table>
+        <template #default>
+          <thead>
+            <tr>
+              <th class="text-left body-1">{{ $t('Details') }}</th>
+              <th class="text-right body-1">{{ $t('Cost') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ $t('Application Cost') }}</td>
+              <td class="text-right body-1">
+                ${{ props.payment.applicationCost }}
+              </td>
+            </tr>
+            <tr>
+              <td>{{ $t('Credit Card Fee') }}</td>
+              <td class="text-right body-1">${{ props.payment.creditFee }}</td>
+            </tr>
+            <tr>
+              <td>{{ $t('Convenience Fee') }}</td>
+              <td class="text-right body-1">
+                ${{ props.payment.convenienceFee }}
+              </td>
+            </tr>
+            <tr>
+              <td class="body-1 font-weight-bold">{{ $t('Total Cost') }}</td>
+              <td class="text-right body-1 font-weight-bold">
+                ${{ props.payment.totalCost }}
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -67,10 +56,3 @@ interface IPaymentWrapperProps {
 }
 const props = defineProps<IPaymentWrapperProps>()
 </script>
-
-<style lang="scss" scoped>
-.payment-wrapper {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-</style>

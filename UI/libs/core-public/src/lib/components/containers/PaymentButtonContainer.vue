@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
+      <v-col class="mt-md-3 ml-md-15">
         <v-btn
-          class="payment-button"
+          block
           :disabled="
             applicationStore.completeApplication.application.paymentStatus !== 0
           "
@@ -68,9 +68,3 @@ function handleCashPayment() {
   state.showInfo = true
 }
 </script>
-
-<style lang="scss" scoped>
-.payment-button {
-  min-width: 50% !important;
-}
-</style>

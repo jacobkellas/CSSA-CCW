@@ -1,5 +1,8 @@
 <template>
-  <v-container class="payment-container">
+  <v-card
+    outlined
+    elevation="2"
+  >
     <v-row>
       <v-col
         cols="12"
@@ -12,7 +15,7 @@
       </v-col>
       <v-col
         cols="12"
-        lg="6"
+        lg="4"
       >
         <PaymentButtonContainer
           :cash-payment="handleCashPayment"
@@ -20,7 +23,7 @@
         />
       </v-col>
     </v-row>
-  </v-container>
+  </v-card>
 </template>
 
 <script setup lang="ts">
@@ -122,13 +125,3 @@ function handleOnlinePayment() {
   props.togglePayment()
 }
 </script>
-
-<style lang="scss" scoped>
-.payment-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  border-radius: 0.5rem;
-  background-color: rgba(201, 243, 99, 0.19);
-}
-</style>
