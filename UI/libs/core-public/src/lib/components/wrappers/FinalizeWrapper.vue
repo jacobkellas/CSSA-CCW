@@ -43,14 +43,22 @@
             />
           </div>
 
-          <div class="info-section">
+          <div
+            class="info-section"
+            v-if="
+              state.completeApplication.personalInfo.maritalStatus == 'Married'
+            "
+          >
             <SpouseInfoSection
               :color="'info'"
               :spouse-info="state.completeApplication.spouseInformation"
             />
           </div>
 
-          <div class="info-section">
+          <div
+            class="info-section"
+            v-if="state.completeApplication.differentSpouseAddress"
+          >
             <SpouseAddressInfoSection
               :title="$t('Different Spouse Address').toString()"
               :color="'info'"
@@ -60,7 +68,10 @@
             />
           </div>
 
-          <div class="info-section">
+          <div
+            class="info-section"
+            v-if="state.completeApplication.aliases.length > 0"
+          >
             <AliasInfoSection
               :color="'transparent'"
               :alias-info="state.completeApplication.aliases"
@@ -77,7 +88,7 @@
           <div class="info-section">
             <DOBinfoSection
               :color="'info'"
-              :d-o-b-info="state.completeApplication.dob"
+              :DOBInfo="state.completeApplication.dob"
             />
           </div>
 
@@ -95,7 +106,10 @@
               :title="'Current Address'"
               :address-info="state.completeApplication.currentAddress"
             />
-            <v-container class="different-mailing-container">
+            <!-- <v-container
+              class="different-mailing-container"
+              v-if="state.completeApplication.differentMailing"
+            >
               <v-row>
                 <v-col
                   cols="12"
@@ -107,7 +121,7 @@
                   >
                     <v-icon
                       left
-                      color="accent"
+                      color="primary"
                     >
                       mdi-home
                     </v-icon>
@@ -118,16 +132,22 @@
                   </v-banner>
                 </v-col>
               </v-row>
-            </v-container>
+            </v-container> -->
           </div>
-          <div class="info-section">
+          <div
+            class="info-section"
+            v-if="state.completeApplication.previousAddresses.length > 0"
+          >
             <PreviousAddressInfoSection
               :previous-address="state.completeApplication.previousAddresses"
               :color="'info'"
             />
           </div>
 
-          <div class="info-section">
+          <div
+            class="info-section"
+            v-if="state.completeApplication.differentMailing"
+          >
             <AddressInfoSection
               :title="'Mailing Address'"
               :address-info="state.completeApplication.mailingAddress"
@@ -157,7 +177,10 @@
             />
           </div>
 
-          <div class="info-section">
+          <div
+            class="info-section"
+            v-if="state.completeApplication.weapons.length > 0"
+          >
             <WeaponInfoSection :weapons="state.completeApplication.weapons" />
           </div>
 
@@ -166,11 +189,19 @@
           </div>
 
           <div class="info-section">
-            <FileUploadInfoSection />
+            <FileUploadInfoSection
+              :color="'primary'"
+              :uploaded-documents="state.completeApplication.uploadedDocuments"
+            />
           </div>
 
           <div class="info-section">
-            <QualifyingQuestionsInfoSection />
+            <QualifyingQuestionsInfoSection
+              :color="'primary'"
+              :qualifying-questions-info="
+                state.completeApplication.qualifyingQuestions
+              "
+            />
           </div>
 
           <div class="info-section">
