@@ -373,6 +373,12 @@ export type BackgroundCheckType = {
   }
 }
 
+export type CommentType = {
+  text: string
+  commentDateTimeUtc: string
+  commentMadeBy: string
+}
+
 export enum ApplicationStatus {
   'None',
   'Incomplete',
@@ -389,6 +395,7 @@ export enum ApplicationStatus {
   'Denied',
   'Withdrawn',
 }
+
 export type CompleteApplication = {
   application: {
     aliases: Array<AliasType>
@@ -397,7 +404,7 @@ export type CompleteApplication = {
       citizen: boolean
       militaryStatus: string
     }
-    comments: string
+    comments: Array<CommentType>
     contact: ContactInfoType
     currentAddress: AddressInfoType
     differentMailing: boolean

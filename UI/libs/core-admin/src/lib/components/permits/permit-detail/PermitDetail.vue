@@ -71,6 +71,41 @@
         <PermitStatus />
       </v-col>
     </v-row>
+
+    <v-btn
+      @click="reveal = !reveal"
+      color="primary"
+      fab
+      bottom
+      right
+      fixed
+      x-large
+    >
+      <v-icon>
+        {{ reveal ? 'mdi-comment-minus-outline' : 'mdi-comment-plus-outline' }}
+      </v-icon>
+    </v-btn>
+
+    <v-sheet
+      v-if="reveal"
+      rounded
+      outlined
+      color="primary"
+      class="sticky-card"
+      elevation="20"
+      width="450"
+    >
+      <v-card
+        class="card-overflow"
+        outlined
+        max-height="650"
+      >
+        <v-card-title>Comments</v-card-title>
+        <v-card-text class="card-text-overflow">
+          <CommentsTab />
+        </v-card-text>
+      </v-card>
+    </v-sheet>
   </v-container>
 </template>
 
@@ -80,6 +115,7 @@ import AliasesTab from './tabs/AliasesTab.vue'
 import ApplicationInfoTab from './tabs/ApplicantInfoTab.vue'
 import AttachedDocumentsTab from './tabs/AttachedDocumentsTab.vue'
 import BirthInformationTab from './tabs/BirthInformationTab.vue'
+import CommentsTab from '../permit-detail/tabs/CommentsTab.vue'
 import ContactInfoTab from './tabs/ContactInfoTab.vue'
 import DemographicsTab from './tabs/DemographicsTab.vue'
 import ImmigrationInfoTab from './tabs/ImmigrationInfoTab.vue'
@@ -106,6 +142,7 @@ const { isLoading } = useQuery(
 )
 
 const stepIndex = ref(1)
+const reveal = ref(false)
 
 const state = reactive({
   tab: null,
@@ -166,5 +203,23 @@ const renderTabs = item => {
 <style lang="scss">
 .theme--dark.v-label.v-label--active {
   color: white !important;
+}
+
+.sticky-card {
+  width: 600px;
+  position: fixed;
+  bottom: 10vh;
+  z-index: 1;
+  right: 1vw;
+}
+
+.card-overflow {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.card-text-overflow {
+  flex-grow: 1;
+  overflow: auto;
 }
 </style>
