@@ -14,12 +14,12 @@
     </v-container>
 
     <v-container v-else>
-      <v-row class="mt-1">
+      <v-row class="mt-3 mb-3">
         <v-col>
           <FinalizeContainer />
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="mt-3 mb-3">
         <v-col>
           <PaymentContainer
             v-if="
@@ -37,18 +37,19 @@
             .paymentStatus !== 0
         "
       >
-        <v-card class="mt-4">
+        <v-card class="mt-3 mb-3">
           <v-alert
             color="primary"
             outlined
             type="info"
-            class="font-weight-bold"
+            class="font-weight-bold mt-3"
           >
             <!-- TODO: update with different options once online is implemented -->
             {{ $t('Payment method selected: Pay in person ') }}
           </v-alert>
         </v-card>
       </template>
+
       <v-container
         v-if="!state.appointmentsLoaded && !state.appointmentComplete"
       >
@@ -78,43 +79,42 @@
         </v-card>
       </v-container>
 
-      <v-row>
+      <v-row class="mt-3 mb-3">
         <v-col>
           <v-card
+            v-if="
+              (isLoading && isError) ||
+              (state.appointmentsLoaded &&
+                state.appointments.length > 0 &&
+                !state.appointmentComplete)
+            "
             elevation="2"
-            class="mt-3"
           >
             <AppointmentContainer
-              v-if="
-                (isLoading && isError) ||
-                (state.appointmentsLoaded &&
-                  state.appointments.length > 0 &&
-                  !state.appointmentComplete)
-              "
               :show-header="true"
               :events="state.appointments"
               :toggle-appointment="toggleAppointmentComplete"
               :reschedule="false"
             />
-
-            <v-container v-else>
-              <v-card>
-                <v-alert
-                  color="primary"
-                  outlined
-                  type="info"
-                  class="font-weight-bold"
-                >
-                  {{ $t('Appointment has been set for ') }}
-                  {{
-                    new Date(
-                      completeApplicationStore.completeApplication.application.appointmentDateTime
-                    ).toLocaleString()
-                  }}
-                </v-alert>
-              </v-card>
-            </v-container>
           </v-card>
+
+          <template v-else>
+            <v-card>
+              <v-alert
+                color="primary"
+                outlined
+                type="info"
+                class="font-weight-bold"
+              >
+                {{ $t('Appointment has been set for ') }}
+                {{
+                  new Date(
+                    completeApplicationStore.completeApplication.application.appointmentDateTime
+                  ).toLocaleString()
+                }}
+              </v-alert>
+            </v-card>
+          </template>
         </v-col>
       </v-row>
       <v-row class="float-right">
