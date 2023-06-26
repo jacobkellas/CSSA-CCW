@@ -83,6 +83,7 @@ import Routes from '@core-public/router/routes'
 import { defaultPermitState } from '@shared-utils/lists/defaultConstants'
 import { reactive } from 'vue'
 import { useAuthStore } from '@shared-ui/stores/auth'
+import { useBrandStore } from '@shared-ui/stores/brandStore'
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication'
 import { useRouter } from 'vue-router/composables'
 import { useMutation, useQuery } from '@tanstack/vue-query'
@@ -96,6 +97,7 @@ const {
   deleteApplication,
 } = useCompleteApplicationStore()
 const authStore = useAuthStore()
+const brandStore = useBrandStore()
 
 const router = useRouter()
 
@@ -155,14 +157,14 @@ const { isLoading, isError } = useQuery(
 const createMutation = useMutation({
   mutationFn: createApplication,
   onSuccess: () => {
-    (state.applicationCreationLoading = false),
-      router.push({
-        path: Routes.APPLICATION_ROUTE_PATH,
-        query: {
-          applicationId: completeApplication.id,
-          isComplete: completeApplication.application.isComplete,
-        },
-      })
+    state.applicationCreationLoading = false
+    router.push({
+      path: Routes.APPLICATION_ROUTE_PATH,
+      query: {
+        applicationId: completeApplication.id,
+        isComplete: completeApplication.application.isComplete,
+      },
+    })
   },
   onError: () => null,
 })
@@ -203,6 +205,22 @@ function handleCreateApplication() {
   state.applicationCreationLoading = true
   //make sure the application is blank
   setCompleteApplication(defaultPermitState)
+  completeApplication.application.cost = {
+    new: {
+      standard: brandStore.brand.cost.new.standard,
+      judicial: brandStore.brand.cost.new.judicial,
+      reserve: brandStore.brand.cost.new.reserve,
+    },
+    renew: {
+      standard: brandStore.brand.cost.renew.standard,
+      judicial: brandStore.brand.cost.renew.judicial,
+      reserve: brandStore.brand.cost.renew.reserve,
+    },
+    issuance: brandStore.brand.cost.issuance,
+    modify: brandStore.brand.cost.modify,
+    creditFee: brandStore.brand.cost.creditFee,
+    convenienceFee: brandStore.brand.cost.convenienceFee,
+  }
   completeApplication.application.userEmail = authStore.auth.userEmail
   completeApplication.id = window.crypto.randomUUID()
   completeApplication.application.currentStep = 0

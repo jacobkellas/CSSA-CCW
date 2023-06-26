@@ -39,4 +39,5 @@ public class UserApplication
     public string? OrderId { get; set; }
     public UploadedDocument[]? UploadedDocuments { get; set; }
     public DateTime? StartOfNinetyDayCountdown { get; set; }
+    public Cost Cost { get; set; }
 }

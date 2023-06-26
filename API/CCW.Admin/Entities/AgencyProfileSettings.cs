@@ -1,3 +1,4 @@
+using CCW.Common.Models;
 using Newtonsoft.Json;
 
 namespace CCW.Admin.Entities;

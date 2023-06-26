@@ -1,6 +1,7 @@
 import {
   ApplicationStatus,
   AppointmentStatus,
+  CommentType,
   CompleteApplication,
   UploadedDocType,
 } from '@shared-utils/types/defaultTypes'
@@ -70,7 +71,23 @@ export const defaultPermitState: CompleteApplication = {
     ciiNumber: '',
     startOfNinetyDayCountdown: null,
     citizenship: { citizen: true, militaryStatus: '' },
-    comments: '',
+    comments: new Array<CommentType>(),
+    cost: {
+      new: {
+        standard: 1,
+        judicial: 1,
+        reserve: 1,
+      },
+      renew: {
+        standard: 1,
+        judicial: 1,
+        reserve: 1,
+      },
+      issuance: 1,
+      modify: 1,
+      creditFee: 1,
+      convenienceFee: 1,
+    },
     contact: {
       cellPhoneNumber: '',
       primaryPhoneNumber: '',
@@ -209,6 +226,7 @@ export const defaultPermitState: CompleteApplication = {
     orderId: '',
     uploadedDocuments: [] as Array<UploadedDocType>,
     appointmentDateTime: null,
+    appointmentId: null,
     backgroundCheck: {
       proofOfID: {
         changeDateTimeUtc: null,
