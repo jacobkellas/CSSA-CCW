@@ -41,5 +41,6 @@ public class Application
     public UploadedDocument[]? UploadedDocuments { get; set; }
     public DateTime? StartOfNinetyDayCountdown { get; set; }
     public string? CiiNumber { get; set; }
+    public Cost Cost { get; set; }
 }
 

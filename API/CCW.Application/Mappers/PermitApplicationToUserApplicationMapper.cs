@@ -107,6 +107,7 @@ public class PermitApplicationToUserApplicationMapper : IMapper<PermitApplicatio
             PaymentStatus = source.Application.PaymentStatus,
             BackgroundCheck = MapIfNotNull(source.Application.BackgroundCheck, () => _backgroundCheckMapper.Map(source)),
             UploadedDocuments = MapIfNotNull(source.Application.UploadedDocuments, () => _uploadedDocMapper.Map(source)),
+            Cost = source.Application.Cost,
         };
     }
 }

@@ -445,6 +445,7 @@ export type CompleteApplication = {
     backgroundCheck: BackgroundCheckType
     startOfNinetyDayCountdown: string | null
     ciiNumber: string
+    cost: CostType
   }
   history: Array<HistoryType>
   paymentHistory: Array<PaymentHistoryType>
