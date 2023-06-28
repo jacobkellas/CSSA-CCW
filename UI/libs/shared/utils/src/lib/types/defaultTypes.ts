@@ -446,6 +446,7 @@ export type CompleteApplication = {
     startOfNinetyDayCountdown: string | null
     ciiNumber: string
     cost: CostType
+    submittedToLicensingDateTime: string | null
   }
   history: Array<HistoryType>
   paymentHistory: Array<PaymentHistoryType>

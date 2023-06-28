@@ -55,7 +55,7 @@ public class CosmosDbService : ICosmosDbService
     {
         var queryString = "SELECT a.Application, a.id, a.userId FROM applications a " +
                           "WHERE a.userId = @userId " +
-                          "Order by a.OrderId DESC";
+                          "Order by a.Application.OrderId DESC";
 
         var parameterizedQuery = new QueryDefinition(query: queryString)
             .WithParameter("@userId", userId);
@@ -114,7 +114,7 @@ public class CosmosDbService : ICosmosDbService
         var queryString = isOrderId
             ? "SELECT a.Application, a.id, a.userId, a.PaymentHistory, a.History FROM applications a " +
               "WHERE a.Application.OrderId = @userEmailOrOrderId and a.Application.IsComplete = @isComplete " +
-              "Order by a.OrderId DESC"
+              "Order by a.Application.OrderId DESC"
             : "SELECT a.Application, a.id, a.userId, a.PaymentHistory, a.History FROM applications a " +
               "WHERE a.Application.UserEmail = @userEmailOrOrderId and a.Application.IsComplete = @isComplete " +
               "Order by a.Application.OrderId DESC";
@@ -144,7 +144,7 @@ public class CosmosDbService : ICosmosDbService
     {
         var queryString = "SELECT a.Application, a.id, a.userId, a.PaymentHistory FROM applications a " +
                           "WHERE a.userId = @userId and a.Application.UserEmail = @userEmail " +
-                          "Order by a.OrderId DESC";
+                          "Order by a.Application.OrderId DESC";
 
         var parameterizedQuery = new QueryDefinition(query: queryString)
                 .WithParameter("@userId", userId)
@@ -171,7 +171,7 @@ public class CosmosDbService : ICosmosDbService
     {
         var queryString = "SELECT a.Application, a.id, a.userId, a.PaymentHistory, a.History FROM applications a " +
                           "WHERE a.Application.UserEmail = @userEmail " +
-                          "Order by a.OrderId DESC";
+                          "Order by a.Application.OrderId DESC";
 
         var parameterizedQuery = new QueryDefinition(query: queryString)
             .WithParameter("@userEmail", userEmail);

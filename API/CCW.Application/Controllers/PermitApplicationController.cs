@@ -339,13 +339,6 @@ public class PermitApplicationController : ControllerBase
                 application.Application.PersonalInfo.Ssn = existingApplication.Application.PersonalInfo.Ssn;
             }
 
-            if (application.Application.Status == ApplicationStatus.Submitted &&
-                existingApplication.Application.Status != ApplicationStatus.Approved &&
-                existingApplication.Application.Status != ApplicationStatus.Submitted)
-            {
-                application.Application.SubmittedToLicensingDateTime = DateTime.UtcNow;
-            }
-
             bool isNewApplication = false;
             await _cosmosDbService.UpdateApplicationAsync(_userPermitApplicationMapper.Map(isNewApplication,
                     existingApplication.Application.Comments, application),
