@@ -23,6 +23,7 @@
     <v-textarea
       v-model="commentText"
       label="Comment"
+      class="mt-2"
       outlined
       auto-grow
       clearable

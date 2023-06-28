@@ -108,7 +108,7 @@ public class UserPermitRequestApplicationToApplicationMapper : IMapper<Comment[]
             Status = source.Application.Status,
             OrderId = source.Application.OrderId,
             BackgroundCheck = MapIfNotNull(source.Application.BackgroundCheck, () => _backgroundCheckMapper.Map(source)),
-            Comments = comments,
+            Comments = comments ?? Array.Empty<Comment>(),
             PaymentStatus = source.Application.PaymentStatus,
             UploadedDocuments = MapIfNotNull(source.Application.UploadedDocuments, () => _uploadedDocMapper.Map(source)),
             StartOfNinetyDayCountdown = source.Application.StartOfNinetyDayCountdown,
