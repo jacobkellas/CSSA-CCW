@@ -221,6 +221,7 @@ export const defaultPermitState: CompleteApplication = {
     },
     currentStep: 1,
     status: ApplicationStatus.Incomplete,
+    submittedToLicensingDateTime: null,
     paymentStatus: 0,
     appointmentStatus: AppointmentStatus['Not Scheduled'],
     orderId: '',
