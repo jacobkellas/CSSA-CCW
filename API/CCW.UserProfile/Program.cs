@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using CCW.UserProfile;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Identity;
 using CCW.UserProfile.Entities;
@@ -15,12 +14,6 @@ using Microsoft.Azure.Cosmos;
 using User = CCW.UserProfile.Entities.User;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .CreateLogger();
-builder.Host.UseSerilog(logger);
 
 // Add services to the container.
 var client = new SecretClient(new Uri(builder.Configuration.GetSection("KeyVault:VaultUri").Value),

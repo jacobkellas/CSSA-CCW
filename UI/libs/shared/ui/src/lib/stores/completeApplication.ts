@@ -33,7 +33,7 @@ export const useCompleteApplicationStore = defineStore('permitStore', () => {
    * Get the complete application from the backend
    */
   async function getCompleteApplicationFromApi(
-    applicationId: string,
+    applicationId: string | null,
     isComplete: boolean
   ) {
     const res = await axios

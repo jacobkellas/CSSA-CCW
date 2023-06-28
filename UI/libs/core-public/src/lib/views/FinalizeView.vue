@@ -99,7 +99,12 @@
           </v-card>
 
           <template v-else>
-            <v-card>
+            <v-card
+              v-if="
+                completeApplicationStore.completeApplication.application
+                  .appointmentDateTime
+              "
+            >
               <v-alert
                 color="primary"
                 outlined
@@ -152,18 +157,18 @@
 
 <script lang="ts" setup>
 import AppointmentContainer from '@core-public/components/containers/AppointmentContainer.vue'
-import {
-  ApplicationStatus,
-  AppointmentStatus,
-  AppointmentType,
-} from '@shared-utils/types/defaultTypes'
 import FinalizeContainer from '@core-public/components/containers/FinalizeContainer.vue'
 import PaymentContainer from '@core-public/components/containers/PaymentContainer.vue'
 import Routes from '@core-public/router/routes'
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore'
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication'
+import { useMutation } from '@tanstack/vue-query'
+import {
+  ApplicationStatus,
+  AppointmentStatus,
+  AppointmentType,
+} from '@shared-utils/types/defaultTypes'
 import { onMounted, reactive } from 'vue'
-import { useMutation, useQuery } from '@tanstack/vue-query'
 import { useRoute, useRouter } from 'vue-router/composables'
 
 const state = reactive({
@@ -223,8 +228,8 @@ onMounted(() => {
     state.isLoading = true
     completeApplicationStore
       .getCompleteApplicationFromApi(
-        route.query.applicationId,
-        route.query.isComplete
+        route.query.applicationId as string,
+        Boolean(route.query.isComplete)
       )
       .then(res => {
         completeApplicationStore.setCompleteApplication(res)
@@ -281,6 +286,8 @@ async function handleSubmit() {
   completeApplicationStore.completeApplication.application.isComplete = true
   completeApplicationStore.completeApplication.application.status =
     ApplicationStatus.Submitted
+  completeApplicationStore.completeApplication.application.submittedToLicensingDateTime =
+    new Date().toISOString()
   updateMutation.mutate()
 }
 
