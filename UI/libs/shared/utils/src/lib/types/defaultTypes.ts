@@ -78,6 +78,7 @@ export type UploadedDocType = {
 export type AdminUserType = {
   id?: string
   badgeNumber: string
+  name: string
   uploadedDocuments: Array<UploadedDocType>
 }
 
@@ -447,6 +448,7 @@ export type CompleteApplication = {
     ciiNumber: string
     cost: CostType
     submittedToLicensingDateTime: string | null
+    assignedTo: string | null
   }
   history: Array<HistoryType>
   paymentHistory: Array<PaymentHistoryType>

@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using CCW.Common.AuthorizationPolicies;
 using Microsoft.Azure.Cosmos;
 using User = CCW.UserProfile.Entities.User;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddSingleton<IMapper<string, UserProfileRequestModel, User>, Us
 builder.Services.AddSingleton<IMapper<User, UserProfileResponseModel>, EntityToUserProfileResponseModelMapper>();
 builder.Services.AddSingleton<IMapper<string, AdminUserProfileRequestModel, AdminUser>, AdminUserProfileRequestModelToEntityMapper>();
 builder.Services.AddSingleton<IMapper<AdminUser, AdminUserProfileResponseModel>, EntityToAdminUserProfileResponseModelMapper>();
+builder.Services.AddSingleton<IMapper<IEnumerable<AdminUser>, IEnumerable<AdminUserProfileResponseModel>>, AllAdminUsersToAdminUserProfileResponseModelMapper>();
 
 builder.Services.AddScoped<IAuthorizationHandler, IsAdminHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, IsSystemAdminHandler>();
@@ -92,6 +94,15 @@ builder.Services
             policy.RequireRole("CCW-SYSTEM-ADMINS-ROLE");
             policy.Requirements.Add(new RoleRequirement("CCW-SYSTEM-ADMINS-ROLE"));
         });
+
+        options.AddPolicy("RequireAdminOrSystemAdminOnly",
+            policy =>
+            {
+                policy.RequireRole(new string[] { "CCW-ADMIN-ROLE", "CCW-SYSTEM-ADMINS-ROLE" });
+                policy.Requirements.Add(new RoleRequirement("CCW-SYSTEM-ADMINS-ROLE"));
+                policy.Requirements.Add(new RoleRequirement("CCW-ADMIN-ROLE"));
+            });
+
 
         options.AddPolicy("RequireProcessorOnly", policy =>
         {
@@ -187,11 +198,25 @@ static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(
     var containerName = configurationSection["ContainerName"];
     var adminUsersContainerName = configurationSection["AdminUsersContainerName"];
     var key = secretClient.GetSecret("cosmos-db-connection-primary").Value.Value;
-    CosmosClientOptions clientOptions = new CosmosClientOptions();
 #if DEBUG
-    clientOptions.ConnectionMode = ConnectionMode.Gateway;
+    key = configurationSection["CosmosDbEmulatorConnectionString"];
 #endif
-    var client = new CosmosClient(key, clientOptions);
+    CosmosClientOptions clientOptions = new CosmosClientOptions();
+    var client = new CosmosClient(
+        key,
+        new CosmosClientOptions()
+        {
+            AllowBulkExecution = true,
+#if DEBUG
+            WebProxy = new WebProxy()
+            {
+                BypassProxyOnLocal = true
+            }
+#endif
+        });
+
+    var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+    await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
     var cosmosDbService = new CosmosDbService(client, databaseName, containerName, adminUsersContainerName);
     return cosmosDbService;
 }
