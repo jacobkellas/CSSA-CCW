@@ -1,17 +1,15 @@
 import Endpoints from '@shared-ui/api/endpoints'
 import { PermitsType } from '@core-admin/types'
 import axios from 'axios'
+import { defaultPermitState } from '@shared-utils/lists/defaultConstants'
 import { defineStore } from 'pinia'
+import { useAuthStore } from '@shared-ui/stores/auth'
 import {
   AppointmentStatus,
   CompleteApplication,
   HistoryType,
 } from '@shared-utils/types/defaultTypes'
 import { computed, ref } from 'vue'
-import {
-  defaultAllPermitsState,
-  defaultPermitState,
-} from '@shared-utils/lists/defaultConstants'
 import {
   formatAddress,
   formatDate,
@@ -21,7 +19,8 @@ import {
 } from '@shared-utils/formatters/defaultFormatters'
 
 export const usePermitsStore = defineStore('PermitsStore', () => {
-  const permits = ref<Array<PermitsType>>([defaultAllPermitsState])
+  const authStore = useAuthStore()
+  const permits = ref<Array<PermitsType>>()
   const openPermits = ref<number>(0)
   const permitDetail = ref<CompleteApplication>(defaultPermitState)
   const history = ref(defaultPermitState.history)
@@ -33,7 +32,7 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
   const getPermitDetail = computed(() => permitDetail.value)
   const getHistory = computed(() => history.value)
 
-  const orderIDs = new Map()
+  const orderIds = new Map()
 
   function setPermits(payload: Array<PermitsType>) {
     permits.value = payload
@@ -60,6 +59,8 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       .get(Endpoints.GET_ALL_PERMITS_ENDPOINT)
       .catch(err => window.console.log(err))
 
+    window.console.log(res?.data)
+
     const permitsData: Array<PermitsType> = res?.data?.map(data => ({
       ...data,
       status: 'New',
@@ -80,15 +81,19 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
   }
 
   async function getPermitDetailApi(orderId: string) {
-    const isComplete =
-      permits.value.filter(item => item.orderID === orderId)[0]?.isComplete ||
-      false
+    let isComplete = false
+
+    if (permits.value) {
+      isComplete =
+        permits.value.filter(item => item.orderId === orderId)[0]?.isComplete ||
+        false
+    }
 
     const res = await axios.get(
       `${Endpoints.GET_AGENCY_PERMIT_ENDPOINT}?userEmailOrOrderId=${orderId}&isOrderId=true&isComplete=${isComplete}`
     )
 
-    orderIDs.set(orderId, res?.data || {})
+    orderIds.set(orderId, res?.data || {})
     setPermitDetail(res?.data)
 
     return res?.data || {}
@@ -161,6 +166,12 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
   }
 
   async function updatePermitDetailApi(item: string) {
+    permitDetail.value.history.push({
+      changeMadeBy: authStore.auth.userEmail,
+      change: item,
+      changeDateTimeUtc: new Date().toISOString(),
+    })
+
     const res = await axios.put(
       Endpoints.PUT_UPDATE_AGENCY_PERMIT_ENDPOINT,
       permitDetail.value,

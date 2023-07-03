@@ -1,11 +1,7 @@
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using CCW.Admin;
-using CCW.Admin.Entities;
-using CCW.Admin.Mappers;
-using CCW.Admin.Models;
 using CCW.Admin.Services;
-using CCW.Common;
 using CCW.Common.AuthorizationPolicies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -22,8 +18,7 @@ var client = new SecretClient(new Uri(builder.Configuration.GetSection("KeyVault
 builder.Services.AddSingleton<ICosmosDbService>(
     InitializeCosmosClientInstanceAsync(builder.Configuration.GetSection("CosmosDb"), client).GetAwaiter().GetResult());
 
-builder.Services.AddSingleton<IMapper<AgencyProfileSettingsRequestModel, AgencyProfileSettings>, AgencyProfileRequestSettingsModelToEntityMapper>();
-builder.Services.AddSingleton<IMapper<AgencyProfileSettings, AgencyProfileSettingsResponseModel>, EntityToAgencyProfileSettingsResponseModelMapper>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IAuthorizationHandler, IsAdminHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, IsSystemAdminHandler>();
@@ -179,7 +174,7 @@ static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(
 #if DEBUG        
     clientOptions.ConnectionMode = ConnectionMode.Gateway;
 #endif
-    var client = new Microsoft.Azure.Cosmos.CosmosClient(key, clientOptions);
+    var client = new CosmosClient(key, clientOptions);
     var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
     return cosmosDbService;
 }
