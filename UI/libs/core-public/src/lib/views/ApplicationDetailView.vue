@@ -422,7 +422,6 @@
           "
           :events="state.appointments"
           :toggle-appointment="toggleAppointmentComplete"
-          :reschedule="false"
           :show-header="false"
         />
         <div
