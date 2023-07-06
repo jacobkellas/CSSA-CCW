@@ -59,8 +59,6 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       .get(Endpoints.GET_ALL_PERMITS_ENDPOINT)
       .catch(err => window.console.log(err))
 
-    window.console.log(res?.data)
-
     const permitsData: Array<PermitsType> = res?.data?.map(data => ({
       ...data,
       status: 'New',

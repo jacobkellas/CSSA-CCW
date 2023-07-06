@@ -215,12 +215,11 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
   }
 
   async function putRemoveApplicationFromAppointment(
-    applicationId: string,
     appointmentId: string | null
   ) {
     const res = await axios
       .put(
-        `${Endpoints.REMOVE_APPLICATION_FROM_APPOINTMENT}?applicationId=${applicationId}&appointmentId=${appointmentId}`
+        `${Endpoints.REMOVE_APPLICATION_FROM_APPOINTMENT}?appointmentId=${appointmentId}`
       )
       .catch(err => {
         window.console.warn(err)

@@ -730,7 +730,6 @@ function handleWithdrawApplication() {
   applicationStore.completeApplication.application.appointmentStatus =
     AppointmentStatus['Not Scheduled']
   appointmentStore.putRemoveApplicationFromAppointment(
-    applicationStore.completeApplication.id,
     applicationStore.completeApplication.application.appointmentId
   )
   applicationStore.completeApplication.application.appointmentDateTime = null
@@ -745,7 +744,6 @@ function handleCancelAppointment() {
     AppointmentStatus['Not Scheduled']
   applicationStore.completeApplication.application.appointmentDateTime = null
   appointmentStore.putRemoveApplicationFromAppointment(
-    applicationStore.completeApplication.id,
     applicationStore.completeApplication.application.appointmentId
   )
   applicationStore.completeApplication.application.appointmentId = null

@@ -525,6 +525,7 @@ export type AppointmentWindowCreateRequestModel = {
   start: string
   end: string
   applicationId: string | null
+  userId: string
   status: AppointmentStatus | null
   name: string | null
   permit: string | null
