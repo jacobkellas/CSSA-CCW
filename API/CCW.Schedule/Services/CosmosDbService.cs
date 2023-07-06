@@ -200,6 +200,7 @@ public class CosmosDbService : ICosmosDbService
             foreach (var appointment in appointments)
             {
                 appointment.ApplicationId = null;
+                appointment.UserId = null;
                 appointment.Status = AppointmentStatus.Available;
                 appointment.Name = null;
                 appointment.Permit = null;

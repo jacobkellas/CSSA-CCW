@@ -269,6 +269,7 @@ export type AppointmentType = {
   start: string
   end: string
   isManuallyCreated: boolean
+  userId: string
 }
 
 export type BackgroundCheckType = {
