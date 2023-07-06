@@ -332,6 +332,27 @@ public class CosmosDbService : ICosmosDbService
         return null!;
     }
 
+    public async Task<AppointmentWindow> GetAppointmentByUserIdAsync(string userId, CancellationToken cancellation)
+    {
+        var parameterizedQuery = new QueryDefinition(
+                query: "SELECT * FROM appointments p WHERE p.userId = @userId"
+            )
+            .WithParameter("@userId", userId);
+
+        using FeedIterator<AppointmentWindow> filteredFeed = _container.GetItemQueryIterator<AppointmentWindow>(
+            queryDefinition: parameterizedQuery
+        );
+
+        if (filteredFeed.HasMoreResults)
+        {
+            FeedResponse<AppointmentWindow> response = await filteredFeed.ReadNextAsync();
+
+            return response.First();
+        }
+
+        return null!;
+    }
+
     public async Task DeleteAsync(string appointmentId, CancellationToken cancellationToken)
     {
         await _container.DeleteItemAsync<AppointmentWindow>(appointmentId, new PartitionKey(appointmentId), cancellationToken: cancellationToken);

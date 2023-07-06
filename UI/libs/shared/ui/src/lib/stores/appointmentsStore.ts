@@ -116,6 +116,18 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     return res?.data
   }
 
+  async function rescheduleAppointment(body: AppointmentType) {
+    const res = await axios
+      .put(Endpoints.PUT_RESCHEDULE_APPOINTMENT_ENDPOINT, body)
+      .catch(err => {
+        console.warn(err)
+
+        return Promise.reject()
+      })
+
+    return res?.data
+  }
+
   async function getSingleAppointment(id: string) {
     const res = await axios
       .get(Endpoints.GET_SINGLE_APPOINTMENT, {
@@ -287,6 +299,7 @@ export const useAppointmentsStore = defineStore('AppointmentsStore', () => {
     getAvailableAppointments,
     getSingleAppointment,
     sendAppointmentCheck,
+    rescheduleAppointment,
     uploadAppointmentsApi,
     deleteUserFromAppointment,
     deleteAppointmentsByDate,

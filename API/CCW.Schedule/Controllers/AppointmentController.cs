@@ -146,6 +146,65 @@ public class AppointmentController : ControllerBase
         }
     }
 
+    [Authorize(Policy = "B2CUsers")]
+    [Route("rescheduleAppointment")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [HttpPut]
+    public async Task<IActionResult> RescheduleAppointment([FromBody] AppointmentWindowUpdateRequestModel appointmentRequest)
+    {
+        try
+        {
+            GetUserId(out var userId);
+
+            var existingAppointment = await _cosmosDbService.GetAppointmentByUserIdAsync(userId, cancellationToken: default);
+
+            if (existingAppointment.IsManuallyCreated)
+            {
+                await _cosmosDbService.DeleteAsync(existingAppointment.Id.ToString(), cancellationToken: default);
+            }
+            else
+            {
+                existingAppointment.ApplicationId = null;
+                existingAppointment.Status = AppointmentStatus.Available;
+                existingAppointment.Name = null;
+                existingAppointment.UserId = null;
+                existingAppointment.Permit = null;
+                existingAppointment.Payment = null;
+                existingAppointment.IsManuallyCreated = false;
+
+                await _cosmosDbService.UpdateAsync(existingAppointment, cancellationToken: default);
+            }
+
+            if (appointmentRequest.Id == Guid.Empty.ToString())
+            {
+                var nextSlot = await _cosmosDbService.GetAvailableSlotByDateTime(appointmentRequest.Start, cancellationToken: default);
+
+                if (nextSlot == null || nextSlot.Count < 1)
+                {
+                    throw new ArgumentOutOfRangeException("start");
+                }
+
+                var slot = nextSlot.First();
+                appointmentRequest.Id = slot.Id.ToString();
+                appointmentRequest.UserId = userId;
+                appointmentRequest.End = slot.End;
+                appointmentRequest.IsManuallyCreated = slot.IsManuallyCreated;
+            }
+
+            AppointmentWindow appointment = _mapper.Map<AppointmentWindow>(appointmentRequest);
+            await _cosmosDbService.UpdateAsync(appointment, cancellationToken: default);
+
+            return Ok(_mapper.Map<AppointmentWindowResponseModel>(appointment));
+        }
+        catch (Exception e)
+        {
+            var originalException = e.GetBaseException();
+            _logger.LogError(originalException, originalException.Message);
+            return NotFound("An error occur while trying to reschedule appointment.");
+        }
+    }
+
 
     [Authorize(Policy = "B2CUsers")]
     [Route("update")]
@@ -166,6 +225,7 @@ public class AppointmentController : ControllerBase
 
                 var slot = nextSlot.First();
                 appointment.Id = slot.Id.ToString();
+                appointment.UserId = userId;
                 appointment.End = slot.End;
                 appointment.IsManuallyCreated = slot.IsManuallyCreated;
             }
@@ -429,8 +489,6 @@ public class AppointmentController : ControllerBase
             }
             else
             {
-                var applicationId = appointment.ApplicationId;
-
                 appointment.ApplicationId = null;
                 appointment.Status = AppointmentStatus.Available;
                 appointment.Name = null;
@@ -440,7 +498,6 @@ public class AppointmentController : ControllerBase
 
                 await _cosmosDbService.UpdateAsync(appointment, cancellationToken: default);
             }
-
 
             var response = await _applicationHttpClient.RemoveApplicationAppointmentAsync(appointment.ApplicationId,
                 cancellationToken: default);
@@ -528,6 +585,7 @@ public class AppointmentController : ControllerBase
                 applicationIdFromAppointment = appointment.ApplicationId;
 
                 appointment.ApplicationId = null;
+                appointment.UserId = null;
                 appointment.Status = AppointmentStatus.Available;
                 appointment.Name = null;
                 appointment.Permit = null;

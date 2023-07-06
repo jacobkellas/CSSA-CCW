@@ -155,10 +155,12 @@ interface IProps {
   toggleAppointment: CallableFunction
   events: Array<AppointmentType>
   showHeader: boolean
+  rescheduling: boolean
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   showHeader: true,
+  rescheduling: false,
 })
 
 const applicationStore = useCompleteApplicationStore()
@@ -192,6 +194,16 @@ const appointmentMutation = useMutation({
       start: new Date(state.selectedEvent.start).toISOString(),
       status: AppointmentStatus.Scheduled,
       time: '',
+    }
+
+    if (props.rescheduling) {
+      return appointmentStore.rescheduleAppointment(body).then(response => {
+        appointmentStore.currentAppointment = response
+        applicationStore.completeApplication.application.appointmentDateTime =
+          response.start
+        applicationStore.completeApplication.application.appointmentId =
+          response.id
+      })
     }
 
     return appointmentStore.setAppointmentPublic(body).then(response => {

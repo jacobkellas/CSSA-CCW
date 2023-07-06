@@ -276,7 +276,9 @@
               />
               <DOBinfoSection
                 :color="'primary'"
-                :DOBInfo="applicationStore.completeApplication.application.dob"
+                :d-o-b-info="
+                  applicationStore.completeApplication.application.dob
+                "
               />
               <ContactInfoSection
                 :color="'primary'"
@@ -423,6 +425,7 @@
           :events="state.appointments"
           :toggle-appointment="toggleAppointmentComplete"
           :show-header="false"
+          :rescheduling="state.rescheduling"
         />
         <div
           class="text-center"
@@ -505,6 +508,7 @@ const route = useRoute()
 const tab = ref(null)
 
 const state = reactive({
+  rescheduling: false,
   withdrawDialog: false,
   appointmentDialog: false,
   appointments: [] as Array<AppointmentType>,
@@ -749,6 +753,7 @@ function handleCancelAppointment() {
 }
 
 function handleShowAppointmentDialog() {
+  state.rescheduling = true
   getAppointmentMutation()
   state.appointmentDialog = true
 }
@@ -760,5 +765,6 @@ function handleShowWithdrawDialog() {
 function toggleAppointmentComplete() {
   applicationStore.updateApplication()
   state.appointmentDialog = false
+  state.rescheduling = false
 }
 </script>
