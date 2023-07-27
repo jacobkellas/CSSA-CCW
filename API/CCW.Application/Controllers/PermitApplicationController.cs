@@ -339,9 +339,33 @@ public class PermitApplicationController : ControllerBase
     }
 
     [Authorize(Policy = "AADUsers")]
+    [HttpGet("getHistory")]
+    public async Task<IActionResult> GetHistory(string applicationIdOrOrderId, bool isOrderId = false)
+    {
+        try
+        {
+            IEnumerable<HistoryResponseModel> responseModels = new List<HistoryResponseModel>();
+            var result = await _cosmosDbService.GetApplicationHistoryAsync(applicationIdOrOrderId, cancellationToken: default, isOrderId);
+
+            if (result.Any())
+            {
+                responseModels = _mapper.Map<List<HistoryResponseModel>>(result);
+            }
+
+            return Ok(responseModels);
+        }
+        catch (Exception e)
+        {
+            var originalException = e.GetBaseException();
+            _logger.LogError(originalException, originalException.Message);
+            return NotFound("An error occur while trying to retrieve permit application history.");
+        }
+    }
+
+    [Authorize(Policy = "AADUsers")]
     [Route("updateUserApplication")]
     [HttpPut]
-    public async Task<IActionResult> UpdateUserApplication([FromBody] PermitApplicationRequestModel application)
+    public async Task<IActionResult> UpdateUserApplication([FromBody] PermitApplicationRequestModel application, string updatedSection)
     {
         try
         {
@@ -358,6 +382,17 @@ public class PermitApplicationController : ControllerBase
             {
                 application.Application.PersonalInfo.Ssn = existingApplication.Application.PersonalInfo.Ssn;
             }
+
+            History[] history = new[]{
+                new History
+                    {
+                        ChangeMadeBy =  userName,
+                        Change = updatedSection,
+                        ChangeDateTimeUtc = DateTime.UtcNow,
+                    }
+                };
+
+            application.History = history;
 
             await _cosmosDbService.UpdateUserApplicationAsync(_mapper.Map<PermitApplication>(application), cancellationToken: default);
 
