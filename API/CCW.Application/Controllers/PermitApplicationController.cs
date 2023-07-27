@@ -357,7 +357,7 @@ public class PermitApplicationController : ControllerBase
         {
             var originalException = e.GetBaseException();
             _logger.LogError(originalException, originalException.Message);
-            throw new Exception("An error occur while trying to retrieve permit application history.");
+            return NotFound("An error occur while trying to retrieve permit application history.");
         }
     }
 
