@@ -41,37 +41,35 @@
 
 <script setup lang="ts">
 import Button from '@shared-ui/components/Button.vue'
-import { getMsalInstance } from '@shared-ui/api/auth/authentication'
+import { MsalBrowser } from '@shared-ui/api/auth/authentication'
 import { useAuthStore } from '@shared-ui/stores/auth'
 import { useBrandStore } from '@shared-ui/stores/brandStore'
 import { useQuery } from '@tanstack/vue-query'
-import { onBeforeUnmount, onMounted } from 'vue'
+import { inject, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const authStore = useAuthStore()
 const brandStore = useBrandStore()
-let msalInstance
+const msalInstance = ref(inject('msalInstance') as MsalBrowser)
 
 let silentRefresh
 
-onMounted(async () => {
-  msalInstance = await getMsalInstance()
-
-  if (authStore.getAuthState.isAuthenticated) {
-    useQuery(['verifyEmail'], authStore.postVerifyUserApi)
-    silentRefresh = setInterval(
-      msalInstance.acquireToken,
-      brandStore.getBrand.refreshTokenTime * 1000 * 60
-    )
-  }
-})
+// onMounted(async () => {
+//   if (authStore.getAuthState.isAuthenticated) {
+//     useQuery(['verifyEmail'], authStore.postVerifyUserApi)
+//     silentRefresh = setInterval(
+//       msalInstance.value.acquireToken,
+//       brandStore.getBrand.refreshTokenTime * 1000 * 60
+//     )
+//   }
+// })
 
 onBeforeUnmount(() => clearInterval(silentRefresh))
 
 function signOut() {
-  msalInstance.logOut()
+  msalInstance.value.logOut()
 }
 
 function handleLogIn() {
-  msalInstance.logIn()
+  msalInstance.value.logIn()
 }
 </script>
