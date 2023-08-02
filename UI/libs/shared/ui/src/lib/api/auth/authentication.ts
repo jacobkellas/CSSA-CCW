@@ -110,7 +110,7 @@ export class MsalBrowser {
     }
 
     const silentRequest: SilentRequest = {
-      scopes: ['offline_access'],
+      scopes: ['openid'],
       account,
       forceRefresh: false,
     }

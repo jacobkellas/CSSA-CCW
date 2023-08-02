@@ -7,7 +7,6 @@ import { computed, ref } from 'vue'
 export const useAuthStore = defineStore(
   'AuthStore',
   () => {
-    window.console.log('making the auth store')
     const auth = ref<AuthType>({
       userName: '',
       userEmail: '',

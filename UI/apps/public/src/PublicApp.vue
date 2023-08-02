@@ -102,13 +102,9 @@ onBeforeMount(async () => {
     prompt.value = true
   })
 
-  window.console.log('getting msal instance')
   msalInstance.value = await getMsalInstance()
-  window.console.log('got msal instance')
 
-  window.console.log('setting interceptors')
   await interceptors(msalInstance.value)
-  window.console.log('done setting interceptors')
 
   if (app) {
     app.proxy.$vuetify.theme.dark = themeStore.getThemeConfig.isDark

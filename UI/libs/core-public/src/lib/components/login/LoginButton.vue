@@ -43,27 +43,10 @@
 import Button from '@shared-ui/components/Button.vue'
 import { MsalBrowser } from '@shared-ui/api/auth/authentication'
 import { useAuthStore } from '@shared-ui/stores/auth'
-import { useBrandStore } from '@shared-ui/stores/brandStore'
-import { useQuery } from '@tanstack/vue-query'
-import { inject, onBeforeUnmount, onMounted, ref } from 'vue'
+import { inject, ref } from 'vue'
 
 const authStore = useAuthStore()
-const brandStore = useBrandStore()
 const msalInstance = ref(inject('msalInstance') as MsalBrowser)
-
-let silentRefresh
-
-// onMounted(async () => {
-//   if (authStore.getAuthState.isAuthenticated) {
-//     useQuery(['verifyEmail'], authStore.postVerifyUserApi)
-//     silentRefresh = setInterval(
-//       msalInstance.value.acquireToken,
-//       brandStore.getBrand.refreshTokenTime * 1000 * 60
-//     )
-//   }
-// })
-
-onBeforeUnmount(() => clearInterval(silentRefresh))
 
 function signOut() {
   msalInstance.value.logOut()
