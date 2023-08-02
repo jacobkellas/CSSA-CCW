@@ -18,6 +18,7 @@ export const useAuthStore = defineStore(
       roles: [],
       sessionStarted: '',
       tokenExpired: false,
+      handlingRedirectPromise: false,
     })
 
     const getAuthState = computed(() => auth.value)

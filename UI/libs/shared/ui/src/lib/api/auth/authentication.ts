@@ -15,13 +15,11 @@ export class MsalBrowser {
   private authStore = useAuthStore()
 
   private constructor(config: Configuration) {
-    window.console.log('in constructor', config)
     this.app = new PublicClientApplication(config)
 
+    this.authStore.auth.handlingRedirectPromise = true
     this.app.handleRedirectPromise().then(() => {
       const accounts = this.app.getAllAccounts()
-
-      window.console.log('accounts', accounts)
 
       if (accounts.length > 0) {
         this.app.setActiveAccount(accounts[0])
@@ -32,16 +30,14 @@ export class MsalBrowser {
         this.authStore.setUserEmail(accounts[0].username)
         this.authStore.setRoles(accounts[0].idTokenClaims?.roles)
       }
+
+      this.authStore.auth.handlingRedirectPromise = false
     })
   }
 
   static async getInstance(): Promise<MsalBrowser> {
-    window.console.log('getting msal instance')
-
     if (!MsalBrowser.instance) {
       const authConfig = await MsalBrowser.fetchAuthConfig()
-
-      window.console.log('there was no instance', authConfig)
 
       MsalBrowser.instance = new MsalBrowser(authConfig)
     }
@@ -98,7 +94,6 @@ export class MsalBrowser {
   }
 
   logIn() {
-    window.console.log('handling login')
     this.app.loginRedirect()
   }
 
@@ -114,15 +109,11 @@ export class MsalBrowser {
       return
     }
 
-    window.console.log('account', account)
-
     const silentRequest: SilentRequest = {
       scopes: ['offline_access'],
       account,
       forceRefresh: false,
     }
-
-    window.console.log('silentRequest', silentRequest)
 
     const token = await this.app.acquireTokenSilent(silentRequest)
 
