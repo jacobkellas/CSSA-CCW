@@ -225,6 +225,36 @@
           </v-card-title>
 
           <v-card-title
+            v-else-if="
+              permitStore.getPermitDetail.application.flaggedForCustomerReview
+            "
+            class="justify-center"
+          >
+            <v-icon
+              color="error"
+              class="mr-2"
+            >
+              mdi-alert
+            </v-icon>
+            Flagged for Applicant Review
+          </v-card-title>
+
+          <v-card-title
+            v-else-if="
+              permitStore.getPermitDetail.application.flaggedForLicensingReview
+            "
+            class="justify-center"
+          >
+            <v-icon
+              color="error"
+              class="mr-2"
+            >
+              mdi-alert
+            </v-icon>
+            Review Survey Details
+          </v-card-title>
+
+          <v-card-title
             v-else
             class="justify-center"
           >
