@@ -1421,13 +1421,20 @@
           >
             Close
           </v-btn>
-          <v-btn
-            @click="() => handleCopy(question)"
-            color="primary"
-            class="ml-auto"
-          >
-            <v-icon>mdi-content-copy</v-icon>
-          </v-btn>
+          <v-tooltip bottom>
+            <template #activator="{ on }">
+              <v-btn
+                @click="() => handleCopy(question)"
+                color="primary"
+                class="ml-auto"
+                v-on="on"
+                slot="activator"
+              >
+                <v-icon>mdi-content-copy</v-icon>
+              </v-btn>
+            </template>
+            Copy Response
+          </v-tooltip>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -1504,6 +1511,11 @@ function handleSaveFlag(questionNumber: string) {
 
   permitStore.getPermitDetail.application.flaggedForCustomerReview = true
 
+  if (permitStore.getPermitDetail.application.status !== 14) {
+    permitStore.getPermitDetail.application.originalStatus =
+      permitStore.getPermitDetail.application.status
+  }
+
   permitStore.getPermitDetail.application.status = 14
 
   updatePermitDetails()
@@ -1539,6 +1551,11 @@ function handleSaveQuestionOneFlag() {
   permitStore.getPermitDetail.application.comments.push(newComment)
 
   permitStore.getPermitDetail.application.flaggedForCustomerReview = true
+
+  if (permitStore.getPermitDetail.application.status !== 14) {
+    permitStore.getPermitDetail.application.originalStatus =
+      permitStore.getPermitDetail.application.status
+  }
 
   permitStore.getPermitDetail.application.status = 14
 
@@ -1661,6 +1678,9 @@ function acceptChanges() {
   permitStore.getPermitDetail.application.flaggedForLicensingReview = false
 
   permitStore.getPermitDetail.application.flaggedForCustomerReview = false
+
+  permitStore.getPermitDetail.application.status =
+    permitStore.getPermitDetail.application.originalStatus
 
   reviewDialog.value = false
 
