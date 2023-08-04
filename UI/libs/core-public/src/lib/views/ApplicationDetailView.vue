@@ -124,7 +124,7 @@
                 <v-card>
                   <v-card-title
                     class="headline"
-                    style="background-color: #ff5252"
+                    style="background-color: #bdbdbd"
                   >
                     <v-icon
                       large
@@ -144,7 +144,7 @@
                     </div>
                     <v-textarea
                       v-if="flaggedQuestionText"
-                      class="mt-5"
+                      class="mt-7"
                       outlined
                       rows="6"
                       auto-grow
@@ -155,7 +155,7 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-btn
-                      text
+                      elevation="2"
                       color="error"
                       @click="cancelChanges"
                     >
@@ -872,7 +872,7 @@ function showReviewDialog() {
   ) {
     flaggedQuestionText.value += `${i18n.t('QUESTION-ONE')}\n\n`
 
-    flaggedQuestionText.value += `Your Response:\n`
+    flaggedQuestionText.value += `Original Response:\n`
     flaggedQuestionText.value += `Agency: ${
       qualifyingQuestions.questionOneAgency || 'N/A'
     }\n`
@@ -883,7 +883,7 @@ function showReviewDialog() {
       qualifyingQuestions.questionOneNumber || 'N/A'
     }\n\n`
 
-    flaggedQuestionText.value += `Revised Response:\n`
+    flaggedQuestionText.value += `Revised Changes:\n`
     flaggedQuestionText.value += `Agency: ${
       qualifyingQuestions.questionOneAgencyTemp || 'N/A'
     }\n`
@@ -913,7 +913,7 @@ function showReviewDialog() {
       flaggedQuestionText.value += `Question: ${i18n.t(
         `QUESTION-${questionNumber.toUpperCase()}`
       )}\n\n`
-      flaggedQuestionText.value += `Your response:  ${originalResponse}\n\n`
+      flaggedQuestionText.value += `Original Response:  ${originalResponse}\n\n`
       flaggedQuestionText.value += `Revised Changes: ${revisedChanges}\n\n`
     }
   }

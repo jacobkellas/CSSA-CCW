@@ -29,7 +29,7 @@
         <v-card>
           <v-card-title
             class="headline"
-            style="background-color: #ff5252"
+            style="background-color: #bdbdbd"
           >
             <v-icon
               large
@@ -41,12 +41,13 @@
           </v-card-title>
           <v-card-text>
             <div class="text-h6 font-weight-bold dark-grey--text mt-5 mb-5">
-              Please confirm if you would like to overwrite their previous
-              response with the accepted changes.
+              The applicant has approved the changes. Please confirm if you
+              would like to overwrite their previous response with the revised
+              changes.
             </div>
             <v-textarea
               v-if="flaggedQuestionText"
-              class="mt-5"
+              class="mt-7"
               outlined
               rows="6"
               auto-grow
@@ -57,7 +58,7 @@
           </v-card-text>
           <v-card-actions>
             <v-btn
-              text
+              elevation="2"
               color="error"
               @click="cancelChanges"
             >
@@ -65,6 +66,7 @@
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn
+              elevation="2"
               color="primary"
               @click="acceptChanges"
               class="white--text"
@@ -1419,6 +1421,13 @@
           >
             Close
           </v-btn>
+          <v-btn
+            @click="() => handleCopy(question)"
+            color="primary"
+            class="ml-auto"
+          >
+            <v-icon>mdi-content-copy</v-icon>
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -1471,6 +1480,7 @@ function handleQuestionOneFlag() {
 function handleFlag(questionNumber: string) {
   question.value = questionNumber
   flagDialog.value = true
+  requestedInformation.value = ''
 }
 
 function handleSaveFlag(questionNumber: string) {
@@ -1565,7 +1575,7 @@ function showReviewDialog() {
   ) {
     flaggedQuestionText.value += `${i18n.t('QUESTION-ONE')}\n\n`
 
-    flaggedQuestionText.value += `Initial Response:\n`
+    flaggedQuestionText.value += `Original Response:\n`
     flaggedQuestionText.value += `Agency: ${
       qualifyingQuestions.questionOneAgency || 'N/A'
     }\n`
@@ -1576,7 +1586,7 @@ function showReviewDialog() {
       qualifyingQuestions.questionOneNumber || 'N/A'
     }\n\n`
 
-    flaggedQuestionText.value += `Revised Response:\n`
+    flaggedQuestionText.value += `Revised Changes:\n`
     flaggedQuestionText.value += `Agency: ${
       qualifyingQuestions.questionOneAgencyTemp || 'N/A'
     }\n`
@@ -1606,15 +1616,14 @@ function showReviewDialog() {
       flaggedQuestionText.value += `Question: ${i18n.t(
         `QUESTION-${questionNumber.toUpperCase()}`
       )}\n\n`
-      flaggedQuestionText.value += `Initial Response:  ${originalResponse}\n\n`
-      flaggedQuestionText.value += `Accepted Changes: ${revisedChanges}\n\n`
+      flaggedQuestionText.value += `Original Response:  ${originalResponse}\n\n`
+      flaggedQuestionText.value += `Revised Changes: ${revisedChanges}\n\n`
     }
   }
 
   if (flaggedQuestionText.value !== '') {
     reviewDialog.value = true
-    flaggedQuestionHeader.value =
-      'The applicant has accepted the following changes:'
+    flaggedQuestionHeader.value = 'Review Required'
   }
 }
 
@@ -1664,6 +1673,13 @@ function acceptChanges() {
 
 function cancelChanges() {
   reviewDialog.value = false
+}
+
+function handleCopy(questionNumber: string) {
+  requestedInformation.value =
+    permitStore.getPermitDetail.application.qualifyingQuestions[
+      `question${questionNumber}Exp`
+    ]
 }
 </script>
 
