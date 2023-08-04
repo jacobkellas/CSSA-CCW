@@ -181,6 +181,8 @@ static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(
     var key = secretClient.GetSecret("cosmos-db-connection-primary").Value.Value;
 #endif
     var client = new CosmosClient(key, clientOptions);
+    var database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+    await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
     var cosmosDbService = new CosmosDbService(client, databaseName, containerName);
     return cosmosDbService;
 }
