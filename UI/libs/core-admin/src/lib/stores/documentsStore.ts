@@ -70,16 +70,29 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
     }
   }
 
+  async function getAdminApplicationFile(name: string) {
+    const res = await axios.get(
+      `${Endpoints.GET_ADMIN_APPLICATION_FILE_ENDPOINT}?adminApplicationFileName=${permitStore.permitDetail.userId}_${name}`,
+      { responseType: 'blob' }
+    )
+
+    setDocuments(res?.data)
+
+    return res?.data || {}
+  }
+
   async function getUserDocument(name) {
     const res = await axios
       .get(
-        `${Endpoints.GET_DOCUMENT_AGENCY_FILE_ENDPOINT}?applicantFileName=${permitStore.permitDetail.userId}_${name}`
+        `${Endpoints.GET_DOCUMENT_AGENCY_FILE_ENDPOINT}?applicantFileName=${permitStore.permitDetail.userId}_${name}`,
+        { responseType: 'blob' }
       )
+
       .catch(err => {
         window.console.warn(err)
       })
 
-    return res
+    return res?.data || {}
   }
 
   return {
@@ -90,6 +103,7 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
     formatName,
     setUserApplicationFile,
     getUserDocument,
+    getAdminApplicationFile,
     postUploadAdminUserFile,
   }
 })

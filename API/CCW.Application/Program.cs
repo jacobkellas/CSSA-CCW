@@ -28,9 +28,19 @@ builder.Services.AddHeaderPropagation(o =>
 builder.Services.AddHttpClient<IDocumentServiceClient, DocumentServiceClient>("DocumentHttpClient", c =>
 {
     c.BaseAddress = new Uri(builder.Configuration.GetSection("DocumentApi:BaseUrl").Value);
+#if DEBUG
+    c.BaseAddress = new Uri(builder.Configuration.GetSection("DocumentApi:LocalDevBaseUrl").Value);
+#endif
     c.Timeout = TimeSpan.FromSeconds(Convert.ToDouble(builder.Configuration.GetSection("DocumentApi:Timeout").Value));
     c.DefaultRequestHeaders.Add("Accept", "application/json");
-
+#if DEBUG
+}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+{
+    Proxy = new WebProxy()
+    {
+        BypassProxyOnLocal = true
+    },
+#endif
 }).AddHeaderPropagation();
 
 builder.Services.AddHttpClient<IAdminServiceClient, AdminServiceClient>("AdminHttpClient", c =>
@@ -162,7 +172,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader())
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
 );
 
 builder.Services.AddHealthChecks();
@@ -183,11 +193,6 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseHealthChecks("/health");
-
-app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
 app.UseCors();
 

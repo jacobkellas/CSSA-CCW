@@ -577,6 +577,7 @@ const allowedExtension = [
   '.pjpeg',
   '.jfif',
   '.bmp',
+  '.pdf',
 ]
 
 const { refetch: updatePermitDetails } = useQuery(

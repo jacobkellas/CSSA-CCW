@@ -129,7 +129,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader())
+        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
 );
 
 builder.Services.AddHealthChecks();
@@ -155,11 +155,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHealthChecks("/health");
-
-app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
 app.UseCors();
 

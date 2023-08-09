@@ -1,4 +1,6 @@
 using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace CCW.Document.Services;
 
@@ -21,4 +23,7 @@ public interface IAzureStorage
     Task DeleteApplicantFileAsync(string applicantFileName, CancellationToken cancellationToken);
     Task UploadAdminUserFileAsync(IFormFile fileToUpload, string saveAsFileName, CancellationToken cancellationToken);
     Task<BlobClient> DownloadAdminUserFileAsync(string adminUserFileName, CancellationToken cancellationToken);
+    Task DeleteAdminApplicationFileAsync(string adminApplicationFileName, CancellationToken cancellationToken);
+    Task UploadAdminApplicationFileAsync(IFormFile fileToUpload, string saveAsFileName, CancellationToken cancellationToken);
+    Task<BlobClient> DownloadAdminApplicationFileAsync(string adminApplicationFileName, CancellationToken cancellationToken);
 }

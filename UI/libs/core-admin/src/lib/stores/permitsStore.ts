@@ -1,5 +1,6 @@
 import Endpoints from '@shared-ui/api/endpoints'
 import { PermitsType } from '@core-admin/types'
+import { UploadedDocType } from '@shared-utils/types/defaultTypes'
 import axios from 'axios'
 import { defaultPermitState } from '@shared-utils/lists/defaultConstants'
 import { defineStore } from 'pinia'
@@ -120,6 +121,17 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
       method: 'PUT',
       responseType: 'blob',
     })
+    const uploadAdminDoc: UploadedDocType = {
+      documentType: 'Application',
+      name: `${permitDetail.value.application.personalInfo.lastName}_${
+        permitDetail.value.application.personalInfo.firstName
+      }_${'Application'}`,
+      uploadedBy: authStore.auth.userEmail,
+      uploadedDateTimeUtc: new Date(Date.now()).toISOString(),
+    }
+
+    permitDetail.value.application.adminUploadedDocuments.push(uploadAdminDoc)
+    updatePermitDetailApi(`Uploaded new ${uploadAdminDoc.documentType}`)
 
     return res || {}
   }
@@ -128,11 +140,22 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
     const applicationId = permitDetail.value.id
 
     const res = await axios({
-      // change to true if if need to download the pdf.
-      url: `${Endpoints.GET_PRINT_OFFICIAL_LICENSE_ENDPOINT}?applicationId=${applicationId}&shouldAddDownloadFilename=false`,
+      url: `${Endpoints.GET_PRINT_OFFICIAL_LICENSE_ENDPOINT}?applicationId=${applicationId}`,
       method: 'PUT',
       responseType: 'blob',
     })
+
+    const uploadAdminDoc: UploadedDocType = {
+      documentType: 'Official_License',
+      name: `${permitDetail.value.application.personalInfo.lastName}_${
+        permitDetail.value.application.personalInfo.firstName
+      }_${'Official_License'}`,
+      uploadedBy: authStore.auth.userEmail,
+      uploadedDateTimeUtc: new Date(Date.now()).toISOString(),
+    }
+
+    permitDetail.value.application.adminUploadedDocuments.push(uploadAdminDoc)
+    updatePermitDetailApi(`Uploaded new ${uploadAdminDoc.documentType}`)
 
     return res || {}
   }
@@ -141,11 +164,21 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
     const applicationId = permitDetail.value.id
 
     const res = await axios({
-      // change to true if if need to download the pdf.
       url: `${Endpoints.GET_PRINT_UNOFFICIAL_LICENSE_ENDPOINT}?applicationId=${applicationId}&shouldAddDownloadFilename=false`,
       method: 'PUT',
       responseType: 'blob',
     })
+    const uploadAdminDoc: UploadedDocType = {
+      documentType: 'Unofficial_License',
+      name: `${permitDetail.value.application.personalInfo.lastName}_${
+        permitDetail.value.application.personalInfo.firstName
+      }_${'Unofficial_License'}`,
+      uploadedBy: authStore.auth.userEmail,
+      uploadedDateTimeUtc: new Date(Date.now()).toISOString(),
+    }
+
+    permitDetail.value.application.adminUploadedDocuments.push(uploadAdminDoc)
+    updatePermitDetailApi(`Uploaded new ${uploadAdminDoc.documentType}`)
 
     return res || {}
   }
@@ -154,11 +187,21 @@ export const usePermitsStore = defineStore('PermitsStore', () => {
     const applicationId = permitDetail.value.id
 
     const res = await axios({
-      // change to true if if need to download the pdf.
       url: `${Endpoints.GET_PRINT_LIVE_SCAN_ENDPOINT}?applicationId=${applicationId}&shouldAddDownloadFilename=false`,
       method: 'PUT',
       responseType: 'blob',
     })
+    const uploadAdminDoc: UploadedDocType = {
+      documentType: 'Live_Scan',
+      name: `${permitDetail.value.application.personalInfo.lastName}_${
+        permitDetail.value.application.personalInfo.firstName
+      }_${'Live_Scan'}`,
+      uploadedBy: authStore.auth.userEmail,
+      uploadedDateTimeUtc: new Date(Date.now()).toISOString(),
+    }
+
+    permitDetail.value.application.adminUploadedDocuments.push(uploadAdminDoc)
+    updatePermitDetailApi(`Uploaded new ${uploadAdminDoc.documentType}`)
 
     return res || {}
   }

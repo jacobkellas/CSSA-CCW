@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="0">
     <v-card-title>
-      {{ $t('Attached Documents:') }}
+      {{ $t('Admin Attached Documents:') }}
       <v-spacer></v-spacer>
       <SaveButton
         :disabled="false"
@@ -29,41 +29,46 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="(item, index) in state.documents"
-              :key="index"
-            >
-              <td>
-                <a
-                  :href="documentStore.formatName(item.name)"
-                  @click="openPdf($event, item.name)"
-                  @keydown="openPdf($event, item.name)"
+            <template v-for="documentType in state.documentTypes">
+              <tr
+                v-if="
+                  state.documents.filter(
+                    doc => doc.documentType === documentType
+                  ).length > 0
+                "
+                :key="documentType"
+              >
+                <td
+                  colspan="4"
+                  style="font-weight: bold"
                 >
-                  <v-icon class="mr-2"> mdi-download </v-icon>{{ item.name }}
-                </a>
-              </td>
-              <td>
-                <v-select
-                  :items="state.documentTypes"
-                  :label="item.documentType"
-                  v-model="
-                    permitStore.getPermitDetail.application.uploadedDocuments[
-                      index
-                    ].documentType
-                  "
-                  single-line
-                  outlined
-                  dense
-                  :menu-props="{ bottom: true, offsetY: true }"
-                ></v-select>
-              </td>
-              <td>{{ item.uploadedBy }}</td>
-              <td>
-                {{ formatDate(item.uploadedDateTimeUtc) }}
-                &nbsp;
-                {{ formatTime(item.uploadedDateTimeUtc) }}
-              </td>
-            </tr>
+                  {{ documentType }}
+                </td>
+              </tr>
+              <tr
+                v-for="item in state.documents.filter(
+                  doc => doc.documentType === documentType
+                )"
+                :key="`${item.name}-${item.documentType}`"
+              >
+                <td>
+                  <a
+                    :href="documentStore.formatName(item.name)"
+                    @click="openPdf($event, item.name)"
+                    @keydown="openPdf($event, item.name)"
+                  >
+                    <v-icon class="mr-2"> mdi-download </v-icon>{{ item.name }}
+                  </a>
+                </td>
+                <td>{{ item.documentType }}</td>
+                <td>{{ item.uploadedBy }}</td>
+                <td>
+                  {{ formatDate(item.uploadedDateTimeUtc) }}&nbsp;{{
+                    formatTime(item.uploadedDateTimeUtc)
+                  }}
+                </td>
+              </tr>
+            </template>
           </tbody>
         </template>
       </v-simple-table>
@@ -86,18 +91,12 @@ const permitStore = usePermitsStore()
 const documentStore = useDocumentsStore()
 
 const state = reactive({
-  documents: permitStore.getPermitDetail.application.uploadedDocuments,
+  documents: permitStore.getPermitDetail.application.adminUploadedDocuments,
   documentTypes: [
-    'DriverLicense',
-    'ProofResidency',
-    'ProofResidency2',
-    'MilitaryDoc',
-    'Citizenship',
-    'Supporting',
-    'NameChange',
-    'Judicial',
-    'Reserve',
-    'Signature',
+    'Unofficial_License',
+    'Official_License',
+    'Live_Scan',
+    'Application',
   ],
 })
 
@@ -105,7 +104,7 @@ async function openPdf($event, name) {
   $event.preventDefault()
 
   documentStore
-    .getUserDocument(name)
+    .getAdminApplicationFile(name)
     .then(response => {
       if (response.type === 'application/pdf') {
         const pdfBlob = new Blob([response], { type: 'application/pdf' })
