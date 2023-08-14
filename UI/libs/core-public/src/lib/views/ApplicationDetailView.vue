@@ -237,10 +237,7 @@
                 <v-btn
                   color="primary"
                   block
-                  :disabled="
-                    applicationStore.completeApplication.application.status !==
-                    ApplicationStatus['Contingently Approved']
-                  "
+                  :disabled="!canApplicationBeModified"
                   @click="handleModifyApplication"
                 >
                   Modify
@@ -684,6 +681,33 @@ const {
   },
 })
 
+const canApplicationBeModified = computed(() => {
+  return (
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Appointment Complete'] &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Background In Progress'] &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Contingently Approved'] &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Approved &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Permit Delivered'] &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Suspended &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Revoked &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Cancelled &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Denied &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Withdrawn &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Flagged For Review']
+  )
+})
+
 const canApplicationBeContinued = computed(() => {
   return (
     applicationStore.completeApplication.application.status !==
@@ -694,6 +718,18 @@ const canApplicationBeContinued = computed(() => {
       ApplicationStatus['Background In Progress'] &&
     applicationStore.completeApplication.application.status !==
       ApplicationStatus['Contingently Approved'] &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Approved &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Permit Delivered'] &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Suspended &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Revoked &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Cancelled &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Denied &&
     applicationStore.completeApplication.application.status !==
       ApplicationStatus.Withdrawn &&
     applicationStore.completeApplication.application.status !==
