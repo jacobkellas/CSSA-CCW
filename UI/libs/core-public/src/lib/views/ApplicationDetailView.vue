@@ -576,18 +576,16 @@ import { i18n } from '@shared-ui/plugins'
 import { useAppointmentsStore } from '@shared-ui/stores/appointmentsStore'
 import { useCompleteApplicationStore } from '@shared-ui/stores/completeApplication'
 import { useMutation } from '@tanstack/vue-query'
+import { useRouter } from 'vue-router/composables'
 import {
   ApplicationStatus,
   AppointmentStatus,
 } from '@shared-utils/types/defaultTypes'
-import { computed, onMounted, reactive, ref } from 'vue'
-
-import { useRoute, useRouter } from 'vue-router/composables'
+import { computed, reactive, ref } from 'vue'
 
 const applicationStore = useCompleteApplicationStore()
 const appointmentStore = useAppointmentsStore()
 const router = useRouter()
-const route = useRoute()
 const tab = ref(null)
 const reviewDialog = ref(false)
 const flaggedQuestionText = ref('')
@@ -632,19 +630,6 @@ const state = reactive({
       value: 'type',
     },
   ],
-})
-
-onMounted(() => {
-  if (!applicationStore.completeApplication.application.orderId) {
-    applicationStore
-      .getCompleteApplicationFromApi(
-        route.query.applicationId,
-        route.query.isComplete
-      )
-      .then(res => {
-        applicationStore.setCompleteApplication(res)
-      })
-  }
 })
 
 const {
