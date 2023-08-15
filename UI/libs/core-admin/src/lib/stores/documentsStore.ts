@@ -82,13 +82,27 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
 
   async function getAdminApplicationFile(name: string) {
     const res = await axios.get(
-      `${Endpoints.GET_ADMIN_APPLICATION_FILE_ENDPOINT}?adminApplicationFileName=${permitStore.permitDetail.userId}_${name}`,
+      `${Endpoints.GET_ADMIN_APPLICATION_FILE_ENDPOINT}?adminApplicationFileName=${permitStore.permitDetail.id}_${name}`,
       { responseType: 'blob' }
     )
 
     setDocuments(res?.data)
 
     return res?.data || {}
+  }
+
+  async function deleteAdminApplicationFile(name: string)
+  {
+    await axios.delete(
+      `${Endpoints.DELETE_ADMIN_APPLICATION_FILE_ENDPOINT}?adminApplicationFileName=${permitStore.permitDetail.id}_${name}`,
+    )
+  }
+
+  async function deleteApplicationFile(name: string)
+ {
+    const res = await axios.delete(
+      `${Endpoints.DELETE_DOCUMENT_FILE_ENDPOINT}?applicantFileName=${permitStore.permitDetail.userId}_${name}`,
+    )
   }
 
   async function getUserDocument(name) {
@@ -105,6 +119,26 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
     return res?.data || {}
   }
 
+  async function editAdminApplicationFileName(oldName, newName) {
+    try {
+      await axios.post(
+        `${Endpoints.POST_ADMIN_APPLICATION_FILE_RENAME_ENDPOINT}?oldName=${oldName}&newName=${newName}`, null
+      )
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function editApplicationFileName(oldName, newName) {
+    try {
+      await axios.post(
+        `${Endpoints.POST_APPLICATION_FILE_RENAME_ENDPOINT}?oldName=${oldName}&newName=${newName}`, null
+      )
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     documents,
     getDocuments,
@@ -115,6 +149,10 @@ export const useDocumentsStore = defineStore('DocumentsStore', () => {
     getUserDocument,
     getAdminApplicationFile,
     postUploadAdminUserFile,
+    deleteAdminApplicationFile,
+    deleteApplicationFile,
+    editAdminApplicationFileName,
+    editApplicationFileName,
     getUserPortrait,
   }
 })
