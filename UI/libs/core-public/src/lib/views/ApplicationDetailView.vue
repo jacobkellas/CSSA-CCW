@@ -210,7 +210,9 @@
                 <v-btn
                   v-if="
                     applicationStore.completeApplication.application.status !==
-                    ApplicationStatus.Withdrawn
+                      ApplicationStatus.Withdrawn &&
+                    applicationStore.completeApplication.application.status !==
+                      ApplicationStatus.Incomplete
                   "
                   @click="handleShowWithdrawDialog"
                   color="primary"
@@ -222,7 +224,9 @@
                 <v-btn
                   v-else-if="
                     applicationStore.completeApplication.application.status ===
-                    ApplicationStatus.Withdrawn
+                      ApplicationStatus.Withdrawn ||
+                    applicationStore.completeApplication.application.status ===
+                      ApplicationStatus.Incomplete
                   "
                   color="primary"
                   block
@@ -376,8 +380,7 @@
                 "
               />
               <DOBinfoSection
-                :color="'primary'"
-                :d-o-b-info="
+                :birth-info="
                   applicationStore.completeApplication.application.dob
                 "
               />
@@ -631,6 +634,38 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-dialog
+      v-model="state.cancelAppointmentDialog"
+      max-width="600"
+    >
+      <v-card>
+        <v-card-title>Cancel Appointment</v-card-title>
+
+        <v-card-text>
+          Are you sure you wish to cancel your appointment? <br />If you cancel
+          your appointment the time slot will not be reserved for you. You may
+          reschedule for the next available appointment.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn
+            @click="state.cancelAppointmentDialog = false"
+            color="primary"
+            text
+          >
+            Close
+          </v-btn>
+          <v-btn
+            @click="handleConfirmCancelAppointment"
+            color="primary"
+            text
+          >
+            Cancel Appointment
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -673,6 +708,7 @@ const flaggedQuestionText = ref('')
 const flaggedQuestionHeader = ref('')
 
 const state = reactive({
+  cancelAppointmentDialog: false,
   invalidSubmissionDialog: false,
   confirmSubmissionDialog: false,
   rescheduling: false,
@@ -839,7 +875,7 @@ const createMutation = useMutation({
       path: Routes.RENEW_FORM_ROUTE_PATH,
       query: {
         applicationId: state.application[0].id,
-        isComplete: state.application[0].application.isComplete,
+        isComplete: state.application[0].application.isComplete.toString(),
       },
     })
   },
@@ -866,7 +902,7 @@ const renewMutation = useMutation({
       path: Routes.RENEW_FORM_ROUTE_PATH,
       query: {
         applicationId: state.application[0].id,
-        isComplete: state.application[0].application.isComplete,
+        isComplete: state.application[0].application.isComplete.toString(),
       },
     })
   },
@@ -882,7 +918,7 @@ function handleContinueApplication() {
       path: Routes.APPLICATION_ROUTE_PATH,
       query: {
         applicationId: state.application[0].id,
-        isComplete: state.application[0].application.isComplete,
+        isComplete: state.application[0].application.isComplete.toString(),
       },
     })
   } else if (
@@ -893,7 +929,7 @@ function handleContinueApplication() {
       path: Routes.FORM_ROUTE_PATH,
       query: {
         applicationId: state.application[0].id,
-        isComplete: state.application[0].application.isComplete,
+        isComplete: state.application[0].application.isComplete.toString(),
       },
     })
   } else {
@@ -901,7 +937,7 @@ function handleContinueApplication() {
       path: Routes.RENEW_FORM_ROUTE_PATH,
       query: {
         applicationId: state.application[0].id,
-        isComplete: state.application[0].application.isComplete,
+        isComplete: state.application[0].application.isComplete.toString(),
       },
     })
   }
@@ -969,6 +1005,10 @@ function handleConfirmSubmit() {
 }
 
 function handleCancelAppointment() {
+  state.cancelAppointmentDialog = true
+}
+
+function handleConfirmCancelAppointment() {
   applicationStore.completeApplication.application.appointmentStatus =
     AppointmentStatus['Not Scheduled']
   applicationStore.completeApplication.application.appointmentDateTime = null
@@ -976,7 +1016,15 @@ function handleCancelAppointment() {
     applicationStore.completeApplication.application.appointmentId
   )
   applicationStore.completeApplication.application.appointmentId = null
+  applicationStore.completeApplication.application.status =
+    ApplicationStatus.Incomplete
+  applicationStore.completeApplication.application.startOfNinetyDayCountdown =
+    null
+  applicationStore.completeApplication.application.submittedToLicensingDateTime =
+    null
+  applicationStore.completeApplication.application.isComplete = false
   updateMutation.mutate()
+  state.cancelAppointmentDialog = false
 }
 
 function handleShowAppointmentDialog() {
