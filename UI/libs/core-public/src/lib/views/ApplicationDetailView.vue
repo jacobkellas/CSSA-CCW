@@ -324,10 +324,10 @@
               </v-col>
               <v-col>
                 <v-btn
+                  v-if="canCancelAppointment && !isGetApplicationsLoading"
                   block
                   color="primary"
                   @click="handleCancelAppointment"
-                  :disabled="!canCancelAppointment || isGetApplicationsLoading"
                 >
                   Cancel
                 </v-btn>
@@ -889,7 +889,9 @@ const canRescheduleAppointment = computed(() => {
 
 const canScheduleAppointment = computed(() => {
   return (
-    applicationStore.completeApplication.application.appointmentStatus === 1
+    applicationStore.completeApplication.application.appointmentStatus === 1 &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Appointment Complete']
   )
 })
 
@@ -901,6 +903,8 @@ const canCancelAppointment = computed(() => {
       ApplicationStatus.Revoked &&
     applicationStore.completeApplication.application.status !==
       ApplicationStatus.Denied &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus['Appointment Complete'] &&
     applicationStore.completeApplication.application.appointmentStatus === 2
   )
 })
