@@ -923,7 +923,9 @@ const canUploadFiles = computed(() => {
     applicationStore.completeApplication.application.status !==
       ApplicationStatus.Revoked &&
     applicationStore.completeApplication.application.status !==
-      ApplicationStatus.Denied
+      ApplicationStatus.Denied &&
+    applicationStore.completeApplication.application.status !==
+      ApplicationStatus.Approved
   )
 })
 
