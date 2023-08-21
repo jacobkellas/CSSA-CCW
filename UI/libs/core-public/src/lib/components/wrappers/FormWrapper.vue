@@ -361,11 +361,6 @@ const { isLoading, mutate: updateMutation } = useMutation({
   mutationFn: () => {
     return applicationStore.updateApplication()
   },
-  // onError: () => {
-  //   submited.value = false;
-  //   valid.value = true;
-  //   snackbar.value = true;
-  // },
 })
 
 const { isLoading: isSaveLoading, mutate: saveMutation } = useMutation({
@@ -375,9 +370,6 @@ const { isLoading: isSaveLoading, mutate: saveMutation } = useMutation({
   onSuccess: () => {
     router.push('/')
   },
-  // onError: () => {
-  //   snackbar.value = true;
-  // },
 })
 
 onMounted(() => {

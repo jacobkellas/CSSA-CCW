@@ -18,7 +18,7 @@
     <v-btn
       color="primary"
       @click="handleSave"
-      :disabled="!props.valid || props.loading"
+      :disabled="props.loading"
       style="width: 200px"
     >
       {{ $t('Save and Exit') }}

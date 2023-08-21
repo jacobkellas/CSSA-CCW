@@ -30,6 +30,11 @@
         {{ $t('File Upload') }}
       </v-subheader>
 
+      <v-progress-circular
+        v-if="isLoading"
+        indeterminate
+      ></v-progress-circular>
+
       <v-row>
         <v-col
           cols="12"
@@ -126,6 +131,18 @@
               </v-icon>
             </template>
           </v-file-input>
+        </v-col>
+
+        <v-col
+          cols="12"
+          lg="6"
+        >
+          <v-btn
+            @click="fileMutation.mutate()"
+            color="primary"
+          >
+            <v-icon left>mdi-content-save</v-icon>Save
+          </v-btn>
         </v-col>
       </v-row>
 
@@ -415,7 +432,7 @@ const driverLicenseRules = computed(() => {
 
 const proofOfResidenceRules = computed(() => {
   const proofOfResidence = completeApplication.uploadedDocuments.some(obj => {
-    return obj.documentType === 'ProofOfResidence'
+    return obj.documentType === 'ProofResidency'
   })
 
   return [proofOfResidence || 'Proof of Residence is required']
@@ -423,7 +440,7 @@ const proofOfResidenceRules = computed(() => {
 
 const proofOfResidence2Rules = computed(() => {
   const proofOfResidence2 = completeApplication.uploadedDocuments.some(obj => {
-    return obj.documentType === 'ProofOfResidence2'
+    return obj.documentType === 'ProofResidency2'
   })
 
   return [proofOfResidence2 || 'Proof of Residence is required']
@@ -431,6 +448,14 @@ const proofOfResidence2Rules = computed(() => {
 
 const fileMutation = useMutation({
   mutationFn: handleFileUpload,
+})
+
+const { isLoading, mutate: updateMutation } = useMutation({
+  mutationFn: () => {
+    window.console.log('updating application')
+
+    return applicationStore.updateApplication()
+  },
 })
 
 function handleMultiInput(event, target: string) {
@@ -472,6 +497,9 @@ async function handleFileUpload() {
     }
 
     completeApplication.uploadedDocuments.push(uploadDoc)
+
+    window.console.log('updating mutation')
+    updateMutation()
   })
 }
 
