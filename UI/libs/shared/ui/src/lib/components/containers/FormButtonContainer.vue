@@ -4,7 +4,7 @@
       class="mr-2"
       color="primary"
       @click="handleSubmit"
-      :disabled="!props.valid || props.loading"
+      :disabled="!props.valid || props.loading || !props.allStepsComplete"
       style="width: 200px"
     >
       <v-progress-circular
@@ -30,11 +30,13 @@
 interface FormButtonContainerProps {
   valid?: boolean
   loading?: boolean
+  allStepsComplete?: boolean
 }
 
 const props = withDefaults(defineProps<FormButtonContainerProps>(), {
   valid: false,
   loading: false,
+  allStepsComplete: true,
 })
 
 const emit = defineEmits(['submit', 'save'])

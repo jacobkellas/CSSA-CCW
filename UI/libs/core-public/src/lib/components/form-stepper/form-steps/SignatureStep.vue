@@ -51,6 +51,7 @@
       <FormButtonContainer
         :valid="valid"
         :loading="state.uploading"
+        :all-steps-complete="props.allStepscomplete"
         @submit="handleSubmit"
         @save="handleSave"
       />
@@ -82,7 +83,8 @@
           :style="{ width: '100%' }"
           v-if="state.previousSignature"
           :valid="true"
-          :submitting="state.submited"
+          :submitting="state.submitted"
+          :all-steps-complete="props.allStepsComplete"
           @submit="handleSkipSubmit"
           @save="router.push('/')"
           @cancel="router.push('/')"
@@ -113,6 +115,7 @@ import {
 interface ISecondFormStepFourProps {
   routes: unknown
   value: CompleteApplication
+  allStepsComplete: boolean
 }
 
 const app = getCurrentInstance()
@@ -132,7 +135,7 @@ const state = reactive({
   file: {},
   signature: '',
   previousSignature: false,
-  submited: false,
+  submitted: false,
   uploading: false,
 })
 
@@ -169,12 +172,12 @@ const fileMutation = useMutation({
     })
   },
   onError: () => {
-    state.submited = false
+    state.submitted = false
   },
 })
 
 async function handleSubmit() {
-  state.submited = true
+  state.submitted = true
   state.uploading = true
   const image = document.getElementById('signatureCanvas')
 
