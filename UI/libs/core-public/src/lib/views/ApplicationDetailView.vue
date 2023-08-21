@@ -1130,9 +1130,9 @@ function handleShowWithdrawDialog() {
 }
 
 function toggleAppointmentComplete() {
-  applicationStore.updateApplication()
   state.appointmentDialog = false
   state.rescheduling = false
+  applicationStore.updateApplication()
 }
 
 function showReviewDialog() {
