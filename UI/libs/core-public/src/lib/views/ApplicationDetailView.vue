@@ -215,9 +215,7 @@
                 <v-btn
                   v-else-if="
                     applicationStore.completeApplication.application.status ===
-                      ApplicationStatus.Withdrawn ||
-                    applicationStore.completeApplication.application.status ===
-                      ApplicationStatus.Incomplete
+                    ApplicationStatus.Withdrawn
                   "
                   color="primary"
                   block
