@@ -452,8 +452,6 @@ const fileMutation = useMutation({
 
 const { isLoading, mutate: updateMutation } = useMutation({
   mutationFn: () => {
-    window.console.log('updating application')
-
     return applicationStore.updateApplication()
   },
 })
@@ -497,8 +495,6 @@ async function handleFileUpload() {
     }
 
     completeApplication.uploadedDocuments.push(uploadDoc)
-
-    window.console.log('updating mutation')
     updateMutation()
   })
 }
